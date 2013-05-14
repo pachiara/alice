@@ -5,16 +5,20 @@ html, body {
   height: 100%;
 }
 footer {
-  color: #666;
-  background: #222;
+  color: #FEFEFE;
+#  color: #666;
+#  background: #222;
+  background: #888888;
   padding: 17px 0 18px 0;
   border-top: 1px solid #000;
 }
 footer a {
-  color: #999;
+#  color: #999;
+  color: #EEEEEE;
 }
 footer a:hover {
-  color: #efefef;
+#  color: #efefef;
+  color: #FFFFFF;
 }
 .wrapper {
   min-height: 100%;
@@ -28,3 +32,4 @@ footer a:hover {
 .wrapper > .container {
   padding-top: 60px;
 }
+
