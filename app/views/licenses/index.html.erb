@@ -1,0 +1,32 @@
+<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>
+	  	
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.license.name') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
+    <th><%= t('activerecord.attributes.license.version') %></th>
+    <th><%= t('activerecord.attributes.license.category') %></th>
+    <th><%= t('activerecord.attributes.license.text_license') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>  
+
+<% @licenses.each do |license| %>
+
+  <tr>
+    <td><%= license.name %></td>
+    <td><%= license.description %></td>
+    <td><%= license.version %></td>
+    <td><%= license.category_id %></td>
+    <td><% if license.text_license.size > 0 %><i class="icon-ok"></i><% end %></td>
+    <td><%= link_to '', license, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
+    <td><%= link_to '', edit_license_path(license), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
+    <td><%= link_to '', license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<i class="icon-plus"></i>
+<%= link_to t('actions.new'), new_license_path, :title => t('actions.new'), :alt => t('actions.new') %>

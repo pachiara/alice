@@ -1,0 +1,352 @@
+0) inizio crea progetto
+rails _3.2.13_ new alice -d mysql
+
+1) In Gemfile aggiunto 'bootstrap-sass' all'interno del group :assets 
+===========
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 4.0.0.beta1'
+  gem 'coffee-rails', '~> 4.0.0.beta1'
+# temi html5
+  gem 'bootstrap-sass', '~> 2.3.1.0'
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', platforms: :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+2) # per l'app server rails di sviluppo
+gem 'thin'
+
+bundle install
+===========
+
+3) app/assets/javascripts/application.js
+includere bootstrap e i suoi moduli da utilizzare:
+
+//= require bootstrap
+//= require bootstrap-scrollspy
+//= require bootstrap-modal
+//= require bootstrap-dropdown
+
+4) app/assets/stylesheets/application.css
+rinominarlo in application.css.scss e aggiungere il contenuto:
+================
+.content {
+  background-color: #eee;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+============================
+
+aggiungere un nuovo file per aggiungere bootstrap che verrà incluso per 
+la presenza di  *= require_tree . in application.css.scss:
+
+bootstrap_and_overrides.css.scss
+con questo contenuto:
+
+==================
+@import "bootstrap";
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
+==================
+
+5) sostituire il layout di base per tutte le applicazioni
+view/layouts/application.html.erb con questo contenuto:
+
+================
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Myapp" %></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    <header class="navbar navbar-fixed-top">
+      <nav class="navbar-inner">
+        <div class="container">
+          <%= render 'layouts/navigation' %>
+        </div>
+      </nav>
+    </header>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="content">
+           <div class="row">
+            <div class="span12">
+              <%= render 'layouts/messages' %>
+              <%= yield %>
+            </div>
+          </div>
+          <footer>
+          </footer>
+        </div>
+      </div> <!--! end of .container -->
+    </div> <!--! end of #main -->
+  </body>
+</html>
+================
+
+6) creare due file partial per il layout condiviso:
+
+_navigation.html.erb per device
+
+==============
+<%= link_to "Home", root_path, :class => 'brand' %>
+<ul class="nav">
+  <% if user_signed_in? %>
+    <li>
+    <%= link_to('Logout', destroy_user_session_path, :method=>'delete') %>
+    </li>
+  <% else %>
+    <li>
+    <%= link_to('Login', new_user_session_path)  %>
+    </li>
+  <% end %>
+  <% if user_signed_in? %>
+    <li>
+    <%= link_to('Edit account', edit_user_registration_path) %>
+    </li>
+  <% else %>
+    <li>
+    <%= link_to('Sign up', new_user_registration_path)  %>
+    </li>
+  <% end %>
+</ul>
+==========
+
+_messages.html.erb per gli errori e gli avvisi
+
+==========
+<% flash.each do |name, msg| %>
+  <% if msg.is_a?(String) %>
+    <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+      <a class="close" data-dismiss="alert">&#215;</a>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    </div>
+  <% end %>
+<% end %>
+==========
+
+7) Simpleform
+inserire in Gemfile
+
+gem 'simple_form'
+
+e lanciare: 
+
+bundle install
+rake db:create
+rails generate simple_form:install --bootstrap
+
+crea i seguenti file:
+
+      create  config/initializers/simple_form.rb
+      create  config/initializers/simple_form_bootstrap.rb
+       exist  config/locales
+      create  config/locales/simple_form.en.yml
+      create  lib/templates/erb/scaffold/_form.html.erb
+      
+8) aggiungere un helper per gli errori generici
+
+in app/helpers/application_helper.rb aggiungere questo metodo:
+=============
+  def display_base_errors resource
+    return '' if (resource.errors.empty?) or (resource.errors[:base].empty?)
+    messages = resource.errors[:base].map { |msg| content_tag(:p, msg) }.join
+    html = <<-HTML
+    <div class="alert alert-error alert-block">
+      <button type="button" class="close" data-dismiss="alert">&#215;</button>
+      #{messages}
+    </div>
+    HTML
+    html.html_safe
+  end
+========
+9) Scaffold per Licenze osi
+
+rails generate scaffold license name:string description:string version:string category_id:integer text_l
+icense:text      
+
+10) Sistemo le dimensioni dei campi e aggiungo le chiavi
+
+class CreateLicenses < ActiveRecord::Migration
+  def change
+   create_table :licenses do |t|
+      t.string :name,         :limit => 15
+      t.string :description,  :limit => 50
+      t.string :version,      :limit => 5
+      t.integer :category_id, :limit => 4
+      t.text :text_license
+
+      t.timestamps
+    end
+    add_index :licenses, [:name, :version], :unique => true
+    add_index :licenses, :category_id
+    add_index :licenses, :description
+  end
+end
+
+11) creo database
+
+rake db:migrate
+
+mysql> describe licenses;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| id           | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(15) | YES  | MUL | NULL    |                |
+| description  | varchar(50) | YES  | MUL | NULL    |                |
+| version      | varchar(5)  | YES  |     | NULL    |                |
+| category_id  | int(11)     | YES  | MUL | NULL    |                |
+| text_license | text        | YES  |     | NULL    |                |
+| created_at   | datetime    | YES  |     | NULL    |                |
+| updated_at   | datetime    | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.06 sec)
+
+===============================
+12) autenticazione
+
+gem 'devise'
+bundle install
+rails generate devise:install
+rails generate devise User
+rails generate devise Admin
+
+rake db:migrate
+
+13) configurare root_path in routes.rb
+
+root to: 'licenses#index'
+rinominare public/index.html in index.html.orig
+
+14) rails s
+primo test
+
+15) aggiungere home
+
+rails g controller home index
+cambiare
+root to: 'licenses#index'
+in
+root to: 'home#index'
+
+16) Gestione del titolo della pagina
+
+in application_helper.rb
+
+def title
+    "#{@title}"
+end 
+
+in it.yml
+
+  activerecord:
+    models:
+      license: Licenze
+  actions:
+    management: "Gestione"  
+
+in home_controller.rb
+
+class HomeController < ApplicationController
+  def index
+       @title = t('actions.management') + " " + t('activerecord.models.license')
+  end
+end
+
+in index.html.erb
+
+<%= title %>
+
+in config/application.rb
+
+    # aggiunto per la localizzazione italiana
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.locale = :it
+    config.i18n.default_locale = :it
+
+17) paginazione
+
+gem 'will_paginate-bootstrap'
+
+bundle install
+
+inserire nella view:
+
+<%= will_paginate @collection, :renderer => BootstrapPagination::Rails %>    
+
+18) scaricare un file con il contenuto della licenza
+
+- nuova rotta download in routes.rb:
+
+  resources :licenses do
+    get 'download'  
+  end
+
+- nuovo metodo download in licenses_controller:
+
+  # GET /licenses/1.text
+  def download
+    @license = License.find(params[:license_id])
+
+    send_data @license.text_license,
+              :filename => @license.name+".txt",
+              :type => "application/text"
+    
+  end
+
+- link all'azione nella view (in questo caso la show)
+
+    <%= link_to t('actions.download'), license_download_path(@license), :class => "btn" %>
+
+19) scaffold per le categorie di licenze
+    
+rails generate scaffold category name:string description:string
+
+20) Sistemo le dimensioni dei campi e aggiungo le chiavi
+
+class CreateCategories < ActiveRecord::Migration
+  def change
+    create_table :categories do |t|
+      t.string :name,         :limit => 15
+      t.string :description,  :limit => 50
+
+      t.timestamps
+    end
+    add_index :categories, [:name], :unique => true
+  end
+end
+
+11) creo database
+
+rake db:migrate
+
+mysql> describe categories;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id          | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(15) | YES  | UNI | NULL    |                |
+| description | varchar(50) | YES  |     | NULL    |                |
+| created_at  | datetime    | NO   |     | NULL    |                |
+| updated_at  | datetime    | NO   |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+

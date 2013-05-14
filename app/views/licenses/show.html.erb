@@ -1,0 +1,30 @@
+<p>
+  <b><%= t('activerecord.attributes.license.name') %>:</b>
+  <%= @license.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.license.description') %>:</b>
+  <%= @license.description %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.license.version') %>:</b>
+  <%= @license.version %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.license.category') %>:</b>
+  <%= @license.category_id %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.license.text_license') %>:</b>
+  <%= simple_format(@license.text_license) %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_license_path(@license), :class => "btn" %>
+    <%= link_to t('actions.download'), license_download_path(@license), :class => "btn" %>
+    <%= link_to t('actions.back'), licenses_path, :class => "btn" %>
+</div>

@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="span4">
+    <h2>Licenze OSI</h2>
+    <p>
+      <%= image_tag("sfondo1.png", :alt => "Elenco Licenze OSI", :class => "img-rounded") %>
+    </p>
+    <p>
+      Elenco delle licenze open source riconosciute da Open Source Initiative (OSI). La <b>Open Source Initiative</b> è un'organizzazione, fondata nel febbraio 1998, dedicata a promuovere software open source.   
+    </p>
+    <p><%= link_to t('actions.view_details'), licenses_path, :class => "btn" %></p>
+  </div>
+  <div class="span4">
+    <h2>Verifica licenze</h2>
+    <p>
+      <%= image_tag("sfondo2.png", :alt => "Verifica licenze", :class => "img-rounded") %>
+    </p>
+    <p>
+      Verifica del corretto utilizzo delle lilcenze dei componenti dell'applicazione in funzione del tipo di utilizzo del prodotto e della sua licenza finale. Per la verifica occorre fornire l'elenco dei componenti utilizzati.
+    </p>
+    <p><%= link_to t('actions.view_details'), licenses_path, :class => "btn" %></p>
+  </div>
+  <div class="span4">
+    <h2>Prodotti controllati</h2>
+    <p>
+      <%= image_tag("sfondo3.png", :alt => "Verifica licenze", :class => "img-rounded") %>
+    </p>
+    <p>
+      Archivio dei prodotti verificati. Questo archivio viene incrementato ogni volta che si effettua una verifica delle licenze. Contiene le informazioni rilevanti sui prodotti e sulla loro modalità di utilizzo.
+    </p>
+    <p><%= link_to t('actions.view_details'), licenses_path, :class => "btn" %></p>
+  </div>
+</div>

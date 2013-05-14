@@ -1,0 +1,27 @@
+<%= will_paginate @categories, :renderer => BootstrapPagination::Rails %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.category.name') %></th>
+    <th><%= t('activerecord.attributes.category.description') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>  
+  
+<% @categories.each do |category| %>
+  <tr>
+  	  <tr>
+    <td><%= category.name %></td>
+    <td><%= category.description %></td>
+    <td><%= link_to '', category, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
+    <td><%= link_to '', edit_category_path(category), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
+    <td><%= link_to '', category, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<i class="icon-plus"></i>
+<%= link_to t('actions.new'), new_category_path, :title => t('actions.new'), :alt => t('actions.new') %>
+

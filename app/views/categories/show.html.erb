@@ -1,0 +1,14 @@
+<p>
+  <b><%= t('activerecord.attributes.category.name') %>:</b>
+  <%= @category.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.category.description') %>:</b>
+  <%= @category.description %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_category_path(@category), :class => "btn" %>
+    <%= link_to t('actions.back'), categories_path, :class => "btn" %>
+</div>

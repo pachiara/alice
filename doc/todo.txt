@@ -1,0 +1,13 @@
+---------------------
+- devise-omniauth 
+integrazione con IDPC
+https://github.com/intridea/omniauth/wiki
+--------------------
+- web-app-theme
+integrazione con bootstrap
+http://pilu.github.io/web-app-theme/#themes/reidb-greenish
+--------------------
+- ruleby
+motore a regole
+https://github.com/Codalytics/ruleby/wiki
+--------------------
