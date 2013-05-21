@@ -350,3 +350,28 @@ mysql> describe categories;
 +-------------+-------------+------+-----+---------+----------------+
 5 rows in set (0.00 sec)
 
+12) associazione
+
+license.rb
+
+class License < ActiveRecord::Base
+  attr_accessible :category_id, :description, :name, :text_license, :version
+  
+  validates_presence_of :name, :description
+  
+  belongs_to :category
+end
+
+category.rb
+
+class Category < ActiveRecord::Base
+  attr_accessible :description, :name
+  
+  validates_presence_of :name
+  validates_uniqueness_of :name
+  
+  has_many :licenses
+end
+
+
+
