@@ -4,7 +4,7 @@ class LicensesController < ApplicationController
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
     #@licenses = License.all
-    @licenses = License.order('created_at ASC').page(params[:page]).per_page(10)
+    @licenses = License.order('created_at ASC').page(params[:page]).per_page(15)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -84,7 +84,7 @@ class LicensesController < ApplicationController
 
     respond_to do |format|
       if @license.update_attributes(params[:license])
-        format.html { redirect_to @license, notice:  t('flash.license.update.notice') }
+        format.html { redirect_to licenses_url, notice:  t('flash.license.update.notice') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

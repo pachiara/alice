@@ -373,5 +373,31 @@ class Category < ActiveRecord::Base
   has_many :licenses
 end
 
+Nel form di aggiornamento/inserimento delle licenze si sinserisce il tipo f.association 
+con il nome dell'associazione belongs_to inserita nel modello (:category).
+
+<%= simple_form_for(@license) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs form-horizontal">
+    <%= f.input :name %>
+    <%= f.input :description, :input_html => { :class => "span6" } %>
+    <%= f.input :version %>
+    <%= f.association :category %>
+    <%= f.input :text_license, :input_html => { :class => "span7" }%>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+    <%= link_to t('actions.back'), licenses_path, :class => "btn" %>
+  </div>
+<% end %>
+
+Decodifica della categoria sulla pagina index delle licenze:
+...
+   <td><%= license.category.name %></td>
+...
+
+
 
 

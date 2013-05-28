@@ -226,7 +226,7 @@ it:
       license:
         description:  "Descrizione"
         category_id:  "Id Categoria"
-        text_license: "Testo della licenza"
+        text_license: "Testo"
         name:         "Nome Licenza"    
         version:      "Versione"
         category:     "Categoria" 
@@ -241,7 +241,7 @@ it:
     destroy: "Elimina"
     are_you_sure: "Sei sicuro?"
     attention: "Attenzione!"
-    back: "Annulla"
+    back: "Ritorna"
     new: "Inserisci"
     listing: "Elenco"
     search: "Ricerca"
