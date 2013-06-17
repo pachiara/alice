@@ -221,6 +221,8 @@ it:
       licenses: Licenze
       category: Categoria
       categories: Categorie
+      type_license: "Tipo Licenza"
+      type_licenses: "Tipologia di Licenze" 
     
     attributes:
       license:
@@ -230,9 +232,13 @@ it:
         name:         "Nome Licenza"    
         version:      "Versione"
         category:     "Categoria" 
+        type_license: "Tipo Licenza"
       category:
         name:         "Nome Categoria"    
-        description:  "Descrizione"        
+        description:  "Descrizione"
+      type_license:
+        code:         "Codice"    
+        description:  "Descrizione"           
 
   actions:
     actions: "Azioni"

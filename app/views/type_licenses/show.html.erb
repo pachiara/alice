@@ -1,0 +1,14 @@
+<p>
+  <b><%= t('activerecord.attributes.type_license.code') %>:</b>
+  <%= @type_license.code %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.type_license.description') %>:</b>
+  <%= @type_license.description %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_type_license_path(@type_license), :class => "btn" %>
+    <%= link_to t('actions.back'), type_licenses_path, :class => "btn" %>
+</div>

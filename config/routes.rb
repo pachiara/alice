@@ -1,4 +1,7 @@
 Alice::Application.routes.draw do
+  resources :type_licenses
+
+
   resources :categories
 
 

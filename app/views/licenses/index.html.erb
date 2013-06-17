@@ -5,6 +5,7 @@
     <th><%= t('activerecord.attributes.license.name') %></th>
     <th><%= t('activerecord.attributes.license.description') %></th>
     <th><%= t('activerecord.attributes.license.version') %></th>
+    <th><%= t('activerecord.attributes.license.type_license') %></th>
     <th><%= t('activerecord.attributes.license.category') %></th>
     <th><%= t('activerecord.attributes.license.text_license') %></th>
     <th></th>
@@ -18,6 +19,7 @@
     <td><%= license.name %></td>
     <td><%= license.description %></td>
     <td><%= license.version %></td>
+    <td><%= unless license.type_license.nil?; license.type_license.description; end %></td>
     <td><%= license.category.name %></td>
     <td><% if license.text_license.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= link_to '', license, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>

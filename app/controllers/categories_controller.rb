@@ -38,7 +38,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @title = t('actions.edit') + " " + t('activerecord.models.categories')    
+    @title = t('actions.edit') + " " + t('activerecord.models.category')    
     @category = Category.find(params[:id])
   end
 

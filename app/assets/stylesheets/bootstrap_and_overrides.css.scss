@@ -4,21 +4,39 @@ body { padding-top: 60px; }
 html, body {
   height: 100%;
 }
+.content {
+  background-color: #FAFAFA;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  padding: 15px 30px 25px;
+}
+.content a:hover {
+  color: #000000;
+  background: #FAFAFA;
+}
 footer {
   color: #FEFEFE;
-#  color: #666;
-#  background: #222;
   background: #888888;
   padding: 17px 0 18px 0;
   border-top: 1px solid #000;
 }
 footer a {
-#  color: #999;
   color: #EEEEEE;
 }
 footer a:hover {
-#  color: #efefef;
-  color: #FFFFFF;
+  color: #efefef;
+  background: #888888;
 }
 .wrapper {
   min-height: 100%;

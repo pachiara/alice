@@ -6,6 +6,7 @@
     <%= f.input :description, :input_html => { :class => "span6" } %>
     <%= f.input :version %>
     <%= f.association :category %>
+    <%= f.association :type_license, label_method: :description %>
     <%= f.input :text_license, :input_html => { :class => "span7" }%>
   </div>
 

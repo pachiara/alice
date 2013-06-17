@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130513081602) do
+ActiveRecord::Schema.define(:version => 20130614150319) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -45,14 +45,26 @@ ActiveRecord::Schema.define(:version => 20130513081602) do
     t.string   "description",  :limit => 50
     t.string   "version",      :limit => 5
     t.integer  "category_id"
+    t.integer  "type_id",      :limit => 2
+    t.boolean  "flag_osi",                   :default => true
     t.text     "text_license"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   add_index "licenses", ["category_id"], :name => "index_licenses_on_category_id"
   add_index "licenses", ["description"], :name => "index_licenses_on_description"
   add_index "licenses", ["name", "version"], :name => "index_licenses_on_name_and_version", :unique => true
+  add_index "licenses", ["type_id"], :name => "index_licenses_on_type_id"
+
+  create_table "type_licenses", :force => true do |t|
+    t.string   "code",        :limit => 2
+    t.string   "description", :limit => 50
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "type_licenses", ["code"], :name => "index_type_licenses_on_code", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
