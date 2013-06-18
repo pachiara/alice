@@ -1,4 +1,4 @@
-class TypeLicense < ActiveRecord::Base
+class LicenseType < ActiveRecord::Base
   attr_accessible :code, :description
     
   validates_presence_of :code, :description

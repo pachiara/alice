@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.license_type.code') %></th>
+    <th><%= t('activerecord.attributes.license_type.description') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @license_types.each do |license_type| %>
+  <tr>
+    <td><%= license_type.code %></td>
+    <td><%= license_type.description %></td>
+    <td><%= link_to '', license_type, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
+    <td><%= link_to '', edit_license_type_path(license_type), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
+    <td><%= link_to '', license_type, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<i class="icon-plus"></i>
+<%= link_to t('actions.new'), new_license_type_path, :title => t('actions.new'), :alt => t('actions.new') %>
+

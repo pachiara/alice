@@ -1,9 +1,7 @@
 Alice::Application.routes.draw do
-  resources :type_licenses
-
+  resources :license_types
 
   resources :categories
-
 
   get "home/index"
 

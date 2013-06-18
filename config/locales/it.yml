@@ -221,8 +221,8 @@ it:
       licenses: Licenze
       category: Categoria
       categories: Categorie
-      type_license: "Tipo Licenza"
-      type_licenses: "Tipologia di Licenze" 
+      license_type: "Tipo Licenza"
+      license_types: "Tipologia di Licenze" 
     
     attributes:
       license:
@@ -232,11 +232,11 @@ it:
         name:         "Nome Licenza"    
         version:      "Versione"
         category:     "Categoria" 
-        type_license: "Tipo Licenza"
+        license_type: "Tipo Licenza"
       category:
         name:         "Nome Categoria"    
         description:  "Descrizione"
-      type_license:
+      license_type:
         code:         "Codice"    
         description:  "Descrizione"           
 
@@ -325,6 +325,15 @@ it:
       destroy:
         notice: "Categoria: eliminazione avvenuta con successo!"
         alert: "Categoria: errore durante l'eliminazione!"
-        
+    license_type:
+      create:
+        notice: "Tipo di licenza: creazione avvenuta con successo!"
+        alert: "Tipo di licenza: errore durante la creazione!"
+      update:
+        notice: "Tipo di licenza: aggiornamento avvenuto con successo!"
+        alert: "Tipo di licenza: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Tipo di licenza: eliminazione avvenuta con successo!"
+        alert: "Tipo di licenza: errore durante l'eliminazione!"        
         
         

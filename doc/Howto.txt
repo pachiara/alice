@@ -185,7 +185,7 @@ type = P Permissiva
 	   
 flag_osi = true
 
-rails generate scaffold license name:string description:string version:string category_id:integer type_license_id:integer falg_osi:boolean text_license:text      
+rails generate scaffold license name:string description:string version:string category_id:integer license_type_id:integer falg_osi:boolean text_license:text      
 
 10) Sistemo le dimensioni dei campi e aggiungo le chiavi
 
@@ -196,7 +196,7 @@ class CreateLicenses < ActiveRecord::Migration
       t.string :description,          :limit => 50
       t.string :version,              :limit => 5
       t.integer :category_id,         :limit => 4
-      t.integer :type_license_id,     :limit => 4
+      t.integer :license_type_id,     :limit => 4
       t.boolean :flag_osi,            :default => true
       t.text :text_license
   
@@ -205,7 +205,7 @@ class CreateLicenses < ActiveRecord::Migration
     
     add_index :licenses, [:name, :version], :unique => true
     add_index :licenses, :category_id
-    add_index :licenses, :type_license_id
+    add_index :licenses, :license_type_id
     add_index :licenses, :description
   
   end
@@ -224,7 +224,7 @@ mysql> describe licenses;
 | description     | varchar(50) | YES  | MUL | NULL    |                |
 | version         | varchar(5)  | YES  |     | NULL    |                |
 | category_id     | int(11)     | YES  | MUL | NULL    |                |
-| type_license_id | int(11)     | YES  | MUL | NULL    |                |
+| license_type_id | int(11)     | YES  | MUL | NULL    |                |
 | flag_osi        | tinyint(1)  | YES  |     | 1       |                |
 | text_license    | text        | YES  |     | NULL    |                |
 | created_at      | datetime    | NO   |     | NULL    |                |
@@ -413,19 +413,19 @@ Decodifica della categoria sulla pagina index delle licenze:
 
 23) scaffold per le typologia di licenze
     
-rails generate scaffold type_license code:string description:string
+rails generate scaffold license_type code:string description:string
 
 24) Sistemo le dimensioni dei campi e aggiungo le chiavi
 
-class CreateTypeLicenses < ActiveRecord::Migration
+class CreateLicenseTypes < ActiveRecord::Migration
   def change
-    create_table :type_licenses do |t|
+    create_table :license_types do |t|
       t.string :code,         :limit => 2
       t.string :description,  :limit => 50
 
       t.timestamps
     end
-    add_index :type_licenses, [:code], :unique => true
+    add_index :license_types, [:code], :unique => true
   end
 end
 
@@ -433,7 +433,7 @@ end
 
 rake db:migrate
 
-mysql> describe type_licenses;
+mysql> describe license_types;
 +-------------+-------------+------+-----+---------+----------------+
 | Field       | Type        | Null | Key | Default | Extra          |
 +-------------+-------------+------+-----+---------+----------------+
@@ -455,17 +455,17 @@ type = P Permissiva
 license.rb
 
 class License < ActiveRecord::Base
-  attr_accessible :category_id, :description, :name, :text_license, :version
+  attr_accessible :license_type :category_id, :description, :name, :text_license, :version
   
   validates_presence_of :name, :description
   
   belongs_to :category
-  belongs_to :type_license
+  belongs_to :license_type
 end
 
-type_license.rb
+license_type.rb
 
-class TypeLicense < ActiveRecord::Base
+class LicenseType < ActiveRecord::Base
   attr_accessible :code, :description
   
   validates_presence_of :code, :description
@@ -475,7 +475,7 @@ class TypeLicense < ActiveRecord::Base
 end
 
 Nel form di aggiornamento/inserimento delle licenze si sinserisce il tipo f.association 
-con il nome dell'associazione belongs_to inserita nel modello (:type_license).
+con il nome dell'associazione belongs_to inserita nel modello (:license_type).
 
 <%= simple_form_for(@license) do |f| %>
   <%= f.error_notification %>
@@ -485,7 +485,7 @@ con il nome dell'associazione belongs_to inserita nel modello (:type_license).
     <%= f.input :description, :input_html => { :class => "span6" } %>
     <%= f.input :version %>
     <%= f.association :category %>
-    <%= f.association :type_license %>
+    <%= f.association :license_type %>
     <%= f.input :text_license, :input_html => { :class => "span7" }%>
   </div>
 
@@ -497,14 +497,14 @@ con il nome dell'associazione belongs_to inserita nel modello (:type_license).
 
 Decodifica del tipo licenza sulla pagina index delle licenze:
 ...
-   <td><%= license.type_license.description %></td>
+   <td><%= license.license_type.description %></td>
 ...
 
 26) per la gestione dei tipi di licenza
 
 - inserire traduzioni su it.yml:   attributes:    models:
-- inserire titoli su type_licenses_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.type_license')
+- inserire titoli su license_types_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.license_type')
 - inserire collegamento sulla barra dei menu': _navigation.html.erb 
-- modificare view di type_license: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
+- modificare view di license_type: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
 - modifica view di license: index.html.erb tipo 
 

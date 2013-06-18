@@ -1,4 +1,4 @@
-<%= simple_form_for(@type_license) do |f| %>
+<%= simple_form_for(@license_type) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -8,6 +8,6 @@
 
   <div class="form-actions">
     <%= f.button :submit %>
-    <%= link_to t('actions.back'), type_licenses_path, :class => "btn" %>
+    <%= link_to t('actions.back'), license_types_path, :class => "btn" %>
   </div>
 <% end %>
