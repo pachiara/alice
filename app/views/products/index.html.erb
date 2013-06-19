@@ -19,13 +19,13 @@
   <tr>
     <td><%= product.name %></td>
     <td><%= product.title %></td>
-    <td><%= product.description %></td>
+    <td><% if product.description.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= unless product.license.nil?; product.license.name; end %></td>
-    <td><%= unless product.use.nil?; product.use.name; end %></td>
+    <td><%= unless product.use.nil?; product.use.description; end %></td>
     <td><%= product.checked_at %></td>
     <td><% if product.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
-    <td><%= product.notes %></td>
+    <td><% if product.notes.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= link_to '', product, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
     <td><%= link_to '', edit_product_path(product), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
     <td><%= link_to '', product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
