@@ -1,0 +1,44 @@
+<p>
+  <b><%= t('activerecord.attributes.product.name') %>:</b>
+  <%= @product.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.title') %>:</b>
+  <%= @product.title %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.description') %>:</b>
+  <%= @product.description %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.license') %>:</b>
+  <%= @product.license.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.use') %>:</b>
+  <%= @product.use.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.checked_at') %>:</b>
+  <%= @product.checked_at %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.result') %>:</b>
+  <%= @product.result %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.product.notes') %>:</b>
+  <%= @product.notes %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_product_path(@license), :class => "btn" %>
+    <%= link_to t('actions.back'), products_path, :class => "btn" %>
+</div>

@@ -1,8 +1,8 @@
 Prodotto	Nome	Licenza								Uso	Prodotto
 			xxx		P		Proprietaria				SUE		Servizio Utenti Esterni
 					E1.1	EUPL 1.1					SUI		Servizio Utenti Interni
-					E1.2	EUPL 1.2					DIS		Distribuito
-														SUEO	Servizio Utenti Esterni + Output
+					E1.2	EUPL 1.2					DIS		Distribuito (all'esterno)
+														SUEO	Servizio Utenti Esterni con distribuzione Output
 					
 Componente	Nome	Licenza			Tipo 				Uso	Componente
 			xxx		O	OSI 		P Permissiva		LS	Link Statico

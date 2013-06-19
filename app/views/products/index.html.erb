@@ -1,0 +1,42 @@
+<%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.license.name') %></th>
+    <th><%= t('activerecord.attributes.license.title') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
+    <th><%= t('activerecord.attributes.license.license') %></th>
+    <th><%= t('activerecord.attributes.license.use') %></th>
+    <th><%= t('activerecord.attributes.license.checked_at') %></th>
+    <th><%= t('activerecord.attributes.license.result') %></th>
+    <th><%= t('activerecord.attributes.license.notes') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @products.each do |product| %>
+  <tr>
+    <td><%= product.name %></td>
+    <td><%= product.title %></td>
+    <td><%= product.description %></td>
+    <td><%= product.license.name %></td>
+    <td><%= product.use.name %></td>
+    <td><%= product.checked_at %></td>
+    <td><% if product.result? %><span class="label label-success">OK</span>
+    	<% else %><span class="label label-important">KO</span><% end %></td>
+    <td><%= product.notes %></td>
+    <td><%= link_to '', product, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
+    <td><%= link_to '', edit_product_path(product), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
+    <td><%= link_to '', product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<i class="icon-plus"></i>
+<%= link_to t('actions.new'), new_product_path, :title => t('actions.new'), :alt => t('actions.new') %>
+
+
+
+

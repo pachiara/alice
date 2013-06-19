@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  title: MyString
+  description: MyText
+  license: MyString
+  use: MyString
+  checked_at: 2013-06-18
+  result: false
+  notes: MyText
+
+two:
+  name: MyString
+  title: MyString
+  description: MyText
+  license: MyString
+  use: MyString
+  checked_at: 2013-06-18
+  result: false
+  notes: MyText

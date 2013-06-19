@@ -508,3 +508,25 @@ Decodifica del tipo licenza sulla pagina index delle licenze:
 - modificare view di license_type: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
 - modifica view di license: index.html.erb tipo 
 
+27) Gestione del prodotto
+
+- scaffold: rails generate scaffold product name:string title:string description:text license_id:integer use_id:integer checked_at:date result:boolean notes:text
+- aggiustare migration xxxx_create_products.rb
+- eseguire rake:db migrate per creare la tabella
+- inserire traduzioni su it.yml:      models:  attributes:  flash:
+- inserire validazioni e relazioni associative (belong_to) nel modello 
+- inserire titoli e flash (per create e update) su products_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.product')
+- modificare view di product: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
+- inserire collegamento sulla barra dei menu': _navigation.html.erb 
+
+28) Gestione tabellina uso
+
+- scaffold: rails generate scaffold use name:string description:string
+- aggiustare migration xxxx_create_uses.rb
+- eseguire rake:db migrate per creare la tabella
+- inserire traduzioni su it.yml:      models:  attributes:  flash:
+- inserire validazioni (validates_presence_of, validates_uniqueness_of) e relazioni associative (has_many, belong_to) nel modello 
+- inserire titoli e flash (per create e update) su uses_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.use')
+- modificare view di use: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
+- inserire collegamento sulla barra dei menu': _navigation.html.erb 
+

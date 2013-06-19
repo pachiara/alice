@@ -223,6 +223,10 @@ it:
       categories: Categorie
       license_type: "Tipo Licenza"
       license_types: "Tipologia di Licenze" 
+      product: Prodotto
+      products: Prodotti
+      use: Uso
+      uses: Utilizzi    
     
     attributes:
       license:
@@ -239,6 +243,19 @@ it:
       license_type:
         code:         "Codice"    
         description:  "Descrizione"           
+      product:
+        name:         "Nome Prodotto"
+        version:      "Versione"
+        title:        "Titolo"    
+        description:  "Descrizione"
+        license:      "Licenze"
+        use:          "Uso"           
+        checked_at:   "Data controllo"
+        result:       "Esito"
+        notes:        "Note"
+      use:
+        name:         "Nome"
+        description:  "Descrizione"  
 
   actions:
     actions: "Azioni"
@@ -335,5 +352,23 @@ it:
       destroy:
         notice: "Tipo di licenza: eliminazione avvenuta con successo!"
         alert: "Tipo di licenza: errore durante l'eliminazione!"        
-        
-        
+    product:
+      create:
+        notice: "Prodotto: creazione avvenuta con successo!"
+        alert: "Prodotto: errore durante la creazione!"
+      update:
+        notice: "Prodotto: aggiornamento avvenuto con successo!"
+        alert: "Prodotto: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Prodotto: eliminazione avvenuta con successo!"
+        alert: "Prodotto: errore durante l'eliminazione!"     
+    use:
+      create:
+        notice: "Uso: creazione avvenuta con successo!"
+        alert: "Uso: errore durante la creazione!"
+      update:
+        notice: "Uso: aggiornamento avvenuto con successo!"
+        alert: "Uso: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Uso: eliminazione avvenuta con successo!"
+        alert: "Uso: errore durante l'eliminazione!"        

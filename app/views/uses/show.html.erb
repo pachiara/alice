@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('activerecord.attributes.use.name') %>:</b>
+  <%= @use.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.use.description') %>:</b>
+  <%= @use.description %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_use_path(@use), :class => "btn" %>
+    <%= link_to t('actions.back'), uses_path, :class => "btn" %>
+</div>

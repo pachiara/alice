@@ -1,0 +1,19 @@
+<%= simple_form_for(@product) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs form-horizontal">
+    <%= f.input :name %>
+    <%= f.input :title, :input_html => { :class => "span6" } %>
+    <%= f.input :description, :input_html => { :class => "span7" } %>
+    <%= f.association :license %>
+    <%= f.association :use %>
+    <%= f.input :checked_at %>
+    <%= f.input :result %>
+    <%= f.input :notes, :input_html => { :class => "span7" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+    <%= link_to t('actions.back'), products_path, :class => "btn" %>
+  </div>
+<% end %>

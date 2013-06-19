@@ -1,4 +1,10 @@
 Alice::Application.routes.draw do
+  resources :uses
+
+
+  resources :products
+
+
   resources :license_types
 
   resources :categories

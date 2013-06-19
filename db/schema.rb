@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614150319) do
+ActiveRecord::Schema.define(:version => 20130619102327) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -40,31 +40,50 @@ ActiveRecord::Schema.define(:version => 20130614150319) do
 
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
-  create_table "licenses", :force => true do |t|
-    t.string   "name",         :limit => 15
-    t.string   "description",  :limit => 50
-    t.string   "version",      :limit => 5
-    t.integer  "category_id"
-    t.integer  "type_id",      :limit => 2
-    t.boolean  "flag_osi",                   :default => true
-    t.text     "text_license"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-  end
-
-  add_index "licenses", ["category_id"], :name => "index_licenses_on_category_id"
-  add_index "licenses", ["description"], :name => "index_licenses_on_description"
-  add_index "licenses", ["name", "version"], :name => "index_licenses_on_name_and_version", :unique => true
-  add_index "licenses", ["type_id"], :name => "index_licenses_on_type_id"
-
-  create_table "type_licenses", :force => true do |t|
+  create_table "license_types", :force => true do |t|
     t.string   "code",        :limit => 2
     t.string   "description", :limit => 50
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
 
-  add_index "type_licenses", ["code"], :name => "index_type_licenses_on_code", :unique => true
+  add_index "license_types", ["code"], :name => "index_license_types_on_code", :unique => true
+
+  create_table "licenses", :force => true do |t|
+    t.string   "name",            :limit => 15
+    t.string   "description",     :limit => 50
+    t.string   "version",         :limit => 5
+    t.integer  "category_id"
+    t.integer  "license_type_id"
+    t.boolean  "flag_osi",                      :default => true
+    t.text     "text_license"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
+  end
+
+  add_index "licenses", ["category_id"], :name => "index_licenses_on_category_id"
+  add_index "licenses", ["description"], :name => "index_licenses_on_description"
+  add_index "licenses", ["license_type_id"], :name => "index_licenses_on_type_id"
+  add_index "licenses", ["name", "version"], :name => "index_licenses_on_name_and_version", :unique => true
+
+  create_table "products", :force => true do |t|
+    t.string   "name",        :limit => 15
+    t.string   "version",     :limit => 5
+    t.string   "title",       :limit => 50
+    t.text     "description"
+    t.integer  "license_id"
+    t.integer  "use_id"
+    t.date     "checked_at"
+    t.boolean  "result",                    :default => true
+    t.text     "notes"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "products", ["license_id"], :name => "index_products_on_license_id"
+  add_index "products", ["name", "version"], :name => "index_products_on_name_and_version", :unique => true
+  add_index "products", ["title"], :name => "index_products_on_title"
+  add_index "products", ["use_id"], :name => "index_products_on_use_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -83,5 +102,14 @@ ActiveRecord::Schema.define(:version => 20130614150319) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "uses", :force => true do |t|
+    t.string   "name",        :limit => 5
+    t.string   "description", :limit => 100
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "uses", ["name"], :name => "index_uses_on_name", :unique => true
 
 end
