@@ -15,12 +15,12 @@
 
 <p>
   <b><%= t('activerecord.attributes.product.license') %>:</b>
-  <%= @product.license.name %>
+  <%= unless @product.license.nil?; @product.license.name; end %>
 </p>
 
 <p>
   <b><%= t('activerecord.attributes.product.use') %>:</b>
-  <%= @product.use.name %>
+  <%= unless @product.use.nil?; @product.use.name; end %>
 </p>
 
 <p>

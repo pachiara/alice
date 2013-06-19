@@ -20,7 +20,7 @@
     <td><%= license.description %></td>
     <td><%= license.version %></td>
     <td><%= unless license.license_type.nil?; license.license_type.description; end %></td>
-    <td><%= license.category.name %></td>
+    <td><%= unless license.category.nil?; license.category.name; end %></td>
     <td><% if license.text_license.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= link_to '', license, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
     <td><%= link_to '', edit_license_path(license), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>

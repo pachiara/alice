@@ -20,8 +20,8 @@
     <td><%= product.name %></td>
     <td><%= product.title %></td>
     <td><%= product.description %></td>
-    <td><%= product.license.name %></td>
-    <td><%= product.use.name %></td>
+    <td><%= unless product.license.nil?; product.license.name; end %></td>
+    <td><%= unless product.use.nil?; product.use.name; end %></td>
     <td><%= product.checked_at %></td>
     <td><% if product.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
