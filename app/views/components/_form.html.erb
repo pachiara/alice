@@ -1,4 +1,4 @@
-<%= simple_form_for(@product) do |f| %>
+<%= simple_form_for(@component) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs form-horizontal">
@@ -15,6 +15,6 @@
 
   <div class="form-actions">
     <%= f.button :submit %>
-    <%= link_to t('actions.back'), products_path, :class => "btn" %>
+    <%= link_to t('actions.back'), components_path, :class => "btn" %>
   </div>
 <% end %>

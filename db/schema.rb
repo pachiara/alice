@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619102327) do
+ActiveRecord::Schema.define(:version => 20130621140412) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -39,6 +39,25 @@ ActiveRecord::Schema.define(:version => 20130619102327) do
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
+
+  create_table "components", :force => true do |t|
+    t.string   "name",        :limit => 15
+    t.string   "version",     :limit => 5
+    t.string   "title",       :limit => 50
+    t.text     "description"
+    t.integer  "license_id"
+    t.integer  "use_id"
+    t.date     "checked_at"
+    t.boolean  "result",                    :default => true
+    t.text     "notes"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "components", ["license_id"], :name => "index_components_on_license_id"
+  add_index "components", ["name", "version"], :name => "index_components_on_name_and_version", :unique => true
+  add_index "components", ["title"], :name => "index_components_on_title"
+  add_index "components", ["use_id"], :name => "index_components_on_use_id"
 
   create_table "license_types", :force => true do |t|
     t.string   "code",        :limit => 2

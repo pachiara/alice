@@ -510,7 +510,7 @@ Decodifica del tipo licenza sulla pagina index delle licenze:
 
 27) Gestione del prodotto
 
-- scaffold: rails generate scaffold product name:string title:string description:text license_id:integer use_id:integer checked_at:date result:boolean notes:text
+- scaffold: rails generate scaffold product name:string version:string title:string description:text license_id:integer use_id:integer checked_at:date result:boolean notes:text
 - aggiustare migration xxxx_create_products.rb
 - eseguire rake:db migrate per creare la tabella
 - inserire traduzioni su it.yml:      models:  attributes:  flash:
@@ -529,4 +529,23 @@ Decodifica del tipo licenza sulla pagina index delle licenze:
 - inserire titoli e flash (per create e update) su uses_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.use')
 - modificare view di use: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
 - inserire collegamento sulla barra dei menu': _navigation.html.erb 
+
+29) Gestione del componente
+
+Group:	org.apache.geronimo.framework
+Artifact:	geronimo-security
+Version:	2.1
+
+- scaffold: rails generate scaffold component name:string version:string title:string description:text license_id:integer use_id:integer checked_at:date result:boolean notes:text
+- aggiustare migration xxxx_create_component.rb
+- eseguire rake:db migrate per creare la tabella
+- inserire traduzioni su it.yml:      models:  attributes:  flash:
+- inserire validazioni e relazioni associative (has_and_belongs_to_many :product) nel modello component e (has_and_belongs_to_many :component) nel product 
+- inserire titoli e flash (per create e update) su components_controller.rb es.: @title = t('actions.edit') + " " + t('activerecord.models.component')
+- modificare view di component: index.html.erb new.html.erb show.html.erb edit.html.erb _form.html.erb
+- inserire collegamento sulla barra dei menu': _navigation.html.erb 
+
+30) Gestione della distinta base 
+relazione componente prodotti e prodotto componenti
+
 

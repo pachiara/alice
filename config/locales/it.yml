@@ -34,6 +34,10 @@ it:
       default: ! '%d-%m-%Y'
       long: ! '%d %B %Y'
       short: ! '%d %b'
+    order:
+      - :day
+      - :month
+      - :year  
     month_names:
     - 
     - gennaio
@@ -226,7 +230,9 @@ it:
       product: Prodotto
       products: Prodotti
       use: Uso
-      uses: Utilizzi    
+      uses: Utilizzi
+      component: Componente
+      components: Componenti   
     
     attributes:
       license:
@@ -248,7 +254,7 @@ it:
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"
-        license:      "Licenze"
+        license:      "Licenza"
         use:          "Uso"           
         checked_at:   "Data controllo"
         result:       "Esito"
@@ -256,6 +262,16 @@ it:
       use:
         name:         "Nome"
         description:  "Descrizione"  
+      component:
+        name:         "Nome Componente"
+        version:      "Versione"
+        title:        "Titolo"    
+        description:  "Descrizione"
+        license:      "Licenza"
+        use:          "Uso"           
+        checked_at:   "Data controllo"
+        result:       "Esito"
+        notes:        "Note"
 
   actions:
     actions: "Azioni"
@@ -372,3 +388,13 @@ it:
       destroy:
         notice: "Uso: eliminazione avvenuta con successo!"
         alert: "Uso: errore durante l'eliminazione!"        
+    component:
+      create:
+        notice: "Componente: creazione avvenuta con successo!"
+        alert: "Componente: errore durante la creazione!"
+      update:
+        notice: "Componente: aggiornamento avvenuto con successo!"
+        alert: "Componente: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Componente: eliminazione avvenuta con successo!"
+        alert: "Componente: errore durante l'eliminazione!"     

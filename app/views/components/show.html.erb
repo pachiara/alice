@@ -1,0 +1,50 @@
+<p>
+  <b><%= t('activerecord.attributes.component.name') %>:</b>
+  <%= @component.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.version') %>:</b>
+  <%= @component.version %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.title') %>:</b>
+  <%= @component.title %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.description') %>:</b>
+  <%= @component.description %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.license') %>:</b>
+  <%= unless @component.license.nil?; @component.license.name; end %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.use') %>:</b>
+  <%= unless @component.use.nil?; @component.use.name; end %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.checked_at') %>:</b>
+  <%= l @component.checked_at %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.result') %>:</b>
+  <%= @component.result %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.component.notes') %>:</b>
+  <%= @component.notes %>
+</p>
+
+<div class="form-actions">
+    <%= link_to t('actions.edit'), edit_component_path(@component), :class => "btn" %>
+    <%= link_to t('actions.back'), components_path, :class => "btn" %>
+</div>
+

@@ -4,6 +4,11 @@
 </p>
 
 <p>
+  <b><%= t('activerecord.attributes.product.version') %>:</b>
+  <%= @product.version %>
+</p>
+
+<p>
   <b><%= t('activerecord.attributes.product.title') %>:</b>
   <%= @product.title %>
 </p>
@@ -25,7 +30,7 @@
 
 <p>
   <b><%= t('activerecord.attributes.product.checked_at') %>:</b>
-  <%= @product.checked_at %>
+  <%= l @product.checked_at %>
 </p>
 
 <p>

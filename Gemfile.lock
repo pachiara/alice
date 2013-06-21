@@ -33,6 +33,7 @@ GEM
     bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
     builder (3.0.4)
+    choice (0.1.6)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -81,6 +82,11 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails-erd (1.1.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      choice (~> 0.1.6)
+      ruby-graphviz (~> 1.0.4)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -91,6 +97,7 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    ruby-graphviz (1.0.9)
     ruleby (0.8)
     sass (3.2.8)
     sass-rails (3.2.6)
@@ -134,6 +141,7 @@ DEPENDENCIES
   jquery-rails
   mysql2
   rails (= 3.2.13)
+  rails-erd
   ruleby
   sass-rails (~> 3.2.3)
   simple_form

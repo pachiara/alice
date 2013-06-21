@@ -29,6 +29,17 @@ end
 
 gem 'jquery-rails'
 
+# generazione diagrammi di documentazione
+#
+#  gem "rails-erd"
+#  rake erd
+#
+
+group :development do
+  gem "rails-erd"
+end
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

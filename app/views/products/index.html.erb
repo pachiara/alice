@@ -2,14 +2,15 @@
 
 <table class="table table-striped">
   <tr>
-    <th><%= t('activerecord.attributes.license.name') %></th>
-    <th><%= t('activerecord.attributes.license.title') %></th>
-    <th><%= t('activerecord.attributes.license.description') %></th>
-    <th><%= t('activerecord.attributes.license.license') %></th>
-    <th><%= t('activerecord.attributes.license.use') %></th>
-    <th><%= t('activerecord.attributes.license.checked_at') %></th>
-    <th><%= t('activerecord.attributes.license.result') %></th>
-    <th><%= t('activerecord.attributes.license.notes') %></th>
+    <th><%= t('activerecord.attributes.product.name') %></th>
+    <th><%= t('activerecord.attributes.product.version') %></th>
+    <th><%= t('activerecord.attributes.product.title') %></th>
+    <th><%= t('activerecord.attributes.product.description') %></th>
+    <th><%= t('activerecord.attributes.product.license') %></th>
+    <th><%= t('activerecord.attributes.product.use') %></th>
+    <th><%= t('activerecord.attributes.product.checked_at') %></th>
+    <th><%= t('activerecord.attributes.product.result') %></th>
+    <th><%= t('activerecord.attributes.product.notes') %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,11 +19,12 @@
 <% @products.each do |product| %>
   <tr>
     <td><%= product.name %></td>
+    <td><%= product.version %></td>
     <td><%= product.title %></td>
     <td><% if product.description.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= unless product.license.nil?; product.license.name; end %></td>
     <td><%= unless product.use.nil?; product.use.description; end %></td>
-    <td><%= product.checked_at %></td>
+    <td><%= l product.checked_at %></td>
     <td><% if product.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
     <td><% if product.notes.size > 0 %><i class="icon-ok"></i><% end %></td>
