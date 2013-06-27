@@ -252,7 +252,7 @@ it:
         code:         "Codice"    
         description:  "Descrizione"           
       product:
-        name:         "Nome Prodotto"
+        name:         "Nome"
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"
@@ -265,7 +265,7 @@ it:
         name:         "Nome"
         description:  "Descrizione"  
       component:
-        name:         "Nome Componente"
+        name:         "Nome"
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"

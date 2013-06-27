@@ -10,7 +10,6 @@
     <th><%= t('activerecord.attributes.component.use') %></th>
     <th><%= t('activerecord.attributes.component.checked_at') %></th>
     <th><%= t('activerecord.attributes.component.result') %></th>
-    <th><%= t('activerecord.attributes.component.notes') %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -27,7 +26,6 @@
     <td><%= l component.checked_at %></td>
     <td><% if component.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
-    <td><% if component.notes.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= link_to '', component, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
     <td><%= link_to '', edit_component_path(component), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
     <td><%= link_to '', component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>    

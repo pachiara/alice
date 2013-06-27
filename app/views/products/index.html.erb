@@ -10,7 +10,6 @@
     <th><%= t('activerecord.attributes.product.use') %></th>
     <th><%= t('activerecord.attributes.product.checked_at') %></th>
     <th><%= t('activerecord.attributes.product.result') %></th>
-    <th><%= t('activerecord.attributes.product.notes') %></th>
     <th></th>
     <th></th>
     <th></th>
@@ -27,7 +26,6 @@
     <td><%= l product.checked_at %></td>
     <td><% if product.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
-    <td><% if product.notes.size > 0 %><i class="icon-ok"></i><% end %></td>
     <td><%= link_to '', product, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
     <td><%= link_to '', edit_product_path(product), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
     <td><%= link_to '', product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
