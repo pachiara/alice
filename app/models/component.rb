@@ -7,6 +7,6 @@ class Component < ActiveRecord::Base
   belongs_to :use
   belongs_to :license
     
-  has_and_belongs_to_many :product
+  has_and_belongs_to_many :products
   
 end

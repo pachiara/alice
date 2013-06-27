@@ -548,4 +548,38 @@ Version:	2.1
 30) Gestione della distinta base 
 relazione componente prodotti e prodotto componenti
 
+rails generate migration CreateComponentsProducts
+
+class CreateComponentsProducts < ActiveRecord::Migration
+  def up
+    create_table :components_products, :id => false do |t|
+      t.integer :product_id, :null => false
+      t.integer :component_id, :null => false
+    end  
+    add_index :components_products, [:product_id, :component_id], :unique => true
+    add_index :components_products, [:component_id, :product_id], :unique => true    
+  end
+
+  def down
+    remove_index :components_products, :column => [:product_id, :component_id]
+    remove_index :components_products, :column => [:component_id, :product_id]    
+    drop_table :components_products
+  end
+end
+
+rake db:migrate
+
+31) videata dei legami
+
+rails g controller ties index
+
+- inserire traduzioni su it.yml:      models:
+- inserire titoli su ties_controller.rb es.: @title = t('actions.listing') + " " + t('activerecord.models.ties')
+- modificare view di use: index.html.erb
+- inserire collegamento sulla barra dei menu': _navigation.html.erb 
+
+- action: select in routes.rb  get "ties/select"
+- link to ties_select_path(product)
+- view select.html.rb
+
 

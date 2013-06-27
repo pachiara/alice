@@ -233,6 +233,8 @@ it:
       uses: Utilizzi
       component: Componente
       components: Componenti   
+      tie: Legame
+      ties: Legami   
     
     attributes:
       license:
