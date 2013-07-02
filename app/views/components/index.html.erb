@@ -11,8 +11,6 @@
     <th><%= t('activerecord.attributes.component.checked_at') %></th>
     <th><%= t('activerecord.attributes.component.result') %></th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @components.each do |component| %>
@@ -26,13 +24,18 @@
     <td><%= l component.checked_at %></td>
     <td><% if component.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
-    <td><%= link_to '', component, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
-    <td><%= link_to '', edit_component_path(component), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
-    <td><%= link_to '', component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>    
+    <td>
+      <div class="btn-group">
+    	<%= link_to raw('<i class="icon-eye-open"></i>'), component, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<i class="icon-pencil"></i>'), edit_component_path(component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<i class="icon-trash"></i>'), component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      </div>
+    </td>	
   </tr>
 <% end %>
 </table>
 
 <br />
-<i class="icon-plus"></i>
-<%= link_to t('actions.new'), new_component_path, :title => t('actions.new'), :alt => t('actions.new') %>
+<%= link_to new_component_path, :class => "btn", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <i class="icon-plus"></i> <%= t('actions.new') %>
+<% end %>
