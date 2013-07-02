@@ -582,4 +582,23 @@ rails g controller ties index
 - link to ties_select_path(product)
 - view select.html.rb
 
+32) ricerca
+- in it.yml 
+  actions:
+    search: "Ricerca"
 
+- layout riusabile _search_product.erb _search_component.erb
+incluso in index.html.erb e select.html.erb
+
+- model product.rb e component.rb:
+
+  def self.search(name, page)
+   conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
+   paginate :order => 'created_at ASC', :per_page => 12, :page => page, :conditions => conditions
+  end
+
+- ties_controller.rb in method index :
+ 
+    @products = Product.search(params[:name], params[:page])
+    @components = Component.search(params[:name], params[:page])
+    

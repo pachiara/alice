@@ -2,8 +2,10 @@ class TiesController < ApplicationController
   def index
     
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
-    @products = Product.order('created_at ASC').page(params[:page]).per_page(12)
-    @components = Component.order('created_at ASC').page(params[:page]).per_page(12)
+#    @products = Product.order('created_at ASC').page(params[:page]).per_page(12)
+#    @components = Component.order('created_at ASC').page(params[:page]).per_page(12)
+    @products = Product.search(params[:product_name], params[:page])
+    @components = Component.search(params[:component_name], params[:page])
     
     respond_to do |format|
       format.html # index.html.erb
@@ -19,13 +21,13 @@ class TiesController < ApplicationController
     if !params[:product_id].nil?
       @product = Product.find(params[:product_id])
       @components = @product.components
-      @products = Product.order('created_at ASC').page(params[:page]).per_page(12)
+      @products = Product.order('id ASC').page(params[:page]).per_page(12)
     end
 
     if !params[:component_id].nil?  
       @component = Component.find(params[:component_id])
       @products = @component.products
-      @components = Component.order('created_at ASC').page(params[:page]).per_page(12)
+      @components = Component.order('id ASC').page(params[:page]).per_page(12)
     end
 
     respond_to do |format|
