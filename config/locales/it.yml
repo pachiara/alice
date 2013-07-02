@@ -302,6 +302,7 @@ it:
     management: "Gestione"  
     view_details: "Vedere i dettagli »"
     download: "Scarica"
+    save: "Salva"
   
   will_paginate:
     next_label: "Sucessivi"
