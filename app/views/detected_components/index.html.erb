@@ -1,0 +1,36 @@
+<h4><%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %></h4>
+
+<%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.detected_component.name') %></th>
+    <th><%= t('activerecord.attributes.detected_component.version') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
+    <th></th>
+  </tr>
+
+<% @detected_components.each do |detected_component| %>
+  <tr>
+    <td><%= detected_component.name %></td>
+    <td><%= detected_component.version %></td>
+    <td><%= detected_component.license_name %></td>
+    <td><%= detected_component.license_version %></td>
+    
+    <td><div class="btn-group">
+      <%= link_to raw('<i class="icon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <%= link_to raw('<i class="icon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+  </td>
+    
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to new_detected_component_path(:detection_id => params[:detection_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn" do %>
+  <i class="icon-plus"></i> <%= t('actions.new') %>
+<% end %>
+ <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn" do %>
+   <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+<% end %>

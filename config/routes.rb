@@ -1,4 +1,10 @@
 Alice::Application.routes.draw do
+  resources :detected_components
+
+
+  resources :detections
+
+
   resources :components
 
 

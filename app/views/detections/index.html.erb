@@ -1,0 +1,39 @@
+<h4><%= t('activerecord.attributes.product.name') %>: <%= Product.find(params[:product_id]).name %></h4>
+
+<%= will_paginate @detections, :renderer => BootstrapPagination::Rails %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= t('activerecord.attributes.detection.name') %></th>
+    <th><%= t('activerecord.attributes.detection.created_at') %></th>
+    <th><%= t('activerecord.attributes.detection.xml_file_name') %></th>
+    <th><%= t('activerecord.attributes.detection.xml_updated_at') %></th>
+    <th></th>
+  </tr>
+
+<% @detections.each do |detection| %>
+  <tr>
+    <td><%= detection.name %></td>
+    <td><%= detection.created_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+    <td><%= detection.xml_file_name %></td>
+    <td><%= detection.xml_updated_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+    <td><div class="btn-group">
+
+      <%= link_to raw('<i class="icon-pencil"></i>'), edit_detection_path(detection), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <%= link_to raw('<i class="icon-list-alt"></i>'), detected_components_path(:detection_id => detection.id), :class => "btn", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
+      <%= link_to raw('<i class="icon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    </td>
+  </tr>
+  
+<% end %>
+</table>
+
+<br />
+
+<%= link_to new_detection_path(:product_id => params[:product_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn" do %>
+  <i class="icon-plus"></i> <%= t('actions.new') %>
+<% end %>
+ <%= link_to products_path, :class => "btn" do %>
+   <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+<% end %>
+
