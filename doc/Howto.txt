@@ -649,3 +649,13 @@ index.html.erb
   
 gestione manuale dei legami
     
+- routes.rb:
+
+ resources :products do
+    get 'ties/select'
+    get 'ties/edit'
+ end
+  
+- ties_controller.rb
+
+      
