@@ -11,6 +11,7 @@ Alice::Application.routes.draw do
 
   resources :products do
     get 'ties/select'
+    get 'ties/edit'
   end
     
   resources :license_types

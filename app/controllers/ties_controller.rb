@@ -36,7 +36,16 @@ class TiesController < ApplicationController
     end
   end
   
-  
-  
+  def edit
+    @title = t('actions.edit') + " " + t('activerecord.models.tie')
+    
+    @product = Product.find(params[:product_id])
+    @components = @product.components
+      
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @product }
+    end    
+  end  
   
 end

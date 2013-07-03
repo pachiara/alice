@@ -602,9 +602,8 @@ incluso in index.html.erb e select.html.erb
     @products = Product.search(params[:name], params[:page])
     @components = Component.search(params[:name], params[:page])
 
-33) aggiorna legami
 
-34) icone nei bottoni
+33) icone nei bottoni
 
 _form.html.erb
 .....
@@ -646,7 +645,7 @@ index.html.erb
   <% end %>
 ... 
 
- 
+34) aggiorna legami 
   
-
+gestione manuale dei legami
     

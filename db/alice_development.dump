@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.68, for apple-darwin11.4.2 (i386)
+-- MySQL dump 10.13  Distrib 5.1.70, for apple-darwin11.4.2 (i386)
 --
 -- Host: localhost    Database: alice_development
 -- ------------------------------------------------------
--- Server version	5.1.68
+-- Server version	5.1.70
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -77,6 +77,69 @@ LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` VALUES (1,'popolari','Licenze che sono popolari e ampiamente utilizzate ','2013-05-13 09:29:16','2013-05-13 09:29:16'),(2,'usi speciali','Licenze per usi speciali','2013-05-13 09:50:36','2013-05-13 09:50:36'),(3,'varie','Altro / Licenze varie','2013-05-13 09:59:06','2013-05-13 09:59:06'),(4,'ridondanti','Licenze che sono ridondanti con le licenze più pop','2013-05-13 10:02:38','2013-05-13 10:02:38'),(5,'non riusabili','Licenze non riutilizzabili','2013-05-13 10:18:52','2013-05-28 12:50:58'),(6,'sostituite','Licenze sostituite','2013-05-13 10:39:46','2013-05-13 10:39:46'),(7,'ritirate','Licenze che sono state volontariamente ritirate','2013-05-13 10:57:47','2013-05-13 10:57:47'),(8,'senza categoria','Licenze senza categoria','2013-05-13 10:59:40','2013-05-13 10:59:40');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `components`
+--
+
+DROP TABLE IF EXISTS `components`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `components` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `version` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `license_id` int(11) DEFAULT NULL,
+  `use_id` int(11) DEFAULT NULL,
+  `checked_at` date DEFAULT NULL,
+  `result` tinyint(1) DEFAULT '1',
+  `notes` text COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_components_on_name_and_version` (`name`,`version`),
+  KEY `index_components_on_license_id` (`license_id`),
+  KEY `index_components_on_use_id` (`use_id`),
+  KEY `index_components_on_title` (`title`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `components`
+--
+
+LOCK TABLES `components` WRITE;
+/*!40000 ALTER TABLE `components` DISABLE KEYS */;
+INSERT INTO `components` VALUES (1,'hibernate-core','4.2.2','A Hibernate Core Module','A module of the Hibernate Core project',6,5,'2013-06-26',1,'','2013-06-26 15:32:04','2013-06-26 15:32:04'),(2,'iText','2.1.7','A JAVA-PDF library','iText is a library that allows developers to extend the capabilities of their web server (and other JAVA) applications with dynamic PDF document generation.',6,5,'2013-06-26',1,'','2013-06-26 20:29:20','2013-06-26 20:29:35'),(3,'spring-mvc','4.2.2','Spring MVC','Framework per lo sviluppo del front-end',NULL,5,'2013-07-02',1,'','2013-07-02 13:46:47','2013-07-02 13:46:47');
+/*!40000 ALTER TABLE `components` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `components_products`
+--
+
+DROP TABLE IF EXISTS `components_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `components_products` (
+  `product_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  UNIQUE KEY `index_components_products_on_product_id_and_component_id` (`product_id`,`component_id`),
+  UNIQUE KEY `index_components_products_on_component_id_and_product_id` (`component_id`,`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `components_products`
+--
+
+LOCK TABLES `components_products` WRITE;
+/*!40000 ALTER TABLE `components_products` DISABLE KEYS */;
+INSERT INTO `components_products` VALUES (1,1);
+/*!40000 ALTER TABLE `components_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -168,7 +231,7 @@ CREATE TABLE `products` (
   KEY `index_products_on_license_id` (`license_id`),
   KEY `index_products_on_use_id` (`use_id`),
   KEY `index_products_on_title` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +240,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'veteweb',NULL,'Servizio di front-end per la veterinaria','Prodotto per la gestione della veterinaria',1,1,'2013-06-19',0,'','2013-06-19 14:29:58','2013-06-19 19:29:12');
+INSERT INTO `products` VALUES (1,'vete-web','5.0','Servizio di front-end per la veterinaria','Prodotto per la gestione della veterinaria',NULL,1,'2013-06-19',0,'','2013-06-19 14:29:58','2013-06-27 19:47:30'),(2,'fse','2.0','Fascicolo sanitario elettronico','',NULL,1,'2013-06-27',1,'','2013-06-27 19:47:01','2013-07-02 13:19:40'),(3,'port-assistenza','1.0','Portale assistenza dei tributi','',NULL,2,'2013-06-27',1,'','2013-06-27 19:51:38','2013-06-27 19:54:32');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +263,7 @@ CREATE TABLE `schema_migrations` (
 
 LOCK TABLES `schema_migrations` WRITE;
 /*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
-INSERT INTO `schema_migrations` VALUES ('20130506102959'),('20130506103603'),('20130506105520'),('20130513081602'),('20130614132001'),('20130614150319'),('20130618154723'),('20130619102327');
+INSERT INTO `schema_migrations` VALUES ('20130506102959'),('20130506103603'),('20130506105520'),('20130513081602'),('20130614132001'),('20130614150319'),('20130618154723'),('20130619102327'),('20130621140412'),('20130625124230');
 /*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,4 +341,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-19 23:42:10
+-- Dump completed on 2013-07-03 10:16:45

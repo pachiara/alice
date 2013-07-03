@@ -8,9 +8,7 @@
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.products') %></li>
   <li class="divider"></li>
-  <% @products.each do |product| %>
-    <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>><%= link_to product.name, product_ties_select_path(product) %></li>
-  <% end %>
+  <li class="active"><a href="#"><%= @product.name %></li></a>
 </ul>
 </div><!--/.well -->
 </div><!--/span-->
@@ -22,7 +20,13 @@
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.components') %></li>
   <li class="divider"></li>
-  <% @components.each do |component| %> 
+  <% @components.each do |component| %>
+<!--    <li><label class="checkbox inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1">
+    	<%= link_to component.name, component_ties_select_path(component) %>
+      </label>
+    </li>
+-->    
     <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>><%= link_to component.name, component_ties_select_path(component) %></li>
   <% end %>
 </div><!--/.well -->
@@ -32,8 +36,9 @@
 </div>
 
 <br />
-<% if !@product.nil? %>
-<%= link_to product_ties_edit_path, :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') do %>
-  <i class="icon-pencil"></i> <%= t('actions.edit') %>
-<% end %>
-<% end %>
+<%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+<% end %>  
+    
+    
+
