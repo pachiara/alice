@@ -1,19 +1,23 @@
 Alice::Application.routes.draw do
+  get "ties/index"
+#  get "ties/select"
   resources :detected_components
-
-
   resources :detections
 
 
-  resources :components
 
+
+  resources :components do
+    get 'ties/select'
+  end
 
   resources :uses
 
-
-  resources :products
-
-
+  resources :products do
+    get 'ties/select'
+    get 'ties/edit'
+  end
+    
   resources :license_types
 
   resources :categories

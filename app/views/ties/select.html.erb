@@ -1,0 +1,39 @@
+<div class="container-fluid">
+<div class="row-fluid">
+
+<div class="span6">
+	<%= render :partial => "search_product" %>
+<div class="well sidebar-nav">
+<!--Product content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.products') %></li>
+  <li class="divider"></li>
+  <% @products.each do |product| %>
+    <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>><%= link_to product.name, product_ties_select_path(product) %></li>
+  <% end %>
+</ul>
+</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span6">
+	<%= render :partial => "search_component" %>
+<div class="well sidebar-nav">
+<!--Component content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.components') %></li>
+  <li class="divider"></li>
+  <% @components.each do |component| %> 
+    <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>><%= link_to component.name, component_ties_select_path(component) %></li>
+  <% end %>
+</div><!--/.well -->
+</div><!--/span-->
+
+</div>
+</div>
+
+<br />
+<% if !@product.nil? %>
+<%= link_to product_ties_edit_path, :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') do %>
+  <i class="icon-pencil"></i> <%= t('actions.edit') %>
+<% end %>
+<% end %>

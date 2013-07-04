@@ -6,13 +6,9 @@
     <th><%= t('activerecord.attributes.product.version') %></th>
     <th><%= t('activerecord.attributes.product.title') %></th>
     <th><%= t('activerecord.attributes.product.description') %></th>
-    <th><%= t('activerecord.attributes.product.license') %></th>
     <th><%= t('activerecord.attributes.product.use') %></th>
     <th><%= t('activerecord.attributes.product.checked_at') %></th>
     <th><%= t('activerecord.attributes.product.result') %></th>
-    <th><%= t('activerecord.attributes.product.notes') %></th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
@@ -22,24 +18,25 @@
     <td><%= product.version %></td>
     <td><%= product.title %></td>
     <td><% if product.description.size > 0 %><i class="icon-ok"></i><% end %></td>
-    <td><%= unless product.license.nil?; product.license.name; end %></td>
     <td><%= unless product.use.nil?; product.use.description; end %></td>
     <td><%= l product.checked_at %></td>
     <td><% if product.result? %><span class="label label-success">OK</span>
     	<% else %><span class="label label-important">KO</span><% end %></td>
-    <td><% if product.notes.size > 0 %><i class="icon-ok"></i><% end %></td>
-    <td><%= link_to '', product, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
-    <td><%= link_to '', edit_product_path(product), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
-    <td><%= link_to '', detections_path(:product_id => product.id), :class => "icon-search", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %></td>
-    <td><%= link_to '', product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+    <td>
+      <div class="btn-group">
+    	<%= link_to raw('<i class="icon-eye-open"></i>'), product, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>
+        <%= link_to raw('<i class="icon-search"></i>'), detections_path(:product_id => product.id), :class => "btn", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
+    	<%= link_to raw('<i class="icon-trash"></i>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      </div>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
-<i class="icon-plus"></i>
-<%= link_to t('actions.new'), new_product_path, :title => t('actions.new'), :alt => t('actions.new') %>
-
+<%= link_to new_product_path, :class => "btn", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <i class="icon-plus"></i> <%= t('actions.new') %>
+<% end %>
 
 
 

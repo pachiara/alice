@@ -13,8 +13,13 @@
     <%= f.input :notes, :input_html => { :class => "span7" } %>
   </div>
 
+  <br />
   <div class="form-actions">
-    <%= f.button :submit %>
-    <%= link_to t('actions.back'), components_path, :class => "btn" %>
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+    <% end %>
+    <%= link_to components_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <% end %> 
   </div>
 <% end %>

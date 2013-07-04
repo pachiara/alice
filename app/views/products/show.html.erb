@@ -43,7 +43,12 @@
   <%= @product.notes %>
 </p>
 
+<br />
 <div class="form-actions">
-    <%= link_to t('actions.edit'), edit_product_path(@product), :class => "btn" %>
-    <%= link_to t('actions.back'), products_path, :class => "btn" %>
+    <%= link_to edit_product_path(@product), :class => "btn" do %>
+      <i class="icon-pencil"></i> <%= t('actions.edit') %>      
+    <% end %>    
+    <%= link_to products_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <% end %>    
 </div>

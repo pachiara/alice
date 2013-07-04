@@ -237,6 +237,8 @@ it:
       detections: Rilevamenti
       detected_component: "Componente rilevato"
       detected_components: "Componenti rilevati"
+      tie: Legame
+      ties: Legami 
     
     attributes:
       license:
@@ -254,7 +256,7 @@ it:
         code:         "Codice"    
         description:  "Descrizione"           
       product:
-        name:         "Nome Prodotto"
+        name:         "Nome"
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"
@@ -267,7 +269,7 @@ it:
         name:         "Nome"
         description:  "Descrizione"  
       component:
-        name:         "Nome Componente"
+        name:         "Nome"
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"
@@ -351,7 +353,7 @@ it:
       text: 'richiesto'
       mark: '*'
     error_notification: 
-      default_message: "Si prega di rivedere i problemi segnalati di seguito:"        
+      default_message: "Correggere i problemi segnalati prima di procedere."        
 
  
   flash:

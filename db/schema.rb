@@ -72,6 +72,16 @@ ActiveRecord::Schema.define(:version => 20130627132908) do
   end
 
   add_index "detected_components", ["detection_id"], :name => "index_detected_components_on_detection_id"
+  
+    create_table "components_products", :id => false, :force => true do |t|
+    t.integer "product_id",   :null => false
+    t.integer "component_id", :null => false
+  end
+
+  add_index "components_products", ["component_id", "product_id"], :name => "index_components_products_on_component_id_and_product_id", :unique => true
+  add_index "components_products", ["product_id", "component_id"], :name => "index_components_products_on_product_id_and_component_id", :unique => true
+
+  
 
   create_table "detections", :force => true do |t|
     t.string   "name"

@@ -1,0 +1,44 @@
+<div class="container-fluid">
+<div class="row-fluid">
+
+<div class="span6">
+	<%= render :partial => "search_product" %>
+<div class="well sidebar-nav">
+<!--Product content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.products') %></li>
+  <li class="divider"></li>
+  <li class="active"><a href="#"><%= @product.name %></li></a>
+</ul>
+</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span6">
+	<%= render :partial => "search_component" %>
+<div class="well sidebar-nav">
+<!--Component content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.components') %></li>
+  <li class="divider"></li>
+  <% @components.each do |component| %>
+<!--    <li><label class="checkbox inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1">
+    	<%= link_to component.name, component_ties_select_path(component) %>
+      </label>
+    </li>
+-->    
+    <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>><%= link_to component.name, component_ties_select_path(component) %></li>
+  <% end %>
+</div><!--/.well -->
+</div><!--/span-->
+
+</div>
+</div>
+
+<br />
+<%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+<% end %>  
+    
+    
+

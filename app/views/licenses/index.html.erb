@@ -9,9 +9,7 @@
     <th><%= t('activerecord.attributes.license.category') %></th>
     <th><%= t('activerecord.attributes.license.text_license') %></th>
     <th></th>
-    <th></th>
-    <th></th>
-  </tr>  
+  </tr>    
 
 <% @licenses.each do |license| %>
 
@@ -22,13 +20,20 @@
     <td><%= unless license.license_type.nil?; license.license_type.description; end %></td>
     <td><%= unless license.category.nil?; license.category.name; end %></td>
     <td><% if license.text_license.size > 0 %><i class="icon-ok"></i><% end %></td>
-    <td><%= link_to '', license, :class => "icon-eye-open", :title => t('actions.show'), :alt => t('actions.show') %></td>
-    <td><%= link_to '', edit_license_path(license), :class => "icon-pencil", :title => t('actions.edit'), :alt => t('actions.edit') %></td>
-    <td><%= link_to '', license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "icon-trash", :title => t('actions.destroy'), :alt => t('actions.destroy') %></td>
+    <td>
+      <div class="btn-group">
+    	<%= link_to raw('<i class="icon-eye-open"></i>'), license, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<i class="icon-pencil"></i>'), edit_license_path(license), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<i class="icon-trash"></i>'), license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      </div>
+    </td>
+
   </tr>
 <% end %>
 </table>
 
 <br />
-<i class="icon-plus"></i>
-<%= link_to t('actions.new'), new_license_path, :title => t('actions.new'), :alt => t('actions.new') %>
+<%= link_to new_license_path, :class => "btn", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <i class="icon-plus"></i> <%= t('actions.new') %>
+<% end %>
+
