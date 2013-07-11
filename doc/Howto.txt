@@ -650,12 +650,89 @@ index.html.erb
 gestione manuale dei legami
     
 - routes.rb:
+  get "ties/index"
 
+  resources :components do
+    get 'ties/select'
+  end
+  
  resources :products do
     get 'ties/select'
     get 'ties/edit'
+    post 'ties/edit'
  end
+              ties_index  GET    /ties/index(.:format)                           ties#index
+    component_ties_select GET    /components/:component_id/ties/select(.:format) ties#select
+    product_ties_select   GET    /products/:product_id/ties/select(.:format)     ties#select
+      product_ties_edit   GET    /products/:product_id/ties/edit(.:format)       ties#edit
+                          POST   /products/:product_id/ties/edit(.:format)       ties#edit
   
 - ties_controller.rb
 
-      
+  def edit
+    @title = t('actions.edit') + " " + t('activerecord.models.tie')
+    
+    @product = Product.find(params[:product_id])
+    @components_ties = @product.components
+    @components = Component.search(params[:component_name], params[:page])
+
+    if !params[:component_del].nil?
+      @product.del_relation(params[:component_del])
+    end
+    if !params[:component_add].nil?
+      @product.add_relation(params[:component_add])
+    end
+         
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @product }
+    end    
+  end    
+  
+- edit.html.erb
+
+<%= form_tag product_ties_edit_path, :method => 'post' do |f| %>	
+....
+  <% @components.each do |component| %>
+    <li>
+      <label class="checkbox inline">
+      <%= check_box_tag "component_add[]", component.id, false, :multiple => "true" %>
+        <%= component.name+" - Vers. "+component.version %>
+     </label>  
+    </li>
+  <% end %>
+....
+  <% @components_ties.each do |component_ties| %>
+    <li>
+      <label class="checkbox inline">
+      <%= check_box_tag "component_del[]", component_ties.id, false, :multiple => "true" %>
+        <%= component_ties.name+" - Vers. "+component_ties.version %>
+     </label>  
+    </li>
+  <% end %>  
+....
+<%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
+  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+<% end %>
+
+- product.rb
+
+  def add_relation(component_add = [])
+    component_add.each do |component_id|
+      component = Component.find(component_id)
+      unless self.components.include?(component)
+        components<<component
+      end
+    end
+  end
+
+  def del_relation(component_del = [])
+   component_del.each do |component_id|
+      component = Component.find(component_id)
+      if self.components.include?(component)
+        components.delete(component)
+      end  
+    end    
+  end
+  
+          
