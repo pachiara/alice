@@ -26,6 +26,7 @@
       <div class="btn-group">
     	<%= link_to raw('<i class="icon-eye-open"></i>'), product, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>
     	<%= link_to raw('<i class="icon-pencil"></i>'), edit_product_path(product), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+        <%= link_to raw('<i class="icon-search"></i>'), detections_path(:product_id => product.id), :class => "btn", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
     	<%= link_to raw('<i class="icon-trash"></i>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>

@@ -232,9 +232,13 @@ it:
       use: Uso
       uses: Utilizzi
       component: Componente
-      components: Componenti   
+      components: Componenti
+      detection: Rilevamento
+      detections: Rilevamenti
+      detected_component: "Componente rilevato"
+      detected_components: "Componenti rilevati"
       tie: Legame
-      ties: Legami   
+      ties: Legami 
     
     attributes:
       license:
@@ -274,6 +278,17 @@ it:
         checked_at:   "Data controllo"
         result:       "Esito"
         notes:        "Note"
+      detection:
+        name:         "Nome Rilevamento"
+        created_at:   "Data rilevamento"
+        xml_file_name: "Nome file xml"
+        xml_updated_at: "Data file xml"
+      detected_component:
+        name:         "Nome"
+        version:      "Versione"
+        license_name: "Licenza"
+        license_version: "Versione licenza"
+        
 
   actions:
     actions: "Azioni"
@@ -303,6 +318,7 @@ it:
     view_details: "Vedere i dettagli »"
     download: "Scarica"
     save: "Salva"
+
   
   will_paginate:
     next_label: "Sucessivi"
@@ -400,4 +416,24 @@ it:
         alert: "Componente: errore durante l'aggiornamento!"
       destroy:
         notice: "Componente: eliminazione avvenuta con successo!"
-        alert: "Componente: errore durante l'eliminazione!"     
+        alert: "Componente: errore durante l'eliminazione!"
+    detection:
+      create:
+        notice: "Rilevamento: creazione avvenuta con successo!"
+        alert: "Rilevamento: errore durante la creazione!"
+      update:
+        notice: "Rilevamento: aggiornamento avvenuto con successo!"
+        alert: "Rilevamento: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Rilevamento: eliminazione avvenuta con successo!"
+        alert: "Rilevamento: errore durante l'eliminazione!"
+    detected_component:
+      create:
+        notice: "Componente rilevato: creazione avvenuta con successo!"
+        alert: "Componente rilevato: errore durante la creazione!"
+      update:
+        notice: "Componente rilevato: aggiornamento avvenuto con successo!"
+        alert: "Componente rilevato: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Componente rilevato: eliminazione avvenuta con successo!"
+        alert: "Componente rilevato: errore durante l'eliminazione!"

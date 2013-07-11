@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  detection: 
+  name: MyString
+  version: MyString
+  license_name: MyString
+  license_version: MyString
+  component_id: 1
+  license_id: 1
+
+two:
+  detection: 
+  name: MyString
+  version: MyString
+  license_name: MyString
+  license_version: MyString
+  component_id: 1
+  license_id: 1

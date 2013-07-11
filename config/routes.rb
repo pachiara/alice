@@ -1,6 +1,9 @@
 Alice::Application.routes.draw do
   get "ties/index"
 
+  resources :detected_components
+  resources :detections
+
   resources :components do
     get 'ties/select'
   end

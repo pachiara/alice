@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @detection.name %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @detection.product_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_detection_path(@detection) %> |
+<%= link_to 'Back', detections_path %>

@@ -1,0 +1,25 @@
+<%= simple_form_for(@detected_component) do |f| %>
+  <%= f.error_notification %>
+
+  <%= hidden_field_tag 'detection_id', @detected_component.detection.id %>
+
+  <h4><%= t('activerecord.attributes.product.name') %>: <%= @detected_component.detection.product.name %></h4>
+  <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detected_component.detection.name %></h4>
+  
+  <div class="form-inputs form-horizontal">
+    <!--%= f.association :detection %-->
+    <%= f.input :name %>
+    <%= f.input :version %>
+    <%= f.input :license_name %>
+    <%= f.input :license_version %>
+  </div>
+
+  <div class="form-actions">
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+    <% end %>
+    <%= link_to (detected_components_path + "?detection_id=#{@detected_component.detection.id}"), :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+    <% end %>
+  </div>
+<% end %>

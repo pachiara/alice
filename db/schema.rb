@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625124230) do
+ActiveRecord::Schema.define(:version => 20130627132908) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -59,13 +59,40 @@ ActiveRecord::Schema.define(:version => 20130625124230) do
   add_index "components", ["title"], :name => "index_components_on_title"
   add_index "components", ["use_id"], :name => "index_components_on_use_id"
 
-  create_table "components_products", :id => false, :force => true do |t|
+  create_table "detected_components", :force => true do |t|
+    t.integer  "detection_id"
+    t.string   "name"
+    t.string   "version"
+    t.string   "license_name"
+    t.string   "license_version"
+    t.integer  "component_id"
+    t.integer  "license_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "detected_components", ["detection_id"], :name => "index_detected_components_on_detection_id"
+  
+    create_table "components_products", :id => false, :force => true do |t|
     t.integer "product_id",   :null => false
     t.integer "component_id", :null => false
   end
 
   add_index "components_products", ["component_id", "product_id"], :name => "index_components_products_on_component_id_and_product_id", :unique => true
   add_index "components_products", ["product_id", "component_id"], :name => "index_components_products_on_product_id_and_component_id", :unique => true
+
+  
+
+  create_table "detections", :force => true do |t|
+    t.string   "name"
+    t.integer  "product_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "xml_file_name"
+    t.string   "xml_content_type"
+    t.integer  "xml_file_size"
+    t.datetime "xml_updated_at"
+  end
 
   create_table "license_types", :force => true do |t|
     t.string   "code",        :limit => 2

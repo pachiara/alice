@@ -6,8 +6,8 @@ class Product < ActiveRecord::Base
   
   belongs_to :use
   belongs_to :license
-  
   has_and_belongs_to_many :components
+  has_many :detections, :dependent => :destroy
   
   def add_relation(component_add = [])
     component_add.each do |component_id|
