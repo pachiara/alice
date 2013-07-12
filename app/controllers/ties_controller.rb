@@ -40,12 +40,20 @@ class TiesController < ApplicationController
     @title = t('actions.edit') + " " + t('activerecord.models.tie')
     
     @product = Product.find(params[:product_id])
-    @components = @product.components
-      
+    @components_ties = @product.components
+    @components = Component.search(params[:component_name], params[:page])
+
+    if !params[:component_del].nil?
+      @product.del_relation(params[:component_del])
+    end
+    if !params[:component_add].nil?
+      @product.add_relation(params[:component_add])
+    end
+         
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }
     end    
-  end  
-  
+  end    
+
 end

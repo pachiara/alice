@@ -11,3 +11,7 @@ http://pilu.github.io/web-app-theme/#themes/reidb-greenish
 motore a regole
 https://github.com/Codalytics/ruleby/wiki
 --------------------
+- paginazione 
+rientro alla stessa pagina navigata 
+dopo la modifica
+

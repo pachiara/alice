@@ -1,44 +1,67 @@
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
+</button>
+<br />
 <div class="container-fluid">
 <div class="row-fluid">
-
+<div class="span12">
+<%= form_tag product_ties_edit_path, :method => 'get', :class => "form-search" do %>	
+  <div class="input-append">
+    <%= text_field_tag :component_name, params[:component_name], :class => "span6 search-query" %>
+    <button type="submit" class="btn"><i class="icon-search"></i> <%= t('activerecord.models.component') %></button>
+  </div>
+<% end %>
+<div class="row-fluid">
 <div class="span6">
-	<%= render :partial => "search_product" %>
 <div class="well sidebar-nav">
-<!--Product content-->
+<%= will_paginate @components, :renderer => BootstrapPagination::Rails %>	
+<!--Component to select content-->
+<%= form_tag product_ties_edit_path, :method => 'post' do |f| %>	
 <ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.products') %></li>
-  <li class="divider"></li>
-  <li class="active"><a href="#"><%= @product.name %></li></a>
-</ul>
-</div><!--/.well -->
-</div><!--/span-->
-
-<div class="span6">
-	<%= render :partial => "search_component" %>
-<div class="well sidebar-nav">
-<!--Component content-->
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.components') %></li>
+  <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.components') %></li>
   <li class="divider"></li>
   <% @components.each do |component| %>
-<!--    <li><label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox1" value="option1">
-    	<%= link_to component.name, component_ties_select_path(component) %>
-      </label>
+    <li>
+      <label class="checkbox inline">
+      <%= check_box_tag "component_add[]", component.id, false, :multiple => "true" %>
+        <%= component.name+" - Vers. "+component.version %>
+     </label>  
     </li>
--->    
-    <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>><%= link_to component.name, component_ties_select_path(component) %></li>
-  <% end %>
+  <% end %>  
+</ul>
 </div><!--/.well -->
-</div><!--/span-->
+</div><!--/.span6 -->
 
-</div>
-</div>
+<div class="span6">
+<div class="well sidebar-nav">
+<!--Component selected content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.components') %></li>
+  <li class="divider"></li>
+  <% @components_ties.each do |component_ties| %>
+    <li>
+      <label class="checkbox inline">
+      <%= check_box_tag "component_del[]", component_ties.id, false, :multiple => "true" %>
+        <%= component_ties.name+" - Vers. "+component_ties.version %>
+     </label>  
+    </li>
+  <% end %>
+</ul>
+</div><!--/.well -->
+</div><!--/.span6 -->
+
+</div><!--/.row -->
+
+</div><!--/span12 -->
+</div><!--/.row -->
+</div><!--/.container -->
 
 <br />
 <%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
       <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
-<% end %>  
-    
-    
+<% end %> 
+<%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
+  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+<% end %>
 
+<% end %>
