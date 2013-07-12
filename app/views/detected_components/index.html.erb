@@ -2,21 +2,32 @@
 
 <%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
 
-<table class="table table-striped">
+<table class="table table-condensed">
   <tr>
-    <th><%= t('activerecord.attributes.detected_component.name') %></th>
-    <th><%= t('activerecord.attributes.detected_component.version') %></th>
+    <th><%= t('activerecord.attributes.detected_component.name_long') %></th>
+    <th><%= t('activerecord.attributes.detected_component.version_long') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
-    <th></th>
+    <th><%= t('activerecord.attributes.detected_component.license_id') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_id_version') %></th>
   </tr>
 
 <% @detected_components.each do |detected_component| %>
   <tr>
     <td><%= detected_component.name %></td>
-    <td><%= detected_component.version %></td>
+    <td class="text-center"><%= detected_component.version %></td>
     <td><%= detected_component.license_name %></td>
-    <td><%= detected_component.license_version %></td>
+    <td class="text-center"><%= detected_component.license_version %></td>
+    <td>
+      <% if !detected_component.license_id.nil? %>
+        <%= License.find(detected_component.license_id).description %>
+      <% end %>
+    </td>
+    <td class="text-center">
+      <% if !detected_component.license_id.nil? %>
+        <%= License.find(detected_component.license_id).version %>
+      <% end %>
+    </td>
     
     <td><div class="btn-group">
       <%= link_to raw('<i class="icon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>

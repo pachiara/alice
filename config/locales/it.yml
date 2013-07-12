@@ -285,9 +285,13 @@ it:
         xml_updated_at: "Data file xml"
       detected_component:
         name:         "Nome"
+        name_long:    "Nome componente"
         version:      "Versione"
-        license_name: "Licenza"
-        license_version: "Versione licenza"
+        version_long: "Versione componente"
+        license_name: "Licenza rilevata"
+        license_version: "Versione rilevata"
+        license_id:   "Licenza assegnata"
+        license_id_version: "Versione assegnata"
         
 
   actions:

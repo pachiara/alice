@@ -39,6 +39,7 @@ class DetectedComponentsController < ApplicationController
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.detected_component')
     @detected_component = DetectedComponent.find(params[:id])
+    @licenses = @detected_component.search_license(@detected_component.license_name, @detected_component.license_version)
   end
 
   # POST /detected_components
