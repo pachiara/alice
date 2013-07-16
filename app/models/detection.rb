@@ -1,5 +1,5 @@
 class Detection < ActiveRecord::Base
-  attr_accessible :name, :product_id, :xml, :created_at, :xml_file_name, :xml_updated_at
+  attr_accessible :name, :product_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
   
   has_attached_file :xml
   belongs_to :product
@@ -59,6 +59,31 @@ class Detection < ActiveRecord::Base
     version = name.slice(/\d+\.\d*\.*\d+/)
     version = url.slice(/\d+\.\d*\.*\d+/) if (version.nil? && !url.nil?)
     return version
+  end
+
+  def validate_acquire
+    detected_components.each do |component|
+      if component.license_id.nil?
+         errors.add("#{component.name}", "#{component.version}")
+      end
+    end
+  end
+  
+  def acquire
+    detected_components.each do |component|
+      if !Component.where("name = ? AND version = ?", component.name, component.version).exists?
+        c = Component.new
+        c.name = component.name
+        c.version = component.version
+        c.title = component.name
+        c.description = component.name
+        c.license_id = component.license_id
+        c.checked_at = Date.today
+        c.use_id = 1
+        c.save
+      end
+    end
+    acquired = true
   end
 
 end

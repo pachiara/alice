@@ -9,7 +9,6 @@
     <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_id') %></th>
-    <th><%= t('activerecord.attributes.detected_component.license_id_version') %></th>
   </tr>
 
 <% @detected_components.each do |detected_component| %>
@@ -21,11 +20,8 @@
     <td>
       <% if !detected_component.license_id.nil? %>
         <%= License.find(detected_component.license_id).description %>
-      <% end %>
-    </td>
-    <td class="text-center">
-      <% if !detected_component.license_id.nil? %>
-        <%= License.find(detected_component.license_id).version %>
+      <% else %>
+        <span class="label label-important">KO</span>
       <% end %>
     </td>
     

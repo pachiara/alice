@@ -3,7 +3,7 @@ class ComponentsController < ApplicationController
   # GET /components.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.components')
-    @components = Component.order('created_at ASC').page(params[:page]).per_page(12)
+    @components = Component.order('name, version').page(params[:page]).per_page(12)
 
     respond_to do |format|
       format.html # index.html.erb

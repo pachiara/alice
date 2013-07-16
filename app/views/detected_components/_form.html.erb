@@ -25,14 +25,6 @@
         <dd><%= License.find(@detected_component.license_id).name %></dd>
       </dl>
     <% end %>
-    <dl class="dl-horizontal">
-      <dt><%= t('activerecord.attributes.detected_component.license_id_version') %></dt>
-      <dd>
-        <% if !@detected_component.license_id.nil? %>
-          <%= License.find(@detected_component.license_id).version %>
-        <% end %>
-      </dd>
-    </dl>
   </div>
 
   <div class="form-actions">

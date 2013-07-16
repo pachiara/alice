@@ -257,6 +257,7 @@ it:
         description:  "Descrizione"           
       product:
         name:         "Nome"
+        name_long:    "Nome prodotto"
         version:      "Versione"
         title:        "Titolo"    
         description:  "Descrizione"
@@ -289,7 +290,7 @@ it:
         version:      "Versione"
         version_long: "Versione componente"
         license_name: "Licenza rilevata"
-        license_version: "Versione rilevata"
+        license_version: "Versione"
         license_id:   "Licenza assegnata"
         license_id_version: "Versione assegnata"
         
@@ -322,6 +323,8 @@ it:
     view_details: "Vedere i dettagli »"
     download: "Scarica"
     save: "Salva"
+    acquire: "Acquisisci"
+    disabled: "Disabilitato"
 
   
   will_paginate:
