@@ -3,7 +3,6 @@ Alice::Application.routes.draw do
 
   resources :detected_components
   resources :detections, :except => [:show]
-#  get 'detections/:id/acquire_components', to: 'detections#acquire_components', as: :acquire_components
   get 'detections/validate_components'
   post 'detections/acquire'
 

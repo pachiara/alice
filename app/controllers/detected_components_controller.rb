@@ -1,9 +1,19 @@
 class DetectedComponentsController < ApplicationController
+  
+  def restore_search
+    if params[:page].nil? && !session[:detected_components_page].nil? then
+       params[:page] = session[:detected_components_page]
+    end
+  end
+  
   # GET /detected_components
   # GET /detected_components.json
   def index
+    restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.detected_components')
     @detected_components = DetectedComponent.where(detection_id: params[:detection_id]).order('created_at ASC').page(params[:page]).per_page(12)
+
+    session[:detected_components_page] = params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
