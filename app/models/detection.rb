@@ -70,8 +70,10 @@ class Detection < ActiveRecord::Base
   end
   
   def acquire
+    p = Product.find(product_id)
     detected_components.each do |component|
-      if !Component.where("name = ? AND version = ?", component.name, component.version).exists?
+      c = Component.where("name = ? AND version = ?", component.name, component.version).first
+      if c.nil?
         c = Component.new
         c.name = component.name
         c.version = component.version
@@ -82,6 +84,7 @@ class Detection < ActiveRecord::Base
         c.use_id = 1
         c.save
       end
+      p.components.push(c) unless p.components.include?(c)
     end
     acquired = true
   end
