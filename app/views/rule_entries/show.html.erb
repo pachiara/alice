@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Rule:</b>
+  <%= @rule_entry.rule %>
+</p>
+
+<p>
+  <b>License:</b>
+  <%= @rule_entry.license_id %>
+</p>
+
+<p>
+  <b>Plus:</b>
+  <%= @rule_entry.plus %>
+</p>
+
+<p>
+  <b>Order:</b>
+  <%= @rule_entry.order %>
+</p>
+
+
+<%= link_to 'Edit', edit_rule_entry_path(@rule_entry) %> |
+<%= link_to 'Back', rule_entries_path %>

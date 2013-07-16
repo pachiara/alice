@@ -1,4 +1,9 @@
 Alice::Application.routes.draw do
+
+  resources :rules do
+    resources :rule_entries
+  end
+
   get "ties/index"
 
   resources :detected_components

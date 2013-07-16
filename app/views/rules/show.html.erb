@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.name') %>:</b>
+  <%= @rule.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.license') %>:</b>
+  <%= @rule.license.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.plus') %>:</b>
+  <%= @rule.plus %>
+</p>
+
+<br />
+<div class="form-actions">
+    <%= link_to edit_rule_path(@rule), :class => "btn" do %>
+      <i class="icon-pencil"></i> <%= t('actions.edit') %>      
+    <% end %>    
+    <%= link_to rules_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <% end %>    
+</div>
