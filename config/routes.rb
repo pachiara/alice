@@ -7,7 +7,9 @@ Alice::Application.routes.draw do
   get "ties/index"
 
   resources :detected_components
-  resources :detections
+  resources :detections, :except => [:show]
+  get 'detections/validate_components'
+  post 'detections/acquire'
 
   resources :components do
     get 'ties/select'
@@ -34,7 +36,6 @@ Alice::Application.routes.draw do
   resources :licenses do
     get 'download'  
   end
-  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

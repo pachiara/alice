@@ -87,4 +87,28 @@ class DetectionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # GET /detections/1/acquire_components
+  def validate_components
+    @title = t('actions.acquire') + " " + t('activerecord.models.components')
+    @detection = Detection.find(params[:detection_id])
+    @detection.validate_acquire
+      
+    respond_to do |format|
+      format.html 
+    end
+  end
+  
+  # POST /detections
+  def acquire
+    @detection = Detection.find(params[:detection_id])
+    @detection.acquire
+    
+    respond_to do |format|
+      @detection.update_attributes(acquired: true)
+      format.html { redirect_to(detections_path + "?product_id=#{@detection.product_id}", notice: t('flash.detection.update.notice')) }
+    end
+
+  end
+
 end
