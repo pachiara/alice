@@ -292,9 +292,13 @@ it:
         name:         "Nome"
         name_long:    "Nome componente"
         version:      "Versione"
-<<<<<<< HEAD
         license_name: "Licenza"
         license_version: "Versione licenza"
+        version_long: "Versione componente"
+        license_name: "Licenza rilevata"
+        license_version: "Versione"
+        license_id:   "Licenza assegnata"
+        license_id_version: "Versione assegnata"
       rule:
         name:         "Nome"
         license:      "Licenza"
@@ -303,14 +307,6 @@ it:
         license:      "Licenza"
         plus:         "e successive"
         order:        "Sequenza"  
-=======
-        version_long: "Versione componente"
-        license_name: "Licenza rilevata"
-        license_version: "Versione"
-        license_id:   "Licenza assegnata"
-        license_id_version: "Versione assegnata"
-        
->>>>>>> 18c2ffd8a4ff62b463d5590cfb499f298e30cbcb
 
   actions:
     actions: "Azioni"
