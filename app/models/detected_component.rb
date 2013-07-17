@@ -14,7 +14,7 @@ class DetectedComponent < ActiveRecord::Base
     return purified_name.strip
   end
   
-  def search_license(name, version)
+  def search_licenses(name, version)
     return License.all if name.nil?
     words = purify_name(name).split
     return License.all if words.length == 0
@@ -24,14 +24,14 @@ class DetectedComponent < ActiveRecord::Base
       queryString << "description LIKE '%#{word}%' or "
     end 
     queryString = queryString[0..-5] + ')'
-    if !version.nil?
+    if version != nil
       queryString << " and version LIKE '%#{version}%'"
     end
-#puts queryString
     return License.where(queryString).order("description")
   end
 
-  def search_component(name, version)
+=begin
+  def search_components(name, version)
     words = name.split
 
     queryString = "("
@@ -39,11 +39,10 @@ class DetectedComponent < ActiveRecord::Base
       queryString << "description LIKE '%#{word}%' or "
     end 
     queryString = queryString[0..-5] + ')'
-    if !version.nil?
+    if version != nil
       queryString << " and version LIKE '%#{version}%'"
     end
-#puts queryString
     return Component.where(queryString).order("description")
   end
-  
+=end  
 end

@@ -24,10 +24,19 @@ class Detection < ActiveRecord::Base
           rc = DetectedComponent.new
           rc.name = node.xpath('../../artifactId').text
           rc.version = node.xpath('../../version').text
-        if node.xpath('name').length > 0
-          rc.license_name = parse_name(node.xpath('name').text)
-          rc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
-        end
+          if node.xpath('name').length > 0
+            rc.license_name = parse_name(node.xpath('name').text)
+            rc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
+            versions = rc.search_licenses(rc.license_name, rc.license_version)
+            if versions.length == 1
+              rc.license_id = versions[0].id
+            end
+          end
+          component = Component.where("name = ? and version = ?", rc.name, rc.version).first
+          if component != nil
+            rc.component_id = component.id
+            rc.license_id = component.license_id
+          end
           self.detected_components << rc
         end
       else
@@ -35,16 +44,16 @@ class Detection < ActiveRecord::Base
         rc.name = node.xpath('../artifactId').text
         rc.version = node.xpath('../version').text
         rc.license_name = node.xpath('comment()').text
-        components = rc.search_component(rc.name, rc.version)
-        if components.length == 1
-          rc.component_id = components[0].id
-          rc.license_id = components[0].license_id
+        component = Component.where("name = ? and version = ?", rc.name, rc.version).first
+        if component != nil
+          rc.component_id = component.id
+          rc.license_id = component.license_id
         end
         self.detected_components << rc
       end
     end
   end
-  
+
   def parse_name(name)
     new_name = name.split(',')[0]
     if new_name.include?("ersion")
