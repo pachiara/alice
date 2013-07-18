@@ -239,6 +239,10 @@ it:
       detected_components: "Componenti rilevati"
       tie: Legame
       ties: Legami 
+      rule: Regola
+      rules: Regole
+      rule_entry: Voce della regola
+      rule_entries: Voci delle regole
     
     attributes:
       license:
@@ -288,12 +292,21 @@ it:
         name:         "Nome"
         name_long:    "Nome componente"
         version:      "Versione"
+        license_name: "Licenza"
+        license_version: "Versione licenza"
         version_long: "Versione componente"
         license_name: "Licenza rilevata"
         license_version: "Versione"
         license_id:   "Licenza assegnata"
         license_id_version: "Versione assegnata"
-        
+      rule:
+        name:         "Nome"
+        license:      "Licenza"
+        plus:         "e successive"
+      rule_entry:
+        license:      "Licenza"
+        plus:         "e successive"
+        order:        "Sequenza"  
 
   actions:
     actions: "Azioni"
@@ -323,9 +336,10 @@ it:
     view_details: "Vedere i dettagli »"
     download: "Scarica"
     save: "Salva"
+    details: "Dettagli"
+    select: "Seleziona"
     acquire: "Acquisisci"
     disabled: "Disabilitato"
-
   
   will_paginate:
     next_label: "Sucessivi"
@@ -444,3 +458,13 @@ it:
       destroy:
         notice: "Componente rilevato: eliminazione avvenuta con successo!"
         alert: "Componente rilevato: errore durante l'eliminazione!"
+    rule:
+      create:
+        notice: "Regola: creazione avvenuta con successo!"
+        alert: "Regola: errore durante la creazione!"
+      update:
+        notice: "Regola: aggiornamento avvenuto con successo!"
+        alert: "Regola: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Regola: eliminazione avvenuta con successo!"
+        alert: "Regola: errore durante l'eliminazione!"         

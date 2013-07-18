@@ -1,0 +1,18 @@
+<%= simple_form_for(@rule) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs form-horizontal">
+    <%= f.input :name %>
+    <%= f.association :license %>
+    <%= f.input :plus %>
+  </div>
+
+  <div class="form-actions">
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+    <% end %>
+    <%= link_to rules_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <% end %> 
+  </div>
+<% end %>

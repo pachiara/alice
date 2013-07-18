@@ -1,0 +1,86 @@
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.rule') %>: <%= @rule.name %> - <%= t('activerecord.models.license') %>: <%= @rule.license.name %><% if @rule.plus %> + <% end %>
+</button>
+<br />
+
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span12">
+<%= render :partial => "search_license" %>
+<div class="row-fluid">
+
+<div class="span6">
+<div class="well sidebar-nav">
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.rules') %></li>
+  <li class="divider"></li>
+</ul>  
+<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>	
+
+<%= form_tag rule_rule_entries_path, :method => 'post' do |f| %>
+
+<table class="table table-striped table-condensed">
+  <tr>
+    <th><%= t('actions.select') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.license') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.order') %></th>
+  </tr>
+
+<% @licenses.each do |license| %>
+  <tr>
+    <td><%= check_box_tag "license_add[]", license.id, false, :multiple => "true" %></td>
+    <td><%= license.name %></td>
+    <td><%= check_box_tag "plus[]", license.id, false, :multiple => "true" %></td>
+    <td><%= number_field_tag "order[]", :order, :class => "input-mini" %></td>
+  </tr>
+<% end %>
+</table>
+
+</div><!--/.well -->
+</div><!--/.span6 -->
+
+<div class="span6">
+<div class="well sidebar-nav">
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.rules') %></li>
+  <li class="divider"></li>
+</ul>  	
+<!--Rule selected content-->
+<table class="table table-striped table-condensed">
+  <tr>
+  	<th><%= t('actions.select') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.license') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.order') %></th>
+  </tr>
+
+<% @rule_entries.each do |rule_entry| %>
+  <tr>
+    <td><%= check_box_tag "license_del[]", rule_entry.rule, false, :multiple => "true" %></td>
+    <td><%= rule_entry.license_id %></td>
+    <td><%= rule_entry.plus %></td>
+    <td><%= rule_entry.order %></td>
+  </tr>
+<% end %>
+</table>
+
+</div><!--/.well -->
+</div><!--/.span6 -->
+
+</div><!--/.row -->
+
+</div><!--/span12 -->
+</div><!--/.row -->
+</div><!--/.container -->
+
+<br />
+
+<%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
+  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+<% end %>
+<%= link_to rules_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+<% end %> 
+
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627132908) do
+ActiveRecord::Schema.define(:version => 20130716073002) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(:version => 20130627132908) do
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
   create_table "components", :force => true do |t|
-    t.string   "name",        :limit => 15
-    t.string   "version",     :limit => 5
+    t.string   "name",        :limit => 30
+    t.string   "version",     :limit => 25
     t.string   "title",       :limit => 50
     t.text     "description"
     t.integer  "license_id"
@@ -84,12 +84,13 @@ ActiveRecord::Schema.define(:version => 20130627132908) do
   create_table "detections", :force => true do |t|
     t.string   "name"
     t.integer  "product_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "xml_file_name"
     t.string   "xml_content_type"
     t.integer  "xml_file_size"
     t.datetime "xml_updated_at"
+    t.boolean  "acquired",         :default => false
   end
 
   create_table "license_types", :force => true do |t|
@@ -136,6 +137,27 @@ ActiveRecord::Schema.define(:version => 20130627132908) do
   add_index "products", ["name", "version"], :name => "index_products_on_name_and_version", :unique => true
   add_index "products", ["title"], :name => "index_products_on_title"
   add_index "products", ["use_id"], :name => "index_products_on_use_id"
+
+  create_table "rule_entries", :force => true do |t|
+    t.integer  "rule_id"
+    t.integer  "license_id"
+    t.boolean  "plus"
+    t.integer  "order"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "rule_entries", ["license_id", "order"], :name => "index_rule_entries_on_license_id_and_order", :unique => true
+
+  create_table "rules", :force => true do |t|
+    t.string   "name"
+    t.integer  "license_id"
+    t.boolean  "plus"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "rules", ["license_id"], :name => "index_rules_on_license_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
