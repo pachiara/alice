@@ -20,37 +20,41 @@ class Detection < ActiveRecord::Base
   def parse_xml(doc)
     doc.xpath('//licenses').each do |node|
       if node.xpath('license').length > 0
+        # un componente può avere più tag <license> 
         node.xpath('license').each do |node|
-          rc = DetectedComponent.new
-          rc.name = node.xpath('../../artifactId').text
-          rc.version = node.xpath('../../version').text
+          dc = DetectedComponent.new
+          dc.name = node.xpath('../../artifactId').text
+          dc.version = node.xpath('../../version').text
           if node.xpath('name').length > 0
-            rc.license_name = parse_name(node.xpath('name').text)
-            rc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
-            versions = rc.search_licenses(rc.license_name, rc.license_version)
-            if versions.length == 1
-              rc.license_id = versions[0].id
-            end
+            dc.license_name = parse_name(node.xpath('name').text)
+            dc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
           end
-          component = Component.where("name = ? and version = ?", rc.name, rc.version).first
-          if component != nil
-            rc.component_id = component.id
-            rc.license_id = component.license_id
+          identify_component(dc)
+          if dc.component_id.nil?
+            # cerca licenza corrispondente 
+            versions = dc.search_licenses(dc.license_name, dc.license_version)
+            dc.license_id = versions[0].id if versions.length == 1
           end
-          self.detected_components << rc
+          self.detected_components << dc
         end
+      # componente rilevato senza tag <license>
       else
-        rc = DetectedComponent.new
-        rc.name = node.xpath('../artifactId').text
-        rc.version = node.xpath('../version').text
-        rc.license_name = node.xpath('comment()').text
-        component = Component.where("name = ? and version = ?", rc.name, rc.version).first
-        if component != nil
-          rc.component_id = component.id
-          rc.license_id = component.license_id
-        end
-        self.detected_components << rc
+        dc = DetectedComponent.new
+        dc.name = node.xpath('../artifactId').text
+        dc.version = node.xpath('../version').text
+        dc.license_name = node.xpath('comment()').text
+        identify_component(dc)
+        self.detected_components << dc
       end
+    end
+  end
+  
+  # Se il componente è registrato assegna id e licenza corrispondente 
+  def identify_component(detected_component)
+    component = Component.where("name = ? and version = ?", detected_component.name, detected_component.version).first
+    if component != nil
+      detected_component.component_id = component.id
+      detected_component.license_id = component.license_id
     end
   end
 

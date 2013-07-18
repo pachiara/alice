@@ -27,22 +27,11 @@ class DetectedComponent < ActiveRecord::Base
     if version != nil
       queryString << " and version LIKE '%#{version}%'"
     end
-    return License.where(queryString).order("description")
-  end
-
-=begin
-  def search_components(name, version)
-    words = name.split
-
-    queryString = "("
-    words.each do |word|
-      queryString << "description LIKE '%#{word}%' or "
-    end 
-    queryString = queryString[0..-5] + ')'
-    if version != nil
-      queryString << " and version LIKE '%#{version}%'"
+    if License.where(queryString).count > 0
+      return License.where(queryString).order("description")
+    else
+      return License.order("description")
     end
-    return Component.where(queryString).order("description")
   end
-=end  
+ 
 end
