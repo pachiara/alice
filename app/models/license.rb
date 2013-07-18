@@ -1,5 +1,5 @@
 class License < ActiveRecord::Base
-  attr_accessible :license_type_id, :category_id, :description, :name, :text_license, :version
+  attr_accessible :license_type_id, :category_id, :description, :name, :text_license, :version, :flag_osi
   
   validates_presence_of :name, :description
   validates_uniqueness_of :name
