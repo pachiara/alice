@@ -4,7 +4,7 @@ class LicensesController < ApplicationController
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
     #@licenses = License.all
-    @licenses = License.order('created_at ASC').page(params[:page]).per_page(12)
+    @licenses = License.order('name ASC').page(params[:page]).per_page(12)
 
     respond_to do |format|
       format.html # index.html.erb

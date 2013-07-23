@@ -1,0 +1,45 @@
+<%= form_for @product, url: {action: 'update_check'}, html: {method: "post"} do |f| %>
+
+  <%= hidden_field_tag 'product_id', @product.id %>
+  <%= hidden_field_tag 'result', @product.result %>
+
+  <h4>
+    <%= t('activerecord.attributes.product.name_long') %>: <%= @product.name %>
+    <br/>
+    <%= t('activerecord.attributes.product.result') %>:
+    <% if @product.result? %>
+      <span class="label label-success">OK</span>
+    <% else %>
+      <span class="label label-important">KO</span>
+    <% end %>
+    <br/>
+    <%= t('activerecord.attributes.product.license_id') %>: <%= @product.license.name %> <%= @product.license.version %>
+    <br/>
+    <%= t('activerecord.attributes.product.compatible_license') %>: <%= @product.compatible_license %>
+  </h4>
+
+  <% if @product.errors.full_messages.length > 0 %>
+    <div class="alert alert-error">
+<!--      <span class="lead text-error">I seguenti componenti non hanno una licenza assegnata:</span> -->
+      <ol>
+        <% @product.errors.full_messages.each do |msg| %>
+           <li><label class="text-error"><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <div class="form-inputs form-horizontal">
+
+    <div class="form-actions">
+      <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+        <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+      <% end %>
+      <%= link_to products_path, :class => "btn" do %>
+          <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+      <% end %>
+    </div>
+
+  </div>
+
+<% end %>

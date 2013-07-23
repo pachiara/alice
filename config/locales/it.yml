@@ -270,6 +270,8 @@ it:
         checked_at:   "Data controllo"
         result:       "Esito"
         notes:        "Note"
+        license_id:   "Licenza prodotto"
+        required_license_name: "Licenza compatibilità componenti"
       use:
         name:         "Nome"
         description:  "Descrizione"  
@@ -340,6 +342,7 @@ it:
     select: "Seleziona"
     acquire: "Acquisisci"
     disabled: "Disabilitato"
+    check: "Controllo"
   
   will_paginate:
     next_label: "Sucessivi"
