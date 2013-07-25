@@ -2,6 +2,7 @@
   <tr>
     <th><%= t('activerecord.attributes.license_type.code') %></th>
     <th><%= t('activerecord.attributes.license_type.description') %></th>
+    <th><%= t('activerecord.attributes.license_type.protection_level') %></th>
     <th></th>
   </tr>
 
@@ -9,6 +10,7 @@
   <tr>
     <td><%= license_type.code %></td>
     <td><%= license_type.description %></td>
+    <td><%= license_type.protection_level %></td>
     <td>
       <div class="btn-group">
     	<%= link_to raw('<i class="icon-eye-open"></i>'), license_type, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>

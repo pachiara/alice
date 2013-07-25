@@ -258,7 +258,8 @@ it:
         description:  "Descrizione"
       license_type:
         code:         "Codice"    
-        description:  "Descrizione"           
+        description:  "Descrizione"
+        protection_level: "Livello protezione"           
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"

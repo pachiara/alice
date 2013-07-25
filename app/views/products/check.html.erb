@@ -15,7 +15,7 @@
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <%= @product.license.name %> <%= @product.license.version %>
     <br/>
-    <%= t('activerecord.attributes.product.compatible_license') %>: <%= @product.compatible_license %>
+    <%= t('activerecord.attributes.product.compatible_license') %>: <%= @product.compatible_license.name %>
   </h4>
 
   <% if @product.errors.full_messages.length > 0 %>

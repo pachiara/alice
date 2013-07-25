@@ -58,7 +58,7 @@
 <% @rule_entries.each do |rule_entry| %>
   <tr>
     <td><%= check_box_tag "license_del[]", rule_entry.rule, false, :multiple => "true" %></td>
-    <td><%= rule_entry.license_id %></td>
+    <td><%= rule_entry.license.name %></td>
     <td><%= rule_entry.plus %></td>
     <td><%= rule_entry.order %></td>
   </tr>
