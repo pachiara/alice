@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'ruleby'
 include Ruleby
 
@@ -9,12 +11,10 @@ class LicenseRulebook < Rulebook
   rules.each do |rule|
     entries = Array.new
     rule.rule_entries.each do |entry|
-       entries.push(entry.license.name)
+       entries.push(entry.license)
     end
-    Floss_slide[rule.name]=entries
+    Floss_slide[rule.license]=entries
   end
-# puts Floss_slide
-
 
   def search_compatible(license1, license2)
     compatibles = Floss_slide[license1] & Floss_slide[license2]
@@ -22,11 +22,11 @@ class LicenseRulebook < Rulebook
   end
   
   def rules
-    
     # Inizializzazione
     rule :New, {:priority => 10}, 
       [Product, :prod] do |v|
-        v[:prod].compatible_license_id = License.where("name=?", "public").first.id
+#        v[:prod].compatible_license = v[:prod].license
+        v[:prod].compatible_license = License.where("name=?", "public").first
         v[:prod].result = true
     end
     
@@ -52,14 +52,14 @@ class LicenseRulebook < Rulebook
     rule :Compatibility, {:priority => 4},
       [Product, :prod],
       [Component,:comp ] do |v|
-        new_compatible_license = self.search_compatible(v[:prod].compatible_license.name, v[:comp].license.name)
+        new_compatible_license = self.search_compatible(v[:prod].compatible_license, v[:comp].license)
         if new_compatible_license == nil 
           v[:prod].result = false
           error_string = "#{v[:comp].name} licenza #{v[:comp].license.name} " +
                          "incompatibile con licenza: #{v[:prod].compatible_license.name}"
           v[:prod].errors.add("Componente: ", "#{error_string}")
-        elsif v[:prod].compatible_license.name != new_compatible_license
-          v[:prod].compatible_license_id = License.where("name=?", "#{new_compatible_license}").first.id
+        elsif v[:prod].compatible_license != new_compatible_license
+          v[:prod].compatible_license = new_compatible_license
         end
     end
   
@@ -68,7 +68,7 @@ class LicenseRulebook < Rulebook
       [Product, :prod] do |v|
         if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
           v[:prod].result = false
-          v[:prod].errors.add(:license_id, "incompatibile con licenza richiesta dai componenti.")
+          v[:prod].errors.add(:license_id, "incompatibile con licenza compatibilità componenti.")
         end    
     end
     

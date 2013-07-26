@@ -115,7 +115,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:product_id])
     
     respond_to do |format|
-      @product.update_attributes(result: params[:result], checked_at: Time.now)
+      @product.update_attributes(result: params[:result], compatible_license_id: params[:compatible_license_id], checked_at: Time.now)
       format.html { redirect_to(products_path, notice: t('flash.product.update.notice')) }
     end
   end

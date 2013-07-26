@@ -2,6 +2,7 @@
 
   <%= hidden_field_tag 'product_id', @product.id %>
   <%= hidden_field_tag 'result', @product.result %>
+  <%= hidden_field_tag 'compatible_license_id', @product.compatible_license.id %>
 
   <h4>
     <%= t('activerecord.attributes.product.name_long') %>: <%= @product.name %>
@@ -15,7 +16,7 @@
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <%= @product.license.name %> <%= @product.license.version %>
     <br/>
-    <%= t('activerecord.attributes.product.compatible_license') %>: <%= @product.compatible_license.name %>
+    <%= t('activerecord.attributes.product.compatible_license_id') %>: <%= @product.compatible_license.name %>
   </h4>
 
   <% if @product.errors.full_messages.length > 0 %>

@@ -272,7 +272,7 @@ it:
         result:       "Esito"
         notes:        "Note"
         license_id:   "Licenza prodotto"
-        required_license_name: "Licenza compatibilità componenti"
+        compatible_license_id: "Licenza compatibilità componenti"
       use:
         name:         "Nome"
         description:  "Descrizione"  
