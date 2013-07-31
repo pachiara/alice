@@ -9,9 +9,9 @@ class Component < ActiveRecord::Base
     
   has_and_belongs_to_many :products
   
-  def self.search(name, page)
+  def self.search(name, page, per_page = 12)
    conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   paginate :order => 'created_at ASC', :per_page => 12, :page => page, :conditions => conditions
+   paginate :order => 'created_at ASC', :per_page => per_page, :page => page, :conditions => conditions
   end
   
 end
