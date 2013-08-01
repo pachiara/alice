@@ -32,7 +32,7 @@
     <td><%= check_box_tag "license_add[]", license.id, false, :multiple => "true" %></td>
     <td><%= license.name %></td>
     <td><%= check_box_tag "plus[]", license.id, false, :multiple => "true" %></td>
-    <td><%= number_field_tag "order[]", :order, :class => "input-mini" %></td>
+    <td><%= label_tag "order[]", license.id %></td>
   </tr>
 <% end %>
 </table>
@@ -57,9 +57,9 @@
 
 <% @rule_entries.each do |rule_entry| %>
   <tr>
-    <td><%= check_box_tag "license_del[]", rule_entry.rule, false, :multiple => "true" %></td>
-    <td><%= rule_entry.license_id %></td>
-    <td><%= rule_entry.plus %></td>
+    <td><%= check_box_tag "license_del[]", rule_entry.id, false, :multiple => "true" %></td>
+    <td><%= rule_entry.license.name %></td>
+    <td><% if rule_entry.plus %>+<% end %></td>
     <td><%= rule_entry.order %></td>
   </tr>
 <% end %>
