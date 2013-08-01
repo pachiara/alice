@@ -21,6 +21,8 @@ Alice::Application.routes.draw do
     get 'ties/select'
     get 'ties/edit'
     post 'ties/edit'
+    get 'check'
+    post 'update_check'
   end
     
   resources :license_types

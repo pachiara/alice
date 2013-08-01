@@ -15,6 +15,7 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'paperclip', '~> 3.0'
 gem 'nokogiri'
+gem 'ruleby'
 
 # Gems used only for assets and not required
 # in production environments by default.

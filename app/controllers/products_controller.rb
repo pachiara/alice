@@ -1,4 +1,8 @@
+require 'ruleby'
+
 class ProductsController < ApplicationController
+  include Ruleby
+  
   # GET /products
   # GET /products.json
   def index
@@ -86,4 +90,35 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+    
+  # GET /products/1/check
+  def check
+    @title = t('actions.check') + " " + t('activerecord.models.components')
+    @product = Product.find(params[:product_id])
+    engine :engine do |e|
+      LicenseRulebook.new(e).rules
+      e.assert @product
+      @product.components.each do |component|
+        e.assert component
+      end
+      e.match
+    end
+
+    respond_to do |format|
+      format.html 
+    end
+  end
+  
+  # POST /products/1/update_check
+  def update_check
+    @product = Product.find(params[:product_id])
+    
+    respond_to do |format|
+      @product.update_attributes(result: params[:result], compatible_license_id: params[:compatible_license_id], checked_at: Time.now)
+      format.html { redirect_to(products_path, notice: t('flash.product.update.notice')) }
+    end
+  end
+
+  
 end

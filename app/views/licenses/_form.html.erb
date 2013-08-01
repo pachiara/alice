@@ -1,17 +1,20 @@
 <%= simple_form_for(@license) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs form-horizontal">
-    <%= f.input :name %>
-    <%= f.input :description, :input_html => { :class => "span6" } %>
-    <%= f.input :version %>
-    <%= f.input :flag_osi %>
-    <%= f.association :category %>
-    <%= f.association :license_type, label_method: :description %>
-    <%= f.input :text_license, :input_html => { :class => "span7" } %>
+  <div class="form-inputs">
+    <div class="row">
+      <%= f.input :name, :wrapper_html => { :class => "span4" } %>
+      <%= f.input :version, :wrapper_html => { :class => "span4" } %>
+    </div>
+    <%= f.input :description, :input_html => { :class => "span7" } %>
+    <div class="row">
+      <%= f.association :license_type, label_method: :description, :wrapper_html => { :class => "span4" }  %>
+      <%= f.association :category, :wrapper_html => { :class => "span4" } %>
+      <%= f.input :flag_osi, :wrapper_html => { :class => "span2" } %>
+    </div>
+    <%= f.input :text_license, :input_html => { :class => "span11", :rows => 10 } %>
   </div>
 
-  <br />
   <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  

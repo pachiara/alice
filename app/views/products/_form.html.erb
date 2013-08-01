@@ -6,7 +6,7 @@
     <%= f.input :version, :input_html => { :class => "span2" } %>
     <%= f.input :title, :input_html => { :class => "span6" } %>
     <%= f.input :description, :input_html => { :class => "span7" } %>
-    <%= f.association :license %>
+    <%= f.association :license, collection: License.all(order: 'name') %>
     <%= f.association :use, label_method: :description %>
     <%= f.input :checked_at %>
     <%= f.input :result %>

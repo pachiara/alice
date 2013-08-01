@@ -258,7 +258,8 @@ it:
         description:  "Descrizione"
       license_type:
         code:         "Codice"    
-        description:  "Descrizione"           
+        description:  "Descrizione"
+        protection_level: "Livello protezione"           
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"
@@ -270,6 +271,8 @@ it:
         checked_at:   "Data controllo"
         result:       "Esito"
         notes:        "Note"
+        license_id:   "Licenza prodotto"
+        compatible_license_id: "Licenza compatibilità componenti"
       use:
         name:         "Nome"
         description:  "Descrizione"  
@@ -340,6 +343,7 @@ it:
     select: "Seleziona"
     acquire: "Acquisisci"
     disabled: "Disabilitato"
+    check: "Controllo"
   
   will_paginate:
     next_label: "Sucessivi"

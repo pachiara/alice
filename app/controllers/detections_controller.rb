@@ -88,7 +88,7 @@ class DetectionsController < ApplicationController
     end
   end
   
-  # GET /detections/1/acquire_components
+  # GET /detections/validate_components
   def validate_components
     @title = t('actions.acquire') + " " + t('activerecord.models.components')
     @detection = Detection.find(params[:detection_id])
@@ -99,7 +99,7 @@ class DetectionsController < ApplicationController
     end
   end
   
-  # POST /detections
+  # POST /detections/acquire
   def acquire
     @detection = Detection.find(params[:detection_id])
     @detection.acquire
@@ -108,7 +108,6 @@ class DetectionsController < ApplicationController
       @detection.update_attributes(acquired: true)
       format.html { redirect_to(detections_path + "?product_id=#{@detection.product_id}", notice: t('flash.detection.update.notice')) }
     end
-
   end
 
 end
