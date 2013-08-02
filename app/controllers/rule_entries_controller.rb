@@ -6,7 +6,7 @@ class RuleEntriesController < ApplicationController
 
     @rule = Rule.find(params[:rule_id])    
     @rule_entries = @rule.rule_entries
-    @licenses = License.search(params[:license_name], params[:page])
+    @licenses = License.search(params[:license_name], params[:page], 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,18 +43,52 @@ class RuleEntriesController < ApplicationController
 
   # POST /rule_entries
   # POST /rule_entries.json
-  def create
-    @rule_entry = RuleEntry.new(params[:rule_entry])
+  def create    
+    @rule = Rule.find(params[:rule_id])    
+    @rule_entries = @rule.rule_entries
+    @licenses = License.search(params[:license_name], params[:page], 10)
 
-    respond_to do |format|
-      if @rule_entry.save
-        format.html { redirect_to @rule_entry, notice: 'Rule entry was successfully created.' }
-        format.json { render json: @rule_entry, status: :created, location: @rule_entry }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @rule_entry.errors, status: :unprocessable_entity }
+    if !params[:license_del].nil?
+      license_del = params[:license_del]
+      license_del.each do |license_id|
+        @rule_entry = RuleEntry.find(license_id)
+        @rule_entry.destroy
       end
     end
+
+    if !params[:license_add].nil?
+      license_add = params[:license_add]
+      plus = params[:plus]
+      order = params[:order]
+      rule_id = params[:rule_id]
+      license_add.each do |license_id|
+        @rule_entry = RuleEntry.new
+        @rule_entry.rule_id = rule_id
+        @rule_entry.license_id = license_id
+        @rule_entry.order = @rule.rule_entries.count + 1
+        if plus.nil?
+          @rule_entry.plus = false
+        else  
+          @rule_entry.plus = plus.include?(license_id)
+        end        
+        @rule_entry.save
+      end  
+    end
+
+    respond_to do |format|
+      format.html { render action: "index" }
+      format.json { render json: @rule_entry }
+    end
+
+#   respond_to do |format|
+#      if @rule_entry.save
+#        format.html { redirect_to @rule_entry, notice: 'Rule entry was successfully created.' }
+#        format.json { render json: @rule_entry, status: :created, location: @rule_entry }
+#      else
+#        format.html { render action: "index" }
+#        format.json { render json: @rule_entry.errors, status: :unprocessable_entity }
+#      end
+#    end
   end
 
   # PUT /rule_entries/1
