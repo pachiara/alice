@@ -3,7 +3,7 @@ class RulesController < ApplicationController
   # GET /rules.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.rules')
-    @rules = Rule.order('created_at ASC').page(params[:page]).per_page(10)
+    @rules = Rule.order('name').page(params[:page]).per_page(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +49,7 @@ class RulesController < ApplicationController
 
     respond_to do |format|
       if @rule.save
-        format.html { redirect_to @rule, notice: t('flash.rule.create.notice') }
+        format.html { redirect_to rules_path, notice: t('flash.rule.create.notice') }
         format.json { render json: @rule, status: :created, location: @rule }
       else
         format.html { render action: "new" }
@@ -66,7 +66,7 @@ class RulesController < ApplicationController
 
     respond_to do |format|
       if @rule.update_attributes(params[:rule])
-        format.html { redirect_to @rule, notice: t('flash.rule.update.notice') }
+        format.html { redirect_to rules_path, notice: t('flash.rule.update.notice') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

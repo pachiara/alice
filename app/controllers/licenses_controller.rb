@@ -1,10 +1,23 @@
 class LicensesController < ApplicationController
+
+  def restore_search
+    if params[:page].nil? && !session[:licenses_page].nil? then
+       params[:page] = session[:licenses_page]
+    end
+    if params[:license_name].nil? && !session[:licenses_search_name].nil? then
+       params[:license_name] = session[:licenses_search_name]
+    end
+  end
+
   # GET /licenses
   # GET /licenses.json
   def index
+    restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
-    #@licenses = License.all
-    @licenses = License.order('name ASC').page(params[:page]).per_page(12)
+    @licenses = License.search(params[:license_name], params[:page])
+
+    session[:licenses_page] = params[:page]
+    session[:licenses_search_name] = params[:license_name]
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,6 @@
+<%= form_tag @search_form_path, :method => 'get', :class => "form-search" do %> 
+  <div class="input-append">
+    <%= text_field_tag :component_name, params[:component_name], :class => "search-query" %>
+    <button type="submit" class="btn"><i class="icon-search"></i> <%= t('activerecord.models.component') %></button>
+  </div>
+<% end %>

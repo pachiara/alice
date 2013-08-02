@@ -11,7 +11,7 @@ class Component < ActiveRecord::Base
   
   def self.search(name, page)
    conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   paginate :order => 'name', :per_page => 12, :page => page, :conditions => conditions
+   paginate :order => 'name, version', :per_page => 12, :page => page, :conditions => conditions
   end
   
 end

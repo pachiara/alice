@@ -3,7 +3,7 @@ class UsesController < ApplicationController
   # GET /uses.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.uses')
-    @uses = Use.all
+    @uses = Use.order('name')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +49,7 @@ class UsesController < ApplicationController
 
     respond_to do |format|
       if @use.save
-        format.html { redirect_to @use, notice: t('flash.use.create.notice') }
+        format.html { redirect_to uses_path, notice: t('flash.use.create.notice') }
         format.json { render json: @use, status: :created, location: @use }
       else
         format.html { render action: "new" }
@@ -66,7 +66,7 @@ class UsesController < ApplicationController
 
     respond_to do |format|
       if @use.update_attributes(params[:use])
-        format.html { redirect_to @use, notice: t('flash.use.update.notice') }
+        format.html { redirect_to uses_path, notice: t('flash.use.update.notice') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
