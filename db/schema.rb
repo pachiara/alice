@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716073002) do
+ActiveRecord::Schema.define(:version => 20130725092256) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -94,10 +94,11 @@ ActiveRecord::Schema.define(:version => 20130716073002) do
   end
 
   create_table "license_types", :force => true do |t|
-    t.string   "code",        :limit => 2
-    t.string   "description", :limit => 50
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "code",             :limit => 2
+    t.string   "description",      :limit => 50
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "protection_level"
   end
 
   add_index "license_types", ["code"], :name => "index_license_types_on_code", :unique => true
@@ -120,17 +121,18 @@ ActiveRecord::Schema.define(:version => 20130716073002) do
   add_index "licenses", ["name", "version"], :name => "index_licenses_on_name_and_version", :unique => true
 
   create_table "products", :force => true do |t|
-    t.string   "name",        :limit => 15
-    t.string   "version",     :limit => 5
-    t.string   "title",       :limit => 50
+    t.string   "name",                  :limit => 15
+    t.string   "version",               :limit => 5
+    t.string   "title",                 :limit => 50
     t.text     "description"
     t.integer  "license_id"
     t.integer  "use_id"
     t.date     "checked_at"
-    t.boolean  "result",                    :default => true
+    t.boolean  "result",                              :default => true
     t.text     "notes"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.integer  "compatible_license_id"
   end
 
   add_index "products", ["license_id"], :name => "index_products_on_license_id"
@@ -146,8 +148,6 @@ ActiveRecord::Schema.define(:version => 20130716073002) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "rule_entries", ["license_id", "order"], :name => "index_rule_entries_on_license_id_and_order", :unique => true
 
   create_table "rules", :force => true do |t|
     t.string   "name"
