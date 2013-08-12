@@ -17,7 +17,9 @@ class LicenseRulebook < Rulebook
   end
 
   def search_compatible(license1, license2)
-    compatibles = Floss_slide[license1] & Floss_slide[license2]
+    if Floss_slide.include?(license1) and Floss_slide.include?(license2) then
+      compatibles = Floss_slide[license1] & Floss_slide[license2]
+    end
     return compatibles ? compatibles[0] : nil 
   end
   
@@ -66,10 +68,11 @@ class LicenseRulebook < Rulebook
     # Prodotto proprietario e licenza richiesta strong
     rule :Strong, {:priority => 2},
       [Product, :prod] do |v|
+        next if v[:prod].license.nil? 
         if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
           v[:prod].result = false
           v[:prod].errors.add(:license_id, "incompatibile con licenza compatibilità componenti.")
-        end    
+        end
     end
     
 =begin
