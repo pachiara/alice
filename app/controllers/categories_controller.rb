@@ -3,8 +3,7 @@ class CategoriesController < ApplicationController
   # GET /categories.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.categories')
-#    @categories = Category.all
-    @categories = Category.order('created_at ASC').page(params[:page]).per_page(10)
+    @categories = Category.order('name').page(params[:page]).per_page(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -50,7 +49,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: t('flash.category.create.notice') }
+        format.html { redirect_to categories_path, notice: t('flash.category.create.notice') }
         format.json { render json: @category, status: :created, location: @category }
       else
         format.html { render action: "new" }
@@ -67,7 +66,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
-        format.html { redirect_to @category, notice:  t('flash.category.update.notice') }
+        format.html { redirect_to categories_path, notice:  t('flash.category.update.notice') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

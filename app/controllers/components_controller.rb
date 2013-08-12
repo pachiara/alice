@@ -1,9 +1,24 @@
 class ComponentsController < ApplicationController
+  
+  def restore_search
+    if params[:page].nil? && !session[:components_page].nil? then
+       params[:page] = session[:components_page]
+    end
+    if params[:component_name].nil? && !session[:components_search_name].nil? then
+       params[:component_name] = session[:components_search_name]
+    end
+  end
+  
   # GET /components
   # GET /components.json
   def index
+    restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.components')
-    @components = Component.order('name, version').page(params[:page]).per_page(12)
+    @search_form_path = components_path
+    @components = Component.search(params[:component_name], params[:page])
+    
+    session[:components_page] = params[:page]
+    session[:components_search_name] = params[:component_name]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +64,7 @@ class ComponentsController < ApplicationController
 
     respond_to do |format|
       if @component.save
-        format.html { redirect_to @component, notice: t('flash.component.create.notice') }
+        format.html { redirect_to components_path, notice: t('flash.component.create.notice') }
         format.json { render json: @component, status: :created, location: @component }
       else
         format.html { render action: "new" }
@@ -66,7 +81,7 @@ class ComponentsController < ApplicationController
 
     respond_to do |format|
       if @component.update_attributes(params[:component])
-        format.html { redirect_to @component, notice: t('flash.component.update.notice') }
+        format.html { redirect_to(components_path, notice: t('flash.component.update.notice')) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

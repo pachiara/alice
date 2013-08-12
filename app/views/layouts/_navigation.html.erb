@@ -4,7 +4,7 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-list icon-white'></i> Licenze <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to( t('activerecord.models.licenses'), licenses_path)  %></li>
+      <li><%= link_to( t('activerecord.models.licenses'), licenses_path(:commit => "clear"))  %></li>
       <li><%= link_to( t('activerecord.models.categories'), categories_path)  %></li>
       <li><%= link_to( t('activerecord.models.license_types'), license_types_path)  %></li>
     </ul>
@@ -14,14 +14,13 @@
     <ul class="dropdown-menu">
       <li><%= link_to(t('activerecord.models.uses'), uses_path)  %></li>
       <li><%= link_to('Regole', rules_path)  %></li>          	
-      <li><%= link_to('Controllo', licenses_path)  %></li>
     </ul>
   </li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book icon-white'></i> Prodotti <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to(t('activerecord.models.products'), products_path)  %></li>
-      <li><%= link_to(t('activerecord.models.components'), components_path)  %></li>
+      <li><%= link_to(t('activerecord.models.products'), products_path(:commit => "clear"))  %></li>
+      <li><%= link_to(t('activerecord.models.components'), components_path(:commit => "clear"))  %></li>
       <li><%= link_to(t('activerecord.models.ties'), ties_index_path)  %></li>
     </ul>
   </li>

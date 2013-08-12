@@ -49,7 +49,7 @@ class LicenseTypesController < ApplicationController
 
     respond_to do |format|
       if @license_type.save
-        format.html { redirect_to @license_type, notice: t('flash.license_type.create.notice') }
+        format.html { redirect_to license_types_path, notice: t('flash.license_type.create.notice') }
         format.json { render json: @license_type, status: :created, location: @license_type }
       else
         format.html { render action: "new" }
@@ -66,7 +66,7 @@ class LicenseTypesController < ApplicationController
 
     respond_to do |format|
       if @license_type.update_attributes(params[:license_type])
-        format.html { redirect_to @license_type, notice: t('flash.license_type.update.notice') }
+        format.html { redirect_to license_types_path, notice: t('flash.license_type.update.notice') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -2,17 +2,15 @@ class TiesController < ApplicationController
   def index
     
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
-#    @products = Product.order('created_at ASC').page(params[:page]).per_page(12)
-#    @components = Component.order('created_at ASC').page(params[:page]).per_page(12)
     @products = Product.search(params[:product_name], params[:page])
     @components = Component.search(params[:component_name], params[:page])
+    @search_form_path = ties_index_path
     
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
     end
-    
-    
+        
   end
   
   def select

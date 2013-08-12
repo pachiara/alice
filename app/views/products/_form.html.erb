@@ -1,19 +1,22 @@
 <%= simple_form_for(@product) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs form-horizontal">
-    <%= f.input :name %>
-    <%= f.input :version, :input_html => { :class => "span2" } %>
-    <%= f.input :title, :input_html => { :class => "span6" } %>
-    <%= f.input :description, :input_html => { :class => "span7" } %>
-    <%= f.association :license, collection: License.all(order: 'name') %>
-    <%= f.association :use, label_method: :description %>
-    <%= f.input :checked_at %>
-    <%= f.input :result %>
-    <%= f.input :notes, :input_html => { :class => "span7" } %>
+  <div class="form-inputs">
+    <div class="row">
+      <%= f.input :name, :wrapper_html => { :class => "span3" } %>
+      <%= f.input :title, :wrapper_html => { :class => "span5" }, :input_html => { :class => "span5" } %>
+      <%= f.association :use, label_method: :description, :wrapper_html => { :class => "span3" } %>
+    </div>
+    <div class="row">
+      <%= f.input :version, :wrapper_html => { :class => "span3" } %>
+      <%= f.association :license, collection: License.all(order: 'name'), :wrapper_html => { :class => "span3" } %>
+      <%= f.input :checked_at , :wrapper_html => { :class => "span3" },  :input_html => { :class => "span1" } %>
+      <%= f.input :result, :wrapper_html => { :class => "span1" } %>
+    </div>
+    <%= f.input :description, :input_html => { :class => "span11", :rows => 5 } %>
+    <%= f.input :notes, :input_html => { :class => "span11", :rows => 5 } %>
   </div>
 
-  <br />
   <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
