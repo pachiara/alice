@@ -4,7 +4,7 @@ class DetectedComponent < ActiveRecord::Base
   
   validates_presence_of :name, :version
 
-  @@grubber = ["license", "public", "software" ,"and", "the", "no", "information", "available"]
+  @@grubber = ["license","public","software","none","and","the","no","information","available",'\W']
   
   def purify_name(name)
     purified_name = String.new(str=name)
