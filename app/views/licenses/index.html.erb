@@ -6,6 +6,7 @@
     <th><%= t('activerecord.attributes.license.name') %></th>
     <th><%= t('activerecord.attributes.license.description') %></th>
     <th><%= t('activerecord.attributes.license.version') %></th>
+    <th><%= t('activerecord.attributes.license.flag_osi') %></th>
     <th><%= t('activerecord.attributes.license.license_type') %></th>
     <th><%= t('activerecord.attributes.license.category') %></th>
     <th><%= t('activerecord.attributes.license.text_license') %></th>
@@ -18,6 +19,7 @@
     <td><%= license.name %></td>
     <td><%= license.description %></td>
     <td><%= license.version %></td>
+    <td><% if license.flag_osi %><span class="badge badge-info">osi</span><% end %></td>
     <td><%= unless license.license_type.nil?; license.license_type.description; end %></td>
     <td><%= unless license.category.nil?; license.category.name; end %></td>
     <td><% if license.text_license.size > 0 %><i class="icon-ok"></i><% end %></td>

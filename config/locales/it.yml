@@ -253,6 +253,7 @@ it:
         version:      "Versione"
         category:     "Categoria" 
         license_type: "Tipo Licenza"
+        flag_osi:     "OSI"
       category:
         name:         "Nome Categoria"    
         description:  "Descrizione"
