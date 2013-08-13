@@ -95,3 +95,4 @@ condizionato nella vista il nome della licenza per il prodotto che non ne ha.
 <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
 
 --------------------------- 
+documentare progetto
