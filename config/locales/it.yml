@@ -249,7 +249,7 @@ it:
         description:  "Descrizione"
         category_id:  "Id Categoria"
         text_license: "Testo"
-        name:         "Nome Licenza"    
+        name:         "Nome"    
         version:      "Versione"
         category:     "Categoria" 
         license_type: "Tipo Licenza"
