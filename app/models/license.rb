@@ -9,7 +9,7 @@ class License < ActiveRecord::Base
   
   has_many   :products
   
-  def self.search(name, page, per_page = 12)
+  def self.search(name, page, per_page = 10)
     conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
     paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
   end
