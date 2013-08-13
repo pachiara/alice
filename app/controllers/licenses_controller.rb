@@ -7,6 +7,9 @@ class LicensesController < ApplicationController
     if params[:license_name].nil? && !session[:licenses_search_name].nil? then
        params[:license_name] = session[:licenses_search_name]
     end
+    if !params[:license_name].chop.empty? then
+      params[:page] = 1
+    end
   end
 
   # GET /licenses
