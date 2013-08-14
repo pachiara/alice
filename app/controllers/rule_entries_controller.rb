@@ -6,6 +6,7 @@ class RuleEntriesController < ApplicationController
 
     @rule = Rule.find(params[:rule_id])    
     @rule_entries = @rule.rule_entries
+    @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 10)
 
     respond_to do |format|
