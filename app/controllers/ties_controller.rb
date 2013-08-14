@@ -41,7 +41,8 @@ class TiesController < ApplicationController
     @product = Product.find(params[:product_id])
     @components_ties = @product.components
     @components = Component.search(params[:component_name], params[:page])
-
+    @search_form_path = product_ties_edit_path
+    
     if !params[:component_del].nil?
       @product.del_relation(params[:component_del])
     end
