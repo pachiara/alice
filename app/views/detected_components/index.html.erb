@@ -5,14 +5,16 @@
 <br />
 
 <%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
+<br />
 
-<table class="table table-condensed">
+<table class="table table-condensed table-striped">
   <tr>
     <th><%= t('activerecord.attributes.detected_component.name_long') %></th>
     <th><%= t('activerecord.attributes.detected_component.version_long') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_id') %></th>
+    <th></th>
   </tr>
 
 <% @detected_components.each do |detected_component| %>
@@ -32,7 +34,7 @@
     <td><div class="btn-group">
       <%= link_to raw('<i class="icon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
       <%= link_to raw('<i class="icon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
-  </td>
+    </td>
     
   </tr>
 <% end %>

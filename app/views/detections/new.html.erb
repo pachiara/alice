@@ -3,8 +3,12 @@
 
   <%= hidden_field_tag 'product_id', @detection.product.id %>
 
-  <h4><%= t('activerecord.attributes.product.name') %>: <%= @detection.product.name %></h4>
-
+  <button class="btn btn-large btn-block btn-primary disabled" type="button">
+    <%= t('activerecord.models.product') %>: <%= @detection.product.name %> - Vers. <%= @detection.product.version %>
+  </button>
+  <br />
+  <br />
+  
   <div class="form-inputs form-horizontal">
     <div class="control-group">
       <%= f.input :name %>

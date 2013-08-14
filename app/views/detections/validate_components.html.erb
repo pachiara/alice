@@ -3,7 +3,11 @@
   <%= hidden_field_tag 'product_id', @detection.product.id %>
   <%= hidden_field_tag 'detection_id', @detection.id %>
 
-  <h4><%= t('activerecord.attributes.product.name_long') %>: <%= @detection.product.name %></h4>
+  <button class="btn btn-large btn-block btn-primary disabled" type="button">
+  	<%= t('activerecord.attributes.product.name_long') %>: <%= @detection.product.name %>
+    - Vers. <%= @detection.product.version %>
+  </button>
+  
   <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detection.name %></h4>
 
   <% if @detection.errors.full_messages.length > 0 %>
