@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
    
   def self.search(name, page, per_page = 10)
    conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   paginate :order => 'created_at ASC', :per_page => per_page, :page => page, :conditions => conditions
+   paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
   end
   
   def check

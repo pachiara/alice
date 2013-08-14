@@ -2,12 +2,26 @@ require 'ruleby'
 
 class ProductsController < ApplicationController
   include Ruleby
+
+  def restore_search
+    if params[:page].nil? && !session[:products_page].nil? then
+       params[:page] = session[:products_page]
+    end
+    if params[:product_name].nil? && !session[:products_search_name].nil? then
+       params[:product_name] = session[:products_search_name]
+    end
+  end
   
   # GET /products
   # GET /products.json
   def index
+    restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
-    @products = Product.order('created_at ASC').page(params[:page]).per_page(12)
+    @search_form_path = products_path
+    @products = Product.search(params[:product_name], params[:page])
+
+    session[:products_page] = params[:page]
+    session[:products_search_name] = params[:product_name]
 
     respond_to do |format|
       format.html # index.html.erb

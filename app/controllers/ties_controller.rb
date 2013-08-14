@@ -15,7 +15,8 @@ class TiesController < ApplicationController
   
   def select
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
-    
+    @search_form_path = ties_index_path
+        
     if !params[:product_id].nil?
       @product = Product.find(params[:product_id])
       @components = @product.components

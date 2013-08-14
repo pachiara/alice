@@ -1,6 +1,0 @@
-<%= form_tag ties_index_path, :method => 'get', :class => "form-search" do %>	
-  <div class="input-append">
-    <%= text_field_tag :product_name, params[:product_name], :class => "span6 search-query" %>
-    <button type="submit" class="btn"><i class="icon-search"></i> <%= t('activerecord.models.product') %></button>
-  </div>
-<% end %>
