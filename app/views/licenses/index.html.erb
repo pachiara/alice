@@ -1,16 +1,26 @@
 <%= render :partial => "search_license" %></h3>
 <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>
-	  	
+  	
 <table class="table table-striped">
   <tr>
-    <th><%= t('activerecord.attributes.license.name') %></th>
-    <th><%= t('activerecord.attributes.license.description') %></th>
+  	<%= form_tag licenses_path, :method => 'get' %>
+    <th><%= button_tag(:class => @class_name, :type => 'submit', :name => 'order', :value => 'name') do  %>
+    	<%= t('activerecord.attributes.license.name')%> <% if !@down_name.nil? %><% if @down_name %><i class="icon-chevron-down"><% else %><i class="icon-chevron-up"><% end %></i>
+    <% end %><% end %></th>
+    <th><%= button_tag(:class => @class_description, :type => 'submit', :name => 'order', :value => 'description') do  %>
+    	<%= t('activerecord.attributes.license.description')%> <% if !@down_description.nil? %><% if @down_description %><i class="icon-chevron-down"><% else %><i class="icon-chevron-up"><% end %></i>
+    <% end %><% end %></th>
     <th><%= t('activerecord.attributes.license.version') %></th>
     <th><%= t('activerecord.attributes.license.flag_osi') %></th>
-    <th><%= t('activerecord.attributes.license.license_type') %></th>
-    <th><%= t('activerecord.attributes.license.category') %></th>
+    <th><%= button_tag(:class => @class_license_type, :type => 'submit', :name => 'order', :value => 'license_type') do  %>
+    	<%= t('activerecord.attributes.license.license_type')%> <% if !@down_license_type.nil? %><% if @down_license_type %><i class="icon-chevron-down"><% else %><i class="icon-chevron-up"><% end %></i>
+    <% end %><% end %></th>
+    <th><%= button_tag(:class => @class_category, :type => 'submit', :name => 'order', :value => 'category') do  %>
+    	<%= t('activerecord.attributes.license.category')%> <% if !@down_category.nil? %><% if @down_category %><i class="icon-chevron-down"><% else %><i class="icon-chevron-up"><% end %></i>
+    <% end %><% end %></th>
     <th><%= t('activerecord.attributes.license.text_license') %></th>
     <th></th>
+    </form>
   </tr>    
 
 <% @licenses.each do |license| %>

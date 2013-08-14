@@ -13,4 +13,10 @@ class License < ActiveRecord::Base
     conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
     paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
   end
+
+# order = 'description ASC', 'description DESC', 'category_id ASC', category_id DESC', 'license_type_id ASC', 'license_type_id DESC'
+  def self.search_order(order, page, per_page = 10)
+    paginate :order => order, :per_page => per_page, :page => page
+  end
+
 end
