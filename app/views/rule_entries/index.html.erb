@@ -15,11 +15,11 @@
   <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.rules') %></li>
   <li class="divider"></li>
 </ul>  
-<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>	
+<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
 
 <%= form_tag rule_rule_entries_path, :method => 'post' do |f| %>
 
-<table class="table table-striped table-condensed">
+<table class="table table-striped">
   <tr>
     <th><%= t('actions.select') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
@@ -47,13 +47,15 @@
   <li class="divider"></li>
 </ul>  	
 <!--Rule selected content-->
-<table class="table table-striped table-condensed">
+<table class="table table-striped">
   <tr>
   	<th><%= t('actions.select') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
     <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
     <th><%= t('activerecord.attributes.rule_entry.order') %></th>
   </tr>
+
+<%= will_paginate @rule_entries, :param_name => 'rule_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
 
 <% @rule_entries.each do |rule_entry| %>
   <tr>
