@@ -83,6 +83,7 @@ class LicensesController < ApplicationController
   def index
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
+    @search_form_path = licenses_path
     @class_name = "btn btn-mini"
     @class_description = "btn btn-mini"
     @class_category = "btn btn-mini"
