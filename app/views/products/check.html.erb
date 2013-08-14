@@ -4,8 +4,11 @@
   <%= hidden_field_tag 'result', @product.result %>
   <%= hidden_field_tag 'compatible_license_id', @product.compatible_license.id %>
 
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
+</button>
+
   <h4>
-    <%= t('activerecord.attributes.product.name_long') %>: <%= @product.name %>
     <br/>
     <%= t('activerecord.attributes.product.result') %>:
     <% if @product.result? %>
