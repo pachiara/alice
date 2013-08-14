@@ -1,5 +1,8 @@
-<h4><%= t('activerecord.attributes.product.name') %>: <%= Product.find(params[:product_id]).name %></h4>
-
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
+</button>
+<br />
+<br />
 <%= will_paginate @detections, :renderer => BootstrapPagination::Rails %>
 
 <table class="table table-striped">
