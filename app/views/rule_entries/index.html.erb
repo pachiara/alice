@@ -21,18 +21,18 @@
 
 <table class="table table-striped">
   <tr>
-    <th><%= t('actions.select') %></th>
+    <th><%= t('actions.add') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
+    <th><%= t('activerecord.attributes.license.version') %></th>
     <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
-    <th><%= t('activerecord.attributes.rule_entry.order') %></th>
   </tr>
 
 <% @licenses.each do |license| %>
   <tr>
     <td><%= check_box_tag "license_add[]", license.id, false, :multiple => "true" %></td>
     <td><%= license.name %></td>
+    <td><%= license.version %></td>
     <td><%= check_box_tag "plus[]", license.id, false, :multiple => "true" %></td>
-    <td><%= label_tag "order[]", license.id %></td>
   </tr>
 <% end %>
 </table>
@@ -49,10 +49,11 @@
 <!--Rule selected content-->
 <table class="table table-striped">
   <tr>
-  	<th><%= t('actions.select') %></th>
+  	<th><%= t('actions.delete') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
     <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
     <th><%= t('activerecord.attributes.rule_entry.order') %></th>
+    <th><%= t('actions.edit') %></th>
   </tr>
 
 <%= will_paginate @rule_entries, :param_name => 'rule_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
@@ -62,7 +63,13 @@
     <td><%= check_box_tag "license_del[]", rule_entry.id, false, :multiple => "true" %></td>
     <td><%= rule_entry.license.name %></td>
     <td><% if rule_entry.plus %>+<% end %></td>
-    <td><%= rule_entry.order %></td>
+    <td><%= rule_entry.order_id %></td>
+    <td>
+      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
+      <i class="icon-chevron-up"></i><% end %>
+      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'down', :value => rule_entry.id) do  %>
+      <i class="icon-chevron-down"></i><% end %>
+    </td>
   </tr>
 <% end %>
 </table>

@@ -306,11 +306,11 @@ it:
       rule:
         name:         "Nome"
         license:      "Licenza"
-        plus:         "e successive"
+        plus:         "in poi"
       rule_entry:
         license:      "Licenza"
-        plus:         "e successive"
-        order:        "Sequenza"  
+        plus:         "in poi"
+        order:        "Ordine"  
 
   actions:
     actions: "Azioni"
@@ -345,6 +345,8 @@ it:
     acquire: "Acquisisci"
     disabled: "Disabilitato"
     check: "Controllo"
+    add: "Add"
+    delete: "Del"
   
   will_paginate:
     next_label: "Sucessivi"

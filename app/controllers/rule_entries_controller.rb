@@ -3,10 +3,9 @@ class RuleEntriesController < ApplicationController
   # GET /rule_entries.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')
-
     @rule = Rule.find(params[:rule_id])    
 #    @rule_entries = @rule.rule_entries
-    @rule_entries = @rule.rule_entries.paginate :order => 'id', :per_page => 10, :page => params[:rule_page]
+    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 10, :page => params[:rule_page]
     @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 10)
 
@@ -45,11 +44,13 @@ class RuleEntriesController < ApplicationController
 
   # POST /rule_entries
   # POST /rule_entries.json
-  def create    
+  def create
+    @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')    
     @rule = Rule.find(params[:rule_id])    
-    @rule_entries = @rule.rule_entries
+    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 10, :page => params[:rule_page]
+    @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 10)
-
+    
     if !params[:license_del].nil?
       license_del = params[:license_del]
       license_del.each do |license_id|
@@ -61,13 +62,12 @@ class RuleEntriesController < ApplicationController
     if !params[:license_add].nil?
       license_add = params[:license_add]
       plus = params[:plus]
-      order = params[:order]
       rule_id = params[:rule_id]
       license_add.each do |license_id|
         @rule_entry = RuleEntry.new
         @rule_entry.rule_id = rule_id
         @rule_entry.license_id = license_id
-        @rule_entry.order = @rule.rule_entries.count + 1
+        @rule_entry.order_id = @rule.rule_entries.count + 1
         if plus.nil?
           @rule_entry.plus = false
         else  
@@ -75,6 +75,18 @@ class RuleEntriesController < ApplicationController
         end        
         @rule_entry.save
       end  
+    end
+
+    if !params[:up].nil?
+      @rule_entry = RuleEntry.find(params[:up])
+      @rule_entry.update_attribute('order_id', @rule_entry.order_id+1)
+    end
+
+    if !params[:down].nil?
+      @rule_entry = RuleEntry.find(params[:down])
+      if @rule_entry.order_id > 1 then
+        @rule_entry.update_attribute('order_id', @rule_entry.order_id-1)
+      end
     end
 
     respond_to do |format|
