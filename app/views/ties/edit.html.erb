@@ -3,14 +3,14 @@
 </button>
 <br />
 <div class="container-fluid">
+<%= render :partial => "components/search_component" %>	
 <div class="row-fluid">
 <div class="span12">	
 
 <div class="row-fluid">
 <div class="span6">
-<%= render :partial => "components/search_component" %>
 <div class="well sidebar-nav">
-<%= will_paginate @components, :renderer => BootstrapPagination::Rails %>	
+<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
 <!--Component to select content-->
 <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>	
 <ul class="nav nav-list">
@@ -30,6 +30,7 @@
 
 <div class="span6">
 <div class="well sidebar-nav">
+<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
 <!--Component selected content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.components') %></li>

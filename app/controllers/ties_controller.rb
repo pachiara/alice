@@ -3,7 +3,7 @@ class TiesController < ApplicationController
     
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
     @products = Product.search(params[:product_name], params[:page])
-    @components = Component.search(params[:component_name], params[:page])
+    @components = Component.search(params[:component_name], params[:component_page])
     @search_form_path = ties_index_path
     
     respond_to do |format|
@@ -19,14 +19,14 @@ class TiesController < ApplicationController
         
     if !params[:product_id].nil?
       @product = Product.find(params[:product_id])
-      @components = @product.components
-      @products = Product.order('id ASC').page(params[:page]).per_page(12)
+      @components = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:component_page]
+      @products = Product.order('name, version').page(params[:page]).per_page(10)
     end
 
     if !params[:component_id].nil?  
       @component = Component.find(params[:component_id])
-      @products = @component.products
-      @components = Component.order('id ASC').page(params[:page]).per_page(12)
+      @products = @component.products.paginate :order => 'name, version', :per_page => 10, :page => params[:page]
+      @components = Component.order('name, version').page(params[:component_page]).per_page(10)
     end
 
     respond_to do |format|
@@ -39,8 +39,8 @@ class TiesController < ApplicationController
     @title = t('actions.edit') + " " + t('activerecord.models.tie')
     
     @product = Product.find(params[:product_id])
-    @components_ties = @product.components
-    @components = Component.search(params[:component_name], params[:page])
+    @components_ties = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:component_ties_page]
+    @components = Component.search(params[:component_name], params[:component_page])
     @search_form_path = product_ties_edit_path
     
     if !params[:component_del].nil?
