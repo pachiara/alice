@@ -1,4 +1,8 @@
-<h4><%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %></h4>
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %>
+</button>
+<br />
+<br />
 
 <%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
 
