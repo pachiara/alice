@@ -3,43 +3,36 @@
 integrazione con IDPC
 https://github.com/intridea/omniauth/wiki
 --------------------
-?- web-app-theme
-integrazione con bootstrap
-http://pilu.github.io/web-app-theme/#themes/reidb-greenish
---------------------
-- paginazione 
-rientro alla stessa pagina navigata 
-dopo la modifica
-
+OK - paginazione 
+rientro alla stessa pagina navigata dopo la modifica
 _____________________
 - assegnamento delle licenze alla rilevazione:
-1) lasciare (con una scelta) la possibilità di visualizzare tutte le licenze per sceglierne una non in elenco,
-   eventualmente con la selezione per effettuare un nuovo inserimento.
-   http://127.0.0.1:3000/detected_components/318/edit
 
-2) modificare le intestazioni:
-Modifica Componente rilevato
-Nome: portale-assiste
-Nome Rilevamento: primo rilevamento portale-assiste   
+1) scelta della licenza:
+lasciare (con una scelta) la possibilità di visualizzare tutte le licenze per sceglierne una non in elenco,
+eventualmente con la selezione per effettuare un nuovo inserimento.
+http://127.0.0.1:3000/detected_components/318/edit
+
+OK 2) modificare le intestazioni:
+ Modifica Componente rilevato
+ Nome: portale-assiste
+ Nome Rilevamento: primo rilevamento portale-assiste   
  
-Modifica Componente rilevato
-Prodotto: portale-assiste - Rilevamento: primo rilevamento portale-assiste   
-(nel falso bottone disattivato blu)
-
+ Modifica Componente rilevato
+ Prodotto: portale-assiste - Rilevamento: primo rilevamento portale-assiste   
+ (nel falso bottone disattivato blu)
 _____________________
 - elenco licenze
   http://127.0.0.1:3000/licenses
-1)  filtrare ordinamento per nome, categoria e tipo
+OK 1) filtrare ordinamento per nome, categoria e tipo
   
-2)  al ritorno di un aggiornamento rimanere sulla stessa pagina della lista da cui si era partiti
+OK 2) al ritorno di un aggiornamento rimanere sulla stessa pagina della lista da cui si era partiti
 
-3) inserire ricerca per licenza
-
+OK 3) inserire ricerca per licenza
 ______________________
-
 - detected_component.rb
 
-1) Il caso di "No license information available."
+OK 1) Il caso di "No license information available."
 purify_name ritorna "." 
 in search_licenses se words contiene un "." esegue la query selezionando solo le licenze che hanno un "." nel nome.
 
@@ -48,13 +41,12 @@ elimina sia gli spazi che i caratteri speciali
 @@grubber = ["license", "public", "software" ,"and", "the", "no", "information", "available", '\W']
 
 
-2) il caso del componente "concurrent 1.3.4" che ha come licenza:  none
+OK 2) il caso del componente "concurrent 1.3.4" che ha come licenza:  none
 @@grubber = ["license","public","software","none","and","the","no","information","available",'\W']
 
 inserito "none" nelle parole dirty prima di "no"
 _______________________
-
-- license_rulebook.rb
+OK - license_rulebook.rb
 
 in search_compatible va in errore se la licenza del componente da controllare non è inclusa 
 nelle regole delle licenze conosciute 
@@ -71,9 +63,9 @@ nelle regole delle licenze conosciute
  --------------------------- 
 Va in errore se non esiste la licenza sul prodotto
 
-- license_rulebook.rb
+OK - license_rulebook.rb
 
-- check.html.erb 
+OK - check.html.erb 
 
 license_rulebook.rb
 
@@ -93,6 +85,7 @@ check.html.erb
 condizionato nella vista il nome della licenza per il prodotto che non ne ha.
 
 <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
-
 --------------------------- 
-documentare progetto
+- documentare progetto
+--------------------------- 
+OK - provare installazione in environment di produzione

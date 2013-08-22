@@ -1,0 +1,125 @@
+Installazione
+
+1) installare alcuni prerequisiti da root (pwd: alice)
+
+    apt-get install apache2
+    apt-get install openssl
+    apt-get install vim
+    apt-get install curl
+    apt-get install mysql-server
+    apt-get install mysql-client
+    apt-get install libmysqlclient-dev
+    apt-get install graphviz
+    apt-get install libcurl4-openssl-dev
+    apt-get install apache2-threaded-dev
+
+2) creare l'utente dell'applicazione rails
+    
+    adduser alice
+    (pwd: alice)
+
+3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione
+
+    vim .set_proxy
+
+export http_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export HTTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export https_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export HTTPS_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export ftp_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export FTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export rsync_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export RSYNC_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export all_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+
+    vim .bashrc 
+         . ~/.set_proxy        
+    vim .profile
+         . ~/.set_proxy        
+    vim .bash_profile 
+         source ~/.profile
+
+4) con user alice installare rvm
+
+    curl -L https://get.rvm.io | bash -s stable
+   
+5) aggiungere nei sudoers l'utente alice (serve per le dipendenze mancanti)
+   nel file /etc/group
+        sudo:x:27:alice
+
+6) installare ruby (installa le dipendenze mancanti)
+   sempre con lo user alice, quando ne avra' bisogno chiedera' la password di root (alice)
+
+    rvm install 2.0.0-p247
+
+7) installazione di rails 
+    gem install rails -v 3.2.13
+
+8) Alice
+    git clone https://github.com/pachiara/alice.git
+    cd alice
+    bundle install
+    rake db:setup RAILS_ENV=production
+    rake tmp:clear
+    rake assets:clean
+    rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+
+9) Apache + Passenger
+
+   gem install passenger
+   sudo passenger-install-apache2-module
+
+   login con user root
+
+   cd /var/www
+   ln -s /home/alice/alice/public/ alice
+
+   vim /etc/apache2/sites-enabled/000-default
+
+   
+LoadModule passenger_module /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13/buildout/apache2/mod_passenger.so
+   PassengerRoot /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13
+   PassengerDefaultRuby /home/alice/.rvm/wrappers/ruby-2.0.0-p247/ruby
+
+<VirtualHost *:80>
+        ServerName  alice.lispa.it
+        ServerAdmin chiara.palmieri@lispa.it
+
+        DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+
+################ Applicazioni Rails ####################
+# in /var/www symbolic link to public dir in rails app #
+########################################################
+
+        RackBaseURI /alice
+        <Directory /var/www/alice>
+                 # This relaxes Apache security settings.
+                 AllowOverride all
+                 # MultiViews must be turned off.
+                 Options -MultiViews
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+10) riavviare apache2
+
+    apache2ctl restart
