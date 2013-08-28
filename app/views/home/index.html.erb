@@ -25,20 +25,20 @@
       Per la verifica occorre fornire l'elenco dei componenti utilizzati.
     </p>
     <br />
-    <p><%= link_to t('actions.view_details'), licenses_path, :class => "btn" %></p>
+    <p><%= link_to t('actions.view_details'), products_path(:commit => "clear"), :class => "btn" %></p>
   </div>
   <div class="span4">
-    <h4>Prodotti controllati</h4>
+    <h4>Componenti controllati</h4>
     <br />
     <p>
-      <%= image_tag("sfondo3.png", :alt => "Verifica licenze", :class => "img-rounded") %>
+      <%= image_tag("sfondo3.png", :alt => "Componenti controllati", :class => "img-rounded") %>
     </p>
     <br />
     <p>
-      Archivio dei prodotti verificati. Questo archivio viene incrementato ogni volta che si effettua una verifica delle licenze. <br />
-      Contiene le informazioni rilevanti sui prodotti e sulla loro modalità di utilizzo.
+      Archivio dei componenti verificati. Questo archivio viene incrementato ogni volta che si effettua una verifica delle licenze. <br />
+      Contiene le informazioni rilevanti sui componenti e sulla loro modalità di utilizzo.
     </p>
     <br />
-    <p><%= link_to t('actions.view_details'), licenses_path, :class => "btn" %></p>
+    <p><%= link_to t('actions.view_details'), components_path(:commit => "clear"), :class => "btn" %></p>
   </div>
 </div>
