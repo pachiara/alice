@@ -24,7 +24,6 @@
 
   <% if @product.errors.full_messages.length > 0 %>
     <div class="alert alert-error">
-<!--      <span class="lead text-error">I seguenti componenti non hanno una licenza assegnata:</span> -->
       <ol>
         <% @product.errors.full_messages.each do |msg| %>
            <li><label class="text-error"><%= msg %></label></li>
@@ -32,6 +31,18 @@
       </ol>
     </div>
   <% end %>
+
+  <% if !@product.warnings.nil? %>
+    <div class="alert">
+      <strong>Attenzione!</strong>
+      <ol>
+        <% @product.warnings.full_messages.each do |msg| %>
+           <li><label><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
 
   <div class="form-inputs form-horizontal">
 

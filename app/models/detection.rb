@@ -76,7 +76,7 @@ class Detection < ActiveRecord::Base
 
   def validate_acquire
     detected_components.each do |component|
-      if component.license_id.nil?
+      if component.license_id.nil? and !component.own
          errors.add("#{component.name}", "#{component.version}")
       end
     end

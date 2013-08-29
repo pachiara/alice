@@ -287,6 +287,8 @@ it:
         checked_at:   "Data controllo"
         result:       "Esito"
         notes:        "Note"
+        purchased:    "Acquistato"
+        own:          "Proprio"
       detection:
         name:         "Nome Rilevamento"
         created_at:   "Data rilevamento"

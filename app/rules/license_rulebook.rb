@@ -17,6 +17,8 @@ class LicenseRulebook < Rulebook
   end
 
   def search_compatible(license1, license2)
+    # TODO Rivedere: una licenza "X" non compresa nelle rules dovrebbe essere segnalata in modo specifico
+    #   Al momento il risultato è un KO error del tipo: "Componente Y: licenza X incompatibile con licenza: Z"
     if Floss_slide.include?(license1) and Floss_slide.include?(license2) then
       compatibles = Floss_slide[license1] & Floss_slide[license2]
     end
@@ -57,9 +59,9 @@ class LicenseRulebook < Rulebook
         new_compatible_license = self.search_compatible(v[:prod].compatible_license, v[:comp].license)
         if new_compatible_license == nil 
           v[:prod].result = false
-          error_string = "#{v[:comp].name} licenza #{v[:comp].license.name} " +
+          error_string = "licenza #{v[:comp].license.name} " +
                          "incompatibile con licenza: #{v[:prod].compatible_license.name}"
-          v[:prod].errors.add("Componente: ", "#{error_string}")
+          v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
         elsif v[:prod].compatible_license != new_compatible_license
           v[:prod].compatible_license = new_compatible_license
         end
@@ -68,11 +70,13 @@ class LicenseRulebook < Rulebook
     # Prodotto proprietario e licenza richiesta strong
     rule :Strong, {:priority => 2},
       [Product, :prod] do |v|
-        next if v[:prod].license.nil? 
-        if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
+        if v[:prod].license.nil?
+          v[:prod].addWarning("Prodotto #{v[:prod].name}:", "non è stata specificata una licenza")
+        else if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
           v[:prod].result = false
           v[:prod].errors.add(:license_id, "incompatibile con licenza compatibilità componenti.")
         end
+      end
     end
     
 =begin

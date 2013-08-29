@@ -113,7 +113,8 @@ class ProductsController < ApplicationController
     engine :engine do |e|
       LicenseRulebook.new(e).rules
       e.assert @product
-      @product.components.each do |component|
+      @components = @product.components.where(:own => false, :purchased => false )
+      @components.each do |component|
         e.assert component
       end
       e.match
