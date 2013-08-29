@@ -17,11 +17,7 @@ class LicenseRulebook < Rulebook
   end
 
   def search_compatible(license1, license2)
-    # TODO Rivedere: una licenza "X" non compresa nelle rules dovrebbe essere segnalata in modo specifico
-    #   Al momento il risultato è un KO error del tipo: "Componente Y: licenza X incompatibile con licenza: Z"
-    if Floss_slide.include?(license1) and Floss_slide.include?(license2) then
-      compatibles = Floss_slide[license1] & Floss_slide[license2]
-    end
+    compatibles = Floss_slide[license1] & Floss_slide[license2]
     return compatibles ? compatibles[0] : nil 
   end
   
@@ -56,6 +52,13 @@ class LicenseRulebook < Rulebook
     rule :Compatibility, {:priority => 4},
       [Product, :prod],
       [Component,:comp ] do |v|
+      if !Floss_slide.include?(v[:comp].license)
+          v[:prod].result = false
+          error_string = "impossibile verificare compatibilità. " +
+                         "Mancano regole per la licenza #{v[:comp].license.name}."
+          v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+          next
+      end
         new_compatible_license = self.search_compatible(v[:prod].compatible_license, v[:comp].license)
         if new_compatible_license == nil 
           v[:prod].result = false

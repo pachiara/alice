@@ -24,6 +24,7 @@
 
   <% if @product.errors.full_messages.length > 0 %>
     <div class="alert alert-error">
+      <strong>Errori:</strong>
       <ol>
         <% @product.errors.full_messages.each do |msg| %>
            <li><label class="text-error"><%= msg %></label></li>
@@ -34,7 +35,7 @@
 
   <% if !@product.warnings.nil? %>
     <div class="alert">
-      <strong>Attenzione!</strong>
+      <strong>Avvisi:</strong>
       <ol>
         <% @product.warnings.full_messages.each do |msg| %>
            <li><label><%= msg %></label></li>
