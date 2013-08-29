@@ -41,9 +41,6 @@
 </table>
 
 <br />
-<%= link_to new_detected_component_path(:detection_id => params[:detection_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn" do %>
-  <i class="icon-plus"></i> <%= t('actions.new') %>
-<% end %>
  <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn" do %>
    <i class="icon-arrow-left"></i> <%= t('actions.back') %>
 <% end %>
