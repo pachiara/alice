@@ -185,7 +185,7 @@ type = P Permissiva
 	   
 flag_osi = true
 
-rails generate scaffold license name:string description:string version:string category_id:integer license_type_id:integer falg_osi:boolean text_license:text      
+rails generate scaffold license name:string description:string version:string category_id:integer license_type_id:integer flag_osi:boolean text_license:text      
 
 10) Sistemo le dimensioni dei campi e aggiungo le chiavi
 
@@ -781,3 +781,8 @@ rake db:migrate
 
 index
 ....
+
+36) creazione pagina di about
+
+ rails g controller about index
+
