@@ -55,11 +55,13 @@
 
 <br />
 
-<%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
-  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
-<% end %>
-<%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
-  <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
-<% end %> 
+<div class="form-actions">
+  <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
+    <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+  <% end %>
+  <%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
+    <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+  <% end %> 
+</div>
 
 <% end %>

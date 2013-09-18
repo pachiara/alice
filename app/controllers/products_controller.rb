@@ -1,4 +1,5 @@
 require 'ruleby'
+require 'json'
 
 class ProductsController < ApplicationController
   include Ruleby
@@ -32,13 +33,35 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    @title = t('actions.show') + " " + t('activerecord.models.product')
+    @title = t('actions.messages.graphics')
     @product = Product.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @product }
+    @components = @product.components
+    
+    purchased = own = open_source = 0
+    license_types = Hash.new
+    
+    LicenseType.all.each do |license_type|
+      license_types[license_type.description] = 0
     end
+
+    @components.each do |component|
+      purchased += 1 if component.purchased
+      own += 1 if component.own
+      open_source += 1 if !component.purchased && !component.own
+      license_types[component.license.license_type.description] += 1
+    end
+    
+    @component_types = Array.new
+    @component_types.push({:tipo => t('activerecord.attributes.component.purchased'), :qta => purchased}) if purchased > 0
+    @component_types.push({:tipo => t('activerecord.attributes.component.own'), :qta => own}) if own > 0
+    @component_types.push({:tipo => "Open source", :qta => open_source}) if open_source > 0
+    @component_types = @component_types.to_json
+
+    @license_types = Array.new
+    license_types.each do |data|
+      @license_types.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
+    end
+    @license_types = @license_types.to_json
   end
 
   # GET /products/new

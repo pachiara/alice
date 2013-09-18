@@ -37,10 +37,11 @@ class TiesController < ApplicationController
   
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.tie')
+    require 'will_paginate/array'
     
     @product = Product.find(params[:product_id])
     @components_ties = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:component_ties_page]
-    @components = Component.search(params[:component_name], params[:component_page])
+    @components = (Component.order('name, version').where("name like ?", "%#{params[:component_name]}%") - @product.components.order('name, version')).paginate(:per_page => 10, :page => params[:component_page])
     @search_form_path = product_ties_edit_path
     
     if !params[:component_del].nil?
