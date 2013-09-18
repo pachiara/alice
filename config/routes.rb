@@ -1,5 +1,11 @@
 Alice::Application.routes.draw do
 
+  get "about/alice"
+
+  get "about/lispa"
+
+  get "about/index"
+
   resources :rules do
     resources :rule_entries
   end
