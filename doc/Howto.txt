@@ -784,5 +784,5 @@ index
 
 36) creazione pagina di about
 
- rails g controller about index
+ rails g controller about index lispa alice
 
