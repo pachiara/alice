@@ -4,6 +4,10 @@
 
 <%= hidden_field_tag 'component_types', @component_types %>
 <%= hidden_field_tag 'license_types', @license_types %>
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
+</button>
+<br />
 <div class="row">
   <div class="span5">
     <h4>Numero di componenti per tipo</h4>

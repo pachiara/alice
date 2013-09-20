@@ -43,12 +43,17 @@ class ProductsController < ApplicationController
     LicenseType.all.each do |license_type|
       license_types[license_type.description] = 0
     end
+    license_types[t('activerecord.attributes.license_type.unidentified')] = 0
 
     @components.each do |component|
       purchased += 1 if component.purchased
       own += 1 if component.own
       open_source += 1 if !component.purchased && !component.own
-      license_types[component.license.license_type.description] += 1
+      if component.license.license_type.nil? 
+        license_types[t('activerecord.attributes.license_type.unidentified')] += 1
+      else
+        license_types[component.license.license_type.description] += 1
+      end  
     end
     
     @component_types = Array.new

@@ -260,7 +260,8 @@ it:
       license_type:
         code:         "Codice"    
         description:  "Descrizione"
-        protection_level: "Livello protezione"           
+        protection_level: "Livello protezione"
+        unidentified: "Non identificata"           
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"
@@ -350,6 +351,7 @@ it:
     add: "Add"
     delete: "Del"
     graphics: "Grafici"
+    print:  "Stampa"
     
     messages:
       graphics: "Statistiche composizione del prodotto"
