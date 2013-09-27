@@ -44,3 +44,29 @@
   var legend_width = radius * 3;
 </script>
 <%= render 'graphics.html' %>
+
+<table class="table table-striped table-condensed">
+  <tr>
+    <th><%= t('activerecord.models.component') %></th>
+    <th><%= t('activerecord.attributes.component.version') %></th>
+    <th><%= t('activerecord.attributes.component.ownership') %></th>
+    <th><%= t('activerecord.attributes.component.license') %></th>
+    <th><%= t('activerecord.attributes.license_type.protection_level') %></th>
+  </tr>
+
+<% @components.each do |component| %>
+  <tr>
+    <td><%= component.name %></td>
+    <td><%= component.version %></td>
+    <% if component.purchased %>
+      <td><%= t('activerecord.attributes.component.purchased') %></td>
+    <% elsif component.own %>
+      <td><%= t('activerecord.attributes.component.own') %></td>
+    <% else %>
+      <td>Open Source</td>
+    <% end %>
+    <td><%= unless component.license.nil?; component.license.name; end %></td>
+    <td><%= unless component.license.license_type.nil?; component.license.license_type.description; end %></td>
+  </tr>
+<% end %>
+</table>

@@ -100,6 +100,7 @@ class ProductsController < ApplicationController
     @title = t('actions.messages.graphics')
     @product = Product.find(params[:product_id])
     count_types
+    @components = @product.components.order("name")
         
     respond_to do |format|
       format.pdf do

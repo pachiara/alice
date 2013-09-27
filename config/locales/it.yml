@@ -290,6 +290,7 @@ it:
         notes:        "Note"
         purchased:    "Acquistato"
         own:          "Proprio"
+        ownership:    "Proprietà"
       detection:
         name:         "Nome Rilevamento"
         created_at:   "Data rilevamento"
