@@ -1,185 +1,32 @@
+<script>
+  var width = 480,
+      height = 250,
+      radius = Math.min(width, height) / 2;
+  var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(radius - 60);
+  var donut_font_size = "18px";
+      
+  var legend_font_size = "14px";
+  var legend_translate = 20;
+  var legend_rect_side = 18;
+  var legend_dy = ".35em"
+  var legend_text_x = 24;
+  var legend_text_y = 9;
+  var legend_width = 188;
+</script>
 <%= simple_form_for(@product) do |f| %>
 
   <div class="form-inputs">
 
-<%= hidden_field_tag 'component_types', @component_types %>
-<%= hidden_field_tag 'license_types', @license_types %>
-<button class="btn btn-large btn-block btn-primary disabled" type="button">
-  <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
-</button>
-<br />
-<div class="row">
-  <div class="span5">
-    <h4>Numero di componenti per tipo</h4>
-    <div id="graphics_area_1"></div>
-  </div>
-  <div class="span5">
-    <h4>Numero di licenze per tipologia</h4>
-    <div id="graphics_area_2"></div>
-  </div>
-</div>
+    <%= render 'graphics' %>
 
   <div class="form-actions">
     <%= link_to products_path, :class => "btn" do %>
       <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %> 
+    <%= link_to product_print_path(@product, :format => :pdf), :class => "btn" do %>
+      <i class="icon-print"></i> <%= t('actions.print') %>      
+    <% end %> 
   </div>
 <% end %>
-
-<script>
-  var width = 480,
-      height = 250,
-      radius = Math.min(width, height) / 2;
-   
-  var colors = ["#049cdb", "#46a546", "#9d261d", "#ffc40d", "#f89406", "#c3325f", "#7a43b6"];
-      
-  var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(radius - 60);
-   
-  var pie = d3.layout.pie()
-      .value(function(d) { return d.qta; });
-
-// Componenti
-  var dataset = JSON.parse(document.getElementById("component_types").value);
-
-  var color_components = d3.scale.ordinal()
-      .range(colors);
-
-  var svg = d3.select("#graphics_area_1").append("svg")
-      .attr("width", width/2)
-      .attr("height", height)
-    .append("g")
-      .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
-
-  var g = svg.selectAll(".arc")
-      .data(pie(dataset))
-    .enter().append("g")
-      .attr("class", "arc");
- 
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d, i) { return color_components(i); });
- 
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".5em")
-      .style("text-anchor", "middle")
-      .text(function(d,i) { return d.data.qta; })
-         .attr("font-size", "18px")
-         .style("fill", "#ffffff");
-
-  g.append("text")
-      .attr("dy", ".5em")
-      .style("text-anchor", "middle")
-      .text("<%= t('activerecord.models.components') %>")
-         .attr("font-size", "18px")
-         .style("fill", "#2F4F4F");
-
-  var tipi = [];
-  dataset.forEach(function(d) {
-    tipi.push(d.tipo);
-  });
-  color_components.domain(tipi);
-   
-  var legend = d3.select("#graphics_area_1").append("svg")
-      .attr("class", "legend")
-      .attr("width", radius * 1.5)
-      .attr("height", height)
-    .selectAll("g")
-      .data(color_components.domain().slice())
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  legend.append("rect")
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color_components);
-
-  legend.append("text")
-      .attr("x", 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .text(function(d) { return d; });
-
-
-// Licenze
-  dataset = JSON.parse(document.getElementById("license_types").value);
-
-  color_licenses = d3.scale.ordinal()
-      .range(colors);
-
-  svg = d3.select("#graphics_area_2").append("svg")
-      .attr("width", width/2)
-      .attr("height", height)
-    .append("g")
-      .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
-
-  g = svg.selectAll(".arc")
-      .data(pie(dataset))
-    .enter().append("g")
-      .attr("class", "arc");
- 
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d, i) { return color_licenses(i); });
-      
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".5em")
-      .style("text-anchor", "middle")
-      .text(function(d,i) { return d.data.qta; })
-         .attr("font-size", "18px")
-         .style("fill", "#ffffff");
-
-  g.append("text")
-      .attr("dy", ".5em")
-      .style("text-anchor", "middle")
-      .text("<%= t('activerecord.models.licenses') %>")
-         .attr("font-size", "18px")
-         .style("fill", "#2F4F4F");
-
-  tipi = [];
-  dataset.forEach(function(d) {
-    tipi.push(d.tipo);
-  });
-  color_licenses.domain(tipi);
-  
-  legend = d3.select("#graphics_area_2").append("svg")
-      .attr("class", "legend")
-      .attr("width", radius * 1.5)
-      .attr("height", height)
-    .selectAll("g")
-      .data(color_licenses.domain().slice())
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  legend.append("rect")
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color_licenses);
-
-  legend.append("text")
-      .attr("x", 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .text(function(d) { return d; });
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

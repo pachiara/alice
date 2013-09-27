@@ -60,4 +60,5 @@ end
 # gem 'debugger'
 
 gem 'd3js-rails'
-gem 'prawn_rails'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'

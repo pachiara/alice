@@ -1,0 +1,46 @@
+<meta charset="utf-8">
+<%= wicked_pdf_stylesheet_link_tag "application" -%>
+<%= wicked_pdf_javascript_include_tag "application" %>
+<style>
+  body {
+    background-color:#ffffff;
+  }
+  .row {
+    width: 710px;
+  }
+  .span5 {
+    width: 350px;
+    display:inline-block;
+  }
+  .span11 {
+    width: 700px;
+    display:inline-block;
+  }
+  h4 {
+    font-size:14px;
+  }
+  .btn-block {
+    width: 690px;
+  }
+  .btn-large {
+    padding: 0;
+  }
+</style>
+<script>
+  var width = 264,
+      height = 137,
+      radius = Math.min(width, height) / 2;
+  var arc = d3.svg.arc()
+      .outerRadius(radius - 4)
+      .innerRadius(radius - 28);
+  var donut_font_size = "12px";
+      
+  var legend_font_size = "10px";
+  var legend_translate = 15;
+  var legend_rect_side = 10;
+  var legend_dy = ".25em"
+  var legend_text_x = 14;
+  var legend_text_y = 7;
+  var legend_width = radius * 3;
+</script>
+<%= render 'graphics.html' %>
