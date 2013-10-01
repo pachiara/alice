@@ -29,6 +29,7 @@ Alice::Application.routes.draw do
     post 'ties/edit'
     get 'check'
     post 'update_check'
+    get 'print'
   end
     
   resources :license_types

@@ -13,6 +13,63 @@ class ProductsController < ApplicationController
     end
   end
   
+  def count_types
+    # Contatori tipi componente
+    purchased = own = open_source = 0
+    
+    # Contatori tipi licenza
+    license_types = Hash.new
+    LicenseType.all.each do |license_type|
+      license_types[license_type.description] = 0
+    end
+    license_types[t('activerecord.attributes.license_type.unidentified')] = 0
+
+    # Contatori licenze
+    licenses = Hash.new
+    licenses[t('activerecord.attributes.license_type.unidentified')] = 0
+
+    # Lettura componenti del prodotto e incremento contatori
+    @product.components.each do |component|
+      purchased += 1 if component.purchased
+      own += 1 if component.own
+      open_source += 1 if !component.purchased && !component.own
+      if component.license.license_type.nil? 
+        license_types[t('activerecord.attributes.license_type.unidentified')] += 1
+      else
+        license_types[component.license.license_type.description] += 1
+      end  
+      if component.license.nil?
+        licenses[t('activerecord.attributes.license_type.unidentified')] += 1
+      elsif licenses[component.license.description].nil?
+        licenses[component.license.description] = 1
+      else
+        licenses[component.license.description] += 1
+      end
+    end
+    
+    # Creazione array tipi componente in json
+    @component_types = Array.new
+    @component_types.push({:tipo => t('activerecord.attributes.component.purchased'), :qta => purchased}) if purchased > 0
+    @component_types.push({:tipo => t('activerecord.attributes.component.own'), :qta => own}) if own > 0
+    @component_types.push({:tipo => "Open source", :qta => open_source}) if open_source > 0
+    @component_types = @component_types.sort_by {|o| o[:qta]}.reverse.to_json
+
+    # Creazione array tipi licenze in json
+    @license_types = Array.new
+    license_types.each do |data|
+      @license_types.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
+    end
+    @license_types = @license_types.sort_by {|o| o[:qta]}.reverse.to_json
+    
+    # Creazione array licenze in json
+    @licenses = Array.new
+    licenses.each do |data|
+      @licenses.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
+    end
+    @licenses = @licenses.sort_by {|o| o[:qta]}.reverse.to_json
+  end
+  
+  
   # GET /products
   # GET /products.json
   def index
@@ -35,33 +92,21 @@ class ProductsController < ApplicationController
   def show
     @title = t('actions.messages.graphics')
     @product = Product.find(params[:id])
-    @components = @product.components
-    
-    purchased = own = open_source = 0
-    license_types = Hash.new
-    
-    LicenseType.all.each do |license_type|
-      license_types[license_type.description] = 0
+    count_types
+  end
+  
+  # GET /products/1/print
+  def print
+    @title = t('actions.messages.graphics')
+    @product = Product.find(params[:product_id])
+    count_types
+    @components = @product.components.order("name")
+        
+    respond_to do |format|
+      format.pdf do
+        render :pdf => "graphics"
+      end
     end
-
-    @components.each do |component|
-      purchased += 1 if component.purchased
-      own += 1 if component.own
-      open_source += 1 if !component.purchased && !component.own
-      license_types[component.license.license_type.description] += 1
-    end
-    
-    @component_types = Array.new
-    @component_types.push({:tipo => t('activerecord.attributes.component.purchased'), :qta => purchased}) if purchased > 0
-    @component_types.push({:tipo => t('activerecord.attributes.component.own'), :qta => own}) if own > 0
-    @component_types.push({:tipo => "Open source", :qta => open_source}) if open_source > 0
-    @component_types = @component_types.to_json
-
-    @license_types = Array.new
-    license_types.each do |data|
-      @license_types.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
-    end
-    @license_types = @license_types.to_json
   end
 
   # GET /products/new
