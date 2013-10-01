@@ -45,6 +45,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    d3js-rails (3.1.6)
+      railties (>= 3.0, < 5.0)
     daemons (1.1.9)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
@@ -146,9 +148,12 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    wicked_pdf (0.9.7)
+      rails
     will_paginate (3.0.4)
     will_paginate-bootstrap (0.2.2)
       will_paginate (>= 3.0.3)
+    wkhtmltopdf-binary (0.9.9.1)
 
 PLATFORMS
   ruby
@@ -156,6 +161,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 2.3.1.0)
   coffee-rails (~> 3.2.1)
+  d3js-rails
   devise
   jquery-rails
   mysql2
@@ -170,5 +176,7 @@ DEPENDENCIES
   therubyracer
   thin
   uglifier (>= 1.0.3)
+  wicked_pdf
   will_paginate
   will_paginate-bootstrap
+  wkhtmltopdf-binary
