@@ -1,4 +1,7 @@
 class RulesController < ApplicationController
+  
+  before_filter :authenticate_user! 
+  
   # GET /rules
   # GET /rules.json
   def index

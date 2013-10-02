@@ -241,8 +241,9 @@ it:
       ties: Legami 
       rule: Regola
       rules: Regole
-      rule_entry: Voce della regola
-      rule_entries: Voci delle regole
+      rule_entry: "Voce della regola"
+      rule_entries: "Voci delle regole"
+      user: "Utente"
     
     attributes:
       license:
@@ -315,6 +316,17 @@ it:
         license:      "Licenza"
         plus:         "in poi"
         order:        "Ordine"  
+      user:
+        sign_in_count: "Accessi"
+        current_sign_in_at: "Ultimo accesso"
+        last_sign_in_at: "Precedente accesso"
+        current_sign_in_ip: "Accesso da"
+        last_sign_in_ip: "Precedente accesso da"
+        created_at: "Creato"
+        updated_at: "Aggiornato"
+        admin: "Amministratore"
+        password_confirmation: "Conferma password"
+        current_password: "Password attuale"
 
   actions:
     actions: "Azioni"
@@ -329,8 +341,8 @@ it:
     search: "Ricerca"
     back_to: "Torna a"
     users: "Utenti"
-    sign_in: "Entra"
-    sign_up: "Registra"
+    sign_in: "Accedi"
+    sign_up: "Iscriviti"
     authentication: "Accesso"
     registration: "Registrazione"
     reports: "Stampe"
@@ -353,9 +365,23 @@ it:
     delete: "Del"
     graphics: "Grafici"
     print:  "Stampa"
+    remember_me: "Ricordami"
+    sign_out: "Esci"
+    forgot_password: "Password dimenticata"
+    cancel_my_account: "Cancellami"
+    send_reset_instructions: "Invia istruzioni reimpostazione password"
+    change_my_password: "Cambia la mia password"
     
     messages:
       graphics: "Statistiche composizione del prodotto"
+      need_password: "La password è necessaria per eseguire le modifiche"
+      leave_it_blank: "Lasciare in bianco se non si desidera cambiarla"
+      waiting_confirmation: "In attesa di conferma da: "
+      hello: "Salve"
+      requested_change_your_password: "Qualcuno ha richiesto di cambiare la tua password. Puoi farlo cliccando sul link seguente:"
+      not_request_this: "Se non sei stato tu, ignora questa email."
+      password_wont_change: "La password rimane invariata fino a quando non si accede al link qui sopra e se ne crea una nuova."
+
   
   will_paginate:
     next_label: "Sucessivi"
@@ -391,7 +417,9 @@ it:
       mark: '*'
     error_notification: 
       default_message: "Correggere i problemi segnalati prima di procedere."        
-
+    labels:
+      user:
+        remember_me: "Ricordami"
  
   flash:
     license:
