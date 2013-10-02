@@ -60,10 +60,10 @@ export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
     git clone https://github.com/pachiara/alice.git
     cd alice
     bundle install
-    rake db:setup RAILS_ENV=production
-    rake tmp:clear
-    rake assets:clean
-    rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+    bundle exec rake db:setup RAILS_ENV=production
+    bundle exec rake tmp:clear
+    bundle exec rake assets:clean
+    bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
 
 9) Apache + Passenger
 
