@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130814132847) do
+ActiveRecord::Schema.define(:version => 20130827085742) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -50,8 +50,10 @@ ActiveRecord::Schema.define(:version => 20130814132847) do
     t.date     "checked_at"
     t.boolean  "result",                    :default => true
     t.text     "notes"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+    t.boolean  "purchased",                 :default => false
+    t.boolean  "own",                       :default => false
   end
 
   add_index "components", ["license_id"], :name => "index_components_on_license_id"

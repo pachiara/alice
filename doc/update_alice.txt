@@ -8,10 +8,10 @@ Aggiornamento
     git clone https://github.com/pachiara/alice.git
     cd alice
     bundle install
-    rake db:migrate RAILS_ENV=production
-    rake tmp:clear
-    rake assets:clean
-    rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+    bundle exec rake db:migrate RAILS_ENV=production
+    bundle exec rake tmp:clear
+    bundle exec rake assets:clean
+    bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
 
 2) Apache + Passenger
 

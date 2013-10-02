@@ -2,7 +2,10 @@
 - devise-omniauth 
 integrazione con IDPC
 https://github.com/intridea/omniauth/wiki
---------------------
+_____________________
+- Prevedere il multi lingua
+SimpleForm con l'uso della gemma 'country_select'
+_____________________
 OK - paginazione 
 rientro alla stessa pagina navigata dopo la modifica
 _____________________
@@ -12,6 +15,7 @@ _____________________
 lasciare (con una scelta) la possibilità di visualizzare tutte le licenze per sceglierne una non in elenco,
 eventualmente con la selezione per effettuare un nuovo inserimento.
 http://127.0.0.1:3000/detected_components/318/edit
+_____________________
 
 OK 2) modificare le intestazioni:
  Modifica Componente rilevato
