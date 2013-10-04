@@ -1,20 +1,3 @@
-<script>
-  var width = 480,
-      height = 250,
-      radius = Math.min(width, height) / 2;
-  var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(radius - 60);
-  var donut_font_size = "18px";
-      
-  var legend_font_size = "14px";
-  var legend_translate = 20;
-  var legend_rect_side = 18;
-  var legend_dy = ".35em"
-  var legend_text_x = 24;
-  var legend_text_y = 9;
-  var legend_width = 188;
-</script>
 <%= simple_form_for(@product) do |f| %>
 
   <div class="form-inputs">
@@ -30,3 +13,18 @@
     <% end %> 
   </div>
 <% end %>
+
+<script>
+// Proprietà componenti
+  dataset = JSON.parse(document.getElementById("component_types").value);
+  donut(dataset, "#graphics_area_1", "<%= t('activerecord.models.components') %>");
+
+// Tipi di protezione licenze
+  dataset = JSON.parse(document.getElementById("license_types").value);
+  donut(dataset, "#graphics_area_2", "<%= t('activerecord.models.licenses') %>");
+
+// Licenze
+  dataset = JSON.parse(document.getElementById("licenses").value);
+  var legend_width = 800;
+  donut(dataset, "#graphics_area_3", "<%= t('activerecord.models.licenses') %>");
+</script>

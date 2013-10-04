@@ -104,7 +104,7 @@ class ProductsController < ApplicationController
         
     respond_to do |format|
       format.pdf do
-        render :pdf => "graphics"
+        render :pdf => "graphics", :show_as_html => params[:debug].present?
       end
     end
   end

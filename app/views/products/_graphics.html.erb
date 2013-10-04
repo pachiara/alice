@@ -1,4 +1,3 @@
-
 <%= hidden_field_tag 'component_types', @component_types %>
 <%= hidden_field_tag 'license_types', @license_types %>
 <%= hidden_field_tag 'licenses', @licenses %>
@@ -22,19 +21,3 @@
     <div id="graphics_area_3"></div>
   </div>
 </div>
-
-<script>
-// Proprietà componenti
-  dataset = JSON.parse(document.getElementById("component_types").value);
-  donut(dataset, "#graphics_area_1", "<%= t('activerecord.models.components') %>");
-
-// Tipi di protezione licenze
-  dataset = JSON.parse(document.getElementById("license_types").value);
-  donut(dataset, "#graphics_area_2", "<%= t('activerecord.models.licenses') %>");
-
-// Licenze
-  dataset = JSON.parse(document.getElementById("licenses").value);
-  legend_width = radius * 6;
-  donut(dataset, "#graphics_area_3", "<%= t('activerecord.models.licenses') %>");
-</script>
-
