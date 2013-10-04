@@ -11,7 +11,7 @@ senza riutilizzare nulla dell'enorme patrimonio di librerie di componenti messo 
 La diffusione di internet, la scrittura con linguaggi ad oggetti, la cultura open source, sono quindi gli ingredienti che hanno determinato questo fenomeno, 
 generando una caratteristica non prevedibile: 
 
---nel tempo sono nate diverse tipologie di licenze open source con le quali vengono rilasciate le librerie di componenti, 
+nel tempo sono nate diverse tipologie di licenze open source con le quali vengono rilasciate le librerie di componenti, 
 spesso non compatibili fra di loro e con il tipo di licenza del prodotto finito che si intende realizzare.
 
 == Il Progetto
