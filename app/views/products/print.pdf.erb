@@ -16,9 +16,6 @@
     width: 700px;
     display:inline-block;
   }
-  h4 {
-    font-size:14px;
-  }
   .btn-block {
     width: 690px;
   }
@@ -27,7 +24,7 @@
   }
 </style>
 
-<body onload='number_pages'>
+<body onload="number_pages()">
     <%= render 'graphics.html' %>
 </body>
 
@@ -53,6 +50,7 @@
 // Licenze
   dataset = JSON.parse(document.getElementById("licenses").value);
   legend_width = 560;
+  legend_height = 148;
   legend_rows_x_column = 10;
   donut(dataset, "#graphics_area_3", "<%= t('activerecord.models.licenses') %>");
 </script>

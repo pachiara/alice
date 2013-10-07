@@ -11,6 +11,7 @@
     legend_text_y        = typeof legend_text_y        !== 'undefined' ? legend_text_y        : 9;
     legend_rows_x_column = typeof legend_rows_x_column !== 'undefined' ? legend_rows_x_column : 20;
     legend_width         = typeof legend_width         !== 'undefined' ? legend_width         : 200;
+    legend_height        = typeof legend_height        !== 'undefined' ? legend_height        : donut_box_side;
     legend_padding       = typeof legend_padding       !== 'undefined' ? legend_padding       : 5;
 
     arc = d3.svg.arc()
@@ -64,7 +65,7 @@
     legend = d3.select(selector).append("svg")
         .attr("class", "legend")
         .attr("width", legend_width)
-        .attr("height", donut_box_side)
+        .attr("height", legend_height)
       .selectAll("g")
         .data(color_components.domain().slice())
       .enter().append("g")

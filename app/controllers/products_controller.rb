@@ -104,7 +104,15 @@ class ProductsController < ApplicationController
         
     respond_to do |format|
       format.pdf do
-        render :pdf => "graphics", :show_as_html => params[:debug].present?
+        render :pdf => "graphics",
+               :header => { :left => 'Alice',
+                            :center => @title,
+                            :right => t('actions.messages.classification'),
+                            :line => true
+                          },
+               :footer => { :center => "#{t('actions.messages.date')} #{Time.now.strftime('%d/%m/%Y')}    #{t('actions.messages.hour')} #{Time.now.strftime('%H:%M')}",
+                            :right => 'Pag. [page] / [topage]', :line => true },
+               :show_as_html => params[:debug].present?
       end
     end
   end

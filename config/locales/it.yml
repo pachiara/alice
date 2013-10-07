@@ -373,7 +373,7 @@ it:
     change_my_password: "Cambia la mia password"
     
     messages:
-      graphics: "Statistiche composizione del prodotto"
+      graphics: "Report composizione prodotto"
       need_password: "La password è necessaria per eseguire le modifiche"
       leave_it_blank: "Lasciare in bianco se non si desidera cambiarla"
       waiting_confirmation: "In attesa di conferma da: "
@@ -381,6 +381,10 @@ it:
       requested_change_your_password: "Qualcuno ha richiesto di cambiare la tua password. Puoi farlo cliccando sul link seguente:"
       not_request_this: "Se non sei stato tu, ignora questa email."
       password_wont_change: "La password rimane invariata fino a quando non si accede al link qui sopra e se ne crea una nuova."
+      date: "Data"
+      hour: "Ora"
+      classification: "Classificazione: uso interno"
+      
 
   
   will_paginate:
