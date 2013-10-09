@@ -19,7 +19,7 @@
       .innerRadius(donut_radius - donut_radius / 2);
    
     pie = d3.layout.pie()
-      .value(function(d) { return d.qta; });
+      .value(function(d) { return d.qty; });
 
     color_components = d3.scale.category20();
   
@@ -42,7 +42,7 @@
         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("dy", ".5em")
         .style("text-anchor", "middle")
-        .text(function(d,i) { return d.data.qta; })
+        .text(function(d,i) { return d.data.qty; })
            .attr("font-size", donut_font_size)
            .style("fill", "#ffffff");
   
@@ -55,7 +55,7 @@
   
     entries = [];
     dataset.forEach(function(d) {
-      entries.push(d.tipo);
+      entries.push(d.item);
     });
     color_components.domain(entries);
     

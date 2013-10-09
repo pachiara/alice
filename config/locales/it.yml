@@ -384,6 +384,9 @@ it:
       date: "Data"
       hour: "Ora"
       classification: "Classificazione: uso interno"
+      components_for_ownership: "Componenti per proprietà"
+      licenses_for_protection_level: "Licenze per livello di protezione"
+      licenses_for_type: "Licenze per tipo"
       
 
   

@@ -49,24 +49,24 @@ class ProductsController < ApplicationController
     
     # Creazione array tipi componente in json
     @component_types = Array.new
-    @component_types.push({:tipo => t('activerecord.attributes.component.purchased'), :qta => purchased}) if purchased > 0
-    @component_types.push({:tipo => t('activerecord.attributes.component.own'), :qta => own}) if own > 0
-    @component_types.push({:tipo => "Open source", :qta => open_source}) if open_source > 0
-    @component_types = @component_types.sort_by {|o| o[:qta]}.reverse.to_json
+    @component_types.push({:item => t('activerecord.attributes.component.purchased'), :qty => purchased}) if purchased > 0
+    @component_types.push({:item => t('activerecord.attributes.component.own'), :qty => own}) if own > 0
+    @component_types.push({:item => "Open source", :qty => open_source}) if open_source > 0
+    @component_types = @component_types.sort_by {|o| o[:qty]}.reverse.to_json
 
     # Creazione array tipi licenze in json
     @license_types = Array.new
     license_types.each do |data|
-      @license_types.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
+      @license_types.push({:item => data[0], :qty => data[1]}) if data[1] > 0
     end
-    @license_types = @license_types.sort_by {|o| o[:qta]}.reverse.to_json
+    @license_types = @license_types.sort_by {|o| o[:qty]}.reverse.to_json
     
     # Creazione array licenze in json
     @licenses = Array.new
     licenses.each do |data|
-      @licenses.push({:tipo => data[0], :qta => data[1]}) if data[1] > 0
+      @licenses.push({:item => data[0], :qty => data[1]}) if data[1] > 0
     end
-    @licenses = @licenses.sort_by {|o| o[:qta]}.reverse.to_json
+    @licenses = @licenses.sort_by {|o| o[:qty]}.reverse.to_json
   end
   
   
