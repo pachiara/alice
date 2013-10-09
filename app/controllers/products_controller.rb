@@ -104,7 +104,7 @@ class ProductsController < ApplicationController
         
     respond_to do |format|
       format.pdf do
-        render :pdf => "graphics",
+        render :pdf => @product.name.gsub(' ', '_'),
                :header => { :left => 'Alice',
                             :center => @title,
                             :right => t('actions.messages.classification'),
