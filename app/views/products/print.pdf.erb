@@ -29,14 +29,10 @@
 </body>
 
 <script>
-  var donut_box_side = 137;
+  var donut_box_side = 150;
   var donut_font_size = "12px";
   var legend_font_size = "10px";
-  var legend_translate = 15;
-  var legend_rect_side = 10;
-  var legend_dy = ".25em"
-  var legend_text_x = 14;
-  var legend_text_y = 7;
+  var legend_rect_side = 12;
   var legend_width = 130;
 
 // Proprietà componenti
@@ -49,9 +45,7 @@
 
 // Licenze
   dataset = JSON.parse(document.getElementById("licenses").value);
-  legend_width = 560;
-  legend_height = 148;
-  legend_rows_x_column = 10;
+  legend_width = 547;
   donut(dataset, "#graphics_area_3", "<%= t('activerecord.models.licenses') %>");
 </script>
 
