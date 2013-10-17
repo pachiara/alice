@@ -1,21 +1,30 @@
   function donut (dataset, selector, hole_text) {
-    donut_box_side  = typeof donut_box_side  !== 'undefined' ? donut_box_side : 250;
+    donut_box_side  = typeof donut_box_side  !== 'undefined' ? donut_box_side  : 250;
     donut_font_size = typeof donut_font_size !== 'undefined' ? donut_font_size : "18px";
-    donut_radius    = donut_box_side / 2;
+    donut_radius    = typeof donut_radius    !== 'undefined' ? donut_radius    : donut_box_side / 2;
         
     legend_width          = typeof legend_width         !== 'undefined' ? legend_width         : 200;
     legend_height         = typeof legend_height        !== 'undefined' ? legend_height        : donut_box_side;
     legend_font_size      = typeof legend_font_size     !== 'undefined' ? legend_font_size     : "14px";
     legend_rect_side      = typeof legend_rect_side     !== 'undefined' ? legend_rect_side     : 18;
-    legend_translate      = legend_rect_side + 2;
-    legend_padding        = 5;
+    legend_translate      = typeof legend_translate     !== 'undefined' ? legend_translate     : legend_rect_side + 2;
+    legend_padding        = typeof legend_padding       !== 'undefined' ? legend_padding       : 5;
+    maxEntries            = typeof maxEntries           !== 'undefined' ? maxEntries           : 19;
+
+    othersQty = 0;
 
     arc = d3.svg.arc()
       .outerRadius(donut_radius)
       .innerRadius(donut_radius - donut_radius / 2);
+
+    quantities = [];
+    dataset.forEach(function(d, i) {
+      if (i<=maxEntries) quantities.push(d.qty);
+      else if (i>maxEntries) quantities[maxEntries] = quantities[maxEntries]+=d.qty;
+    });
    
     pie = d3.layout.pie()
-      .value(function(d) { return d.qty; });
+      .value(function(d,i) { return quantities[i]; });
 
     color_components = d3.scale.category20();
   
@@ -26,7 +35,7 @@
           .attr("transform", "translate(" + donut_box_side / 2 + "," + donut_box_side / 2 + ")");
   
     g = svg.selectAll(".arc")
-        .data(pie(dataset))
+        .data(pie(quantities))
         .enter().append("g")
           .attr("class", "arc");
    
@@ -38,7 +47,7 @@
         .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
         .attr("dy", ".5em")
         .style("text-anchor", "middle")
-        .text(function(d,i) { return d.data.qty; })
+        .text(function(d,i) { return quantities[i]; })
            .attr("font-size", donut_font_size)
            .style("fill", "#ffffff");
   
@@ -50,8 +59,9 @@
            .style("fill", "#2F4F4F");
   
     entries = [];
-    dataset.forEach(function(d) {
-      entries.push(d.item);
+    dataset.forEach(function(d, i) {
+      if (i<maxEntries) entries.push(d.item);
+      else if (i=maxEntries) entries.push("Altri");
     });
     color_components.domain(entries);
     
