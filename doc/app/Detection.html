@@ -105,6 +105,10 @@
 
   <ul class="link-list">
   
+    <li><a href="./AboutController.html">AboutController</a>
+  
+    <li><a href="./AboutHelper.html">AboutHelper</a>
+  
     <li><a href="./Admin.html">Admin</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
@@ -473,7 +477,7 @@
             <pre><span class="ruby-comment"># File app/models/detection.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_acquire</span>
   <span class="ruby-identifier">detected_components</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">component</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span>.<span class="ruby-identifier">license_id</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span>.<span class="ruby-identifier">license_id</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">component</span>.<span class="ruby-identifier">own</span>
        <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;#{component.name}&quot;</span>, <span class="ruby-node">&quot;#{component.version}&quot;</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>

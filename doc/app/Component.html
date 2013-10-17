@@ -72,6 +72,8 @@
     
     <li><a href="#method-c-search">::search</a>
     
+    <li><a href="#method-i-purchase_or_own">#purchase_or_own</a>
+    
   </ul>
 </nav>
 
@@ -92,6 +94,10 @@
   <h3 class="section-header">Class and Module Index</h3>
 
   <ul class="link-list">
+  
+    <li><a href="./AboutController.html">AboutController</a>
+  
+    <li><a href="./AboutHelper.html">AboutHelper</a>
   
     <li><a href="./Admin.html">Admin</a>
   
@@ -220,7 +226,7 @@
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File app/models/component.rb, line 12</span>
+            <pre><span class="ruby-comment"># File app/models/component.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span> = <span class="ruby-value">10</span>)
  <span class="ruby-identifier">conditions</span> = <span class="ruby-identifier">sanitize_sql_for_conditions</span>([<span class="ruby-string">&quot;name like &#39;%s&#39;&quot;</span>, <span class="ruby-node">&quot;%#{name}%&quot;</span>])      
  <span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>
@@ -236,6 +242,45 @@
 
     
     </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-purchase_or_own" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">purchase_or_own</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="purchase_or_own-source">
+            <pre><span class="ruby-comment"># File app/models/component.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">purchase_or_own</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">purchased</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">own</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:purchased</span>, <span class="ruby-string">&quot;valori imcompatibili&quot;</span>)
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:own</span>, <span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- purchase_or_own-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- purchase_or_own-method -->
+
+    
+    </section><!-- public-instance-method-details -->
   
   </section><!-- 5Buntitled-5D -->
 
