@@ -5,13 +5,13 @@
 <br />
 <%= will_paginate @detections, :renderer => BootstrapPagination::Rails %>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <tr>
     <th><%= t('activerecord.attributes.detection.name') %></th>
     <th><%= t('activerecord.attributes.detection.created_at') %></th>
     <th><%= t('activerecord.attributes.detection.xml_file_name') %></th>
     <th><%= t('activerecord.attributes.detection.xml_updated_at') %></th>
-    <th></th>
+    <th><%= t('actions.actions') %></th>
   </tr>
 
 <% @detections.each do |detection| %>

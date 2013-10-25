@@ -1,7 +1,7 @@
 <%= render :partial => "search_component" %>
 <%= will_paginate @components, :renderer => BootstrapPagination::Rails %>
 
-<table class="table table-striped">
+<table class="table table-striped table-condensed table-bordered">
   <tr>
   	<th><%= t('activerecord.attributes.component.name') %></th>
     <th><%= t('activerecord.attributes.component.version') %></th>
@@ -11,7 +11,7 @@
     <th><%= t('activerecord.attributes.component.use') %></th>
     <th><%= t('activerecord.attributes.component.checked_at') %></th>
     <th><%= t('activerecord.attributes.component.result') %></th>
-    <th></th>
+    <th><%= t('actions.actions') %></th>
   </tr>
 
 <% @components.each do |component| %>
