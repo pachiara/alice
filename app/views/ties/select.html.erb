@@ -4,7 +4,7 @@
 <div class="span6">
 <div class="well sidebar-nav">
 <div class="row-fluid"><%= render :partial => "products/search_product" %></div>
-<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
+<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Product content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.products') %></li>
@@ -21,7 +21,7 @@
 <div class="span6">
 <div class="well sidebar-nav">
 <div class="row-fluid"><%= render :partial => "components/search_component" %></div>
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
+<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Component content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.components') %></li>
