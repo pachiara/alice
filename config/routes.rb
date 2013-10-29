@@ -27,6 +27,7 @@ Alice::Application.routes.draw do
     get 'ties/select'
     get 'ties/edit'
     post 'ties/edit'
+    delete 'ties/destroy'
     get 'check'
     post 'update_check'
     get 'print'

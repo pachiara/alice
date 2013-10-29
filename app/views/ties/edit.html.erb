@@ -59,6 +59,9 @@
   <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
     <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
   <% end %>
+  <%= link_to product_ties_destroy_path, :class => "btn", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
+    <i class="icon-trash"></i> <%= t('actions.destroy') %>      
+  <% end %> 
   <%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
     <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
   <% end %> 

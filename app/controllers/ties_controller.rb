@@ -56,5 +56,17 @@ class TiesController < ApplicationController
       format.json { render json: @product }
     end    
   end    
+  
+  # DELETE /product/1/ties/
+  # DELETE /product/1/ties.json
+  def destroy
+    @product = Product.find(params[:product_id])
+    @product.delete_components
+
+    respond_to do |format|
+      format.html { redirect_to product_ties_edit_url }
+      format.json { head :no_content }
+    end
+  end
 
 end
