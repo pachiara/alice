@@ -10,7 +10,7 @@
 <div class="row-fluid">
 <div class="span6">
 <div class="well sidebar-nav">
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
+<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component to select content-->
 <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>	
 <ul class="nav nav-list">
@@ -30,7 +30,7 @@
 
 <div class="span6">
 <div class="well sidebar-nav">
-<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
+<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component selected content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.components') %></li>
