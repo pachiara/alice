@@ -57,8 +57,8 @@ class TiesController < ApplicationController
     end    
   end    
   
-  # DELETE /product/1/ties/
-  # DELETE /product/1/ties.json
+  # DELETE /product/1/ties/destroy
+  # DELETE /product/1/ties/destroy.json
   def destroy
     @product = Product.find(params[:product_id])
     @product.delete_components
@@ -66,6 +66,20 @@ class TiesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to product_ties_edit_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /product/1/ties/show
+  # GET /product/1/ties/show.json
+  def show
+    @title = t('actions.show') + " " + t('activerecord.models.ties')
+        
+    @product = Product.find(params[:product_id])
+    @components = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:page]
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @product }
     end
   end
 
