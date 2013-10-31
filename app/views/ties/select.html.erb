@@ -11,7 +11,7 @@
   <li class="divider"></li>
   <% @products.each do |product| %>
     <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>>
-      <%= link_to product.name+" - Vers. "+product.version, product_ties_select_path(product) %>
+      <%= link_to product.name+" - v. "+product.version, product_ties_select_path(product) %>
     </li>
   <% end %>
 </ul>
@@ -28,7 +28,7 @@
   <li class="divider"></li>
   <% @components.each do |component| %> 
     <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>>
-      <%= link_to component.name+" - Vers. "+component.version, component_ties_select_path(component) %>
+      <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
     </li>
   <% end %>
 </div><!--/.well -->

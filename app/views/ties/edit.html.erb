@@ -20,7 +20,7 @@
     <li>
       <label class="checkbox inline">
       <%= check_box_tag "component_add[]", component.id, false, :multiple => "true" %>
-        <%= component.name+" - Vers. "+component.version %>
+        <%= component.name+" - v. "+component.version+" - lic. "+component.license.name %>
      </label>  
     </li>
   <% end %>  
@@ -39,7 +39,7 @@
     <li>
       <label class="checkbox inline">
       <%= check_box_tag "component_del[]", component_ties.id, false, :multiple => "true" %>
-        <%= component_ties.name+" - Vers. "+component_ties.version %>
+        <%= component_ties.name+" - v. "+component_ties.version+" - lic. "+component_ties.license.name %>
      </label>  
     </li>
   <% end %>
