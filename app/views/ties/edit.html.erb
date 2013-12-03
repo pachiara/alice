@@ -10,7 +10,7 @@
 <div class="row-fluid">
 <div class="span6">
 <div class="well sidebar-nav">
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
+<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component to select content-->
 <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>	
 <ul class="nav nav-list">
@@ -20,7 +20,7 @@
     <li>
       <label class="checkbox inline">
       <%= check_box_tag "component_add[]", component.id, false, :multiple => "true" %>
-        <%= component.name+" - Vers. "+component.version %>
+        <%= component.name+" - v. "+component.version+" - lic. "+component.license.name %>
      </label>  
     </li>
   <% end %>  
@@ -30,7 +30,7 @@
 
 <div class="span6">
 <div class="well sidebar-nav">
-<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
+<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component selected content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.components') %></li>
@@ -39,7 +39,7 @@
     <li>
       <label class="checkbox inline">
       <%= check_box_tag "component_del[]", component_ties.id, false, :multiple => "true" %>
-        <%= component_ties.name+" - Vers. "+component_ties.version %>
+        <%= component_ties.name+" - v. "+component_ties.version+" - lic. "+component_ties.license.name %>
      </label>  
     </li>
   <% end %>
@@ -59,6 +59,9 @@
   <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
     <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
   <% end %>
+  <%= link_to product_ties_destroy_path, :class => "btn", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
+    <i class="icon-trash"></i> <%= t('actions.destroy') %>      
+  <% end %> 
   <%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
     <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
   <% end %> 

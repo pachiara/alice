@@ -7,7 +7,6 @@
 <%= render :partial => "licenses/search_license" %>
 <div class="row-fluid">
 <div class="span12">
-<div class="row-fluid">
 
 <div class="span6">
 <div class="well sidebar-nav">
@@ -15,7 +14,7 @@
   <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.rules') %></li>
   <li class="divider"></li>
 </ul>  
-<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>	
+<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2 %>	
 
 <%= form_tag rule_rule_entries_path, :method => 'post' do |f| %>
 
@@ -24,7 +23,7 @@
     <th><%= t('actions.add') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
     <th><%= t('activerecord.attributes.license.version') %></th>
-    <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
   </tr>
 
 <% @licenses.each do |license| %>
@@ -32,7 +31,7 @@
     <td><%= check_box_tag "license_add[]", license.id, false, :multiple => "true" %></td>
     <td><%= license.name %></td>
     <td><%= license.version %></td>
-    <td><%= check_box_tag "plus[]", license.id, false, :multiple => "true" %></td>
+    <td><%= license.description %></td>
   </tr>
 <% end %>
 </table>
@@ -51,18 +50,18 @@
   <tr>
   	<th><%= t('actions.delete') %></th>
     <th><%= t('activerecord.attributes.rule_entry.license') %></th>
-    <th><%= t('activerecord.attributes.rule_entry.plus') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
     <th><%= t('activerecord.attributes.rule_entry.order') %></th>
     <th><%= t('actions.edit') %></th>
   </tr>
 
-<%= will_paginate @rule_entries, :param_name => 'rule_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
+<%= will_paginate @rule_entries, :param_name => 'rule_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2 %>
 
 <% @rule_entries.each do |rule_entry| %>
   <tr>
     <td><%= check_box_tag "license_del[]", rule_entry.id, false, :multiple => "true" %></td>
     <td><%= rule_entry.license.name %></td>
-    <td><% if rule_entry.plus %>+<% end %></td>
+    <td><%= rule_entry.license.description %></td>
     <td><%= rule_entry.order_id %></td>
     <td>
       <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
@@ -76,8 +75,6 @@
 
 </div><!--/.well -->
 </div><!--/.span6 -->
-
-</div><!--/.row -->
 
 </div><!--/span12 -->
 </div><!--/.row -->

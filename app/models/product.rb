@@ -32,6 +32,10 @@ class Product < ActiveRecord::Base
     end    
   end
    
+  def delete_components
+    self.components.clear
+  end 
+   
   def self.search(name, page, per_page = 10)
    conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
    paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions

@@ -4,14 +4,14 @@
 <div class="span6">
 <div class="well sidebar-nav">
 <div class="row-fluid"><%= render :partial => "products/search_product" %></div>
-<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
+<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Product content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.products') %></li>
   <li class="divider"></li>
   <% @products.each do |product| %>
     <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>>
-      <%= link_to product.name+" - Vers. "+product.version, product_ties_select_path(product) %>
+      <%= link_to product.name+" - v. "+product.version, product_ties_select_path(product) %>
     </li>
   <% end %>
 </ul>
@@ -21,14 +21,14 @@
 <div class="span6">
 <div class="well sidebar-nav">
 <div class="row-fluid"><%= render :partial => "components/search_component" %></div>
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>' %>
+<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Component content-->
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('activerecord.models.components') %></li>
   <li class="divider"></li>
   <% @components.each do |component| %> 
     <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>>
-      <%= link_to component.name+" - Vers. "+component.version, component_ties_select_path(component) %>
+      <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
     </li>
   <% end %>
 </div><!--/.well -->

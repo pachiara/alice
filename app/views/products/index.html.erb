@@ -1,7 +1,7 @@
 <%= render :partial => "search_product" %>
 <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
 
-<table class="table table-striped">
+<table class="table table-striped table-condensed table-bordered">
   <tr>
     <th><%= t('activerecord.attributes.product.name') %></th>
     <th><%= t('activerecord.attributes.product.version') %></th>
@@ -10,7 +10,7 @@
     <th><%= t('activerecord.attributes.product.use') %></th>
     <th><%= t('activerecord.attributes.product.checked_at') %></th>
     <th><%= t('activerecord.attributes.product.result') %></th>
-    <th></th>
+    <th><%= t('actions.actions') %></th>
   </tr>
 
 <% @products.each do |product| %>
@@ -27,9 +27,9 @@
       <div class="btn-group">
     	<%= link_to raw('<i class="icon-picture"></i>'), product, :class => "btn", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
     	<%= link_to raw('<i class="icon-pencil"></i>'), edit_product_path(product), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
-      <%= link_to raw('<i class="icon-list"></i>'), product_ties_edit_path(product), :class => "btn", :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
-      <%= link_to raw('<i class="icon-check"></i>'), product_check_path(product), :class => "btn", :title => t('actions.check'), :alt => t('actions.check') %>
-      <%= link_to raw('<i class="icon-search"></i>'), detections_path(:product_id => product.id), :class => "btn", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
+        <%= link_to raw('<i class="icon-list"></i>'), product_ties_show_path(product), :class => "btn", :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
+        <%= link_to raw('<i class="icon-check"></i>'), product_check_path(product), :class => "btn", :title => t('actions.check'), :alt => t('actions.check') %>
+        <%= link_to raw('<i class="icon-search"></i>'), detections_path(:product_id => product.id), :class => "btn", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
     	<%= link_to raw('<i class="icon-trash"></i>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>

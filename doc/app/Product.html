@@ -72,6 +72,8 @@
     
     <li><a href="#method-c-search">::search</a>
     
+    <li><a href="#method-i-addWarning">#addWarning</a>
+    
     <li><a href="#method-i-add_relation">#add_relation</a>
     
     <li><a href="#method-i-check">#check</a>
@@ -98,6 +100,10 @@
   <h3 class="section-header">Class and Module Index</h3>
 
   <ul class="link-list">
+  
+    <li><a href="./AboutController.html">AboutController</a>
+  
+    <li><a href="./AboutHelper.html">AboutHelper</a>
   
     <li><a href="./Admin.html">Admin</a>
   
@@ -203,6 +209,26 @@
     
 
     
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-warnings" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">warnings</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
 
     <!-- Methods -->
     
@@ -226,7 +252,7 @@
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File app/models/product.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/product.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span> = <span class="ruby-value">10</span>)
  <span class="ruby-identifier">conditions</span> = <span class="ruby-identifier">sanitize_sql_for_conditions</span>([<span class="ruby-string">&quot;name like &#39;%s&#39;&quot;</span>, <span class="ruby-node">&quot;%#{name}%&quot;</span>])      
  <span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">per_page</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">page</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>
@@ -247,6 +273,37 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
+      <div id="method-i-addWarning" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">addWarning</span><span
+            class="method-args">(key, text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="addWarning-source">
+            <pre><span class="ruby-comment"># File app/models/product.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">addWarning</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@warnings</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@warnings</span> = <span class="ruby-constant">ActiveModel</span><span class="ruby-operator">::</span><span class="ruby-constant">Errors</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-ivar">@warnings</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">text</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- addWarning-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- addWarning-method -->
+
+    
       <div id="method-i-add_relation" class="method-detail ">
         
         <div class="method-heading">
@@ -263,7 +320,7 @@
 
           
           <div class="method-source-code" id="add_relation-source">
-            <pre><span class="ruby-comment"># File app/models/product.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/product.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_relation</span>(<span class="ruby-identifier">component_add</span> = [])
   <span class="ruby-identifier">component_add</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">component_id</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">component_id</span>)
@@ -298,7 +355,7 @@
 
           
           <div class="method-source-code" id="check-source">
-            <pre><span class="ruby-comment"># File app/models/product.rb, line 38</span>
+            <pre><span class="ruby-comment"># File app/models/product.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check</span>
   <span class="ruby-identifier">engine</span> = <span class="ruby-constant">Ruleby</span><span class="ruby-operator">::</span><span class="ruby-constant">Core</span><span class="ruby-operator">::</span><span class="ruby-constant">Engine</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">engine</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -331,7 +388,7 @@
 
           
           <div class="method-source-code" id="del_relation-source">
-            <pre><span class="ruby-comment"># File app/models/product.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/models/product.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">del_relation</span>(<span class="ruby-identifier">component_del</span> = [])
  <span class="ruby-identifier">component_del</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">component_id</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">component_id</span>)

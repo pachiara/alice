@@ -97,6 +97,10 @@
 
   <ul class="link-list">
   
+    <li><a href="./AboutController.html">AboutController</a>
+  
+    <li><a href="./AboutHelper.html">AboutHelper</a>
+  
     <li><a href="./Admin.html">Admin</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
@@ -227,10 +231,11 @@
             <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
   <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.edit&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.tie&#39;</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;will_paginate/array&#39;</span>
   
   <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:product_id</span>])
   <span class="ruby-ivar">@components_ties</span> = <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_ties_page</span>]
-  <span class="ruby-ivar">@components</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_name</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>])
+  <span class="ruby-ivar">@components</span> = (<span class="ruby-constant">Component</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name like ?&quot;</span>, <span class="ruby-node">&quot;%#{params[:component_name]}%&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>)).<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>])
   <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">product_ties_edit_path</span>
   
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:component_del</span>].<span class="ruby-identifier">nil?</span>

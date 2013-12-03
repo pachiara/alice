@@ -5,9 +5,9 @@ class RuleEntriesController < ApplicationController
     @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')
     @rule = Rule.find(params[:rule_id])    
 #    @rule_entries = @rule.rule_entries
-    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 10, :page => params[:rule_page]
+    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 8, :page => params[:rule_page]
     @search_form_path = rule_rule_entries_path(@rule)
-    @licenses = License.search(params[:license_name], params[:page], 10)
+    @licenses = License.search(params[:license_name], params[:page], 8)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -47,9 +47,9 @@ class RuleEntriesController < ApplicationController
   def create
     @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')    
     @rule = Rule.find(params[:rule_id])    
-    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 10, :page => params[:rule_page]
+    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 8, :page => params[:rule_page]
     @search_form_path = rule_rule_entries_path(@rule)
-    @licenses = License.search(params[:license_name], params[:page], 10)
+    @licenses = License.search(params[:license_name], params[:page], 8)
     
     if !params[:license_del].nil?
       license_del = params[:license_del]
@@ -61,18 +61,18 @@ class RuleEntriesController < ApplicationController
 
     if !params[:license_add].nil?
       license_add = params[:license_add]
-      plus = params[:plus]
+#      plus = params[:plus]
       rule_id = params[:rule_id]
       license_add.each do |license_id|
         @rule_entry = RuleEntry.new
         @rule_entry.rule_id = rule_id
         @rule_entry.license_id = license_id
         @rule_entry.order_id = @rule.rule_entries.count + 1
-        if plus.nil?
-          @rule_entry.plus = false
-        else  
-          @rule_entry.plus = plus.include?(license_id)
-        end        
+#        if plus.nil?
+#          @rule_entry.plus = false
+#       else  
+#         @rule_entry.plus = plus.include?(license_id)
+#       end        
         @rule_entry.save
       end  
     end

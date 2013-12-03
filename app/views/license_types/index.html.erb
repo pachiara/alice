@@ -1,9 +1,9 @@
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <tr>
     <th><%= t('activerecord.attributes.license_type.code') %></th>
     <th><%= t('activerecord.attributes.license_type.description') %></th>
     <th><%= t('activerecord.attributes.license_type.protection_level') %></th>
-    <th></th>
+    <th><%= t('actions.actions') %></th>
   </tr>
 
 <% @license_types.each do |license_type| %>

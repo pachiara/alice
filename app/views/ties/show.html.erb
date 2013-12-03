@@ -1,0 +1,40 @@
+<div class="container-fluid">
+<div class="row-fluid">
+
+<div class="span6">
+<div class="well sidebar-nav">
+
+<!--Product content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.products') %></li>
+  <li class="divider"></li>
+    <li class="active">
+      <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+    </li>
+</ul>
+</div><!--/.well -->
+</div><!--/span-->
+
+<div class="span6">
+<div class="well sidebar-nav">
+
+<%= will_paginate @components, :param_name => 'page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+<!--Component content-->
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('activerecord.models.components') %></li>
+  <li class="divider"></li>
+  <% @components.each do |component| %> 
+    <li>
+      <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
+    </li>
+  <% end %>
+</div><!--/.well -->
+</div><!--/span-->
+
+</div>
+</div>
+
+<br />
+ <%= link_to products_path, :class => "btn" do %>
+   <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+ <% end %>

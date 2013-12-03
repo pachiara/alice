@@ -95,6 +95,10 @@
 
   <ul class="link-list">
   
+    <li><a href="./AboutController.html">AboutController</a>
+  
+    <li><a href="./AboutHelper.html">AboutHelper</a>
+  
     <li><a href="./Admin.html">Admin</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
@@ -236,7 +240,7 @@ href="http://www.dwheeler.com/essays/floss-license-slide.html">www.dwheeler.com/
 
           
           <div class="method-source-code" id="rules-source">
-            <pre><span class="ruby-comment"># File app/rules/license_rulebook.rb, line 25</span>
+            <pre><span class="ruby-comment"># File app/rules/license_rulebook.rb, line 23</span>
   <span class="ruby-keyword">def</span> <span class="ruby-identifier">rules</span>
     <span class="ruby-comment"># Inizializzazione</span>
     <span class="ruby-identifier">rule</span> <span class="ruby-value">:New</span>, {<span class="ruby-value">:priority</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>}, 
@@ -266,12 +270,19 @@ href="http://www.dwheeler.com/essays/floss-license-slide.html">www.dwheeler.com/
     <span class="ruby-identifier">rule</span> <span class="ruby-value">:Compatibility</span>, {<span class="ruby-value">:priority</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">4</span>},
       [<span class="ruby-constant">Product</span>, <span class="ruby-value">:prod</span>],
       [<span class="ruby-constant">Component</span>,<span class="ruby-value">:comp</span> ] <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">Floss_slide</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">v</span>[<span class="ruby-value">:comp</span>].<span class="ruby-identifier">license</span>)
+          <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">result</span> = <span class="ruby-keyword">false</span>
+          <span class="ruby-identifier">error_string</span> = <span class="ruby-string">&quot;impossibile verificare compatibilità. &quot;</span> <span class="ruby-operator">+</span>
+                         <span class="ruby-node">&quot;Mancano regole per la licenza #{v[:comp].license.name}.&quot;</span>
+          <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;Componente #{v[:comp].name}:&quot;</span>, <span class="ruby-node">&quot;#{error_string}&quot;</span>)
+          <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">end</span>
         <span class="ruby-identifier">new_compatible_license</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">search_compatible</span>(<span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">compatible_license</span>, <span class="ruby-identifier">v</span>[<span class="ruby-value">:comp</span>].<span class="ruby-identifier">license</span>)
         <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_compatible_license</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span> 
           <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">result</span> = <span class="ruby-keyword">false</span>
-          <span class="ruby-identifier">error_string</span> = <span class="ruby-node">&quot;#{v[:comp].name} licenza #{v[:comp].license.name} &quot;</span> <span class="ruby-operator">+</span>
+          <span class="ruby-identifier">error_string</span> = <span class="ruby-node">&quot;licenza #{v[:comp].license.name} &quot;</span> <span class="ruby-operator">+</span>
                          <span class="ruby-node">&quot;incompatibile con licenza: #{v[:prod].compatible_license.name}&quot;</span>
-          <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-string">&quot;Componente: &quot;</span>, <span class="ruby-node">&quot;#{error_string}&quot;</span>)
+          <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;Componente #{v[:comp].name}:&quot;</span>, <span class="ruby-node">&quot;#{error_string}&quot;</span>)
         <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">compatible_license</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">new_compatible_license</span>
           <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">compatible_license</span> = <span class="ruby-identifier">new_compatible_license</span>
         <span class="ruby-keyword">end</span>
@@ -280,11 +291,13 @@ href="http://www.dwheeler.com/essays/floss-license-slide.html">www.dwheeler.com/
     <span class="ruby-comment"># Prodotto proprietario e licenza richiesta strong</span>
     <span class="ruby-identifier">rule</span> <span class="ruby-value">:Strong</span>, {<span class="ruby-value">:priority</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>},
       [<span class="ruby-constant">Product</span>, <span class="ruby-value">:prod</span>] <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">license</span>.<span class="ruby-identifier">nil?</span> 
-        <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">compatible_license</span>.<span class="ruby-identifier">license_type</span>.<span class="ruby-identifier">protection_level</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">license</span>.<span class="ruby-identifier">license_type</span>.<span class="ruby-identifier">protection_level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> 
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">license</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">addWarning</span>(<span class="ruby-node">&quot;Prodotto #{v[:prod].name}:&quot;</span>, <span class="ruby-string">&quot;non è stata specificata una licenza&quot;</span>)
+        <span class="ruby-keyword">else</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">compatible_license</span>.<span class="ruby-identifier">license_type</span>.<span class="ruby-identifier">protection_level</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">license</span>.<span class="ruby-identifier">license_type</span>.<span class="ruby-identifier">protection_level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> 
           <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">result</span> = <span class="ruby-keyword">false</span>
           <span class="ruby-identifier">v</span>[<span class="ruby-value">:prod</span>].<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-value">:license_id</span>, <span class="ruby-string">&quot;incompatibile con licenza compatibilità componenti.&quot;</span>)
         <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
     
 <span class="ruby-comment">    rule :Sentenza, {:priority =&gt; 1}, 
@@ -323,9 +336,7 @@ href="http://www.dwheeler.com/essays/floss-license-slide.html">www.dwheeler.com/
           <div class="method-source-code" id="search_compatible-source">
             <pre><span class="ruby-comment"># File app/rules/license_rulebook.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search_compatible</span>(<span class="ruby-identifier">license1</span>, <span class="ruby-identifier">license2</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">Floss_slide</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">license1</span>) <span class="ruby-keyword">and</span> <span class="ruby-constant">Floss_slide</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">license2</span>) <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">compatibles</span> = <span class="ruby-constant">Floss_slide</span>[<span class="ruby-identifier">license1</span>] &amp; <span class="ruby-constant">Floss_slide</span>[<span class="ruby-identifier">license2</span>]
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">compatibles</span> = <span class="ruby-constant">Floss_slide</span>[<span class="ruby-identifier">license1</span>] &amp; <span class="ruby-constant">Floss_slide</span>[<span class="ruby-identifier">license2</span>]
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">compatibles</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">compatibles</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span> 
 <span class="ruby-keyword">end</span></pre>
           </div><!-- search_compatible-source -->
