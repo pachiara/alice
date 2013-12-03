@@ -28,6 +28,7 @@ class LicenseRulebook < Rulebook
 #        v[:prod].compatible_license = v[:prod].license
         v[:prod].compatible_license = License.where("name=?", "public").first
         v[:prod].result = true
+        v[:prod].addInfo("Licenza compatibilità componenti iniziale:", " #{v[:prod].compatible_license.name} #{v[:prod].compatible_license.version}")
     end
     
 =begin    
@@ -66,6 +67,7 @@ class LicenseRulebook < Rulebook
                          "incompatibile con licenza: #{v[:prod].compatible_license.name}"
           v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
         elsif v[:prod].compatible_license != new_compatible_license
+          v[:prod].addInfo("Componente #{v[:comp].name} con licenza #{v[:comp].license.name} #{v[:comp].license.version}", "cambia licenza compatibilità componenti in: #{new_compatible_license.name} #{new_compatible_license.version}")
           v[:prod].compatible_license = new_compatible_license
         end
     end

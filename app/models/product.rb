@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
   attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version,
    :compatible_license_id
    
-  attr_accessor :warnings
+  attr_accessor :warnings, :infos
   
   validates_presence_of :name, :title, :use_id
   validates_uniqueness_of :name
@@ -48,5 +48,11 @@ class Product < ActiveRecord::Base
     @warnings || @warnings = ActiveModel::Errors.new(self)
     @warnings.add(key, text)
   end
+
+  def addInfo(key, text)
+    @infos || @infos = ActiveModel::Errors.new(self)
+    @infos.add(key, text)
+  end
+
   
 end

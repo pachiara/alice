@@ -44,6 +44,16 @@
     </div>
   <% end %>
 
+  <% if !@product.infos.nil? %>
+    <div class="alert alert-info">
+      <strong>Informazioni:</strong>
+      <ol>
+        <% @product.infos.full_messages.each do |msg| %>
+           <li><label><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
 
   <div class="form-inputs form-horizontal">
 
