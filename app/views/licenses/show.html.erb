@@ -15,7 +15,9 @@
 
 <p>
   <b><%= t('activerecord.attributes.license.category') %>:</b>
-  <%= @license.category.name %>
+  <% if !@license.category.nil? %>
+   <%= @license.category.name %>
+  <% end %>
 </p>
 
 <p>
