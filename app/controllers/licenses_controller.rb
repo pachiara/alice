@@ -159,7 +159,7 @@ class LicensesController < ApplicationController
 
     respond_to do |format|
       if @license.save
-        format.html { redirect_to @license, notice: t('flash.license.create.notice') }
+        format.html { redirect_to licenses_path, notice: t('flash.license.create.notice') }
         format.json { render json: @license, status: :created, location: @license }
       else
         format.html { render action: "new" }
