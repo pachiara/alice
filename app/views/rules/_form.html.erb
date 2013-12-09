@@ -3,7 +3,7 @@
 
   <div class="form-inputs form-horizontal">
     <%= f.input :name %>
-    <%= f.association :license %>
+    <%= f.input :license_id, collection: License.all(order: 'name'), value_method: :id, label_method: :name %>
   </div>
 
   <div class="form-actions">
