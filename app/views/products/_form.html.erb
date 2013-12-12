@@ -10,8 +10,26 @@
     <div class="row">
       <%= f.input :version, :wrapper_html => { :class => "span3" } %>
       <%= f.association :license, collection: License.all(order: 'name'), :wrapper_html => { :class => "span3" } %>
-      <%= f.input :checked_at , :wrapper_html => { :class => "span3" },  :input_html => { :class => "span1" } %>
-      <%= f.input :result, :wrapper_html => { :class => "span1" } %>
+      <div class="span2">
+        <%= t('activerecord.attributes.product.checked_at') %>
+        </br></br>
+        <% if !@product.checked_at.nil? %>
+          <span class="label"><%= l @product.checked_at %></span>
+        <% end %>
+      </div>
+      <div class="span1">
+        <%= t('activerecord.attributes.product.result') %>
+        </br></br>
+        <% if @product.result.nil? %>
+          <span class="label label-warning">NC</span>
+        <% else %>
+          <% if @product.result.true? %>
+            <span class="label label-success">OK</span>
+          <% else %>
+            <span class="label label-important">KO</span>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <%= f.input :description, :input_html => { :class => "span11", :rows => 5 } %>
     <%= f.input :notes, :input_html => { :class => "span11", :rows => 5 } %>
