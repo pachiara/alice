@@ -255,6 +255,7 @@ it:
         category:     "Categoria" 
         license_type: "Tipo Licenza"
         flag_osi:     "OSI"
+        notes:        "Note"
       category:
         name:         "Nome Categoria"    
         description:  "Descrizione"
