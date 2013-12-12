@@ -27,7 +27,7 @@ class LicenseRulebook < Rulebook
       [Product, :prod] do |v|
 #        v[:prod].compatible_license = v[:prod].license
         v[:prod].compatible_license = License.where("name=?", "public").first
-        v[:prod].result = true
+        v[:prod].result = nil
         v[:prod].addInfo("Licenza compatibilità componenti iniziale:", " #{v[:prod].compatible_license.name} #{v[:prod].compatible_license.version}")
     end
     

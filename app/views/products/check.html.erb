@@ -11,10 +11,14 @@
   <h4>
     <br/>
     <%= t('activerecord.attributes.product.result') %>:
-    <% if @product.result? %>
-      <span class="label label-success">OK</span>
+    <% if @product.result.nil? %>
+      <span class="label label-warning">NC</span>
     <% else %>
-      <span class="label label-important">KO</span>
+      <% if @product.result? %>
+        <span class="label label-success">OK</span>
+      <% else %>
+        <span class="label label-important">KO</span>
+      <% end %>
     <% end %>
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
@@ -58,8 +62,10 @@
   <div class="form-inputs form-horizontal">
 
     <div class="form-actions">
-      <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-        <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+      <% if !@product.result.nil? %>
+        <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+          <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+        <% end %>
       <% end %>
       <%= link_to products_path, :class => "btn" do %>
           <i class="icon-arrow-left"></i> <%= t('actions.back') %>

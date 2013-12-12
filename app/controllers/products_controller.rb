@@ -190,6 +190,9 @@ class ProductsController < ApplicationController
       LicenseRulebook.new(e).rules
       e.assert @product
       @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
+      if @components.empty? 
+         @product.errors.add("Impossibile eseguire il controllo", "Il prodotto non ha componenti")
+      end
       @components.each do |component|
         e.assert component
       end
