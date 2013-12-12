@@ -1,5 +1,5 @@
 class Component < ActiveRecord::Base
-  attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version, :purchased, :own
+  attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version, :purchased, :own, :leave_out
   
   validates_presence_of :name, :title, :use_id, :license_id
   validates :version, :uniqueness => {:scope => [:name]}

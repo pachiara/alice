@@ -293,6 +293,7 @@ it:
         purchased:    "Acquistato"
         own:          "Proprio"
         ownership:    "Proprietà"
+        leave_out:    "Escluso"
       detection:
         name:         "Nome Rilevamento"
         created_at:   "Data rilevamento"
