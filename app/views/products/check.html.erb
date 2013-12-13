@@ -2,7 +2,7 @@
 
   <%= hidden_field_tag 'product_id', @product.id %>
   <%= hidden_field_tag 'result', @product.result %>
-  <%= hidden_field_tag 'compatible_license_id', @product.compatible_license.id %>
+  <%= hidden_field_tag 'compatible_license_id', (!@product.compatible_license.nil? ? @product.compatible_license.id : " ") %>
 
   <button class="btn btn-large btn-block btn-primary disabled" type="button">
     <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
@@ -23,7 +23,9 @@
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
     <br/>
-    <%= t('activerecord.attributes.product.compatible_license_id') %>: <%= @product.compatible_license.name %>
+    <% if !@product.result.nil? %>
+     <%= t('activerecord.attributes.product.compatible_license_id') %>: <%= @product.compatible_license.name %>
+     <% end %>
   </h4>
 
   <% if @product.errors.full_messages.length > 0 %>
