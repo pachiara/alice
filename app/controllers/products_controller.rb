@@ -186,11 +186,11 @@ class ProductsController < ApplicationController
   def check
     @title = t('actions.check') + " " + t('activerecord.models.components')
     @product = Product.find(params[:product_id])
-    @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
-    if @components.empty? 
+    if @product.components.empty? 
        @product.errors.add("Impossibile eseguire il controllo", "Il prodotto non ha componenti")
        @product.result = nil
     else
+      @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
       engine :engine do |e|
         LicenseRulebook.new(e).rules
         e.assert @product
