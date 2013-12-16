@@ -1,6 +1,6 @@
 class DetectedComponent < ActiveRecord::Base
   belongs_to :detection
-  attr_accessible :component_id, :license_id, :license_name, :license_version, :name, :version
+  attr_accessible :component_id, :license_id, :license_name, :license_version, :name, :version, :own
   
   validates_presence_of :name, :version
 

@@ -16,6 +16,7 @@
     <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
     <th><%= t('activerecord.attributes.detected_component.license_id') %></th>
+    <th><%= t('activerecord.attributes.detected_component.own') %></th>
     <th><%= t('actions.actions') %></th>
   </tr>
 
@@ -30,6 +31,10 @@
         <%= License.find(detected_component.license_id).description %>
       <% else %>
         <span class="label label-important">KO</span>
+      <% end %>
+    <td>
+      <% if detected_component.own %>
+        <p class="text-center"><i class="icon-ok"></i></p>
       <% end %>
     </td>
     

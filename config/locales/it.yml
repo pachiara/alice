@@ -310,6 +310,7 @@ it:
         license_version: "Versione"
         license_id:   "Licenza assegnata"
         license_id_version: "Versione assegnata"
+        own:          "Proprio"
       rule:
         name:         "Nome"
         license:      "Licenza"
