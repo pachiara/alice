@@ -51,7 +51,8 @@ class Detection < ActiveRecord::Base
   
   # Se il componente è registrato assegna id e licenza corrispondente 
   def identify_component(detected_component)
-    component = Component.where("name = ? and version = ?", detected_component.name, detected_component.version).first
+    major_release = detected_component.version.split('.')[0]
+    component = Component.where("name = ? and version like ?", detected_component.name, "#{major_release}.%").first
     if component != nil
       detected_component.component_id = component.id
       detected_component.license_id = component.license_id
