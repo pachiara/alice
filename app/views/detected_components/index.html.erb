@@ -1,4 +1,6 @@
 <button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.product') %>: <%= @product.name %>
+     <% if !@product.version.blank? %> - Vers. <%= @product.version %> <% end %> &nbsp; 
   <%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %>
 </button>
 <br />
