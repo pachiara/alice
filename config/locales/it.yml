@@ -263,6 +263,7 @@ it:
         code:         "Codice"    
         description:  "Descrizione"
         protection_level: "Livello protezione"
+        protection_level_short: "Protezione"
         unidentified: "Non identificata"           
       product:
         name:         "Nome"
@@ -283,6 +284,7 @@ it:
       component:
         name:         "Nome"
         version:      "Versione"
+        version_short: "Vers."
         title:        "Titolo"    
         description:  "Descrizione"
         license:      "Licenza"
@@ -390,6 +392,8 @@ it:
       components_for_ownership: "Componenti per proprietà"
       licenses_for_protection_level: "Licenze per livello di protezione"
       licenses_for_type: "Licenze per tipo"
+      print_check: "Report controllo licenze"
+      compatibility: "compatibilità licenze"
       
 
   

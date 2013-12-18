@@ -32,6 +32,7 @@ Alice::Application.routes.draw do
     get 'check'
     post 'update_check'
     get 'print'
+    get 'print_check'
   end
     
   resources :license_types

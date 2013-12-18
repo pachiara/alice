@@ -184,7 +184,7 @@ class ProductsController < ApplicationController
     
   # GET /products/1/check
   def check
-    @title = t('actions.check') + " " + t('activerecord.models.components')
+    @title = t('actions.check') + " " + t('actions.messages.compatibility')
     @product = Product.find(params[:product_id])
     if @product.components.empty? 
        @product.errors.add("Impossibile eseguire il controllo", "Il prodotto non ha componenti")
@@ -216,5 +216,37 @@ class ProductsController < ApplicationController
     end
   end
 
+  # GET /products/1/print_check
+  def print_check
+    @title = t('actions.messages.print_check')
+    @product = Product.find(params[:product_id])
+ 
+    @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
+    engine :engine do |e|
+      LicenseRulebook.new(e).rules
+      e.assert @product
+        @components.each do |component|
+          e.assert component
+        end
+        e.match
+    end
+    
+#    count_types
+#    @components = @product.components.order("name")
+        
+    respond_to do |format|
+      format.pdf do
+        render :pdf => @product.name.gsub(' ', '_'),
+               :header => { :left => 'Alice',
+                            :center => @title,
+                            :right => t('actions.messages.classification'),
+                            :line => true
+                          },
+               :footer => { :center => "#{t('actions.messages.date')} #{Time.now.strftime('%d/%m/%Y')}    #{t('actions.messages.hour')} #{Time.now.strftime('%H:%M')}",
+                            :right => 'Pag. [page] / [topage]', :line => true },
+               :show_as_html => params[:debug].present?
+      end
+    end
+  end
   
 end

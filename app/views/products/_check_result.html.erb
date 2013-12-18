@@ -1,0 +1,56 @@
+  <button class="btn btn-large btn-block btn-primary disabled" type="button">
+    <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
+  </button>
+
+  <h4>
+    <br/>
+    <%= t('activerecord.attributes.product.result') %>:
+    <% if @product.result.nil? %>
+      <span class="label label-warning">NC</span>
+    <% else %>
+      <% if @product.result? %>
+        <span class="label label-success">OK</span>
+      <% else %>
+        <span class="label label-important">KO</span>
+      <% end %>
+    <% end %>
+    <br/>
+    <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
+    <br/>
+    <% if !@product.result.nil? %>
+     <%= t('activerecord.attributes.product.compatible_license_id') %>: <%= @product.compatible_license.name %>
+     <% end %>
+  </h4>
+  
+    <% if @product.errors.full_messages.length > 0 %>
+    <div class="alert alert-error">
+      <strong>Errori:</strong>
+      <ol>
+        <% @product.errors.full_messages.each do |msg| %>
+           <li><label class="text-error"><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <% if !@product.warnings.nil? %>
+    <div class="alert">
+      <strong>Avvisi:</strong>
+      <ol>
+        <% @product.warnings.full_messages.each do |msg| %>
+           <li><label><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <% if !@product.infos.nil? %>
+    <div class="alert alert-info">
+      <strong>Informazioni:</strong>
+      <ol>
+        <% @product.infos.full_messages.each do |msg| %>
+           <li><label><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
