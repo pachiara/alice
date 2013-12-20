@@ -53,14 +53,15 @@ class LicenseRulebook < Rulebook
     rule :Compatibility, {:priority => 4},
       [Product, :prod],
       [Component,:comp ] do |v|
-      if !Floss_slide.include?(v[:comp].license)
-          v[:prod].result = false
-          error_string = "impossibile verificare compatibilità. " +
-                         "Mancano regole per la licenza #{v[:comp].license.name}."
-          v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
-          next
-      end
-        new_compatible_license = self.search_compatible(v[:prod].compatible_license, v[:comp].license)
+        seeking_license = v[:comp].license.similar_license_id.nil? ? license = v[:comp].license : License.find(v[:comp].license.similar_license_id)
+        if !Floss_slide.include?(seeking_license)
+            v[:prod].result = false
+            error_string = "impossibile verificare compatibilità. " +
+                           "Mancano regole per la licenza #{v[:comp].license.name}."
+            v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+            next
+        end
+        new_compatible_license = self.search_compatible(v[:prod].compatible_license, seeking_license)
         if new_compatible_license == nil 
           v[:prod].result = false
           error_string = "licenza #{v[:comp].license.name} " +
