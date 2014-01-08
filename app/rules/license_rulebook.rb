@@ -16,6 +16,9 @@ class LicenseRulebook < Rulebook
     Floss_slide[rule.license]=entries
   end
 
+  # Cerca le licenze compatibili con la license1 all'interno delle licenze compatibili con la license2
+  # e restituisce la PRIMA licenza compatibile trovata;
+  # quindi L'ORDINE con cui sono passate license1 e license2 CAMBIA IL RISULTATO!
   def search_compatible(license1, license2)
     compatibles = Floss_slide[license1] & Floss_slide[license2]
     return compatibles ? compatibles[0] : nil 
@@ -61,7 +64,7 @@ class LicenseRulebook < Rulebook
             v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
             next
         end
-        new_compatible_license = self.search_compatible(v[:prod].compatible_license, seeking_license)
+        new_compatible_license = self.search_compatible(seeking_license, v[:prod].compatible_license)
         if new_compatible_license == nil 
           v[:prod].result = false
           error_string = "licenza #{v[:comp].license.name} " +
