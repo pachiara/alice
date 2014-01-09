@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007144110) do
+ActiveRecord::Schema.define(:version => 20131219114541) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20131007144110) do
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
   create_table "components", :force => true do |t|
-    t.string   "name",        :limit => 30
+    t.string   "name",        :limit => 50
     t.string   "version",     :limit => 25
     t.string   "title",       :limit => 50
     t.text     "description"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20131007144110) do
     t.datetime "updated_at",                                   :null => false
     t.boolean  "purchased",                 :default => false
     t.boolean  "own",                       :default => false
+    t.boolean  "leave_out",                 :default => false
   end
 
   add_index "components", ["license_id"], :name => "index_components_on_license_id"
@@ -77,8 +78,9 @@ ActiveRecord::Schema.define(:version => 20131007144110) do
     t.string   "license_version"
     t.integer  "component_id"
     t.integer  "license_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "own",             :default => false
   end
 
   add_index "detected_components", ["detection_id"], :name => "index_detected_components_on_detection_id"
@@ -106,15 +108,17 @@ ActiveRecord::Schema.define(:version => 20131007144110) do
   add_index "license_types", ["code"], :name => "index_license_types_on_code", :unique => true
 
   create_table "licenses", :force => true do |t|
-    t.string   "name",            :limit => 15
-    t.string   "description",     :limit => 100
-    t.string   "version",         :limit => 5
+    t.string   "name",               :limit => 15
+    t.string   "description",        :limit => 100
+    t.string   "version",            :limit => 5
     t.integer  "category_id"
     t.integer  "license_type_id"
-    t.boolean  "flag_osi",                       :default => true
+    t.boolean  "flag_osi",                          :default => true
     t.text     "text_license"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.text     "notes"
+    t.integer  "similar_license_id"
   end
 
   add_index "licenses", ["category_id"], :name => "index_licenses_on_category_id"
@@ -130,10 +134,10 @@ ActiveRecord::Schema.define(:version => 20131007144110) do
     t.integer  "license_id"
     t.integer  "use_id"
     t.date     "checked_at"
-    t.boolean  "result",                              :default => true
+    t.boolean  "result"
     t.text     "notes"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "compatible_license_id"
   end
 
