@@ -27,13 +27,11 @@
   </tbody>
 </table>
 
-<% @components.each do |component, i| %>
-  <% if !component.notes.blank? %>
-    <% if i=1 %>
-      <h3><%= t('activerecord.attributes.component.notes') + " " + t('activerecord.models.components') %></h3>
-    <% end %>
-    <h4><%= component.name %></h4>
-    <div class="well"><%= simple_format(component.notes) %></div>
+<% if !@components_with_notes.empty? %>
+  <h3><%= t('activerecord.attributes.component.notes') + " " + t('activerecord.models.components') %></h3>
+  <% @components_with_notes.each do |name, notes| %>
+    <h4><%= name %></h4>
+    <div class="well"><%= simple_format(notes) %></div>
   <% end %>
 <% end %>
  

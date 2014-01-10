@@ -233,10 +233,13 @@ class ProductsController < ApplicationController
     
     # Nella stampa devono apparire anche i componenti esclusi dal controllo 
     @components = @product.components.order("name")
+    @components_with_notes = Hash.new
     @licenses_with_notes = Hash.new
     @components.each do |component| 
+      @components_with_notes[component.name] = component.notes unless component.notes.blank?  
       @licenses_with_notes[component.license.name] = component.license unless component.license.notes.blank?  
     end
+    @components_with_notes.sort
     @licenses_with_notes.sort
         
     respond_to do |format|
