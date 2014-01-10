@@ -231,8 +231,13 @@ class ProductsController < ApplicationController
         e.match
     end
     
-#    count_types
-#    @components = @product.components.order("name")
+    # Nella stampa devono apparire anche i componenti esclusi dal controllo 
+    @components = @product.components.order("name")
+    @licenses_with_notes = Hash.new
+    @components.each do |component| 
+      @licenses_with_notes[component.license.name] = component.license unless component.license.notes.blank?  
+    end
+    @licenses_with_notes.sort
         
     respond_to do |format|
       format.pdf do
