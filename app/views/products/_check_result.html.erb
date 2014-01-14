@@ -17,6 +17,8 @@
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
     <br/>
+    <%= t('activerecord.attributes.product.use') %>: <%= @product.use.description %>
+    <br/>
     <% if !@product.result.nil? %>
      <%= t('activerecord.attributes.product.compatible_license_id') %>: <%= @product.compatible_license.name %>
      <% end %>

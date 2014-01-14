@@ -15,6 +15,7 @@ class LicenseRulebook < Rulebook
     end
     Floss_slide[rule.license]=entries
   end
+  distribution_impossible = false;
 
   # Cerca le licenze compatibili con la license1 all'interno delle licenze compatibili con la license2
   # e restituisce la PRIMA licenza compatibile trovata;
@@ -28,37 +29,19 @@ class LicenseRulebook < Rulebook
     # Inizializzazione
     rule :New, {:priority => 10}, 
       [Product, :prod] do |v|
-#        v[:prod].compatible_license = v[:prod].license
         v[:prod].compatible_license = License.where("name=?", "public").first
         v[:prod].result = true
         v[:prod].addInfo("Licenza compatibilità componenti iniziale:", " #{v[:prod].compatible_license.name} #{v[:prod].compatible_license.version}")
     end
     
-=begin    
-    # Prodotto proprietario e componente con licenza strong
-    rule :Strong, {:priority => 5},
-      [Product, :prod],
-      [Component,:comp ] do |v|
-        puts v[:comp].name
-        if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
-          v[:prod].result = false
-#          print "****** Licenza Prodotto incompatibile con "
-#          puts "licenza #{v[:comp].license.name}  #{v[:comp].license.version}"
-#          puts "Componente: #{v[:comp].name}  #{v[:comp].version}"
-          error_string = "Licenza Prodotto incompatibile con "
-          error_string << "licenza #{v[:comp].license.name}  #{v[:comp].license.version}"
-          error_string << "Componente: #{v[:comp].name}  #{v[:comp].version}"
-          v[:prod].errors.add("#{v[:comp].name}", "#{error_string}")
-        end    
-    end
-=end
+
     # Calcola la licenza richiesta 
     rule :Compatibility, {:priority => 4},
       [Product, :prod],
       [Component,:comp ] do |v|
         seeking_license = v[:comp].license.similar_license_id.nil? ? license = v[:comp].license : License.find(v[:comp].license.similar_license_id)
         if !Floss_slide.include?(seeking_license)
-            v[:prod].result = false
+            v[:prod].result = nil
             error_string = "impossibile verificare compatibilità. " +
                            "Mancano regole per la licenza #{v[:comp].license.name}."
             v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
@@ -66,7 +49,7 @@ class LicenseRulebook < Rulebook
         end
         new_compatible_license = self.search_compatible(seeking_license, v[:prod].compatible_license)
         if new_compatible_license == nil 
-          v[:prod].result = false
+          distribution_impossible = true;
           error_string = "licenza #{v[:comp].license.name} " +
                          "incompatibile con licenza: #{v[:prod].compatible_license.name}"
           v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
@@ -75,27 +58,24 @@ class LicenseRulebook < Rulebook
           v[:prod].compatible_license = new_compatible_license
         end
     end
-  
-    # Prodotto proprietario e licenza richiesta strong
-    rule :Strong, {:priority => 2},
+ 
+    # Distribuzione di prodotto proprietario con licenza componenti strong
+    rule :Distribution, {:priority => 2},
       [Product, :prod] do |v|
-        if v[:prod].license.nil?
-          v[:prod].addWarning("Prodotto #{v[:prod].name}:", "non è stata specificata una licenza")
-        else if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
+        if v[:prod].use.name == "DIS" and v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0
           v[:prod].result = false
-          v[:prod].errors.add(:license_id, "incompatibile con licenza compatibilità componenti.")
+          v[:prod].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
         end
       end
-    end
     
-=begin
-    rule :Sentenza, {:priority => 1}, 
+    # Servizio esterno di prodotto proprietario con licenza componenti network protective
+    rule :ExternalService, {:priority => 2},
       [Product, :prod] do |v|
-        if v[:prod].result == false
-#          v[:prod].compatible_license = nil
+        if v[:prod].use.name == "SUE" and v[:prod].compatible_license.license_type.protection_level > 2 and v[:prod].license.license_type.protection_level < 0
+          v[:prod].result = false
+          v[:prod].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
         end
-    end
-=end
-    
+      end
+  
   end
 end

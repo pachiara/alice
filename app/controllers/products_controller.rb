@@ -186,8 +186,11 @@ class ProductsController < ApplicationController
   def check
     @title = t('actions.check') + " " + t('actions.messages.compatibility')
     @product = Product.find(params[:product_id])
-    if @product.components.empty? 
-       @product.errors.add("Impossibile eseguire il controllo", "Il prodotto non ha componenti")
+    if @product.license.nil?
+       @product.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+       @product.result = nil
+    elsif @product.components.empty? 
+       @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
        @product.result = nil
     else
       @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
