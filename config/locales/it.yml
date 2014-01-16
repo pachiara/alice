@@ -279,6 +279,7 @@ it:
         notes:        "Note"
         license_id:   "Licenza prodotto"
         compatible_license_id: "Licenza compatibilità componenti"
+        groupage:        "Raggruppamento"
       use:
         name:         "Nome"
         description:  "Descrizione"  

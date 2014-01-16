@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
   attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version,
-   :compatible_license_id
+   :compatible_license_id, :groupage
    
   attr_accessor :warnings, :infos
   
@@ -36,9 +36,14 @@ class Product < ActiveRecord::Base
     self.components.clear
   end 
    
-  def self.search(name, page, per_page = 10)
+  def self.search(name, groupage, page, per_page = 10)
    conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
+   conditions << sanitize_sql_for_conditions([" and groupage like '%s'", "%#{groupage}%"]) unless groupage.nil? or groupage.empty?
    paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
+  end
+  
+  def self.search_order(order, page, per_page = 10)
+    paginate :order => order, :per_page => per_page, :page => page
   end
   
   def check

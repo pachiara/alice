@@ -1,16 +1,41 @@
+<%= render :partial => "search_product_groupage" %>
 <%= render :partial => "search_product" %>
 <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
 
 <table class="table table-striped table-condensed table-bordered">
   <tr>
-    <th><%= t('activerecord.attributes.product.name') %></th>
-    <th><%= t('activerecord.attributes.product.version') %></th>
-    <th><%= t('activerecord.attributes.product.title') %></th>
-    <th><%= t('activerecord.attributes.product.description') %></th>
-    <th><%= t('activerecord.attributes.product.use') %></th>
-    <th><%= t('activerecord.attributes.product.checked_at') %></th>
-    <th><%= t('activerecord.attributes.product.result') %></th>
-    <th><%= t('actions.actions') %></th>
+    <%= form_tag products_path, :method => 'get' %>
+      <th>
+        <%= button_tag(:class => @class_name, :type => 'submit', :name => 'order', :value => 'name') do  %>
+          <%= t('activerecord.attributes.product.name')%>
+          <% if !@down_name.nil? %>
+            <% if @down_name %>
+              <i class="icon-chevron-up"></i>
+            <% else %>
+              <i class="icon-chevron-down"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </th>
+      <th><%= t('activerecord.attributes.product.version') %></th>
+      <th><%= t('activerecord.attributes.product.title') %></th>
+      <th>
+        <%= button_tag(:class => @class_groupage, :type => 'submit', :name => 'order', :value => 'groupage') do  %>
+          <%= t('activerecord.attributes.product.groupage')%>
+          <% if !@down_groupage.nil? %>
+            <% if @down_groupage %>
+              <i class="icon-chevron-up"></i>
+            <% else %>
+              <i class="icon-chevron-down"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </th>
+      <th><%= t('activerecord.attributes.product.use') %></th>
+      <th><%= t('activerecord.attributes.product.checked_at') %></th>
+      <th><%= t('activerecord.attributes.product.result') %></th>
+      <th><%= t('actions.actions') %></th>
+    </form>
   </tr>
 
 <% @products.each do |product| %>
@@ -18,7 +43,7 @@
     <td><%= product.name %></td>
     <td><%= product.version %></td>
     <td><%= product.title %></td>
-    <td><% if product.description.size > 0 %><i class="icon-ok"></i><% end %></td>
+    <td><%= unless product.groupage.nil?; product.groupage; end %></td>
     <td><%= unless product.use.nil?; product.use.description; end %></td>
     <td><% if !product.checked_at.nil? %><%= l product.checked_at %><% end %></td>
     <td>

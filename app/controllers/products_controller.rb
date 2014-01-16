@@ -11,6 +11,45 @@ class ProductsController < ApplicationController
     if params[:product_name].nil? && !session[:products_search_name].nil? then
        params[:product_name] = session[:products_search_name]
     end
+    if params[:product_groupage].nil? && !session[:products_search_groupage].nil? then
+       params[:product_groupage] = session[:products_search_groupage]
+    end
+  end
+  
+  def order_search
+    case params[:order]
+    when "name"
+      if session[:down_name].nil?
+        session[:down_name] = true
+      end
+      @down_name = session[:down_name]
+      if session[:products_page] == params[:page] then
+        @down_name = !session[:down_name]
+        session[:down_name] = @down_name      
+      end 
+      if @down_name 
+        @order = "name DESC, version DESC"
+      else
+        @order = "name ASC, version ASC"
+      end
+      @class_name = "btn btn-mini btn-info" 
+      when "groupage"
+      if session[:down_groupage].nil?
+        session[:down_groupage] = true
+      end
+      @down_groupage = session[:down_groupage]
+      if session[:products_page] == params[:page] then
+        @down_groupage = !session[:down_groupage]
+        session[:down_groupage] = @down_groupage
+      end         
+      if @down_groupage
+        @order = "groupage DESC"
+      else
+        @order = "groupage ASC"
+      end  
+      @class_groupage = "btn btn-mini btn-info"
+    end
+    return @order  
   end
   
   def count_types
@@ -76,10 +115,18 @@ class ProductsController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
     @search_form_path = products_path
-    @products = Product.search(params[:product_name], params[:page])
+    @class_name = "btn btn-mini"
+    @class_groupage = "btn btn-mini"
+    
+    if params[:order].nil? || params[:order].empty? then
+      @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
+    else
+      @products = Product.search_order(order_search, params[:page])
+    end
 
     session[:products_page] = params[:page]
     session[:products_search_name] = params[:product_name]
+    session[:products_search_groupage] = params[:product_groupage]
 
     respond_to do |format|
       format.html # index.html.erb
