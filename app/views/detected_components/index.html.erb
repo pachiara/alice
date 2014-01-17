@@ -40,7 +40,11 @@
     
     <td><div class="btn-group">
       <%= link_to raw('<i class="icon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
-      <%= link_to raw('<i class="icon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      <% if detected_component.detection.acquired %>
+       <%= link_to raw('<i class="icon-trash"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+     <% else %>
+       <%= link_to raw('<i class="icon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+     <% end %>
     </td>
     
   </tr>

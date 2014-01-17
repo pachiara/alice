@@ -303,6 +303,7 @@ it:
         created_at:   "Data rilevamento"
         xml_file_name: "Nome file xml"
         xml_updated_at: "Data file xml"
+        acquired:     "Acquisito"  
       detected_component:
         name:         "Nome"
         name_long:    "Nome componente"
@@ -396,7 +397,8 @@ it:
       licenses_for_type: "Licenze per tipo"
       print_check: "Report controllo licenze"
       compatibility: "compatibilità licenze"
-      components_list_legend: "Legenda: Pr=Proprio, Ac=Acquistato, Es=Escluso, Nt=Note"  
+      components_list_legend: "Legenda: Pr=Proprio, Ac=Acquistato, Es=Escluso, Nt=Note"
+      acquisition: "Acquisizione"
   
   will_paginate:
     next_label: "Sucessivi"

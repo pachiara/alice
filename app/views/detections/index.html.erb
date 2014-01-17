@@ -11,6 +11,7 @@
     <th><%= t('activerecord.attributes.detection.created_at') %></th>
     <th><%= t('activerecord.attributes.detection.xml_file_name') %></th>
     <th><%= t('activerecord.attributes.detection.xml_updated_at') %></th>
+    <th><%= t('actions.messages.acquisition') %></th>
     <th><%= t('actions.actions') %></th>
   </tr>
 
@@ -20,12 +21,23 @@
     <td><%= detection.created_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
     <td><%= detection.xml_file_name %></td>
     <td><%= detection.xml_updated_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+    <td>
+      <% if detection.acquired %>  
+        <span class="label label-success"><i class="icon-thumbs-up icon-white"></i></span>
+      <% else %>
+        <span class="label label-warning"><i class=" icon-wrench icon-white"></i></span>
+      <% end %>
+    </td>
     <td><div class="btn-group">
-
       <%= link_to raw('<i class="icon-pencil"></i>'), edit_detection_path(detection), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
       <%= link_to raw('<i class="icon-list-alt"></i>'), detected_components_path(:detection_id => detection.id, :commit => "clear"), :class => "btn", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
-      <%= link_to raw('<i class="icon-download-alt"></i>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn", :title => t('actions.acquire'), :alt => t('actions.acquire') %>
-      <%= link_to raw('<i class="icon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+        <% if detection.acquired %>
+         <%= link_to raw('<i class="icon-download-alt"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+         <%= link_to raw('<i class="icon-trash"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+       <% else %>
+         <%= link_to raw('<i class="icon-download-alt"></i>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn", disabled: detection.acquired, :title => t('actions.acquire'), :alt => t('actions.acquire') %>
+         <%= link_to raw('<i class="icon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+       <% end %>
     </td>
   </tr>
   
