@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'ruleby'
 require 'json'
 
@@ -50,6 +51,33 @@ class ProductsController < ApplicationController
       @class_groupage = "btn btn-mini btn-info"
     end
     return @order  
+  end
+  
+  def analyze_rules
+    @components = @product.components.where(:own => false, :leave_out => false )
+    # Inizializzazione
+    @product.compatible_license = License.where("name=?", "public").first
+    @product.result = true
+    @product.addInfo("Licenza compatibilità componenti iniziale:",
+                     " #{@product.compatible_license.name} #{@product.compatible_license.version}")
+
+    engine :engine do |e|
+      CompatibilityRulebook.new(e).rules
+      e.assert @product
+      @components.each do |component|
+        e.assert component
+      end
+      e.match
+    end
+
+    engine :engine do |e|
+      CheckRulebook.new(e).rules
+      e.assert @product
+      @components.each do |component|
+        e.assert component
+      end
+      e.match
+    end
   end
   
   def count_types
@@ -240,15 +268,7 @@ class ProductsController < ApplicationController
        @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
        @product.result = nil
     else
-      @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
-      engine :engine do |e|
-        LicenseRulebook.new(e).rules
-        e.assert @product
-          @components.each do |component|
-            e.assert component
-          end
-          e.match
-      end
+      analyze_rules      
     end
 
     respond_to do |format|
@@ -270,16 +290,8 @@ class ProductsController < ApplicationController
   def print_check
     @title = t('actions.messages.print_check')
     @product = Product.find(params[:product_id])
- 
-    @components = @product.components.where(:own => false, :purchased => false, :leave_out => false )
-    engine :engine do |e|
-      LicenseRulebook.new(e).rules
-      e.assert @product
-        @components.each do |component|
-          e.assert component
-        end
-        e.match
-    end
+
+    analyze_rules 
     
     # Nella stampa devono apparire anche i componenti esclusi dal controllo 
     @components = @product.components.order("name")
