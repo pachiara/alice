@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219114541) do
+ActiveRecord::Schema.define(:version => 20140116151950) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -128,17 +128,18 @@ ActiveRecord::Schema.define(:version => 20131219114541) do
 
   create_table "products", :force => true do |t|
     t.string   "name",                  :limit => 15
-    t.string   "version",               :limit => 5
-    t.string   "title",                 :limit => 50
+    t.string   "version",               :limit => 25
+    t.string   "title",                 :limit => 100
     t.text     "description"
     t.integer  "license_id"
     t.integer  "use_id"
     t.date     "checked_at"
     t.boolean  "result"
     t.text     "notes"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "compatible_license_id"
+    t.string   "groupage",              :limit => 25
   end
 
   add_index "products", ["license_id"], :name => "index_products_on_license_id"
