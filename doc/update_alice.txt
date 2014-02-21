@@ -3,7 +3,7 @@ Aggiornamento
 1) Alice
     login con user = alice
     salvataggio attuale:
-    tar czvf alice.`date +%d%m%Y`.tgz alice/
+    tar czvf alice.`date +%Y%m%d`.tgz alice/
     rm -rf alice
     git clone https://github.com/pachiara/alice.git
     cd alice
