@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
       else
         @order = "name ASC, version ASC"
       end
-      @class_name = "btn btn-mini btn-info" 
+      @class_name = "btn btn-xs btn-info" 
       when "groupage"
       if session[:down_groupage].nil?
         session[:down_groupage] = true
@@ -48,30 +48,9 @@ class ProductsController < ApplicationController
       else
         @order = "groupage ASC"
       end  
-      @class_groupage = "btn btn-mini btn-info"
+      @class_groupage = "btn btn-xs btn-info"
     end
     return @order  
-  end
-  
-  def precheck
-    result = true
-    if @product.license.nil?
-      @product.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
-      result = false
-    end
-    if @product.components.empty? 
-      @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
-      result = false
-    else
-      @product.components.each do |component|
-        if component.license.license_type.nil?
-          @product.errors.add("Impossibile eseguire il controllo:",
-           "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
-          result = false
-        end
-      end
-    end
-    return result
   end
   
   def analyze_rules
@@ -164,8 +143,8 @@ class ProductsController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
     @search_form_path = products_path
-    @class_name = "btn btn-mini"
-    @class_groupage = "btn btn-mini"
+    @class_name = "btn btn-default btn-xs"
+    @class_groupage = "btn btn-default btn-xs"
     
     if params[:order].nil? || params[:order].empty? then
       @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
@@ -282,16 +261,18 @@ class ProductsController < ApplicationController
   def check
     @title = t('actions.check') + " " + t('actions.messages.compatibility')
     @product = Product.find(params[:product_id])
-    if precheck 
-      analyze_rules
+    if @product.license.nil?
+       @product.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+       @product.result = nil
+    elsif @product.components.empty? 
+       @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
+       @product.result = nil
     else
-      @product.result = nil
-      @product.checked_at = nil
-      @product.save  
+      analyze_rules      
     end
 
     respond_to do |format|
-      format.html
+      format.html 
     end
   end
   

@@ -1,8 +1,11 @@
 @import "bootstrap";
 body { padding-top: 60px; }
-@import "bootstrap-responsive";
+
 html, body {
   height: 100%;
+}
+.container {
+   width: 1370;
 }
 .content {
   background-color: #FDFDFD;
@@ -27,7 +30,7 @@ html, body {
 }
 footer {
   color: #FEFEFE;
-  background: #888888;
+  background: #7A7F86;
   padding: 17px 0 18px 0;
   border-top: 1px solid #000;
 }
@@ -36,7 +39,7 @@ footer a {
 }
 footer a:hover {
   color: #efefef;
-  background: #888888;
+  background: #7A7F86;
 }
 .wrapper {
   min-height: 100%;

@@ -1,8 +1,8 @@
-<%= form_tag @search_form_path, :method => 'get', :class => "form-search", :style => "float: right;" do %>	
-  <div class="input-append">
-    <%= text_field_tag :product_name, params[:product_name], :class => "search-query" %>
-    <button type="submit" class="btn" name="commit" value="clear">
-      <i class="icon-search"></i>
+<%= form_tag @search_form_path, :method => 'get', :class => "form-inline", :style => "float: right;" do %>	
+  <div class="input-group-sm">
+    <%= text_field_tag :product_name, params[:product_name], :class => "search-query form-control" %>
+    <button type="submit" class="btn btn-sm btn-default" name="commit" value="clear">
+      <i class="glyphicon glyphicon-search"></i>
        <%= t('activerecord.models.product') %>
     </button>
   </div>

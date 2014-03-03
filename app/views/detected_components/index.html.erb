@@ -1,4 +1,4 @@
-<button class="btn btn-large btn-block btn-primary disabled" type="button">
+<button class="btn btn-lg btn-block btn-primary disabled" type="button">
   <%= t('activerecord.models.product') %>: <%= @product.name %>
      <% if !@product.version.blank? %> - Vers. <%= @product.version %> <% end %> &nbsp; 
   <%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %>
@@ -34,16 +34,16 @@
       <% end %>
     <td>
       <% if detected_component.own %>
-        <p class="text-center"><i class="icon-ok"></i></p>
+        <p class="text-center"><i class="glyphicon glyphicon-ok"></i></p>
       <% end %>
     </td>
     
     <td><div class="btn-group">
-      <%= link_to raw('<i class="icon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
       <% if detected_component.detection.acquired %>
-       <%= link_to raw('<i class="icon-trash"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+       <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
      <% else %>
-       <%= link_to raw('<i class="icon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+       <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
      <% end %>
     </td>
     
@@ -52,6 +52,6 @@
 </table>
 
 <br />
- <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn" do %>
-   <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+ <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn btn-default" do %>
+   <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
 <% end %>

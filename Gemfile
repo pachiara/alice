@@ -1,63 +1,62 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.0.3'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+# Use mysql as the database for Active Record
 gem 'mysql2'
-# gem 'web-app-theme', :git =>'git://github.com/pilu/web-app-theme.git'
-gem 'ruleby'
-gem 'thin'
-gem 'simple_form'
-gem 'devise'
-gem 'will_paginate'
-gem 'will_paginate-bootstrap'
-gem 'paperclip', '~> 3.0'
-gem 'nokogiri'
-gem 'seed_dump'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  # temi html5
-  gem 'bootstrap-sass', '~> 2.3.1.0'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
 
-  gem 'uglifier', '>= 1.0.3'
-end
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
 
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', platforms: :ruby
+
+# Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# generazione diagrammi di documentazione
-#
-#  gem "rails-erd"
-#  rake erd
-#
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
 
-group :development do
-  gem "rails-erd"
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 1.2'
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
 end
 
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
+# Use Capistrano for deployment
+# gem 'capistrano', group: :development
 
-# To use debugger
-# gem 'debugger'
+# Use debugger
+# gem 'debugger', group: [:development, :test]
 
+# Gems add for this project
+gem 'thin'
+gem 'rails-erd', group: :development 
+gem 'seed_dump'
+gem 'bootstrap-sass'
+gem 'simple_form'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem 'devise'
+gem 'ruleby'
+gem 'paperclip'
+gem 'nokogiri'
 gem 'd3js-rails'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem 'protected_attributes'

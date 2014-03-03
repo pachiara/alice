@@ -11,14 +11,14 @@
     <div class="form-actions">
       <% if !@product.result.nil? %>
         <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-          <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+          <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
         <% end %>
-        <%= link_to product_print_check_path(@product, :format => :pdf), :class => "btn" do %>
-          <i class="icon-print"></i> <%= t('actions.print') %>
+        <%= link_to product_print_check_path(@product, :format => :pdf), :class => "btn btn-default" do %>
+          <i class="glyphicon glyphicon-print"></i> <%= t('actions.print') %>
         <% end %>
       <% end %>
-      <%= link_to products_path, :class => "btn" do %>
-          <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+      <%= link_to products_path, :class => "btn btn-default" do %>
+          <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
       <% end %>
     </div>
 

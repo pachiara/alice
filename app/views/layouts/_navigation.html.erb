@@ -1,8 +1,8 @@
-<ul class="nav pull-left">
-  <li><%= link_to raw("<i class='icon-home icon-white'></i> Home"), root_path %></li>
+<ul class="nav navbar-nav pull-left">
+  <li><%= link_to raw("<i class='glyphicon glyphicon-home glyphicon-inverse'></i> Home"), root_path %></li>
   <li class="divider-vertical"></li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-list icon-white'></i> Licenze <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-list glyphicon-inverse'></i> Licenze <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><%= link_to( t('activerecord.models.licenses'), licenses_path(:commit => "clear"))  %></li>
       <li><%= link_to( t('activerecord.models.categories'), categories_path)  %></li>
@@ -10,14 +10,14 @@
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-ok icon-white'></i> Verifica <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-ok glyphicon-inverse'></i> Verifica <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><%= link_to(t('activerecord.models.uses'), uses_path)  %></li>
       <li><%= link_to('Regole', rules_path)  %></li>          	
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book icon-white'></i> Prodotti <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-book glyphicon-inverse'></i> Prodotti <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><%= link_to(t('activerecord.models.products'), products_path(:commit => "clear"))  %></li>
       <li><%= link_to(t('activerecord.models.components'), components_path(:commit => "clear"))  %></li>
@@ -26,9 +26,9 @@
   </li>
 </ul>
 
-<ul class="nav pull-right">
+<ul class="nav navbar-nav pull-right">
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-user icon-white'></i> Accesso <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-user glyphicon-inverse'></i> Accesso <b class="caret"></b></a>
     <ul class="dropdown-menu">
   <% if user_signed_in? %>
     <li>
@@ -50,5 +50,5 @@
   <% end %>
     </ul>
   </li>	
-  <li><%= link_to raw("<i class='icon-asterisk icon-white'></i> About"), about_index_path %></li>
+  <li><%= link_to raw("<i class='glyphicon glyphicon-asterisk glyphicon-inverse'></i> About"), about_index_path %></li>
 </ul>	

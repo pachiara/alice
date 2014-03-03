@@ -1,9 +1,9 @@
-<div class="container-fluid">
-<div class="row-fluid">
+<div class="container">
+<div class="row">
 
-<div class="span6">
+<div class="col-md-6">
 <div class="well sidebar-nav">
-<div class="row-fluid"><%= render :partial => "products/search_product" %></div>
+<div class="row"><%= render :partial => "products/search_product" %></div>
 <%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Product content-->
 <ul class="nav nav-list">
@@ -16,11 +16,11 @@
   <% end %>
 </ul>
 </div><!--/.well -->
-</div><!--/span-->
+</div><!--/col-md--->
 
-<div class="span6">
+<div class="col-md-6">
 <div class="well sidebar-nav">
-<div class="row-fluid"><%= render :partial => "components/search_component" %></div>
+<div class="row"><%= render :partial => "components/search_component" %></div>
 <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
 <!--Component content-->
 <ul class="nav nav-list">
@@ -32,14 +32,14 @@
     </li>
   <% end %>
 </div><!--/.well -->
-</div><!--/span-->
+</div><!--/col-md--->
 
 </div>
 </div>
 
 <br />
 <% if !@product.nil? %>
-<%= link_to product_ties_edit_path, :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') do %>
-  <i class="icon-pencil"></i> <%= t('actions.edit') %>
+<%= link_to product_ties_edit_path, :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') do %>
+  <i class="glyphicon glyphicon-pencil"></i> <%= t('actions.edit') %>
 <% end %>
 <% end %>

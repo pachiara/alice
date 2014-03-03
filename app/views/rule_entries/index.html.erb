@@ -1,14 +1,14 @@
-<button class="btn btn-large btn-block btn-primary disabled" type="button">
+<button class="btn btn-lg btn-block btn-primary disabled" type="button">
   <%= t('activerecord.models.rule') %>: <%= @rule.name %> - <%= t('activerecord.models.license') %>: <%= @rule.license.name %><% if @rule.plus %> + <% end %>
 </button>
 <br />
 
-<div class="container-fluid">
+<div class="container">
 <%= render :partial => "licenses/search_license" %>
-<div class="row-fluid">
-<div class="span12">
+<div class="row">
+<div class="col-md-12">
 
-<div class="span6">
+<div class="col-md-6">
 <div class="well sidebar-nav">
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.rules') %></li>
@@ -37,9 +37,9 @@
 </table>
 
 </div><!--/.well -->
-</div><!--/.span6 -->
+</div><!--/.col-md-6 -->
 
-<div class="span6">
+<div class="col-md-6">
 <div class="well sidebar-nav">
 <ul class="nav nav-list">
   <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.rules') %></li>
@@ -64,29 +64,29 @@
     <td><%= rule_entry.license.description %></td>
     <td><%= rule_entry.order_id %></td>
     <td>
-      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
-      <i class="icon-chevron-up"></i><% end %>
-      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'down', :value => rule_entry.id) do  %>
-      <i class="icon-chevron-down"></i><% end %>
+      <%= button_tag(:class => 'btn btn-default btn-xs', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
+      <i class="glyphicon glyphicon-chevron-up"></i><% end %>
+      <%= button_tag(:class => 'btn btn-default btn-xs', :type => 'submit', :name => 'down', :value => rule_entry.id) do  %>
+      <i class="glyphicon glyphicon-chevron-down"></i><% end %>
     </td>
   </tr>
 <% end %>
 </table>
 
 </div><!--/.well -->
-</div><!--/.span6 -->
+</div><!--/.col-md-6 -->
 
-</div><!--/span12 -->
+</div><!--/col-md-12 -->
 </div><!--/.row -->
 </div><!--/.container -->
 
 <br />
 
 <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
-  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+  <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
 <% end %>
-<%= link_to rules_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
-      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+<%= link_to rules_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>      
 <% end %> 
 
 <% end %>

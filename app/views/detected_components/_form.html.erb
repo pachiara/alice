@@ -3,7 +3,7 @@
 
   <%= hidden_field_tag 'detection_id', @detected_component.detection.id %>
 
-  <button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <button class="btn btn-lg btn-block btn-primary disabled" type="button">
   	<%= t('activerecord.models.product') %>: <%= @detected_component.detection.product.name %>
   	 - Vers. <%= @detected_component.detection.product.version %>
   </button>
@@ -23,7 +23,7 @@
     </dl>
     <% if @detected_component.component_id.nil? %>
     <div class="row">
-      <%= f.input :license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "span5" } %>
+      <%= f.input :license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "col-md-5" } %>
     </div>
     <div class="row">
       <%= f.input :own %>
@@ -40,10 +40,10 @@
 
   <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
+      <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
     <% end %>
-    <%= link_to (detected_components_path + "?detection_id=#{@detected_component.detection.id}"), :class => "btn" do %>
-      <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+    <%= link_to (detected_components_path + "?detection_id=#{@detected_component.detection.id}"), :class => "btn btn-default" do %>
+      <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
     <% end %>
   </div>
 <% end %>

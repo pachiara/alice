@@ -1,5 +1,5 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
-# 
+#
 # Install the MYSQL driver
 #   gem install mysql2
 #
@@ -11,13 +11,11 @@
 development:
   adapter: mysql2
   encoding: utf8
-  reconnect: false
   database: alice_development
   pool: 5
   username: root
   password:
-  socket: /opt/local/var/run/mariadb/mysqld.sock
-#  socket: /var/run/mysqld/mysqld.sock
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,21 +23,17 @@ development:
 test:
   adapter: mysql2
   encoding: utf8
-  reconnect: false
   database: alice_test
   pool: 5
   username: root
   password:
-  socket: /opt/local/var/run/mariadb/mysqld.sock
-#  socket: /var/run/mysqld/mysqld.sock
+  host: localhost
 
 production:
   adapter: mysql2
   encoding: utf8
-  reconnect: false
   database: alice_production
   pool: 5
   username: root
   password:
-#  socket: /opt/local/var/run/mariadb/mysqld.sock
-  socket: /var/run/mysqld/mysqld.sock
+  host: localhost

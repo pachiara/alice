@@ -1,4 +1,4 @@
-<button class="btn btn-large btn-block btn-primary disabled" type="button">
+<button class="btn btn-lg btn-block btn-primary disabled" type="button">
   <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
 </button>
 <br />
@@ -23,20 +23,20 @@
     <td><%= detection.xml_updated_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
     <td>
       <% if detection.acquired %>  
-        <span class="label label-success"><i class="icon-thumbs-up icon-white"></i></span>
+        <span class="label label-success"><i class="glyphicon glyphicon-thumbs-up glyphicon-inverse"></i></span>
       <% else %>
-        <span class="label label-warning"><i class=" icon-wrench icon-white"></i></span>
+        <span class="label label-warning"><i class="glyphicon glyphicon-wrench glyphicon-inverse"></i></span>
       <% end %>
     </td>
     <td><div class="btn-group">
-      <%= link_to raw('<i class="icon-pencil"></i>'), edit_detection_path(detection), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
-      <%= link_to raw('<i class="icon-list-alt"></i>'), detected_components_path(:detection_id => detection.id, :commit => "clear"), :class => "btn", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
+      <%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_detection_path(detection), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <%= link_to raw('<i class="glyphicon glyphicon-list-alt"></i>'), detected_components_path(:detection_id => detection.id, :commit => "clear"), :class => "btn btn-default", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
         <% if detection.acquired %>
-         <%= link_to raw('<i class="icon-download-alt"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
-         <%= link_to raw('<i class="icon-trash"></i>'), "#", :class => "btn", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+         <%= link_to raw('<i class="glyphicon glyphicon-download-alt"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+         <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
        <% else %>
-         <%= link_to raw('<i class="icon-download-alt"></i>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn", disabled: detection.acquired, :title => t('actions.acquire'), :alt => t('actions.acquire') %>
-         <%= link_to raw('<i class="icon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+         <%= link_to raw('<i class="glyphicon glyphicon-download-alt"></i>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn btn-default", disabled: detection.acquired, :title => t('actions.acquire'), :alt => t('actions.acquire') %>
+         <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
        <% end %>
     </td>
   </tr>
@@ -47,9 +47,9 @@
 <br />
 
 <%= link_to new_detection_path(:product_id => params[:product_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn" do %>
-  <i class="icon-plus"></i> <%= t('actions.new') %>
+  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
 <% end %>
- <%= link_to products_path, :class => "btn" do %>
-   <i class="icon-arrow-left"></i> <%= t('actions.back') %>
+ <%= link_to products_path, :class => "btn btn-default" do %>
+   <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
 <% end %>
 

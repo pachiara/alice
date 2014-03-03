@@ -16,7 +16,7 @@ class LicensesController < ApplicationController
       else
         @order = "name ASC, version ASC"
       end
-      @class_name = "btn btn-mini btn-info" 
+      @class_name = "btn btn-sm btn-info" 
     when "description"
       if session[:down_description].nil?
         session[:down_description] = true
@@ -31,7 +31,7 @@ class LicensesController < ApplicationController
       else
         @order = "description ASC"
       end
-      @class_description = "btn btn-mini btn-info"
+      @class_description = "btn btn-sm btn-info"
     when "license_type"
       if session[:down_license_type].nil?
         session[:down_license_type] = true
@@ -46,7 +46,7 @@ class LicensesController < ApplicationController
       else  
         @order = "license_type_id ASC"
       end
-      @class_license_type = "btn btn-mini btn-info"
+      @class_license_type = "btn btn-sm btn-info"
     when "category"
       if session[:down_category].nil?
         session[:down_category] = true
@@ -61,7 +61,7 @@ class LicensesController < ApplicationController
       else
         @order = "category_id ASC"
       end  
-      @class_category = "btn btn-mini btn-info"
+      @class_category = "btn btn-sm btn-info"
     end
     return @order  
   end
@@ -84,10 +84,10 @@ class LicensesController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
     @search_form_path = licenses_path
-    @class_name = "btn btn-mini"
-    @class_description = "btn btn-mini"
-    @class_category = "btn btn-mini"
-    @class_license_type = "btn btn-mini"
+    @class_name = "btn btn-default btn-sm"
+    @class_description = "btn btn-default btn-sm"
+    @class_category = "btn btn-default btn-sm"
+    @class_license_type = "btn btn-default btn-sm"
         
     if params[:order].nil? || params[:order].empty? then
       @licenses = License.search(params[:license_name], params[:page])

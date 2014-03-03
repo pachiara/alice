@@ -6,17 +6,17 @@
   </div>
   <div class="modal-body">
 
-  <%= form_tag product_ties_new_path, :method => 'get', :class => "form-search" do %>	
-    <div class="input-append">
-      <%= text_field_tag :component_name, params[:component_name], :class => "span6 search-query" %>
-      <button type="submit" class="btn"><i class="icon-search"></i> <%= t('activerecord.models.component') %></button>
+  <%= form_tag product_ties_new_path, :method => 'get', :class => "form-inline" do %>	
+    <div class="input-group-sm">
+      <%= text_field_tag :component_name, params[:component_name], :class => "col-md-6 search-query form-control" %>
+      <button type="submit" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-search"></i> <%= t('activerecord.models.component') %></button>
     </div>
   <% end %>
 
     <p>One fine body…</p>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary">Save changes</button>
   </div>
 </div>

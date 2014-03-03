@@ -1,14 +1,14 @@
-<button class="btn btn-large btn-block btn-primary disabled" type="button">
+<button class="btn btn-lg btn-block btn-primary disabled" type="button">
   <%= t('activerecord.models.product') %>: <%= @product.name %> - Vers. <%= @product.version %>
 </button>
 <br />
-<div class="container-fluid">
+<div class="container">
 <%= render :partial => "components/search_component" %>	
-<div class="row-fluid">
-<div class="span12">	
+<div class="row">
+<div class="col-md-12">	
 
-<div class="row-fluid">
-<div class="span6">
+<div class="row">
+<div class="col-md-6">
 <div class="well sidebar-nav">
 <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component to select content-->
@@ -26,9 +26,9 @@
   <% end %>  
 </ul>
 </div><!--/.well -->
-</div><!--/.span6 -->
+</div><!--/.col-md-6 -->
 
-<div class="span6">
+<div class="col-md-6">
 <div class="well sidebar-nav">
 <%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
 <!--Component selected content-->
@@ -45,11 +45,11 @@
   <% end %>
 </ul>
 </div><!--/.well -->
-</div><!--/.span6 -->
+</div><!--/.col-md-6 -->
 
 </div><!--/.row -->
 
-</div><!--/span12 -->
+</div><!--/col-md-12 -->
 </div><!--/.row -->
 </div><!--/.container -->
 
@@ -57,13 +57,13 @@
 
 <div class="form-actions">
   <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
-    <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+    <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
   <% end %>
-  <%= link_to product_ties_destroy_path, :class => "btn", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
-    <i class="icon-trash"></i> <%= t('actions.destroy') %>      
+  <%= link_to product_ties_destroy_path, :class => "btn btn-default", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
+    <i class="glyphicon glyphicon-trash"></i> <%= t('actions.destroy') %>      
   <% end %> 
-  <%= link_to ties_index_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
-    <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+  <%= link_to ties_index_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
+    <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>      
   <% end %> 
 </div>
 

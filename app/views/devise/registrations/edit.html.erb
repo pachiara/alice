@@ -5,30 +5,30 @@
 
   <div class="form-inputs">
     <div class="row">
-      <%= f.input :email, :required => true, :autofocus => true, :wrapper_html => { :class => "span5" } %>
-        <%= f.input :admin, :disabled => true, :wrapper_html => { :class => "span2" } %>
+      <%= f.input :email, :required => true, :autofocus => true, :wrapper_html => { :class => "col-md-5" } %>
+        <%= f.input :admin, :disabled => true, :wrapper_html => { :class => "col-md-2" } %>
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <p><%=t('actions.messages.waiting_confirmation') %> <%= resource.unconfirmed_email %></p>
       <% end %>
     </div>
     <div class="row">
-      <%= f.input :password, :autocomplete => "off", :hint => t('actions.messages.leave_it_blank'), :required => false, :wrapper_html => { :class => "span5" } %>
-      <%= f.input :password_confirmation, :required => false, :wrapper_html => { :class => "span5" } %>
+      <%= f.input :password, :autocomplete => "off", :hint => t('actions.messages.leave_it_blank'), :required => false, :wrapper_html => { :class => "col-md-5" } %>
+      <%= f.input :password_confirmation, :required => false, :wrapper_html => { :class => "col-md-5" } %>
     </div>
     <div class="row">
-      <%= f.input :current_password, :hint => t('actions.messages.need_password'), :required => true, :wrapper_html => { :class => "span5" } %>
+      <%= f.input :current_password, :hint => t('actions.messages.need_password'), :required => true, :wrapper_html => { :class => "col-md-5" } %>
     </div>
   </div>
 
   <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+      <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>
-    <%= link_to :back, :class => "btn" do %>
-      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <%= link_to :back, :class => "btn btn-default" do %>
+      <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %>
-    <%= link_to registration_path(resource_name), :data => { :confirm => t('actions.are_you_sure') }, :method => :delete, :class => "btn" do %>
-      <i class="icon-trash"></i> <%= t('actions.cancel_my_account') %>      
+    <%= link_to registration_path(resource_name), :data => { :confirm => t('actions.are_you_sure') }, :method => :delete, :class => "btn btn-default" do %>
+      <i class="glyphicon glyphicon-trash"></i> <%= t('actions.cancel_my_account') %>      
   <% end %> 
     
   </div>
