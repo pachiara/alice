@@ -3,7 +3,6 @@
   </button>
 
   <h4>
-    <br/>
     <%= t('activerecord.attributes.product.result') %>:
     <% if @product.result.nil? %>
       <span class="label label-warning">NC</span>
@@ -14,6 +13,8 @@
         <span class="label label-important">KO</span>
       <% end %>
     <% end %>
+    <br/>
+    <% if !@product.result.nil? %><%= t('activerecord.attributes.product.checked_at') %>: <%= l @product.checked_at %><% end %>
     <br/>
     <%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
     <br/>
