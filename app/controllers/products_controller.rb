@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
     else
       @product.components.each do |component|
         if component.license.license_type.nil?
-          @product.errors.add("Impossibile eseguire il controllo:",
+          @product.errors.add("Impossibile eseguire il controllo:", 
            "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
           result = false
         end
@@ -287,7 +287,6 @@ class ProductsController < ApplicationController
     else
       @product.result = nil
       @product.checked_at = nil
-      @product.save  
     end
 
     respond_to do |format|
