@@ -1,7 +1,7 @@
 <%= simple_form_for(@license) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <div class="row">
       <%= f.input :name, :wrapper_html => { :class => "col-md-4" } %>
       <%= f.input :version, :wrapper_html => { :class => "col-md-4" } %>
@@ -17,7 +17,7 @@
     <%= f.input :notes, :input_html => { :class => "col-md-11", :rows => 5 } %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>

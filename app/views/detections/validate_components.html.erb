@@ -21,9 +21,9 @@
     </div>
   <% end %>
 
-  <div class="form-inputs form-horizontal">
+  <div class="form-group form-horizontal">
 
-    <div class="form-actions">
+    <div class="form-group">
       <%= button_tag(type: 'submit', disabled: (@detection.errors.full_messages.length > 0), class: "btn btn-primary") do %>
         <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
       <% end %>

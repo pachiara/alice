@@ -1,14 +1,14 @@
 <%= simple_form_for(@license_type) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs form-horizontal">
+  <div class="form-group form-horizontal">
     <%= f.input :code, input_html: { maxlength: 1, :class => "col-md-1" } %>
     <%= f.input :description, :input_html => { :class => "col-md-6" } %>
     <%= f.input :protection_level, :input_html => { :class => "col-md-1" } %>
   </div>
 
   <br />
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>

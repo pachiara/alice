@@ -10,7 +10,7 @@
 
   <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detected_component.detection.name %></h4>
   
-  <div class="form-inputs form-horizontal">
+  <div class="form-group form-horizontal">
     <dl class="dl-horizontal">
       <dt><%= t('activerecord.attributes.detected_component.name') %></dt>
       <dd><%= @detected_component.name %></dd>
@@ -38,7 +38,7 @@
     <% end %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
     <% end %>

@@ -1,7 +1,7 @@
 <%= simple_form_for(@product) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <div class="row">
       <%= f.input :name, :wrapper_html => { :class => "col-md-3" } %>
       <%= f.input :title, :wrapper_html => { :class => "col-md-5" }, :input_html => { :class => "col-md-5" } %>
@@ -23,7 +23,7 @@
         <% if @product.result.nil? %>
           <span class="label label-warning">NC</span>
         <% else %>
-          <% if @product.result.true? %>
+          <% if @product.result %>
             <span class="label label-success">OK</span>
           <% else %>
             <span class="label label-important">KO</span>
@@ -38,7 +38,7 @@
     <%= f.input :notes, :input_html => { :class => "col-md-11", :rows => 5 } %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>

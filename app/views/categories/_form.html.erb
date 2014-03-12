@@ -1,13 +1,17 @@
-<%= simple_form_for(@category) do |f| %>
+<br />
+<br />
+
+<%= simple_form_for(@category, :wrapper_html => {class: "form-horizontal", role: "form"} ) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs form-horizontal">
+  <div class="form-group">
     <%= f.input :name %>
     <%= f.input :description, :input_html => { :class => "col-md-6" } %>
   </div>
 
   <br />
-  <div class="form-actions">
+  <br />
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>

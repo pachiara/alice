@@ -1,13 +1,13 @@
 <%= simple_form_for(@use) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs form-horizontal">
+  <div class="form-group form-horizontal">
     <%= f.input :name %>
     <%= f.input :description, :input_html => { :class => "col-md-6" } %>
   </div>
  
   <br />
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
     <% end %>

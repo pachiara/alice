@@ -1,26 +1,31 @@
 <%= render :partial => "search_license" %>
 <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>
+<% if @order_search == 'name'         then class_name         = 'btn btn-primary btn-block btn-sm' else class_name         = 'btn btn-default btn-block btn-sm' end %>
+<% if @order_search == 'description'  then class_description  = 'btn btn-primary btn-block btn-sm' else class_description  = 'btn btn-default btn-block btn-sm' end %>
+<% if @order_search == 'license_type' then class_license_type = 'btn btn-primary btn-block btn-sm' else class_license_type = 'btn btn-default btn-block btn-sm' end %>
+<% if @order_search == 'category'     then class_category     = 'btn btn-primary btn-block btn-sm' else class_category     = 'btn btn-default btn-block btn-sm' end %>
+
+<%= form_tag licenses_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
 <div class="table-responsive">  	
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-condensed table-bordered">
   <tr>
-  	<%= form_tag licenses_path, :method => 'get' %>
-    <th><%= button_tag(:class => @class_name, :type => 'submit', :name => 'order', :value => 'name') do  %>
-    	<%= t('activerecord.attributes.license.name')%> <% if !@down_name.nil? %><% if @down_name %><i class="glyphicon glyphicon-chevron-down"><% else %><i class="glyphicon glyphicon-chevron-up"><% end %></i>
-    <% end %><% end %></th>
-    <th><%= button_tag(:class => @class_description, :type => 'submit', :name => 'order', :value => 'description') do  %>
-    	<%= t('activerecord.attributes.license.description')%> <% if !@down_description.nil? %><% if @down_description %><i class="glyphicon glyphicon-chevron-down"><% else %><i class="glyphicon glyphicon-chevron-up"><% end %></i>
+    <th><%= button_tag(:class => class_name, :type => 'submit', :name => 'order_search', :value => 'name') do  %>
+    	<%= t('activerecord.attributes.license.name')%> <% if !@down_name.nil? %><% if @down_name %><span class="caret"><% else %><span class="caret-up"><% end %></span>
+    <% end %><% end %> </th>
+    <th><%= button_tag(:class => class_description, :type => 'submit', :name => 'order_search', :value => 'description') do  %>
+    	<%= t('activerecord.attributes.license.description')%> <% if !@down_description.nil? %><% if @down_description %><span class="caret"><% else %><span class="caret-up"><% end %></span>
     <% end %><% end %></th>
     <th><%= t('activerecord.attributes.license.version') %></th>
     <th><%= t('activerecord.attributes.license.flag_osi') %></th>
-    <th><%= button_tag(:class => @class_license_type, :type => 'submit', :name => 'order', :value => 'license_type') do  %>
-    	<%= t('activerecord.attributes.license.license_type')%> <% if !@down_license_type.nil? %><% if @down_license_type %><i class="glyphicon glyphicon-chevron-down"><% else %><i class="glyphicon glyphicon-chevron-up"><% end %></i>
+    <th><%= button_tag(:class => class_license_type, :type => 'submit', :name => 'order_search', :value => 'license_type') do  %>
+    	<%= t('activerecord.attributes.license.license_type')%> <% if !@down_license_type.nil? %><% if @down_license_type %><span class="caret"><% else %><span class="caret-up"><% end %></span>
     <% end %><% end %></th>
-    <th><%= button_tag(:class => @class_category, :type => 'submit', :name => 'order', :value => 'category') do  %>
-    	<%= t('activerecord.attributes.license.category')%> <% if !@down_category.nil? %><% if @down_category %><i class="glyphicon glyphicon-chevron-down"><% else %><i class="glyphicon glyphicon-chevron-up"><% end %></i>
+    <th><%= button_tag(:class => class_category, :type => 'submit', :name => 'order_search', :value => 'category') do  %>
+    	<%= t('activerecord.attributes.license.category')%> <% if !@down_category.nil? %><% if @down_category %><span class="caret"><% else %><span class="caret-up"><% end %></span>
     <% end %><% end %></th>
     <th><%= t('activerecord.attributes.license.text_license') %></th>
-    <th><%= t('actions.actions') %></th>
-    </form>
+    <th><%= t('actions.actions') %></th>    
+
   </tr>    
 
 <% @licenses.each do |license| %>
@@ -29,7 +34,7 @@
     <td><%= license.name %></td>
     <td><%= license.description %></td>
     <td><%= license.version %></td>
-    <td><% if license.flag_osi %><span class="label label-info">osi</span><% end %></td>
+    <td><% if license.flag_osi %><span class="label label-primary">osi</span><% end %></td>
     <td><%= unless license.license_type.nil?; license.license_type.description; end %></td>
     <td><%= unless license.category.nil?; license.category.name; end %></td>
     <td><% if license.text_license.size > 0 %><i class="glyphicon glyphicon-ok"></i><% end %></td>
@@ -45,6 +50,7 @@
 <% end %>
 </table>
 </div>
+<% end %>
 <br />
 <%= link_to new_license_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>

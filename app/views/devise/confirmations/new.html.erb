@@ -4,11 +4,11 @@
   <%= f.error_notification %>
   <%= f.full_error :confirmation_token %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <%= f.input :email, :required => true, :autofocus => true %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= f.button :submit, "Resend confirmation instructions" %>
   </div>
 <% end %>

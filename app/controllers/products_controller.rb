@@ -18,7 +18,8 @@ class ProductsController < ApplicationController
   end
   
   def order_search
-    case params[:order]
+    @order_search = params[:order_search]
+    case @order_search
     when "name"
       if session[:down_name].nil?
         session[:down_name] = true
@@ -33,7 +34,6 @@ class ProductsController < ApplicationController
       else
         @order = "name ASC, version ASC"
       end
-      @class_name = "btn btn-xs btn-info" 
       when "groupage"
       if session[:down_groupage].nil?
         session[:down_groupage] = true
@@ -48,7 +48,6 @@ class ProductsController < ApplicationController
       else
         @order = "groupage ASC"
       end  
-      @class_groupage = "btn btn-xs btn-info"
     end
     return @order  
   end
@@ -143,10 +142,8 @@ class ProductsController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
     @search_form_path = products_path
-    @class_name = "btn btn-default btn-xs"
-    @class_groupage = "btn btn-default btn-xs"
     
-    if params[:order].nil? || params[:order].empty? then
+    if params[:order_search].nil? || params[:order_search].empty? then
       @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
     else
       @products = Product.search_order(order_search, params[:page])

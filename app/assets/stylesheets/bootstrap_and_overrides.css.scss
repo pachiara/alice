@@ -4,14 +4,13 @@ body { padding-top: 60px; }
 html, body {
   height: 100%;
 }
-.container {
-   width: 1370;
+.page-header {
+  margin: 5px 0 5px;
+  padding-bottom: 0;
 }
 .content {
   background-color: #FDFDFD;
-  padding: 20px;
-  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
-
+/*  margin: 0 -60px; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -22,7 +21,8 @@ html, body {
   -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
-  padding: 15px 30px 25px;
+  padding: 15px 30px 30px 30px;
+  margin: 15px 15px 15px 15px; 
 }
 .content a:hover {
   color: #000000;
@@ -57,7 +57,23 @@ footer a:hover {
 display: block;
 margin-bottom: -75px;
 padding-top: 5px;
+margin-left: 10px;
+margin-right: 10px;
 }
 .pagination {
   margin: 0px 0;
+}
+.caret-up {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: none;
+  border-bottom: 4px solid #FFFFFF;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top-width: 0px;
+  border-top-style: dotted;
+  content: "";
 }

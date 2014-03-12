@@ -1,41 +1,25 @@
 <%= render :partial => "search_product_groupage" %>
 <%= render :partial => "search_product" %>
 <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+<% if @order_search == 'name'     then class_name     = 'btn btn-primary btn-block btn-sm' else class_name     = 'btn btn-default btn-block btn-sm' end %>
+<% if @order_search == 'groupage' then class_groupage = 'btn btn-primary btn-block btn-sm' else class_groupage = 'btn btn-default btn-block btn-sm' end %>
 
+<%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
+<div class="table-responsive"> 
 <table class="table table-striped table-condensed table-bordered">
   <tr>
-    <%= form_tag products_path, :method => 'get' %>
-      <th>
-        <%= button_tag(:class => @class_name, :type => 'submit', :name => 'order', :value => 'name') do  %>
-          <%= t('activerecord.attributes.product.name')%>
-          <% if !@down_name.nil? %>
-            <% if @down_name %>
-              <i class="glyphicon glyphicon-chevron-up"></i>
-            <% else %>
-              <i class="glyphicon glyphicon-chevron-down"></i>
-            <% end %>
-          <% end %>
-        <% end %>
-      </th>
-      <th><%= t('activerecord.attributes.product.version') %></th>
-      <th><%= t('activerecord.attributes.product.title') %></th>
-      <th>
-        <%= button_tag(:class => @class_groupage, :type => 'submit', :name => 'order', :value => 'groupage') do  %>
-          <%= t('activerecord.attributes.product.groupage')%>
-          <% if !@down_groupage.nil? %>
-            <% if @down_groupage %>
-              <i class="glyphicon glyphicon-chevron-up"></i>
-            <% else %>
-              <i class="glyphicon glyphicon-chevron-down"></i>
-            <% end %>
-          <% end %>
-        <% end %>
-      </th>
-      <th><%= t('activerecord.attributes.product.use') %></th>
-      <th><%= t('activerecord.attributes.product.checked_at') %></th>
-      <th><%= t('activerecord.attributes.product.result') %></th>
-      <th><%= t('actions.actions') %></th>
-    </form>
+    <th><%= button_tag(:class => class_name, :type => 'submit', :name => 'order_search', :value => 'name') do  %>
+    	<%= t('activerecord.attributes.product.name')%> <% if !@down_name.nil? %><% if @down_name %><span class="caret"><% else %><span class="caret-up"><% end %></span>
+    <% end %><% end %> </th>
+    <th><%= t('activerecord.attributes.product.version') %></th>
+    <th><%= t('activerecord.attributes.product.title') %></th>
+    <th><%= button_tag(:class => class_groupage, :type => 'submit', :name => 'order_search', :value => 'groupage') do  %>
+    	<%= t('activerecord.attributes.product.groupage')%> <% if !@down_groupage.nil? %><% if @down_groupage %><span class="caret"><% else %><span class="caret-up"><% end %></span>
+    <% end %><% end %> </th>
+    <th><%= t('activerecord.attributes.product.use') %></th>
+    <th><%= t('activerecord.attributes.product.checked_at') %></th>
+    <th><%= t('activerecord.attributes.product.result') %></th>
+    <th><%= t('actions.actions') %></th>
   </tr>
 
 <% @products.each do |product| %>
@@ -70,7 +54,8 @@
   </tr>
 <% end %>
 </table>
-
+</div>
+<% end %>
 <br />
 <%= link_to new_product_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>

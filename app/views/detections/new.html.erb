@@ -9,16 +9,25 @@
   <br />
   <br />
   
-  <div class="form-inputs form-horizontal">
-    <div class="control-group">
+  <div class="container">
+  <div class="form-group form-horizontal">
+ 
+  <div class="row"> 
+    <div class="form-group col-md-7">
       <%= f.input :name %>
     </div>
-
-    <div class="control-group">
-      <%= f.input :xml %>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-5">
+      <%= f.input :xml, :input_html => { :class => "btn btn-default" } %>
     </div>
-
-    <div class="form-actions">
+  </div>
+  </div>
+  </div>
+  <br />
+  <br />
+  
+    <div class="form-group">
       <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
         <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
       <% end %>
@@ -26,7 +35,5 @@
           <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
       <% end %>
     </div>
-
-  </div>
 
 <% end %>
