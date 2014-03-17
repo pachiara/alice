@@ -51,8 +51,11 @@ class Detection < ActiveRecord::Base
   
   # Se il componente è registrato assegna id e licenza corrispondente 
   def identify_component(detected_component)
-    major_release = detected_component.version.split('.')[0]
-    component = Component.where("name = ? and version like ?", detected_component.name, "#{major_release}.%").first
+    component = Component.where("name = ? and version = ?", detected_component.name, detected_component.version).first
+    if component == nil
+      major_release = detected_component.version.split('.')[0]
+      component = Component.where("name = ? and version like ?", detected_component.name, "#{major_release}.%").first
+    end
     if component != nil
       detected_component.component_id = component.id
       detected_component.license_id = component.license_id
@@ -87,18 +90,25 @@ class Detection < ActiveRecord::Base
   def acquire
     p = Product.find(product_id)
     detected_components.each do |component|
-      c = Component.where("name = ? AND version = ?", component.name, component.version).first
-      if c.nil?
-        c = Component.new
-        c.name = component.name
-        c.version = component.version
-        c.title = component.name
-        c.description = component.name
-        c.license_id = component.license_id
-        c.own = component.own
-        c.checked_at = Date.today
-        c.use_id = 1
-        c.save
+      if !component.component_id.nil?
+        c = Component.find(component.component_id)
+      # detected_component.component_id è impostato durante il parsing del file .xml
+      # Il metodo acquire è eseguito a distanza di tempo, durante il quale un componente con stesso nome e versione
+      # potrebbe essere stato creato manualmente o da un'altra acquisizione. 
+      else
+        c = Component.where("name = ? AND version = ?", component.name, component.version).first
+        if c.nil?
+          c = Component.new
+          c.name = component.name
+          c.version = component.version
+          c.title = component.name
+          c.description = component.name
+          c.license_id = component.license_id
+          c.own = component.own
+          c.checked_at = Date.today
+          c.use_id = 1
+          c.save
+        end
       end
       p.components.push(c) unless p.components.include?(c)
     end
