@@ -51,6 +51,27 @@ class ProductsController < ApplicationController
     end
     return @order  
   end
+ 
+  def precheck
+    result = true
+    if @product.license.nil?
+      @product.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+      result = false
+    end
+    if @product.components.empty? 
+      @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
+      result = false
+    else
+      @product.components.each do |component|
+        if component.license.license_type.nil?
+          @product.errors.add("Impossibile eseguire il controllo:", 
+           "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
+          result = false
+        end
+      end
+    end
+    return result
+  end
   
   def analyze_rules
     @components = @product.components.where(:own => false, :leave_out => false )
@@ -258,18 +279,15 @@ class ProductsController < ApplicationController
   def check
     @title = t('actions.check') + " " + t('actions.messages.compatibility')
     @product = Product.find(params[:product_id])
-    if @product.license.nil?
-       @product.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
-       @product.result = nil
-    elsif @product.components.empty? 
-       @product.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
-       @product.result = nil
+    if precheck 
+      analyze_rules
     else
-      analyze_rules      
+      @product.result = nil
+      @product.checked_at = nil
     end
 
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
   
