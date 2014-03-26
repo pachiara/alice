@@ -3,7 +3,7 @@ class DetectionsController < ApplicationController
   # GET /detections.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.detections')
-    @detections = Detection.where(product_id: params[:product_id]).order('created_at ASC').page(params[:page]).per_page(12)
+    @detections = Detection.where(product_id: params[:product_id]).order('name ASC').page(params[:page]).per_page(12)
     @product = Product.find(params[:product_id])
 
     respond_to do |format|
