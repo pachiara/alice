@@ -52,11 +52,15 @@ class CheckRulebook < Rulebook
             next
         end
         new_compatible_license = self.search_compatible(seeking_license, v[:prod].compatible_license)
-        if new_compatible_license == nil and (v[:prod].use.name == "DIS") # or v[:prod].use.name == "SUE")  
-          v[:prod].result = false
+        if new_compatible_license == nil
           error_string = "licenza #{v[:comp].license.name} " +
                          "incompatibile con licenza: #{v[:prod].compatible_license.name}"
-          v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+          if (v[:prod].use.name == "DIS") # or v[:prod].use.name == "SUE")  
+            v[:prod].result = false
+            v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+          else
+            v[:prod].addWarning("Componente #{v[:comp].name}:", "#{error_string}")
+          end
         end
     end
 
