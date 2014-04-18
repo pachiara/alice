@@ -32,4 +32,4 @@ Lombardia Informatica S.p.A.
 
 == Licenza
 
-Alice e' rilasciata con licenza europea EUPL mantenuta a tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
+Alice e' rilasciata con licenza europea EUPL mantenuta e tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
