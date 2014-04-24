@@ -12,7 +12,7 @@
       <%= f.association :category, :wrapper_html => { :class => "col-md-4" } %>
       <%= f.input :flag_osi, :wrapper_html => { :class => "col-md-2" } %>
     </div>
-      <%= f.input :similar_license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "col-md-5" } %>
+      <%= f.input :similar_license_id, collection: License.all.order('description'), value_method: :id, label_method: :description, :input_html => { :class => "col-md-5" } %>
     <%= f.input :text_license, :input_html => { :class => "col-md-11", :rows => 10 } %>
     <%= f.input :notes, :input_html => { :class => "col-md-11", :rows => 5 } %>
   </div>
