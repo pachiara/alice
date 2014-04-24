@@ -11,8 +11,7 @@ class Component < ActiveRecord::Base
   has_and_belongs_to_many :products
   
   def self.search(name, page, per_page = 10)
-   conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
+   order('name, version').where('name LIKE ?', "%#{name}%").paginate(page: page, per_page: per_page)   
   end
   
   def purchase_or_own

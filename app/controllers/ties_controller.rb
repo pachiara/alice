@@ -19,13 +19,13 @@ class TiesController < ApplicationController
         
     if !params[:product_id].nil?
       @product = Product.find(params[:product_id])
-      @components = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:component_page]
+      @components = @product.components.order('name, version').paginate(page: params[:component_page], per_page: 10)   
       @products = Product.order('name, version').page(params[:page]).per_page(10)
     end
 
     if !params[:component_id].nil?  
       @component = Component.find(params[:component_id])
-      @products = @component.products.paginate :order => 'name, version', :per_page => 10, :page => params[:page]
+      @products = @component.products.order('name, version').paginate(page: params[:page], per_page: 10)   
       @components = Component.order('name, version').page(params[:component_page]).per_page(10)
     end
 
@@ -40,8 +40,9 @@ class TiesController < ApplicationController
     require 'will_paginate/array'
     
     @product = Product.find(params[:product_id])
-    @components_ties = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:component_ties_page]
-    @components = (Component.order('name, version').where("name like ?", "%#{params[:component_name]}%") - @product.components.order('name, version')).paginate(:per_page => 10, :page => params[:component_page])
+    @components_ties = @product.components.order('name, version').paginate(page: params[:component_ties_page], per_page: 10)
+    
+    @components = (Component.order('name, version').where("name like ?", "%#{params[:component_name]}%") - @product.components.order('name, version')).paginate(page: params[:component_page], per_page: 10)
     @search_form_path = product_ties_edit_path
     
     if !params[:component_del].nil?
@@ -75,7 +76,7 @@ class TiesController < ApplicationController
     @title = t('actions.show') + " " + t('activerecord.models.ties')
         
     @product = Product.find(params[:product_id])
-    @components = @product.components.paginate :order => 'name, version', :per_page => 10, :page => params[:page]
+    @components = @product.components.order('name, version').paginate(page: params[:page], per_page: 10)   
 
     respond_to do |format|
       format.html # show.html.erb

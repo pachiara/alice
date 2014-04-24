@@ -37,13 +37,11 @@ class Product < ActiveRecord::Base
   end 
    
   def self.search(name, groupage, page, per_page = 10)
-   conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   conditions << sanitize_sql_for_conditions([" and groupage like '%s'", "%#{groupage}%"]) unless groupage.nil? or groupage.empty?
-   paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
+   order('name, version').where('name LIKE ? and groupage LIKE ?', "%#{name}%","%#{groupage}%").paginate(page: page, per_page: per_page)
   end
   
   def self.search_order(order, page, per_page = 10)
-    paginate :order => order, :per_page => per_page, :page => page
+    order(order).paginate(page: page, per_page: per_page)
   end
   
   def check
