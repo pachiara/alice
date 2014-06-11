@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0'
+gem 'rails', '4.1.1'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -43,7 +43,8 @@ gem 'thin'
 gem 'rails-erd', group: :development 
 gem 'seed_dump'
 gem 'bootstrap-sass'
-gem 'simple_form'
+#gem 'simple_form'
+gem 'simple_form', '>= 3.1.0.rc1'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'devise'

@@ -1,12 +1,12 @@
 <br />
 <br />
 
-<%= simple_form_for(@category) do |f| %>
+<%= simple_form_for(@category, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-group">
     <%= f.input :name %>
-    <%= f.input :description, :input_html => { :class => "col-md-6" } %>
+    <%= f.input :description %>
   </div>
 
   <br />
