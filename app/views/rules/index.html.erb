@@ -1,7 +1,9 @@
 <%= will_paginate @rules, :renderer => BootstrapPagination::Rails %>
 <br />
+<br />
 
-<table class="table table-striped table-bordered">
+<div class="table-responsive">  	
+<table class="table table-striped table-condensed table-bordered">
   <tr>
     <th><%= t('activerecord.attributes.rule.name') %></th>
     <th><%= t('activerecord.attributes.rule.license') %></th>
@@ -25,6 +27,7 @@
   </tr>
 <% end %>
 </table>
+</div>
 
 <br />
 <%= link_to new_rule_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>

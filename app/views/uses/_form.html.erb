@@ -1,11 +1,17 @@
-<%= simple_form_for(@use) do |f| %>
+<br />
+<br />
+
+<%= simple_form_for(@use, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-group form-horizontal">
-    <%= f.input :name %>
-    <%= f.input :description, :input_html => { :class => "col-md-6" } %>
+  <div class="form-group">
+ 	<div class="col-sm-6 col-md-6 col-lg-6">
+      <%= f.input :name %>
+      <%= f.input :description, :input_html => { :class => "col-md-6" } %>
+    </div>
   </div>
  
+  <br />
   <br />
   <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
