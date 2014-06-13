@@ -5,7 +5,7 @@ class RuleEntriesController < ApplicationController
     @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')
     @rule = Rule.find(params[:rule_id])    
 #    @rule_entries = @rule.rule_entries
-    @rule_entries = @rule.rule_entries.paginate :order => 'order_id', :per_page => 8, :page => params[:rule_page]
+    @rule_entries = @rule.rule_entries.order('order_id').paginate(:per_page => 8, :page => params[:rule_page])
     @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 8)
 
