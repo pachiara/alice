@@ -37,7 +37,7 @@
   <% end %>
 
   <% if !@product.warnings.nil? %>
-    <div class="alert">
+    <div class="alert alert-warning">
       <strong>Avvisi:</strong>
       <ol>
         <% @product.warnings.full_messages.each do |msg| %>
