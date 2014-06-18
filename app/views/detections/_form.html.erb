@@ -1,10 +1,12 @@
-<%= simple_form_for(@detection) do |f| %>
+<%= simple_form_for(@detection, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
   <%= f.error_notification %>
 
   <h4><%= t('activerecord.attributes.product.name') %>: <%= @detection.product.name %></h4>
 
-  <div class="form-group form-horizontal">
-    <%= f.input :name %>
+  <div class="form-group">
+  	<div class="col-sm-6 col-md-6 col-lg-6">
+      <%= f.input :name %>
+    </div>
   </div>
   
   <div class="form-group">
