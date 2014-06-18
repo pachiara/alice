@@ -23,7 +23,7 @@
     </dl>
     <% if @detected_component.component_id.nil? %>
     <div class="row">
-      <%= f.input :license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "col-md-5" } %>
+      <%= f.input :license_id, collection: License.all.order('description'), value_method: :id, label_method: :description, :input_html => { :class => "col-md-5" } %>
     </div>
     <div class="row">
       <%= f.input :own %>
