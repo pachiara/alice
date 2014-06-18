@@ -9,7 +9,7 @@
     </div>
     <div class="row">
       <%= f.input :version, :wrapper_html => { :class => "col-md-3" } %>
-      <%= f.association :license, collection: License.all(order: 'name'), :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.association :license, collection: License.all.order('name'), :wrapper_html => { :class => "col-md-3" } %>
       <div class="col-md-2">
         <%= t('activerecord.attributes.product.checked_at') %>
         </br></br>
@@ -34,10 +34,14 @@
     <div class="row">
       <%= f.input :groupage, :wrapper_html => { :class => "col-md-3" } %>
     </div>
-    <%= f.input :description, :input_html => { :class => "col-md-11", :rows => 5 } %>
-    <%= f.input :notes, :input_html => { :class => "col-md-11", :rows => 5 } %>
+    <div class="row">
+      <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+    </div>
+    <div class="row">
+      <%= f.input :notes, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+    </div>  
   </div>
-
+  
   <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
