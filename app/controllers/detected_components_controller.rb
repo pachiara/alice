@@ -11,7 +11,7 @@ class DetectedComponentsController < ApplicationController
   def index
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.detected_components')
-    @detected_components = DetectedComponent.where(detection_id: params[:detection_id]).order('name ASC').page(params[:page]).per_page(12)
+    @detected_components = DetectedComponent.where(detection_id: params[:detection_id]).order('name ASC').page(params[:page]).per_page(10)
     @product = Detection.find(params[:detection_id]).product
 
     session[:detected_components_page] = params[:page]
