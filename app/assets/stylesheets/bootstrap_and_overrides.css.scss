@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
 body { padding-top: 60px; }
 
 html, body {
@@ -29,17 +30,21 @@ html, body {
   background: transparent;
 }
 footer {
-  color: #FEFEFE;
-  background: #c6bbab;
+  color: #fefefe;
+  background: #3e3e3e;
   padding: 17px 0 18px 0;
   border-top: 1px solid #000;
 }
 footer a {
-  color: #EEEEEE;
+  color: #fefefe;
 }
 footer a:hover {
   color: #efefef;
-  background: #c6bbab;
+  background: #3e3e3e;
+}
+footer a:visited {
+  color: #efefef;
+  background: #3e3e3e;
 }
 .wrapper {
   min-height: 100%;

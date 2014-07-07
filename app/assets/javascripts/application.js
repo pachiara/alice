@@ -15,3 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require d3
+//= require moment
+//= require moment/it
+//= require bootstrap-datetimepicker
+//= require locales/bootstrap-datetimepicker.it
