@@ -43,7 +43,6 @@ gem 'thin'
 gem 'rails-erd', group: :development 
 gem 'seed_dump'
 gem 'bootstrap-sass'
-#gem 'simple_form'
 gem 'simple_form', '>= 3.1.0.rc1'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
