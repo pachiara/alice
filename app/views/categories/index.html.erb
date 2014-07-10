@@ -3,7 +3,7 @@
 <br />
 
 <div class="table-responsive">
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-condensed table-bordered">
   <thead>	
   <tr>
     <th class="col-sm-2 col-xs-2"><%= t('activerecord.attributes.category.name') %></th>
@@ -18,9 +18,9 @@
     <td><%= category.description %></td>
     <td>
       <div class="btn-group">
-    	<%= link_to raw('<i class="glyphicon glyphicon-eye-open"></i>'), category, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_category_path(category), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), category, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), category, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_category_path(category), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), category, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>
   </tr>
@@ -31,5 +31,5 @@
 
 <br />
 <%= link_to new_category_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>

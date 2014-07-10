@@ -7,21 +7,23 @@
 <%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
 <div class="table-responsive"> 
 <table class="table table-striped table-condensed table-bordered">
+<thead>
   <tr>
     <th><%= button_tag(:class => class_name, :type => 'submit', :name => 'order_search', :value => 'name') do  %>
-    	<%= t('activerecord.attributes.product.name')%> <% if !@down_name.nil? %><% if @down_name %><span class="caret"><% else %><span class="caret-up"><% end %></span>
+    	<b><%= t('activerecord.attributes.product.name')%></b><% if !@down_name.nil? %><% if @down_name %><span class="caret"><% else %><span class="caret-up"><% end %></span>
     <% end %><% end %> </th>
     <th><%= t('activerecord.attributes.product.version') %></th>
     <th><%= t('activerecord.attributes.product.title') %></th>
     <th><%= button_tag(:class => class_groupage, :type => 'submit', :name => 'order_search', :value => 'groupage') do  %>
-    	<%= t('activerecord.attributes.product.groupage')%> <% if !@down_groupage.nil? %><% if @down_groupage %><span class="caret"><% else %><span class="caret-up"><% end %></span>
+    	<b><%= t('activerecord.attributes.product.groupage')%></b><% if !@down_groupage.nil? %><% if @down_groupage %><span class="caret"><% else %><span class="caret-up"><% end %></span>
     <% end %><% end %> </th>
     <th><%= t('activerecord.attributes.product.use') %></th>
     <th><%= t('activerecord.attributes.product.checked_at') %></th>
     <th><%= t('activerecord.attributes.product.result') %></th>
     <th><%= t('actions.actions') %></th>
   </tr>
-
+</thead>
+<tbody>
 <% @products.each do |product| %>
   <tr>
     <td><%= product.name %></td>
@@ -53,6 +55,7 @@
     </td>
   </tr>
 <% end %>
+</tbody>
 </table>
 </div>
 <% end %>
