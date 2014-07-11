@@ -1,18 +1,18 @@
 <%- if controller_name != 'sessions' %>
   <%= link_to new_session_path(resource_name), :class => "btn btn-default" do %>
-    <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.sign_in') %>      
+    <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.sign_in') %>      
   <% end %> 
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
   <%= link_to new_registration_path(resource_name), :class => "btn btn-default" do %>
-    <i class="glyphicon glyphicon-edit"></i> <%= t('actions.sign_up') %>      
+    <span class="glyphicon glyphicon-edit"></span> <%= t('actions.sign_up') %>      
   <% end %> 
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
   <%= link_to new_password_path(resource_name), :class => "btn btn-default" do %>
-    <i class="glyphicon glyphicon-wrench"></i> <%= t('actions.forgot_password') %>      
+    <span class="glyphicon glyphicon-wrench"></span> <%= t('actions.forgot_password') %>      
   <% end %> 
 <% end -%>
 

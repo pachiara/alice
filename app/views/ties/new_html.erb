@@ -9,7 +9,7 @@
   <%= form_tag product_ties_new_path, :method => 'get', :class => "form-inline" do %>	
     <div class="input-group-sm">
       <%= text_field_tag :component_name, params[:component_name], :class => "col-md-6 search-query form-control" %>
-      <button type="submit" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-search"></i> <%= t('activerecord.models.component') %></button>
+      <button type="submit" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span> <%= t('activerecord.models.component') %></button>
     </div>
   <% end %>
 

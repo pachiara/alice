@@ -6,10 +6,10 @@
 
   <div class="form-group">
     <%= link_to products_path, :class => "btn btn-default" do %>
-      <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>      
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
     <% end %> 
     <%= link_to product_print_path(@product, :format => :pdf), :class => "btn btn-default" do %>
-      <i class="glyphicon glyphicon-print"></i> <%= t('actions.print') %>      
+      <span class="glyphicon glyphicon-print"></span> <%= t('actions.print') %>      
     <% end %> 
   </div>
 <% end %>

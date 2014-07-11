@@ -4,8 +4,9 @@
 <br />
 <br />
 <%= will_paginate @detections, :renderer => BootstrapPagination::Rails %>
-
-<table class="table table-striped table-bordered">
+<div class="table-responsive"> 
+<table class="table table-condensed table-striped table-bordered">
+<thead>		
   <tr>
     <th><%= t('activerecord.attributes.detection.name') %></th>
     <th><%= t('activerecord.attributes.detection.created_at') %></th>
@@ -14,7 +15,8 @@
     <th><%= t('actions.messages.acquisition') %></th>
     <th><%= t('actions.actions') %></th>
   </tr>
-
+</thead>
+<tbody>
 <% @detections.each do |detection| %>
   <tr>
     <td><%= detection.name %></td>
@@ -23,33 +25,34 @@
     <td><%= detection.xml_updated_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
     <td>
       <% if detection.acquired %>  
-        <span class="label label-success"><i class="glyphicon glyphicon-thumbs-up glyphicon-inverse"></i></span>
+        <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up glyphicon-inverse"></span></span>
       <% else %>
-        <span class="label label-warning"><i class="glyphicon glyphicon-wrench glyphicon-inverse"></i></span>
+        <span class="label label-warning"><span class="glyphicon glyphicon-wrench glyphicon-inverse"></span></span>
       <% end %>
     </td>
-    <td><div class="btn-group">
-      <%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_detection_path(detection), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-      <%= link_to raw('<i class="glyphicon glyphicon-list-alt"></i>'), detected_components_path(:detection_id => detection.id, :commit => "clear"), :class => "btn btn-default", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
+    <td>
+    <div class="btn-group">
+      <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_detection_path(detection), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <%= link_to raw('<span class="glyphicon glyphicon-list-alt"></span>'), detected_components_path(:detection_id => detection.id, :commit => "clear"), :class => "btn btn-default", :title => t('activerecord.models.detected_components'), :alt => t('activerecord.models.detected_components') %>
         <% if detection.acquired %>
-         <%= link_to raw('<i class="glyphicon glyphicon-download-alt"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
-         <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+         <%= link_to raw('<soan class="glyphicon glyphicon-download-alt"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+         <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
        <% else %>
-         <%= link_to raw('<i class="glyphicon glyphicon-download-alt"></i>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn btn-default", disabled: detection.acquired, :title => t('actions.acquire'), :alt => t('actions.acquire') %>
-         <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+         <%= link_to raw('<span class="glyphicon glyphicon-download-alt"></span>'), detections_validate_components_path(:detection_id => detection.id), :class => "btn btn-default", disabled: detection.acquired, :title => t('actions.acquire'), :alt => t('actions.acquire') %>
+         <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), detection, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
        <% end %>
+     </div>
     </td>
-  </tr>
-  
+  </tr>  
 <% end %>
+</tbody>
 </table>
-
+</div>
 <br />
 
 <%= link_to new_detection_path(:product_id => params[:product_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn  btn-default" do %>
-  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
  <%= link_to products_path, :class => "btn btn-default" do %>
-   <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
+   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
-

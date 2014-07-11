@@ -65,9 +65,9 @@
     <td><%= rule_entry.order_id %></td>
     <td>
       <%= button_tag(:class => 'btn btn-default btn-xs', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
-      <i class="glyphicon glyphicon-chevron-up"></i><% end %>
+      <span class="glyphicon glyphicon-chevron-up"></span><% end %>
       <%= button_tag(:class => 'btn btn-default btn-xs', :type => 'submit', :name => 'down', :value => rule_entry.id) do  %>
-      <i class="glyphicon glyphicon-chevron-down"></i><% end %>
+      <span class="glyphicon glyphicon-chevron-down"></span><% end %>
     </td>
   </tr>
 <% end %>
@@ -83,10 +83,10 @@
 <br />
 
 <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
-  <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.update') %>  
+  <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
 <% end %>
 <%= link_to rules_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
-      <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>      
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
 <% end %> 
 
 <% end %>

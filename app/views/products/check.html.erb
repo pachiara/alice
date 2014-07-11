@@ -10,15 +10,15 @@
 
     <div class="form-group">
       <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-        <i class="glyphicon glyphicon-ok glyphicon-inverse"></i> <%= t('actions.save') %>
+        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
       <% end %>
       <% if !@product.result.nil? %>
         <%= link_to product_print_check_path(@product, :format => :pdf), :class => "btn btn-default" do %>
-          <i class="glyphicon glyphicon-print"></i> <%= t('actions.print') %>
+          <span class="glyphicon glyphicon-print"></span> <%= t('actions.print') %>
         <% end %>
       <% end %>
       <%= link_to products_path, :class => "btn btn-default" do %>
-          <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
+          <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
       <% end %>
     </div>
 

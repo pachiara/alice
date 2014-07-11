@@ -45,12 +45,12 @@
     </td>
     <td>
       <div class="btn-group">
-    	<%= link_to raw('<i class="glyphicon glyphicon-picture"></i>'), product, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_product_path(product), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-        <%= link_to raw('<i class="glyphicon glyphicon-list"></i>'), product_ties_show_path(product), :class => "btn btn-default", :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
-        <%= link_to raw('<i class="glyphicon glyphicon-check"></i>'), product_check_path(product), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
-        <%= link_to raw('<i class="glyphicon glyphicon-search"></i>'), detections_path(:product_id => product.id), :class => "btn btn-default", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'), product, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_product_path(product), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+        <%= link_to raw('<span class="glyphicon glyphicon-list"></span>'), product_ties_show_path(product), :class => "btn btn-default", :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
+        <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'), product_check_path(product), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
+        <%= link_to raw('<span class="glyphicon glyphicon-search"></span>'), detections_path(:product_id => product.id), :class => "btn btn-default", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>
   </tr>
@@ -61,8 +61,5 @@
 <% end %>
 <br />
 <%= link_to new_product_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
-
-
-

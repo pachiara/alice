@@ -37,12 +37,12 @@
     <td><% if license.flag_osi %><span class="label label-primary">osi</span><% end %></td>
     <td><%= unless license.license_type.nil?; license.license_type.description; end %></td>
     <td><%= unless license.category.nil?; license.category.name; end %></td>
-    <td><% if license.text_license.size > 0 %><i class="glyphicon glyphicon-ok"></i><% end %></td>
+    <td><% if license.text_license.size > 0 %><span class="glyphicon glyphicon-ok"></span><% end %></td>
     <td>
       <div class="btn-group">
-    	<%= link_to raw('<i class="glyphicon glyphicon-eye-open"></i>'), license, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_license_path(license), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), license, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_license_path(license), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>
   </tr>
@@ -53,6 +53,6 @@
 <% end %>
 <br />
 <%= link_to new_license_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
 

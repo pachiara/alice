@@ -22,7 +22,7 @@
     <td><%= component.name %></td>
     <td><%= component.version %></td>
     <td><%= component.title %></td>
-    <td><% if component.description.size > 0 %><i class="glyphicon glyphicon-ok"></i><% end %></td>
+    <td><% if component.description.size > 0 %><span class="glyphicon glyphicon-ok"></span><% end %></td>
     <td><%= unless component.license.nil?; component.license.name; end %></td>
     <td><%= unless component.use.nil?; component.use.description; end %></td>
     <td><%= l component.checked_at %></td>
@@ -30,9 +30,9 @@
     	<% else %><span class="label label-important">KO</span><% end %></td>
     <td>
       <div class="btn-group">
-    	<%= link_to raw('<i class="glyphicon glyphicon-eye-open"></i>'), component, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_component_path(component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-    	<%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), component, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_component_path(component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>	
   </tr>
@@ -43,5 +43,5 @@
 
 <br />
 <%= link_to new_component_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <i class="glyphicon glyphicon-plus"></i> <%= t('actions.new') %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>

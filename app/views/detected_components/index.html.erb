@@ -9,6 +9,7 @@
 <br />
 <div class="table-responsive"> 
 <table class="table table-condensed table-striped table-bordered">
+<thead>	
   <tr>
     <th><%= t('activerecord.attributes.detected_component.name_long') %></th>
     <th><%= t('activerecord.attributes.detected_component.version_long') %></th>
@@ -18,7 +19,8 @@
     <th><%= t('activerecord.attributes.detected_component.own') %></th>
     <th><%= t('actions.actions') %></th>
   </tr>
-
+</thead>
+<tbody>
 <% @detected_components.each do |detected_component| %>
   <tr>
     <td><%= detected_component.name %></td>
@@ -34,24 +36,25 @@
     </td>
     <td>
       <% if detected_component.own %>
-        <p class="text-center"><i class="glyphicon glyphicon-ok"></i></p>
+        <p class="text-center"><span class="glyphicon glyphicon-ok"></span></p>
       <% end %>
     </td>
     <td>
       <div class="btn-group">
-        <%= link_to raw('<i class="glyphicon glyphicon-pencil"></i>'), edit_detected_component_path(detected_component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+        <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_detected_component_path(detected_component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
         <% if detected_component.detection.acquired %>
-          <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+          <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
         <% else %>
-          <%= link_to raw('<i class="glyphicon glyphicon-trash"></i>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+          <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
         <% end %>
       </div>
     </td>    
   </tr>
 <% end %>
+</tbody>
 </table>
 </div>
 <br />
  <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn btn-default" do %>
-   <i class="glyphicon glyphicon-arrow-left"></i> <%= t('actions.back') %>
+   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
