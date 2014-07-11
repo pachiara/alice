@@ -11,7 +11,7 @@
   <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detection.name %></h4>
 
   <% if @detection.errors.full_messages.length > 0 %>
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
       <span class="lead text-error">I seguenti componenti non hanno una licenza assegnata:</span>
       <ol>
         <% @detection.errors.full_messages.each do |msg| %>
@@ -21,7 +21,7 @@
     </div>
   <% end %>
 
-  <div class="form-group form-horizontal">
+  <div class="form-group">
 
     <div class="form-group">
       <%= button_tag(type: 'submit', disabled: (@detection.errors.full_messages.length > 0), class: "btn btn-primary") do %>
