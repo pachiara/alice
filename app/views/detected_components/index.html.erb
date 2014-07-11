@@ -31,7 +31,7 @@
       <% if !detected_component.license_id.nil? %>
         <%= License.find(detected_component.license_id).description %>
       <% else %>
-        <span class="label label-important">KO</span>
+        <span class="label label-danger">KO</span>
       <% end %>
     </td>
     <td>
