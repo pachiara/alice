@@ -1,40 +1,27 @@
-<div class="container">
-<div class="row">
-
-<div class="col-md-6">
-<div class="well sidebar-nav">
-
-<!--Product content-->
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.products') %></li>
-  <li class="divider"></li>
-    <li class="active">
-      <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
-    </li>
-</ul>
-</div><!--/.well -->
-</div><!--/col-md--->
-
-<div class="col-md-6">
-<div class="well sidebar-nav">
-
-<%= will_paginate @components, :param_name => 'page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
-<!--Component content-->
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.components') %></li>
-  <li class="divider"></li>
-  <% @components.each do |component| %> 
-    <li>
-      <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
-    </li>
-  <% end %>
-</div><!--/.well -->
-</div><!--/col-md--->
-
-</div>
-</div>
-
-<br />
- <%= link_to products_path, :class => "btn btn-default" do %>
-   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
- <% end %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <%= @product.name %> - v. <%= @product.version %></h3>
+  </div>
+  <div class="panel-body">
+  	<div class="tree col-md-6">
+	  <ul>
+	  	<li>
+          <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+        </li>
+        <ul>
+        <% @components.each do |component| %> 
+          <li>
+            <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
+          </li>
+        <% end %>
+        </ul>        	
+      </ul>
+	</div>
+  	<div class="col-md-6">
+  	<%= will_paginate @components, :param_name => 'page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+  	</div>
+  </div>  
+</div>  
+<%= link_to products_path, :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+<% end %>

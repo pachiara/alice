@@ -1,45 +1,58 @@
-<div class="container">
-<div class="row">
-
-<div class="col-md-6">
-<div class="well sidebar-nav">
-<div class="row"><%= render :partial => "products/search_product" %></div>
-<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
-<!--Product content-->
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.products') %></li>
-  <li class="divider"></li>
-  <% @products.each do |product| %>
-    <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>>
-      <%= link_to product.name+" - v. "+product.version, product_ties_select_path(product) %>
-    </li>
-  <% end %>
-</ul>
-</div><!--/.well -->
-</div><!--/col-md--->
-
-<div class="col-md-6">
-<div class="well sidebar-nav">
-<div class="row"><%= render :partial => "components/search_component" %></div>
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
-<!--Component content-->
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.components') %></li>
-  <li class="divider"></li>
-  <% @components.each do |component| %> 
-    <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>>
-      <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
-    </li>
-  <% end %>
-</div><!--/.well -->
-</div><!--/col-md--->
-
-</div>
-</div>
-
-<br />
-<% if !@product.nil? %>
-<%= link_to product_ties_edit_path, :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') do %>
-  <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <% if !@product.nil? %>
+    	<%= t('activerecord.models.product') %>: <%= @product.name %> - v. <%= @product.version %>
+      <% end %>
+      <% if !@component.nil? %>
+    	<%= t('activerecord.models.component') %>: <%= @component.name %> - v. <%= @component.version %>
+      <% end %>
+    </h3>
+  </div>
+  <div class="panel-body">
+  	<div class="tree col-md-6">
+	  <ul>
+	  	<li>
+          <% if !@product.nil? %>
+            <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+          <% end %>
+          <% if !@component.nil? %>
+            <%= link_to @component.name+" - v. "+@component.version, component_ties_select_path(@component) %>
+          <% end %>
+        </li>
+        <ul>
+        <% if !@product.nil? %>
+          <% @components.each do |component| %> 
+            <li>
+              <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
+            </li>
+          <% end %>
+        <% end %>
+        <% if !@component.nil? %>
+          <% @products.each do |product| %> 
+            <li>
+              <%= link_to product.name+" - v. "+product.version+" - lic. "+product.license.name, product_ties_select_path(product) %>
+            </li>
+          <% end %>
+        <% end %>
+        </ul>        	
+      </ul>
+	</div>
+  	<div class="col-md-6">
+    <% if !@product.nil? %>
+      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+    <% end %>
+    <% if !@component.nil? %>
+      <%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+    <% end %>
+  	</div>
+  </div>  
+</div>  
+<%= link_to ties_index_path, :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
+<% if !@product.nil? %>
+  <%= link_to product_ties_edit_path, :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') do %>
+    <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>
+  <% end %>
 <% end %>

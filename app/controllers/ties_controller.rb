@@ -2,8 +2,8 @@ class TiesController < ApplicationController
   def index
     
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
-    @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
-    @components = Component.search(params[:component_name], params[:component_page])
+    @products = Product.search(params[:product_name], params[:product_groupage], params[:page], 6)
+    @components = Component.search(params[:component_name], params[:component_page], 6)
     @search_form_path = ties_index_path
     
     respond_to do |format|

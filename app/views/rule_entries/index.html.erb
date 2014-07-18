@@ -1,4 +1,3 @@
-<br />
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title"><%= t('activerecord.models.rule') %>: <%= @rule.name %> - <%= t('activerecord.models.license') %>: <%= @rule.license.name %><% if @rule.plus %> + <% end %></h3>
@@ -10,7 +9,7 @@
   	    <% @rule_entries.each do |rule_entry| %>
   	      <div class="alert alert-info col-xs-12 col-sm-6 col-md-4 col-lg-2" style="padding-left: 0; padding-right: 0;">	
             <div class="col-md-12">
-      	      <div class="input-group">
+      	      <div class="input-group input-group-sm">
                 <span class="input-group-addon"><%= rule_entry.order_id %></span>
                 <input type="text" class="form-control" value="<%= rule_entry.license.name %>" disabled style="background-color: #FFFFFF;">
                 <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "del", value: rule_entry.id) do %>
@@ -25,7 +24,6 @@
     <% end %>
   </div>
 </div>
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.license') %></h3>
@@ -49,6 +47,7 @@
                   <span class="glyphicon glyphicon-plus glyphicon-inverse"></span>  
                   <% end %>
                 </span>
+              </td>
               <td><%= license.name %></td>
               <td><%= license.version %></td>
               <td><%= license.description %></td>
@@ -59,8 +58,6 @@
     </div>
   </div>
 </div>
-
-<br />
 <%= link_to rules_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
       <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
 <% end %> 

@@ -18,11 +18,13 @@ pre {
   font-size: 11px;
 }
 
+/*  &:visited {
+    color: #fff;
+  }
+*/  
+
 a {
   color: #000;
-  &:visited {
-    color: #333;
-  }
   &:hover {
     color: #fff;
     background-color: #000;
