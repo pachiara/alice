@@ -366,6 +366,7 @@ it:
     save: "Salva"
     details: "Dettagli"
     select: "Seleziona"
+    selected: "Selezionati"
     acquire: "Acquisisci"
     disabled: "Disabilitato"
     check: "Controllo"

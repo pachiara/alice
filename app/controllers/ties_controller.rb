@@ -2,8 +2,8 @@ class TiesController < ApplicationController
   def index
     
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
-    @products = Product.search(params[:product_name], params[:product_groupage], params[:page], 6)
-    @components = Component.search(params[:component_name], params[:component_page], 6)
+    @products = Product.search(params[:product_name], params[:product_groupage], params[:page], 5)
+    @components = Component.search(params[:component_name], params[:component_page], 5)
     @search_form_path = ties_index_path
     
     respond_to do |format|
@@ -38,12 +38,8 @@ class TiesController < ApplicationController
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.tie')
     require 'will_paginate/array'
-    
-    @product = Product.find(params[:product_id])
-    @components_ties = @product.components.order('name, version').paginate(page: params[:component_ties_page], per_page: 10)
-    
-    @components = (Component.order('name, version').where("name like ?", "%#{params[:component_name]}%") - @product.components.order('name, version')).paginate(page: params[:component_page], per_page: 10)
     @search_form_path = product_ties_edit_path
+    @product = Product.find(params[:product_id])
     
     if !params[:component_del].nil?
       @product.del_relation(params[:component_del])
@@ -51,6 +47,9 @@ class TiesController < ApplicationController
     if !params[:component_add].nil?
       @product.add_relation(params[:component_add])
     end
+
+    @components_ties = @product.components.order('name, version').paginate(page: params[:component_ties_page], per_page: 6)
+    @components = (Component.order('name, version').where("name like ?", "%#{params[:component_name]}%") - @product.components.order('name, version')).paginate(page: params[:component_page], per_page: 6)
          
     respond_to do |format|
       format.html # show.html.erb
