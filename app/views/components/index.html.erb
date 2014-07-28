@@ -45,3 +45,7 @@
 <%= link_to new_component_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
+ 
+<%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 
