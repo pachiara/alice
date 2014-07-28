@@ -31,7 +31,7 @@
   <div class="panel-body">
     <div class="table-responsive"> 
       <%= render :partial => "licenses/search_license" %>
-      <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2 %>	
+      <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>	
       <%= form_tag rule_rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do |f| %>
         <table class="table table-striped table-condensed table-bordered">
           <tr>
