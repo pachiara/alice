@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
    	<div class="col-md-5">
-  	<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+  	<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails %>
   	</div>
     <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
         <div class="form-group col-md-2">
@@ -44,7 +44,7 @@
   <div class="panel-body">
     <%= render :partial => "components/search_component" %>
    	<div class="col-md-5">	
-      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>	
+      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>	
     </div>
     <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
     <div class="form-group col-md-1">

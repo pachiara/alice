@@ -402,8 +402,8 @@ it:
       acquisition: "Acquisizione"
   
   will_paginate:
-    next_label: "Sucessivi"
-    previous_label: "Precedenti"
+    next_label: "&rarr;"
+    previous_label: "&larr;"
   
   devise:
     sessions:

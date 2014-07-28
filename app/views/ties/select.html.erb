@@ -40,10 +40,10 @@
 	</div>
   	<div class="col-md-6">
     <% if !@product.nil? %>
-      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>
     <% end %>
     <% if !@component.nil? %>
-      <%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+      <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
     <% end %>
   	</div>
   </div>  
