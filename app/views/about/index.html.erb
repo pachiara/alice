@@ -1,32 +1,39 @@
 <br />
 <br />
-<br />
-<br />
 
-<div class="row">
+<div class="container-fluid">
 
-<div class="col-md-offset-1 col-md-4">
-<div class="panel panel-primary">
+<div class="col-md-6">
+<div class="panel panel-default">
   <div class="panel-heading">
-  	<%= link_to "Alice", about_alice_path, :class => "btn btn-info" %>
+  	<h3 class="panel-title">Alice</h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body center">
     <%= image_tag("alice2.png", :alt => "Logo Alice", :class => "img-rounded img-thumbnail img-responsive") %>
+    <br /><br />
+   	<%= link_to "Chi è Alice ?", about_alice_path, :class => "btn btn-info" %>
   </div>
 </div>
 </div>
 
-<div class="col-md-offset-2 col-md-4">
-<div class="panel panel-primary">
+<div class="col-md-6">
+<div class="panel panel-default">
   <div class="panel-heading">
-  	<%= link_to "Lombardia Informatica", about_lispa_path, :class => "btn btn-info" %>  	  	
+  	<h3 class="panel-title">Lombardia Informatica</h3>
   </div>
-  <div class="panel-body">
+  <div class="panel-body center">
   	<br /><br /><br />
     <%= image_tag("lispa.png", :alt => "Lombardia Informatica", :class => "img-rounded img-thumbnail img-responsive") %>
     <br /><br /><br /><br /><br />
+  	<%= link_to "Lombardia Informatica", about_lispa_path, :class => "btn btn-info" %>
+    <br /><br />
   </div>
 </div>
 </div>
 
+<div class="col-md-12">
+<%= link_to root_path, :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %>  
+</div>
 </div>  
