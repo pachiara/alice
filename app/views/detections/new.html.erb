@@ -3,9 +3,12 @@
 
   <%= hidden_field_tag 'product_id', @detection.product.id %>
 
-  <button class="btn btn-lg btn-block btn-primary disabled" type="button">
-    <%= t('activerecord.models.product') %>: <%= @detection.product.name %> - Vers. <%= @detection.product.version %>
-  </button>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @detection.product.name %></b> - Vers. <b><%= @detection.product.version %></b></h3>
+  </div>
+  <div class="panel-body">
+
   <br />
   <br />
  
@@ -19,12 +22,17 @@
   <br />
   
   <div class="form-group">
+  	<div class="col-sx-6 col-sm-6 col-md-6 col-lg-6"> 
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
     <% end %>
     <%= link_to (detections_path + "?product_id=#{params[:product_id]}"), :class => "btn btn-default" do %>
       <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
     <% end %>
+    </div>
   </div>
 
 <% end %>
+
+</div>
+</div>

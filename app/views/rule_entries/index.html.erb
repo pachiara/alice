@@ -1,6 +1,6 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= t('activerecord.models.rule') %>: <%= @rule.name %> - <%= t('activerecord.models.license') %>: <%= @rule.license.name %><% if @rule.plus %> + <% end %></h3>
+    <h3 class="panel-title"><%= t('activerecord.models.rule') %>: <b><%= @rule.name %></b> - <%= t('activerecord.models.license') %>: <b><%= @rule.license.name %></b><% if @rule.plus %> + <% end %></h3>
   </div>
   <div class="panel-body">
   	<%= form_tag @rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do %> 	

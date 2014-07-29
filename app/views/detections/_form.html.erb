@@ -10,12 +10,14 @@
   </div>
   
   <div class="form-group">
+  	<div class="col-sm-6 col-md-6 col-lg-6">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
     <% end %>
     <%= link_to (detections_path + "?product_id=#{@detection.product.id}"), :class => "btn btn-default" do %>
       <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
     <% end %>
+    </div>
   </div>
   
 <% end %>
