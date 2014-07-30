@@ -3,12 +3,10 @@
     <h3 class="panel-title">
       <%= t('activerecord.models.product') %>: <b><%= @product.name %></b>
       <% if !@product.version.blank? %> - Vers. <b><%= @product.version %></b> <% end %> &nbsp; 
-      <%= t('activerecord.attributes.detection.name') %>: <%= Detection.find(params[:detection_id]).name %>
+      <%= t('activerecord.attributes.detection.name') %>: <b><%= Detection.find(params[:detection_id]).name %></b>
     </h3>
   </div>
   <div class="panel-body">
-
-<br />
 
 <%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
 <br />
