@@ -5,7 +5,7 @@ class Product < ActiveRecord::Base
   attr_accessor :warnings, :infos
   
   validates_presence_of :name, :title, :use_id
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, scope: :version
   
   belongs_to :use
   belongs_to :license
