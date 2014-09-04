@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :detections, :except => [:show]
   get 'detections/validate_components'
   post 'detections/acquire'
+  post 'detections/remote_check'
 
   resources :components do
     get 'ties/select'

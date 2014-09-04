@@ -111,4 +111,34 @@ class DetectionsController < ApplicationController
     end
   end
 
+  # POST /detections/remote_check
+  # API 
+  def remote_check
+    @name    = params[:name]
+    @version = params[:version]
+    @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{name}%", "%#{version}%")
+    if @product.id.nil? 
+      @detection.errors.add("Prodotto non trovato:", "#{@name}", "#{@version}")
+    else
+      if params[:detection][:name].nil?
+        @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
+      else
+        @detection_name = params[:detection][:name]
+      end
+      @detection = Detection.new(params[:detection])
+      @detection.product_id = @product.id
+    end
+    respond_to do |format|
+      if @detection.save
+        format.html { render @detection, status: :created }
+        format.json { render json: @detection, status: :created, location: @detection }
+      else
+        format.html { render @detection.errors, status: :unprocessable_entity }
+        format.json { render json: @detection.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
+
 end
