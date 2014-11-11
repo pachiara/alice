@@ -22,7 +22,7 @@ html, body {
   -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
-  padding: 15px 30px 30px 30px;
+/*  padding: 15px 30px 30px 30px; */
   margin: 15px 15px 15px 15px; 
 }
 .content a:hover {
@@ -155,4 +155,13 @@ line-height: 1.428571429;
 }
 .center {
   text-align: center; 
+}
+.panel-main {
+  border-color: #003A60;
+  background-color: #FBF7F6;
+}
+.panel-main > .panel-heading {
+  color: white;
+  background-color: #003A60;
+  border-color: #003A60;
 }

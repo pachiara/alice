@@ -1,3 +1,4 @@
+<div class="table-responsive">  	
 <%= render :partial => "search_license" %>
 <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>
 <% if @order_search == 'name'         then class_name         = 'btn btn-primary btn-block btn-sm' else class_name         = 'btn btn-default btn-block btn-sm' end %>
@@ -6,7 +7,6 @@
 <% if @order_search == 'category'     then class_category     = 'btn btn-primary btn-block btn-sm' else class_category     = 'btn btn-default btn-block btn-sm' end %>
 
 <%= form_tag licenses_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
-<div class="table-responsive">  	
 <table class="table table-striped table-condensed table-bordered">
   <thead>	
   <tr>
