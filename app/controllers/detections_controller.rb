@@ -114,11 +114,23 @@ class DetectionsController < ApplicationController
   # POST /detections/remote_check
   # API 
   def remote_check
+    # parametri
+    # input: 
+    # 1 - nome/sigla prodotto
+    # 2 - versione
+    # 3 - file delle licenze
+    # 4 - nome rilevamento (facoltativo se non esiste lo creo "remote+time")
+    # output:
+    # 1 - msg
+    # 2 - nome
+    # 3 - versione
+    @msg     = []
     @name    = params[:name]
     @version = params[:version]
     @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{name}%", "%#{version}%")
     if @product.id.nil? 
-      @detection.errors.add("Prodotto non trovato:", "#{@name}", "#{@version}")
+      # se non lo trovo creo nuovo prodotto/versione copiando da prodotto (se ne esiste uno) ?
+      @msg.add("1 codice prodotto non trovato", "#{@name}", "#{@version}")
     else
       if params[:detection][:name].nil?
         @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
@@ -128,17 +140,50 @@ class DetectionsController < ApplicationController
       @detection = Detection.new(params[:detection])
       @detection.product_id = @product.id
     end
+    # 1 - registro il rilevamento @detection.save
+    # 2 - valido l'acquisizione @detection.validate_acquire
+    # 3 - acquisisco il rilevamento @detection.acquire
+    # 4 - modifico lo stato del rilevamento @detection.update_attributes(acquired: true)
+    # messaggi di errore:
+    # "0 controllo ok", "#{@name}", "#{@version}"
+    # "1 codice prodotto non trovato", "#{@name}", "#{@version}"
+    # "2 importazione non riuscita", "#{@name}", "#{@version}"
+    # "3 validazione non riuscita", "#{@name}", "#{@version}"
+    # "4 acquisizione non riuscita", "#{@name}", "#{@version}"
+    # "5 impossibile eseguire il controllo", "#{@name}", "#{@version}"
+    # "6 problemi sul controllo", "#{@name}", "#{@version}"
     respond_to do |format|
       if @detection.save
-        format.html { render @detection, status: :created }
-        format.json { render json: @detection, status: :created, location: @detection }
+        @detection.validate_acquire
+        if @detection.errors.full_messages.length > 0
+          @msg.add("3 validazione non riuscita", "#{@name}", "#{@version}")
+        else 
+          @detection.acquire
+          if @detection.errors.full_messages.length > 0
+            @msg.add("4 acquisizione non riuscita", "#{@name}", "#{@version}")
+          else
+            @detection.update_attributes(acquired: true)
+            # eseguo il check del prodotto
+            if @product.precheck 
+              @product.analyze_rules
+              if @product.errors.full_messages.length > 0
+                @msg.add("6 problemi sul controllo", "#{@name}", "#{@version}")
+              else
+                @msg.add("0 controllo ok", "#{@name}", "#{@version}")
+              end
+            else
+              @msg.add("5 impossibile eseguire il controllo", "#{@name}", "#{@version}")
+              @product.result = nil
+              @product.checked_at = nil
+            end
+          end        
+        end
       else
-        format.html { render @detection.errors, status: :unprocessable_entity }
-        format.json { render json: @detection.errors, status: :unprocessable_entity }
+        @msg.add("2 importazione non riuscita", "#{@name}", "#{@version}")
       end
+      format.html { render @msg }
+      format.json { render json: @msg }
     end
   end
-
-
 
 end
