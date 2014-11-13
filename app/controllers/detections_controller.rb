@@ -127,18 +127,26 @@ class DetectionsController < ApplicationController
     @msg     = []
     @name    = params[:name]
     @version = params[:version]
-    @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{name}%", "%#{version}%")
-    if @product.id.nil? 
+    @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%")
+    @error   = false
+    if @product.nil?
       # se non lo trovo creo nuovo prodotto/versione copiando da prodotto (se ne esiste uno) ?
       @msg.add("1 codice prodotto non trovato", "#{@name}", "#{@version}")
+      @error = true
     else
-      if params[:detection][:name].nil?
-        @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
-      else
-        @detection_name = params[:detection][:name]
+      @product = @product[0]
+      if params[:detection].nil?
+        @msg.add("7 file licenses.xml non ricevuto", "#{@name}", "#{@version}")
+        @error = true
+      else  
+        if params[:detection][:name].nil?
+          @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
+        else
+          @detection_name = params[:detection][:name]
+        end
+        @detection = Detection.new(params[:detection])
+        @detection.product_id = @product.id
       end
-      @detection = Detection.new(params[:detection])
-      @detection.product_id = @product.id
     end
     # 1 - registro il rilevamento @detection.save
     # 2 - valido l'acquisizione @detection.validate_acquire
@@ -152,8 +160,9 @@ class DetectionsController < ApplicationController
     # "4 acquisizione non riuscita", "#{@name}", "#{@version}"
     # "5 impossibile eseguire il controllo", "#{@name}", "#{@version}"
     # "6 problemi sul controllo", "#{@name}", "#{@version}"
+    # "7 file licenses.xml non ricevuto", "#{@name}", "#{@version}"
     respond_to do |format|
-      if @detection.save
+      if !@error && @detection.save
         @detection.validate_acquire
         if @detection.errors.full_messages.length > 0
           @msg.add("3 validazione non riuscita", "#{@name}", "#{@version}")
