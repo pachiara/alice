@@ -131,12 +131,12 @@ class DetectionsController < ApplicationController
     @error   = false
     if @product.nil?
       # se non lo trovo creo nuovo prodotto/versione copiando da prodotto (se ne esiste uno) ?
-      @msg.add("1 codice prodotto non trovato", "#{@name}", "#{@version}")
+      @msg.push("1 codice prodotto non trovato #{@name} #{@version}")
       @error = true
     else
       @product = @product[0]
       if params[:detection].nil?
-        @msg.add("7 file licenses.xml non ricevuto", "#{@name}", "#{@version}")
+        @msg.push("7 file licenses.xml non ricevuto #{@name} #{@version}")
         @error = true
       else  
         if params[:detection][:name].nil?
@@ -165,32 +165,31 @@ class DetectionsController < ApplicationController
       if !@error && @detection.save
         @detection.validate_acquire
         if @detection.errors.full_messages.length > 0
-          @msg.add("3 validazione non riuscita", "#{@name}", "#{@version}")
+          @msg.push("3 validazione non riuscita #{@name} #{@version}")
         else 
           @detection.acquire
           if @detection.errors.full_messages.length > 0
-            @msg.add("4 acquisizione non riuscita", "#{@name}", "#{@version}")
+            @msg.push("4 acquisizione non riuscita #{@name} #{@version}")
           else
             @detection.update_attributes(acquired: true)
             # eseguo il check del prodotto
             if @product.precheck 
               @product.analyze_rules
               if @product.errors.full_messages.length > 0
-                @msg.add("6 problemi sul controllo", "#{@name}", "#{@version}")
+                @msg.push("6 problemi sul controllo #{@name} #{@version}")
               else
-                @msg.add("0 controllo ok", "#{@name}", "#{@version}")
+                @msg.push("0 controllo ok #{@name} #{@version}")
               end
             else
-              @msg.add("5 impossibile eseguire il controllo", "#{@name}", "#{@version}")
+              @msg.push("5 impossibile eseguire il controllo #{@name} #{@version}")
               @product.result = nil
               @product.checked_at = nil
             end
           end        
         end
       else
-        @msg.add("2 importazione non riuscita", "#{@name}", "#{@version}")
+        @msg.push("2 importazione non riuscita #{@name} #{@version}")
       end
-      format.html { render @msg }
       format.json { render json: @msg }
     end
   end
