@@ -131,20 +131,21 @@ class DetectionsController < ApplicationController
     @error   = false
     if @product.nil?
       # se non lo trovo creo nuovo prodotto/versione copiando da prodotto (se ne esiste uno) ?
-      @msg.push("1 codice prodotto non trovato #{@name} #{@version}")
+      @msg.push("1 codice prodotto non trovato-#{@name}-#{@version}")
       @error = true
     else
       @product = @product[0]
       if params[:detection].nil?
-        @msg.push("7 file licenses.xml non ricevuto #{@name} #{@version}")
+        @msg.push("7 file licenses.xml non ricevuto-#{@name}-#{@version}")
         @error = true
       else  
-#        if params[:detection][:name].nil?
+        if params[:detection_name].nil?
           @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
- #       else
- #         @detection_name = params[:detection][:name]
- #       end
+        else
+          @detection_name = params[:detection_name]
+        end
         @detection = Detection.new(params[:detection])
+        @detection.name = @detection_name 
         @detection.product_id = @product.id
       end
     end
@@ -153,42 +154,42 @@ class DetectionsController < ApplicationController
     # 3 - acquisisco il rilevamento @detection.acquire
     # 4 - modifico lo stato del rilevamento @detection.update_attributes(acquired: true)
     # messaggi di errore:
-    # "0 controllo ok", "#{@name}", "#{@version}"
-    # "1 codice prodotto non trovato", "#{@name}", "#{@version}"
-    # "2 importazione non riuscita", "#{@name}", "#{@version}"
-    # "3 validazione non riuscita", "#{@name}", "#{@version}"
-    # "4 acquisizione non riuscita", "#{@name}", "#{@version}"
-    # "5 impossibile eseguire il controllo", "#{@name}", "#{@version}"
-    # "6 problemi sul controllo", "#{@name}", "#{@version}"
-    # "7 file licenses.xml non ricevuto", "#{@name}", "#{@version}"
+    # "0 controllo ok"-"#{@name}"-"#{@version}"
+    # "1 codice prodotto non trovato"-"#{@name}"-"#{@version}"
+    # "2 importazione non riuscita"-"#{@name}"-"#{@version}"
+    # "3 validazione non riuscita"-"#{@name}"-"#{@version}"
+    # "4 acquisizione non riuscita"-"#{@name}"-"#{@version}"
+    # "5 impossibile eseguire il controllo"-"#{@name}"-"#{@version}"
+    # "6 problemi sul controllo"-"#{@name}"-"#{@version}"
+    # "7 file licenses.xml non ricevuto"-"#{@name}"-"#{@version}"
     respond_to do |format|
       if !@error && @detection.save
         @detection.validate_acquire
         if @detection.errors.full_messages.length > 0
-          @msg.push("3 validazione non riuscita #{@name} #{@version}")
+          @msg.push("3 validazione non riuscita-#{@name}-#{@version}")
         else 
           @detection.acquire
           if @detection.errors.full_messages.length > 0
-            @msg.push("4 acquisizione non riuscita #{@name} #{@version}")
+            @msg.push("4 acquisizione non riuscita-#{@name}-#{@version}")
           else
             @detection.update_attributes(acquired: true)
             # eseguo il check del prodotto
             if @product.precheck 
               @product.analyze_rules
               if @product.errors.full_messages.length > 0
-                @msg.push("6 problemi sul controllo #{@name} #{@version}")
+                @msg.push("6 problemi sul controllo-#{@name}-#{@version}")
               else
-                @msg.push("0 controllo ok #{@name} #{@version}")
+                @msg.push("0 controllo ok-#{@name}-#{@version}")
               end
             else
-              @msg.push("5 impossibile eseguire il controllo #{@name} #{@version}")
+              @msg.push("5 impossibile eseguire il controllo-#{@name}-#{@version}")
               @product.result = nil
               @product.checked_at = nil
             end
           end        
         end
       else
-        @msg.push("2 importazione non riuscita #{@name} #{@version}")
+        @msg.push("2 importazione non riuscita-#{@name}-#{@version}-#{@detection.product_id}-#{@detection.name}-#{@detection.xml}-#{@error}")
       end
       format.html { render json: @msg }
       format.json { render json: @msg }
