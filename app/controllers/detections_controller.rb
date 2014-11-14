@@ -139,11 +139,11 @@ class DetectionsController < ApplicationController
         @msg.push("7 file licenses.xml non ricevuto #{@name} #{@version}")
         @error = true
       else  
-        if params[:detection][:name].nil?
+#        if params[:detection][:name].nil?
           @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
-        else
-          @detection_name = params[:detection][:name]
-        end
+ #       else
+ #         @detection_name = params[:detection][:name]
+ #       end
         @detection = Detection.new(params[:detection])
         @detection.product_id = @product.id
       end
@@ -190,6 +190,7 @@ class DetectionsController < ApplicationController
       else
         @msg.push("2 importazione non riuscita #{@name} #{@version}")
       end
+      format.html { render json: @msg }
       format.json { render json: @msg }
     end
   end
