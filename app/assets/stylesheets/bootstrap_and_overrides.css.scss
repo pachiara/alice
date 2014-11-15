@@ -1,10 +1,68 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import 'bootstrap-datetimepicker';
-body { padding-top: 60px; }
-
 html, body {
   height: 100%;
+}
+body {
+  padding-top: 60px; 
+  background-color: #fff; 
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+a {
+  color: #000;
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+div {
+  &.field, &.actions {
+    margin-bottom: 10px;
+  }
+}
+#notice {
+  color: green;
+}
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff;
+  }
+  ul li {
+    font-size: 12px;
+    list-style: square;
+  }
 }
 .page-header {
   margin: 5px 0 5px;
@@ -22,7 +80,6 @@ html, body {
   -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
-/*  padding: 15px 30px 30px 30px; */
   margin: 15px 15px 15px 15px; 
 }
 .content a:hover {
@@ -59,11 +116,11 @@ footer a:visited {
   padding-top: 60px;
 }
 .logo {
-display: block;
-margin-bottom: -75px;
-padding-top: 5px;
-margin-left: 10px;
-margin-right: 10px;
+  display: block;
+  margin-bottom: -75px;
+  padding-top: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .pagination {
   margin: 0px 0;
@@ -138,17 +195,17 @@ margin-right: 10px;
 .tree li a:hover+ul li::after, 
 .tree li a:hover+ul li::before, 
 .tree li a:hover+ul::before, 
-.tree li a:hover+ul ul::before{
+.tree li a:hover+ul ul::before {
   border-color:  #94a0b4;
 }
 .btn-circle {
-width: 30px;
-height: 30px;
-padding: 6px 0;
-border-radius: 15px;
-text-align: center;
-font-size: 12px;
-line-height: 1.428571429;
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
 }
 .btn-primary.active {
   background-color: #000000;
