@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  include Ruleby
+  
   attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version,
    :compatible_license_id, :groupage
    
@@ -44,13 +46,6 @@ class Product < ActiveRecord::Base
     order(order).paginate(page: page, per_page: per_page)
   end
   
-  def check
-    engine = Ruleby::Core::Engine.new
-    engine do |e|
-      LicenseRulebook.new(e).rules
-    end
-  end
-  
   def addWarning(key, text)
     @warnings || @warnings = ActiveModel::Errors.new(self)
     @warnings.add(key, text)
@@ -61,5 +56,53 @@ class Product < ActiveRecord::Base
     @infos.add(key, text)
   end
 
+  def precheck
+    result = true
+    if self.license.nil?
+      @errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+      result = false
+    end
+    if self.components.empty? 
+      @errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
+      result = false
+    else
+      self.components.each do |component|
+        if component.license.license_type.nil?
+          @errors.add("Impossibile eseguire il controllo:", 
+           "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
+          result = false
+        end
+      end
+    end
+    return result
+  end
+
+  def analyze_rules
+    @product = self
+    @components = @product.components.where(:own => false, :leave_out => false )
+    # Inizializzazione
+    @product.compatible_license = License.where("name=?", "public").first
+    @product.result = true
+    @product.addInfo("Licenza compatibilità componenti iniziale:",
+                     " #{@product.compatible_license.name} #{@product.compatible_license.version}")
+
+    engine :engine do |e|
+      CompatibilityRulebook.new(e).rules
+      e.assert @product
+      @components.each do |component|
+        e.assert component
+      end
+      e.match
+    end
+
+    engine :engine do |e|
+      CheckRulebook.new(e).rules
+      e.assert @product
+      @components.each do |component|
+        e.assert component
+      end
+      e.match
+    end
+  end
   
 end
