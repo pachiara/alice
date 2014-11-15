@@ -222,3 +222,17 @@ footer a:visited {
   background-color: #003A60;
   border-color: #003A60;
 }
+table {
+  color: gray;
+  background-color: #FFFFFF;
+}
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+.navbar-static-top,
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  border-radius: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+}
