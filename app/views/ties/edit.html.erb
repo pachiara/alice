@@ -3,15 +3,10 @@
     <h3 class="panel-title"><%= t('activerecord.models.product') %>: <%= @product.name %> - v. <%= @product.version %></h3>
   </div>
   <div class="panel-body">
-   	<div class="col-md-5">
+   	<div class="col-md-6">
   	<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails %>
   	</div>
     <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
-        <div class="form-group col-md-2">
-      <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.destroy'), :alt => t('actions.destroy')) do %>
-        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.destroy') %> <%= t('activerecord.models.components') %>
-      <% end %>
-    </div>     
   	<div class="tree col-md-12">
 	  <ul>
 	  	<li>
@@ -32,7 +27,11 @@
         </ul>        	
       </ul>
 	</div>
-   
+    <div class="form-group col-md-2">
+      <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.destroy'), :alt => t('actions.destroy')) do %>
+        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.destroy') %> <%= t('activerecord.models.components') %>
+      <% end %>
+    </div>     
     <% end %>
  </div>  
 </div>
@@ -42,17 +41,10 @@
     <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.ties') %>: <%= t('activerecord.models.component')  %></h3>
   </div>
   <div class="panel-body">
+  	<div class="table-responsive">
     <%= render :partial => "components/search_component" %>
-   	<div class="col-md-5">	
-      <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>	
-    </div>
+    <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>	
     <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
-    <div class="form-group col-md-1">
-      <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.new'), :alt => t('actions.new')) do %>
-        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.new') %> <%= t('activerecord.models.components') %>
-      <% end %>
-    </div> 
-    <div class="table-responsive">
       <table class="table table-striped table-condensed table-bordered">
         <tr>
           <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.component.name') %></th>
@@ -76,6 +68,9 @@
         </tr>
         <% end %>
       </table>
+      <%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.new'), :alt => t('actions.new')) do %>
+        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.new') %> <%= t('activerecord.models.components') %>
+      <% end %>
     </div>
     <% end %>
   </div>
