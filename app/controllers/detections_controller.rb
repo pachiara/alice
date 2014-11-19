@@ -181,8 +181,8 @@ class DetectionsController < ApplicationController
               else
                 @msg.push("0 controllo ok-#{@name}-#{@version}")
               end
-            # 6 - Aggiorno stato del prodotto
-            @product.update_attributes(checked_at: Time.now)
+              # 6 - Aggiorno stato del prodotto
+              @product.update_attributes(checked_at: Time.now)
             else
               @msg.push("5 impossibile eseguire il controllo-#{@name}-#{@version}")
               # 6 - Aggiorno stato del prodotto
