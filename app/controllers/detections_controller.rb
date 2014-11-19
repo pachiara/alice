@@ -130,8 +130,8 @@ class DetectionsController < ApplicationController
     @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%")
     @error   = false
     if @product.nil?
-      # se non lo trovo creo nuovo prodotto/versione copiando da prodotto (se ne esiste uno) ?
-      @msg.push("1 codice prodotto non trovato-#{@name}-#{@version}")
+      # TODO se versione non esiste, crearla
+      @msg.push("1 prodotto/versione non trovato-#{@name}-#{@version}")
       @error = true
     else
       @product = @product[0]
@@ -149,13 +149,9 @@ class DetectionsController < ApplicationController
         @detection.product_id = @product.id
       end
     end
-    # 1 - registro il rilevamento @detection.save
-    # 2 - valido l'acquisizione @detection.validate_acquire
-    # 3 - acquisisco il rilevamento @detection.acquire
-    # 4 - modifico lo stato del rilevamento @detection.update_attributes(acquired: true)
     # messaggi di errore:
     # "0 controllo ok"-"#{@name}"-"#{@version}"
-    # "1 codice prodotto non trovato"-"#{@name}"-"#{@version}"
+    # "1 prodotto/versione non trovato"-"#{@name}"-"#{@version}"
     # "2 importazione non riuscita"-"#{@name}"-"#{@version}"
     # "3 validazione non riuscita"-"#{@name}"-"#{@version}"
     # "4 acquisizione non riuscita"-"#{@name}"-"#{@version}"
@@ -163,17 +159,21 @@ class DetectionsController < ApplicationController
     # "6 problemi sul controllo"-"#{@name}"-"#{@version}"
     # "7 file licenses.xml non ricevuto"-"#{@name}"-"#{@version}"
     respond_to do |format|
+      # 1 - registro il rilevamento
       if !@error && @detection.save
+        # 2 - valido l'acquisizione
         @detection.validate_acquire
         if @detection.errors.full_messages.length > 0
           @msg.push("3 validazione non riuscita-#{@name}-#{@version}")
         else 
+          # 3 - acquisisco il rilevamento
           @detection.acquire
           if @detection.errors.full_messages.length > 0
             @msg.push("4 acquisizione non riuscita-#{@name}-#{@version}")
           else
+            # 4 - modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
-            # eseguo il check del prodotto
+            # 5 - eseguo il check del prodotto
             if @product.precheck 
               @product.analyze_rules
               if @product.errors.full_messages.length > 0
@@ -181,10 +181,12 @@ class DetectionsController < ApplicationController
               else
                 @msg.push("0 controllo ok-#{@name}-#{@version}")
               end
+              # 6 - Aggiorno stato del prodotto
+              @product.update_attributes(checked_at: Time.now)
             else
               @msg.push("5 impossibile eseguire il controllo-#{@name}-#{@version}")
-              @product.result = nil
-              @product.checked_at = nil
+              # 6 - Aggiorno stato del prodotto
+              @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
             end
           end        
         end
