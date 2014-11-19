@@ -2,6 +2,7 @@ Installazione
 
 1) installare alcuni prerequisiti da root (pwd: alice)
 
+    apt-get install git
     apt-get install apache2
     apt-get install openssl
     apt-get install vim
@@ -20,7 +21,7 @@ Installazione
 
 3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione
 
-    vim .set_proxy
+    vim .my_set
 
 export http_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
 export HTTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
@@ -34,27 +35,41 @@ export all_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
 export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
 
     vim .bashrc 
-         . ~/.set_proxy        
+         . ~/.my_set        
     vim .profile
-         . ~/.set_proxy        
+         . ~/.my_set        
     vim .bash_profile 
          source ~/.profile
 
-4) con user alice installare rvm
+4) con user alice installare rbenv
 
-    curl -L https://get.rvm.io | bash -s stable
-   
-5) aggiungere nei sudoers l'utente alice (serve per le dipendenze mancanti)
-   nel file /etc/group
-        sudo:x:27:alice
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-6) installare ruby (installa le dipendenze mancanti)
-   sempre con lo user alice, quando ne avra' bisogno chiedera' la password di root (alice)
+5) configurare il proprio profilo
 
-    rvm install 2.0.0-p247
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.my_set
+echo 'eval "$(rbenv init -)"' >> ~/.my_set
 
-7) installazione di rails 
-    gem install rails -v 3.2.13
+6) restart del terminale e installazione ruby 
+
+verifica il comendo digitando
+type rbenv
+(deve essere riconosciuto come una funzione)
+
+rbenv install -l 
+(elenca tutte le versioni disponibili)
+
+rbenv install 2.1.5
+(installa una versione)
+rbenv global 2.1.5
+(imposta una versione globalmente)
+rbenv local 2.1.5
+(imposta una versione localmente)
+rbenv rehash
+
+7) restart del terminale e installazione di rails 
+    gem install rails -v 4.1.7
 
 8) Alice
     git clone https://github.com/pachiara/alice.git
@@ -68,7 +83,7 @@ export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
 9) Apache + Passenger
 
    gem install passenger
-   sudo passenger-install-apache2-module
+   passenger-install-apache2-module
 
    login con user root
 
@@ -77,10 +92,12 @@ export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
 
    vim /etc/apache2/sites-enabled/000-default
 
-   
-LoadModule passenger_module /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13/buildout/apache2/mod_passenger.so
-   PassengerRoot /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13
-   PassengerDefaultRuby /home/alice/.rvm/wrappers/ruby-2.0.0-p247/ruby
+....
+LoadModule passenger_module /home/alice/.rbenv/versions/2.1.5/lib/ruby/gems/2.1.0/gems/passenger-4.0.53/buildout/apache2/mod_passenger.so
+<IfModule mod_passenger.c>
+ PassengerRoot /home/alice/.rbenv/versions/2.1.5/lib/ruby/gems/2.1.0/gems/passenger-4.0.53
+ PassengerDefaultRuby /home/alice/.rbenv/versions/2.1.5/bin/ruby
+</IfModule>
 
 <VirtualHost *:80>
         ServerName  alice.lispa.it
@@ -88,14 +105,14 @@ LoadModule passenger_module /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger
 
         DocumentRoot /var/www
         <Directory />
-                Options FollowSymLinks
-                AllowOverride None
+          Options FollowSymLinks
+          AllowOverride None
         </Directory>
         <Directory /var/www/>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride None
-                Order allow,deny
-                allow from all
+          Options Indexes FollowSymLinks MultiViews
+          AllowOverride None
+          # Uncomment this if you're on Apache >= 2.4:
+           Require all granted
         </Directory>
 
 ################ Applicazioni Rails ####################
@@ -104,10 +121,12 @@ LoadModule passenger_module /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger
 
         RackBaseURI /alice
         <Directory /var/www/alice>
-                 # This relaxes Apache security settings.
-                 AllowOverride all
-                 # MultiViews must be turned off.
-                 Options -MultiViews
+          # This relaxes Apache security settings.
+          AllowOverride all
+          # MultiViews must be turned off.
+          Options -MultiViews
+          # Uncomment this if you're on Apache >= 2.4:
+          Require all granted
         </Directory>
 
         ErrorLog ${APACHE_LOG_DIR}/error.log
