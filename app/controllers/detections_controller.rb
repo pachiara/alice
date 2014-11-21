@@ -125,18 +125,17 @@ class DetectionsController < ApplicationController
     # 2 - nome
     # 3 - versione
     @msg     = []
-    @name    = params[:name]
-    @version = params[:version]
-    @product = Product.order('name, version').where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%")
     @error   = false
+    @name    = params[:product_name]
+    @version = params[:product_version]
+    @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
     if @product.nil?
-      # TODO se versione non esiste, crearla
-      @msg.push("1 prodotto/versione non trovato-#{@name}-#{@version}")
+      # TODO se il prodotto esiste ma la versione non esiste, crearla
+      @msg.push("1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}")
       @error = true
     else
-      @product = @product[0]
-      if params[:detection].nil?
-        @msg.push("7 file licenses.xml non ricevuto-#{@name}-#{@version}")
+      if params[:detection].nil? || !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
+        @msg.push("7 ** Errore ** File licenses.xml non ricevuto - prodotto: #{@name} versione: #{@version}")
         @error = true
       else  
         if params[:detection_name].nil?
@@ -150,48 +149,45 @@ class DetectionsController < ApplicationController
       end
     end
     # messaggi di errore:
-    # "0 controllo ok"-"#{@name}"-"#{@version}"
-    # "1 prodotto/versione non trovato"-"#{@name}"-"#{@version}"
-    # "2 importazione non riuscita"-"#{@name}"-"#{@version}"
-    # "3 validazione non riuscita"-"#{@name}"-"#{@version}"
-    # "4 acquisizione non riuscita"-"#{@name}"-"#{@version}"
-    # "5 impossibile eseguire il controllo"-"#{@name}"-"#{@version}"
-    # "6 problemi sul controllo"-"#{@name}"-"#{@version}"
-    # "7 file licenses.xml non ricevuto"-"#{@name}"-"#{@version}"
+    # 0 controllo ok
+    # 1 prodotto/versione non trovato
+    # 2 importazione non riuscita
+    # 3 errori nel rilevamento
+    # 5 impossibile eseguire il controllo
+    # 6 KO sul controllo
+    # 7 file licenses.xml non ricevuto
     respond_to do |format|
-      # 1 - registro il rilevamento
-      if !@error && @detection.save
-        # 2 - valido l'acquisizione
-        @detection.validate_acquire
-        if @detection.errors.full_messages.length > 0
-          @msg.push("3 validazione non riuscita-#{@name}-#{@version}")
-        else 
-          # 3 - acquisisco il rilevamento
-          @detection.acquire
+      if !@error 
+        # Registro il rilevamento
+        if @detection.save
+          # Valido l'acquisizione
+          @detection.validate_acquire
           if @detection.errors.full_messages.length > 0
-            @msg.push("4 acquisizione non riuscita-#{@name}-#{@version}")
-          else
-            # 4 - modifico lo stato del rilevamento
+            @msg.push("3 ** Errore ** Errori nel rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}")
+          else 
+            # Acquisisco il rilevamento
+            @detection.acquire
+            # Modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
-            # 5 - eseguo il check del prodotto
+            # Eseguo il check del prodotto
             if @product.precheck 
               @product.analyze_rules
               if @product.errors.full_messages.length > 0
-                @msg.push("6 problemi sul controllo-#{@name}-#{@version}")
+                @msg.push("6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}")
               else
-                @msg.push("0 controllo ok-#{@name}-#{@version}")
+                @msg.push("0 ** OK ** Controllo ok prodotto: #{@name} versione: #{@version}")
               end
-              # 6 - Aggiorno stato del prodotto
+              # Aggiorno stato del prodotto
               @product.update_attributes(checked_at: Time.now)
             else
-              @msg.push("5 impossibile eseguire il controllo-#{@name}-#{@version}")
-              # 6 - Aggiorno stato del prodotto
+              @msg.push("5 ** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}")
+              # Aggiorno stato del prodotto
               @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
             end
-          end        
+          end
+        else
+          @msg.push("2 ** Errore ** Importazione non riuscita - prodotto: #{@name} versione: #{@version}")
         end
-      else
-        @msg.push("2 importazione non riuscita-#{@name}-#{@version}-#{@detection.product_id}-#{@detection.name}-#{@detection.xml}-#{@error}")
       end
       format.html { render json: @msg }
       format.json { render json: @msg }

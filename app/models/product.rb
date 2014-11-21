@@ -59,16 +59,16 @@ class Product < ActiveRecord::Base
   def precheck
     result = true
     if self.license.nil?
-      @errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+      self.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
       result = false
     end
     if self.components.empty? 
-      @errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
+      self.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
       result = false
     else
       self.components.each do |component|
         if component.license.license_type.nil?
-          @errors.add("Impossibile eseguire il controllo:", 
+          self.errors.add("Impossibile eseguire il controllo:", 
            "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
           result = false
         end

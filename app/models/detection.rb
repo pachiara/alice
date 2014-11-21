@@ -80,9 +80,13 @@ class Detection < ActiveRecord::Base
   end
 
   def validate_acquire
-    detected_components.each do |component|
-      if component.license_id.nil?
-         errors.add("#{component.name}", "#{component.version}")
+    if detected_components.empty?
+      errors.add("Rilevamento: #{name}", "Nessun componente rilevato")
+    else
+      detected_components.each do |component|
+        if component.license_id.nil?
+           errors.add("#{component.name}", "#{component.version}")
+        end
       end
     end
   end
