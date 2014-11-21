@@ -139,6 +139,19 @@ LoadModule passenger_module /home/alice/.rbenv/versions/2.1.5/lib/ruby/gems/2.1.
 </VirtualHost>
 
 
-10) riavviare apache2
+10) impostare la secret_key per la produzione
+
+cd /alice
+RAILS_ENV=production rake secret
+
+viene stampata a video la nuova key
+
+sul server apache bisogna impostarla come variabile di environment
+vim /etc/apache2/envvars
+
+export SECRET_KEY_BASE=1418c46ca0e87bb9b28c40601ecc356513211a6d812eebec818fd594af338696c1869fcd0f460f5e51ecaf8460912f3615a5ab840542b710cd7c68b2b45fed68
+
+
+11) riavviare apache2
 
     apache2ctl restart
