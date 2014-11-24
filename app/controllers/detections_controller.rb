@@ -142,6 +142,11 @@ class DetectionsController < ApplicationController
           @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
         else
           @detection_name = params[:detection_name]
+          @detection = Detection.where('product_id = ? and name = ?', "#{@product.id}", "#{@detection_name}").take
+          if !@detection.nil?
+            @msg.push("4 ** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}")
+            @error = true
+          end
         end
         @detection = Detection.new(params[:detection])
         @detection.name = @detection_name 
@@ -153,6 +158,7 @@ class DetectionsController < ApplicationController
     # 1 prodotto/versione non trovato
     # 2 importazione non riuscita
     # 3 errori nel rilevamento
+    # 4 nome rilevamento duplicato
     # 5 impossibile eseguire il controllo
     # 6 KO sul controllo
     # 7 file licenses.xml non ricevuto
