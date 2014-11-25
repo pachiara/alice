@@ -113,91 +113,115 @@ class DetectionsController < ApplicationController
 
   # POST /detections/remote_check
   # API 
-  def remote_check
+  def remote_detect
     # parametri
     # input: 
     # 1 - nome/sigla prodotto
     # 2 - versione
-    # 3 - file delle licenze
-    # 4 - nome rilevamento (facoltativo se non esiste lo creo "remote+time")
+    # 3 - nome rilevamento (facoltativo default "remote+time")
+    # 4 - file delle licenze
     # output:
-    # 1 - msg
-    # 2 - nome
-    # 3 - versione
-    @msg     = []
-    @error   = false
+    # 0 ok rilevamento acquisito 
+    # 1 prodotto/versione non trovato
+    # 2 importazione non riuscita
+    # 3 errori nel rilevamento
+    # 4 nome rilevamento duplicato
+    # 7 file licenses.xml non ricevuto
     @name    = params[:product_name]
     @version = params[:product_version]
+    # Controllo parametri product_name e product_version
     @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
     if @product.nil?
-      # TODO se il prodotto esiste ma la versione non esiste, crearla
-      @msg.push("1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}")
-      @error = true
-    else
-      if params[:detection].nil? || !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
-        @msg.push("7 ** Errore ** File licenses.xml non ricevuto - prodotto: #{@name} versione: #{@version}")
-        @error = true
+      @result = "1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"
+    end
+    # Controllo parametro detection_name
+    if @result.nil?
+      if params[:detection_name].nil?
+        @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
+      else
+        @detection_name = params[:detection_name]
+      end
+      if !(Detection.where('product_id = ? and name = ?', "#{@product.id}", "#{@detection_name}").take).nil?
+        @result = "4 ** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"
+      end
+    end
+    # Controllo parametro detection
+    if @result.nil?
+      if params[:detection].nil? || 
+         !params[:detection].is_a?(ActionController::Parameters) ||
+         params[:detection][:xml].nil? ||
+         !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
+        @result = "7 ** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
       else  
-        if params[:detection_name].nil?
-          @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
-        else
-          @detection_name = params[:detection_name]
-          @detection = Detection.where('product_id = ? and name = ?', "#{@product.id}", "#{@detection_name}").take
-          if !@detection.nil?
-            @msg.push("4 ** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}")
-            @error = true
-          end
-        end
         @detection = Detection.new(params[:detection])
         @detection.name = @detection_name 
         @detection.product_id = @product.id
       end
     end
-    # messaggi di errore:
-    # 0 controllo ok
-    # 1 prodotto/versione non trovato
-    # 2 importazione non riuscita
-    # 3 errori nel rilevamento
-    # 4 nome rilevamento duplicato
-    # 5 impossibile eseguire il controllo
-    # 6 KO sul controllo
-    # 7 file licenses.xml non ricevuto
+
     respond_to do |format|
-      if !@error 
+      if @result.nil? 
         # Registro il rilevamento
         if @detection.save
           # Valido l'acquisizione
           @detection.validate_acquire
           if @detection.errors.full_messages.length > 0
-            @msg.push("3 ** Errore ** Errori nel rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}")
+            @result = "3 ** Errore ** Errori nel rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}"
           else 
             # Acquisisco il rilevamento
             @detection.acquire
             # Modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
-            # Eseguo il check del prodotto
-            if @product.precheck 
-              @product.analyze_rules
-              if @product.errors.full_messages.length > 0
-                @msg.push("6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}")
-              else
-                @msg.push("0 ** OK ** Controllo ok prodotto: #{@name} versione: #{@version}")
-              end
-              # Aggiorno stato del prodotto
-              @product.update_attributes(checked_at: Time.now)
-            else
-              @msg.push("5 ** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}")
-              # Aggiorno stato del prodotto
-              @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
-            end
+            @result = "0 ** OK ** Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
           end
         else
-          @msg.push("2 ** Errore ** Importazione non riuscita - prodotto: #{@name} versione: #{@version}")
+          @result = "2 ** Errore ** Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
         end
       end
-      format.html { render json: @msg }
-      format.json { render json: @msg }
+      format.html { render json: @result }
+      format.json { render json: @result }
     end
   end
+
+
+  # POST /detections/remote_detect
+  # API 
+  def remote_check
+    # parametri
+    # input: 
+    # 1 - nome/sigla prodotto
+    # 2 - versione
+    # output:
+    # 0 controllo ok
+    # 1 prodotto/versione non trovato
+    # 5 impossibile eseguire il controllo
+    # 6 KO sul controllo
+    @name    = params[:product_name]
+    @version = params[:product_version]
+    @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
+    if @product.nil?
+      @result = "1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"
+    else
+      if @product.precheck 
+        @product.analyze_rules
+        if @product.errors.full_messages.length > 0
+          @result = "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"
+        else
+          @result = "0 ** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"
+        end
+        # Aggiorno stato del prodotto
+        @product.update_attributes(checked_at: Time.now)
+      else
+        @result = "5 ** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"
+        # Aggiorno stato del prodotto
+        @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
+      end
+    end
+    respond_to do |format|
+      format.html { render json: @result }
+      format.json { render json: @result }
+    end
+  end
+
 
 end
