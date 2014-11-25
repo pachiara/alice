@@ -78,7 +78,7 @@ rbenv rehash
     bundle exec rake db:setup RAILS_ENV=production
     bundle exec rake tmp:clear
     bundle exec rake assets:clean
-    bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+    RAILS_ENV=production bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
 
 9) Apache + Passenger
 
