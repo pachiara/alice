@@ -124,15 +124,17 @@ class DetectionsController < ApplicationController
     # 0 ok rilevamento acquisito 
     # 1 prodotto/versione non trovato
     # 2 importazione non riuscita
-    # 3 errori nel rilevamento
+    # 3 errori sui componenti del rilevamento
     # 4 nome rilevamento duplicato
+    # 5 file licenses.xml vuoto
     # 7 file licenses.xml non ricevuto
     @name    = params[:product_name]
     @version = params[:product_version]
     # Controllo parametri product_name e product_version
     @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
     if @product.nil?
-      @result = "1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"
+      @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
+         "msg" => "** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"}
     end
     # Controllo parametro detection_name
     if @result.nil?
@@ -142,7 +144,8 @@ class DetectionsController < ApplicationController
         @detection_name = params[:detection_name]
       end
       if !(Detection.where('product_id = ? and name = ?', "#{@product.id}", "#{@detection_name}").take).nil?
-        @result = "4 ** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"
+        @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+           "msg" => "** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
       end
     end
     # Controllo parametro detection
@@ -151,7 +154,8 @@ class DetectionsController < ApplicationController
          !params[:detection].is_a?(ActionController::Parameters) ||
          params[:detection][:xml].nil? ||
          !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
-        @result = "7 ** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
+        @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+           "msg" => "** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
       else  
         @detection = Detection.new(params[:detection])
         @detection.name = @detection_name 
@@ -166,16 +170,24 @@ class DetectionsController < ApplicationController
           # Valido l'acquisizione
           @detection.validate_acquire
           if @detection.errors.full_messages.length > 0
-            @result = "3 ** Errore ** Errori nel rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}"
+            if @detection.errors.full_messages[0].include? "Nessun componente"
+              @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+                 "msg" => "** Errore ** File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+            else  
+              @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+                 "msg" => "** Errore ** Errori sui componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}"}
+            end
           else 
             # Acquisisco il rilevamento
             @detection.acquire
             # Modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
-            @result = "0 ** OK ** Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
+            @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+               "msg" => "** OK ** Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
           end
         else
-          @result = "2 ** Errore ** Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"
+          @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+             "msg" => "** Errore ** Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
         end
       end
       format.html { render json: @result }
@@ -200,19 +212,23 @@ class DetectionsController < ApplicationController
     @version = params[:product_version]
     @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
     if @product.nil?
-      @result = "1 ** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"
+      @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
+         "msg" => "** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"}
     else
       if @product.precheck 
         @product.analyze_rules
         if @product.errors.full_messages.length > 0
-          @result = "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"
+          @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
+             "msg" => "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"}
         else
-          @result = "0 ** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"
+          @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
+             "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"}
         end
         # Aggiorno stato del prodotto
         @product.update_attributes(checked_at: Time.now)
       else
-        @result = "5 ** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"
+        @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
+           "msg" => "** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"}
         # Aggiorno stato del prodotto
         @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
       end
@@ -220,6 +236,7 @@ class DetectionsController < ApplicationController
     respond_to do |format|
       format.html { render json: @result }
       format.json { render json: @result }
+      format.xml { render xml: @result }
     end
   end
 
