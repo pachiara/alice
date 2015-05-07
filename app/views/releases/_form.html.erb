@@ -1,41 +1,50 @@
-<%= simple_form_for(@product) do |f| %>
+<%= simple_form_for(@release) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-group">
     <div class="row">
-      <%= f.input :name, :wrapper_html => { :class => "col-md-3" } %>
-      <%= f.input :title, :wrapper_html => { :class => "col-md-5" } %>
-      <%= f.association :use, label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
+      <div class="col-md-3">
+        <div class="form-group string">
+          <label class="string control-label">
+            <%= t('activerecord.attributes.product.name_long') %>
+          </label>
+          <div>
+            <%= @release.product.name %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group string">
+          <label class="string control-label">
+            <%= t('activerecord.attributes.product.title') %>
+          </label>
+          <div>
+            <%= @release.product.title %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group string">
+          <label class="string control-label">
+            <%= t('activerecord.attributes.product.use') %>
+          </label>
+          <div>
+            <%= @release.product.use.description %>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="form-group string">
-          <label class="string control-label">
-            <%= t('activerecord.attributes.product.version') %>
-          </label>
-          <div>
-            <%= @product.releases.last.version_name %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group string">
-          <label class="string control-label">
-            <%= t('activerecord.attributes.release.license') %>
-          </label>
-          <div>
-            <%= @product.releases.last.license.description %>
-          </div>
-        </div>
-      </div>
+      <%= f.input :version_name, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.association :license, label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
       <div class="col-md-2">
        <div class="form-group string">
          <label class="string control-label">
            <%= t('activerecord.attributes.release.checked_at') %>
           </label>
           <div>
-            <% if !@product.releases.last.checked_at.nil? %>
-              <span class="label label-primary"><%= l @product.releases.last.checked_at %></span>
+            <% if !@release.checked_at.nil? %>
+              <span class="label label-primary"><%= l @release.checked_at %></span>
             <% end %>
           </div>
         </div>
@@ -46,10 +55,10 @@
           <%= t('activerecord.attributes.release.check_result') %>
           </label>
           <div>
-            <% if @product.releases.last.check_result.nil? %>
+            <% if @release.check_result.nil? %>
               <span class="label label-warning">NC</span>
             <% else %>
-              <% if @product.releases.last.check_result %>
+              <% if @release.check_result %>
                 <span class="label label-success">OK</span>
               <% else %>
                 <span class="label label-danger">KO</span>
@@ -60,19 +69,18 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
+      <%= f.input :sequential_number, input_html: { :type => "number", :step => "0.001"}, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :groupage, :wrapper_html => { :class => "col-md-3" } %>
+      <div class="col-md-6">
         <div class="form-group string">
           <label class="string control-label">
-            <%= t('activerecord.attributes.product.groupage') %>
+            <%= t('activerecord.attributes.release.compatible_license_id') %>
           </label>
           <div>
-            <%= @product.releases.last.groupage %>
+            <%= License.find(@release.compatible_license_id).description %>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
     </div>
     <div class="row">
       <%= f.input :notes, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
@@ -83,8 +91,8 @@
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
       <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
     <% end %>
-    <%= link_to products_path, :class => "btn btn-default" do %>
+    <%= link_to (releases_path + "?product_id=#{@release.product.id}"), :class => "btn btn-default" do %>
       <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
-    <% end %> 
+    <% end %>
   </div>
 <% end %>

@@ -1,69 +1,100 @@
 <div class="table-responsive"> 
-<%= render :partial => "search_product_groupage" %>
-<%= render :partial => "search_product" %>
-<%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
-<% if @order_search == 'name'     then class_name     = 'btn btn-primary btn-block btn-sm' else class_name     = 'btn btn-default btn-block btn-sm' end %>
-<% if @order_search == 'groupage' then class_groupage = 'btn btn-primary btn-block btn-sm' else class_groupage = 'btn btn-default btn-block btn-sm' end %>
-
-<%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
-<table class="table table-striped table-condensed table-bordered">
-<thead>
-  <tr>
-    <th><%= button_tag(:class => class_name, :type => 'submit', :name => 'order_search', :value => 'name') do  %>
-    	<b><%= t('activerecord.attributes.product.name')%></b><% if !@down_name.nil? %><% if @down_name %><span class="caret"><% else %><span class="caret-up"><% end %></span>
-    <% end %><% end %> </th>
-    <th><%= t('activerecord.attributes.product.version') %></th>
-    <th><%= t('activerecord.attributes.product.title') %></th>
-    <th><%= button_tag(:class => class_groupage, :type => 'submit', :name => 'order_search', :value => 'groupage') do  %>
-    	<b><%= t('activerecord.attributes.product.groupage')%></b><% if !@down_groupage.nil? %><% if @down_groupage %><span class="caret"><% else %><span class="caret-up"><% end %></span>
-    <% end %><% end %> </th>
-    <th><%= t('activerecord.attributes.product.use') %></th>
-    <th><%= t('activerecord.attributes.product.checked_at') %></th>
-    <th><%= t('activerecord.attributes.product.result') %></th>
-    <th><%= t('actions.actions') %></th>
-  </tr>
-</thead>
-<tbody>
-<% @products.each do |product| %>
-  <tr>
-    <td><%= product.name %></td>
-    <td><%= product.version %></td>
-    <td><%= product.title %></td>
-    <td><%= unless product.groupage.nil?; product.groupage; end %></td>
-    <td><%= unless product.use.nil?; product.use.description; end %></td>
-    <td><% if !product.checked_at.nil? %><%= l product.checked_at %><% end %></td>
-    <td>
-      <% if product.result.nil? %>
-        <span class="label label-warning">NC</span>
-        <% else %>
-          <% if product.result? %>
-            <span class="label label-success">OK</span>
-        	<% else %>
-    	     <span class="label label-danger">KO</span>
-          <% end %>
-    	<% end %>
-    </td>
-    <td>
-      <div class="btn-group">
-    	<%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'), product, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
-    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_product_path(product), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-        <%= link_to raw('<span class="glyphicon glyphicon-list"></span>'), product_ties_show_path(product), :class => "btn btn-default", :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
-        <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'), product_check_path(product), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
-        <%= link_to raw('<span class="glyphicon glyphicon-search"></span>'), detections_path(:product_id => product.id), :class => "btn btn-default", :title => t('activerecord.models.detections'), :alt => t('activerecord.models.detections') %>
-    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), product, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
-      </div>
-    </td>
-  </tr>
-<% end %>
-</tbody>
-</table>
+  <%= render :partial => "search_product_groupage" %>
+  <%= render :partial => "search_product" %>
+  <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+  <% if @order_search == 'name'     then class_name     = 'btn btn-primary btn-block btn-sm'
+     else class_name     = 'btn btn-default btn-block btn-sm' end %>
+  <% if @order_search == 'groupage' then class_groupage = 'btn btn-primary btn-block btn-sm'
+     else class_groupage = 'btn btn-default btn-block btn-sm' end %>
+  
+  <%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
+    <table class="table table-striped table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>
+            <%= button_tag(:class => class_name, :type => 'submit', :name => 'order_search', :value => 'name') do  %>
+              <b><%= t('activerecord.attributes.product.name')%></b>
+              <% if !@down_name.nil? %>
+                <% if @down_name %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th><%= t('activerecord.attributes.product.title') %></th>
+          <th>
+            <%= button_tag(:class => class_groupage, :type => 'submit', :name => 'order_search', :value => 'groupage') do  %>
+            	<b><%= t('activerecord.attributes.release.groupage')%></b>
+              <% if !@down_groupage.nil? %>
+                <% if @down_groupage %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th><%= t('activerecord.attributes.product.use') %></th>
+          <th><%= t('activerecord.attributes.product.version') %></th>
+          <th><%= t('activerecord.attributes.release.check_result') %></th>
+          <th><%= t('activerecord.attributes.release.checked_at') %></th>
+          <th><%= t('actions.actions') %></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.title %></td>
+          <td><%= unless product.releases.last.groupage.nil?; product.releases.last.groupage; end %></td>
+          <td><%= unless product.use.nil?; product.use.description; end %></td>
+          <td><%= product.releases.last.version_name %></td>
+          <td>
+            <% if product.releases.last.check_result.nil? %>
+              <span class="label label-warning">NC</span>
+              <% else %>
+                <% if product.releases.last.check_result? %>
+                  <span class="label label-success">OK</span>
+              	<% else %>
+          	     <span class="label label-danger">KO</span>
+                <% end %>
+          	<% end %>
+          </td>
+          <td><% if !product.releases.last.checked_at.nil? %><%= l product.releases.last.checked_at %><% end %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to raw('<span class="glyphicon glyphicon-tags"></span>'),
+               releases_path(:product_id => product.id), :class => "btn btn-default",
+               :title => t('activerecord.models.releases'), :alt => t('activerecord.models.releases') %>
+            	<%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'),
+            	 product, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
+            	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'),
+            	 edit_product_path(product), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+              <%= link_to raw('<span class="glyphicon glyphicon-list"></span>'),
+               product_ties_show_path(product), :class => "btn btn-default", :title => t('activerecord.models.components'), 
+               :alt => t('activerecord.models.components') %>
+              <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'),
+               product_check_path(product), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
+            	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'),
+            	 product, method: :delete, data: { confirm: t('actions.are_you_sure') }, 
+            	 :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>
-<% end %>
+
 <br />
+
 <%= link_to new_product_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
- 
 <%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
 <% end %> 

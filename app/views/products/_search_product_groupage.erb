@@ -1,6 +1,6 @@
 <%= form_tag @search_form_path, :method => 'get', :class => "form-group pull-right form-inline", :role => "form" do %>	
   <div class="input-group-sm">
-    <%= text_field_tag :product_groupage, params[:product_groupage], :class => "pull-left form-control", :placeholder => t('activerecord.attributes.product.groupage'), :type => "search" %>
+    <%= text_field_tag :groupage, params[:groupage], :class => "pull-left form-control", :placeholder => t('activerecord.attributes.release.groupage'), :type => "search" %>
     <span class="pull-left input-group-btn">
       <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span> </button>
     </span>

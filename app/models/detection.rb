@@ -1,13 +1,13 @@
 class Detection < ActiveRecord::Base
-  attr_accessible :name, :product_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
+  attr_accessible :name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
   
   has_attached_file :xml
-  belongs_to :product
+  belongs_to :release
   has_many :detected_components, :dependent => :destroy
   
   validates_presence_of :name
   validates_presence_of :xml, :message => ''
-  validates :name, :uniqueness => {:scope => [:product_id]}
+  validates :name, :uniqueness => true
   validates_attachment_content_type :xml, :content_type => "text/xml"
   before_save :parse_file
   

@@ -75,7 +75,7 @@ class TiesController < ApplicationController
     @title = t('actions.show') + " " + t('activerecord.models.ties')
         
     @product = Product.find(params[:product_id])
-    @components = @product.components.order('name, version').paginate(page: params[:page], per_page: 10)   
+    @components = @product.releases.last.components.order('name, version').paginate(page: params[:page], per_page: 10)   
 
     respond_to do |format|
       format.html # show.html.erb

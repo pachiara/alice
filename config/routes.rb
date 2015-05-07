@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 
   resources :categories
 
+  resources :releases
+
   get "home/index"
 
   devise_for :admins

@@ -8,7 +8,7 @@ class Component < ActiveRecord::Base
   belongs_to :use
   belongs_to :license
     
-  has_and_belongs_to_many :products
+  has_and_belongs_to_many :releases
   
   def self.search(name, page, per_page = 10)
    order('name, version').where('name LIKE ?', "%#{name}%").paginate(page: page, per_page: per_page)   

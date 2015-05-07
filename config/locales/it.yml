@@ -244,6 +244,8 @@ it:
       rule_entry: "Voce della regola"
       rule_entries: "Voci delle regole"
       user: "Utente"
+      release: "Versione"
+      releases: "Versioni"
     
     attributes:
       license:
@@ -269,20 +271,21 @@ it:
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"
-        version:      "Versione"
+        version:      "Ultima versione"
         title:        "Titolo"    
         description:  "Descrizione"
-        license:      "Licenza"
         use:          "Uso"           
-        checked_at:   "Data controllo"
-        result:       "Esito"
         notes:        "Note"
-        license_id:   "Licenza prodotto"
+      release:
+        version_name: "Versione"
+        sequential_number: "Ordinamento"
+        sequential_number_short: "Ord."
+        license:      "Licenza"
+        checked_at:   "Data controllo"
+        check_result: "Esito"
+        notes:        "Note"
         compatible_license_id: "Licenza compatibilità componenti"
         groupage:     "Gruppo"
-      use:
-        name:         "Nome"
-        description:  "Descrizione"  
       component:
         name:         "Nome"
         version:      "Versione"
@@ -480,6 +483,16 @@ it:
       destroy:
         notice: "Prodotto: eliminazione avvenuta con successo!"
         alert: "Prodotto: errore durante l'eliminazione!"     
+    release:
+      create:
+        notice: "Versione: creazione avvenuta con successo!"
+        alert: "Versione: errore durante la creazione!"
+      update:
+        notice: "Versione: aggiornamento avvenuto con successo!"
+        alert: "Versione: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Versione: eliminazione avvenuta con successo!"
+        alert: "Versione: errore durante l'eliminazione!"
     use:
       create:
         notice: "Uso: creazione avvenuta con successo!"

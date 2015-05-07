@@ -1,8 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
-      <%= t('activerecord.models.product') %>: <b><%= @product.name %></b>
-      <% if !@product.version.blank? %> - Vers. <b><%= @product.version %></b> <% end %> &nbsp; 
+      <%= t('activerecord.models.product') %>: <b><%= @release.product.name %></b> - Vers. <b><%= @release.version_name %></b> &nbsp; 
       <%= t('activerecord.attributes.detection.name') %>: <b><%= Detection.find(params[:detection_id]).name %></b>
     </h3>
   </div>
@@ -58,7 +57,7 @@
 </table>
 </div>
 <br />
- <%= link_to (detections_path + "?product_id=#{Detection.find(params[:detection_id]).product_id}"), :class => "btn btn-default" do %>
+ <%= link_to (detections_path + "?release_id=#{Detection.find(params[:detection_id]).release_id}"), :class => "btn btn-default" do %>
    <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
 

@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @product.name %></b> - Vers. <b><%= @product.version %></b></h3>
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @release.product.name %></b> - Vers. <b><%= @release.version_name %></b></h3>
   </div>
   <div class="panel-body">  	
 <br />
@@ -52,10 +52,10 @@
 </div>
 <br />
 
-<%= link_to new_detection_path(:product_id => params[:product_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn  btn-default" do %>
+<%= link_to new_detection_path(:release_id => params[:release_id]), :title => t('actions.new'), :alt => t('actions.new'), :class => "btn  btn-default" do %>
   <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
- <%= link_to products_path, :class => "btn btn-default" do %>
+ <%= link_to (releases_path + "?product_id=#{Release.find(params[:release_id]).product_id}"), :class => "btn btn-default" do %>
    <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
 </div>
