@@ -5,7 +5,11 @@ class Release < ActiveRecord::Base
   
   has_and_belongs_to_many :components
   belongs_to :product
-  belongs_to :license, :foreign_key => "license_id"
+  belongs_to :license
+  belongs_to :compatible_license, :class_name => "License", :foreign_key => "compatible_license_id"
+  
+  has_and_belongs_to_many :components
+  has_many :detections, :dependent => :destroy
 
   def self.search_release(product_name, groupage, page, per_page = 10)
     Release.joins(:product).order('products.name').where("name LIKE ? and groupage LIKE ?", "%#{product_name}%", "%#{groupage}%").paginate(page: page, per_page: per_page)

@@ -9,12 +9,11 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :name
   
   belongs_to :use
-  belongs_to :license
-  belongs_to :compatible_license, :class_name => "License", :foreign_key => "compatible_license_id"
-  
-  has_and_belongs_to_many :components
-  has_many :detections, :dependent => :destroy
   has_many :releases, :dependent => :destroy
+  
+  def last_release
+    return self.releases.order("sequential_number").last
+  end
   
   def add_relation(component_add = [])
     component_add.each do |component_id|
