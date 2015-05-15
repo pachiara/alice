@@ -74,12 +74,12 @@ class TiesController < ApplicationController
   def show
     @title = t('actions.show') + " " + t('activerecord.models.ties')
         
-    @product = Product.find(params[:product_id])
-    @components = @product.releases.last.components.order('name, version').paginate(page: params[:page], per_page: 10)   
+    @release = Release.find(params[:release_id])
+    @components = @release.components.order('name, version').paginate(page: params[:page], per_page: 10)   
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @product }
+      format.json { render json: @release }
     end
   end
 

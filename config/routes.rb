@@ -24,8 +24,9 @@ Rails.application.routes.draw do
   end
 
   resources :uses
+  resources :products
 
-  resources :products do
+  resources :releases do
     get 'ties/select'
     get 'ties/edit'
     post 'ties/edit'

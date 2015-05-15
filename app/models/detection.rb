@@ -7,7 +7,7 @@ class Detection < ActiveRecord::Base
   
   validates_presence_of :name
   validates_presence_of :xml, :message => ''
-  validates :name, :uniqueness => true
+  validates_uniqueness_of :name, scope: :release_id
   validates_attachment_content_type :xml, :content_type => "text/xml"
   before_save :parse_file
   
@@ -92,7 +92,7 @@ class Detection < ActiveRecord::Base
   end
   
   def acquire
-    p = Product.find(product_id)
+    r = Release.find(release_id)
     detected_components.each do |component|
       if !component.component_id.nil?
         c = Component.find(component.component_id)
@@ -114,7 +114,7 @@ class Detection < ActiveRecord::Base
           c.save
         end
       end
-      p.components.push(c) unless p.components.include?(c)
+      r.components.push(c) unless r.components.include?(c)
     end
     acquired = true
   end

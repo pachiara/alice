@@ -1,6 +1,9 @@
 class MoveDataFromProductsToReleases < ActiveRecord::Migration
   def up
     Product.all.each do |product|
+      if product.version.blank? 
+        product.version = 1.0 
+      end
       Release.create(
         product_id: product.id,
         version_name: product.version,

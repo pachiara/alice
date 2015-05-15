@@ -48,6 +48,13 @@
             <div class="btn-group">
               <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), 
                 edit_release_path(release), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+              <%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'),
+               release, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
+              <%= link_to raw('<span class="glyphicon glyphicon-list"></span>'),
+               release_ties_show_path(release), :class => "btn btn-default", :title => t('activerecord.models.components'), 
+               :alt => t('activerecord.models.components') %>
+              <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'),
+               release_check_path(release), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
               <%= link_to raw('<span class="glyphicon glyphicon-search"></span>'),
                detections_path(:release_id => release.id), :class => "btn btn-default", :title => t('activerecord.models.detections'), 
                :alt => t('activerecord.models.detections') %>
@@ -63,7 +70,7 @@
 </div>
 <br>
 
-<%= link_to new_release_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
+<%= link_to (new_release_path + "?product_id=#{@product.id}"), :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
 <%= link_to products_path, :class => "btn btn-default", :role => "button" do %>

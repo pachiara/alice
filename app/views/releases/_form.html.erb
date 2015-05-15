@@ -1,6 +1,8 @@
 <%= simple_form_for(@release) do |f| %>
   <%= f.error_notification %>
 
+  <%= hidden_field_tag 'product_id', @release.product.id %>
+
   <div class="form-group">
     <div class="row">
       <div class="col-md-3">
@@ -36,7 +38,7 @@
     </div>
     <div class="row">
       <%= f.input :version_name, :wrapper_html => { :class => "col-md-3" } %>
-      <%= f.association :license, label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.association :license, collection: License.all.order('name'), label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
       <div class="col-md-2">
        <div class="form-group string">
          <label class="string control-label">
@@ -77,7 +79,7 @@
             <%= t('activerecord.attributes.release.compatible_license_id') %>
           </label>
           <div>
-            <%= License.find(@release.compatible_license_id).description %>
+            <%= License.find(@release.compatible_license_id).description unless @release.compatible_license_id.nil? %>
           </div>
         </div>
       </div>

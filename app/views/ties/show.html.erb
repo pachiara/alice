@@ -1,12 +1,12 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @product.name %> - v. <%= @product.version %></b></h3>
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @release.product.name %> - v. <%= @release.version_name %></b></h3>
   </div>
   <div class="panel-body">
   	<div class="tree col-md-6">
 	  <ul>
 	  	<li>
-          <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+          <%= link_to @release.product.name+" - v. "+@release.version_name, release_ties_select_path(@release) %>
         </li>
         <ul>
         <% @components.each do |component| %> 
@@ -22,6 +22,6 @@
   	</div>
   </div>  
 </div>  
-<%= link_to products_path, :class => "btn btn-default" do %>
+<%= link_to (releases_path + "?product_id=#{Release.find(params[:release_id]).product_id}"), :class => "btn btn-default" do %>
   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>

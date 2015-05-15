@@ -84,7 +84,7 @@ class DetectionsController < ApplicationController
     @detection.destroy
 
     respond_to do |format|
-      format.html { redirect_to(detections_path + "?product_id=#{@detection.product_id}") }
+      format.html { redirect_to(detections_path + "?product_id=#{@detection.release_id}") }
       format.json { head :no_content }
     end
   end
@@ -107,7 +107,7 @@ class DetectionsController < ApplicationController
     
     respond_to do |format|
       @detection.update_attributes(acquired: true)
-      format.html { redirect_to(detections_path + "?product_id=#{@detection.product_id}", notice: t('flash.detection.update.notice')) }
+      format.html { redirect_to(detections_path + "?release_id=#{@detection.release_id}", notice: t('flash.detection.update.notice')) }
     end
   end
 

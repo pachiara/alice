@@ -1,11 +1,11 @@
 <%= form_for @detection, url: {action: 'acquire'}, html: {method: "post"} do |f| %>
 
-  <%= hidden_field_tag 'product_id', @detection.product.id %>
+  <%= hidden_field_tag 'product_id', @detection.release.id %>
   <%= hidden_field_tag 'detection_id', @detection.id %>
 
   <button class="btn btn-lg btn-block btn-primary disabled" type="button">
-  	<%= t('activerecord.attributes.product.name_long') %>: <%= @detection.product.name %>
-    - Vers. <%= @detection.product.version %>
+  	<%= t('activerecord.attributes.product.name_long') %>: <%= @detection.release.product.name %>
+    - Vers. <%= @detection.release.version_name %>
   </button>
   
   <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detection.name %></h4>
@@ -27,7 +27,7 @@
       <%= button_tag(type: 'submit', disabled: (@detection.errors.full_messages.length > 0), class: "btn btn-primary") do %>
         <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
       <% end %>
-      <%= link_to (detections_path + "?product_id=#{@detection.product_id}"), :class => "btn btn-default" do %>
+      <%= link_to (detections_path + "?release_id=#{@detection.release_id}"), :class => "btn btn-default" do %>
           <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
       <% end %>
     </div>

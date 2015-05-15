@@ -7,70 +7,73 @@
       <%= f.input :title, :wrapper_html => { :class => "col-md-5" } %>
       <%= f.association :use, label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
     </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group string">
-          <label class="string control-label">
-            <%= t('activerecord.attributes.product.version') %>
-          </label>
-          <div>
-            <%= @product.releases.last.version_name %>
+    <% if @product.last_release != nil %>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group string">
+            <label class="string control-label">
+              <%= t('activerecord.attributes.product.version') %>
+            </label>
+            <div>
+              <%= @product.last_release.version_name %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group string">
-          <label class="string control-label">
-            <%= t('activerecord.attributes.release.license') %>
-          </label>
-          <div>
-            <%= @product.releases.last.license.description %>
+        <div class="col-md-3">
+          <div class="form-group string">
+            <label class="string control-label">
+              <%= t('activerecord.attributes.release.license') %>
+            </label>
+            <div>
+              <%= @product.last_release.license.description %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-2">
-       <div class="form-group string">
-         <label class="string control-label">
-           <%= t('activerecord.attributes.release.checked_at') %>
-          </label>
-          <div>
-            <% if !@product.releases.last.checked_at.nil? %>
-              <span class="label label-primary"><%= l @product.releases.last.checked_at %></span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1">
-       <div class="form-group string">
-         <label class="string control-label">
-          <%= t('activerecord.attributes.release.check_result') %>
-          </label>
-          <div>
-            <% if @product.releases.last.check_result.nil? %>
-              <span class="label label-warning">NC</span>
-            <% else %>
-              <% if @product.releases.last.check_result %>
-                <span class="label label-success">OK</span>
-              <% else %>
-                <span class="label label-danger">KO</span>
+        <div class="col-md-2">
+         <div class="form-group string">
+           <label class="string control-label">
+             <%= t('activerecord.attributes.release.checked_at') %>
+            </label>
+            <div>
+              <% if !@product.last_release.checked_at.nil? %>
+                <span class="label label-primary"><%= l @product.last_release.checked_at %></span>
               <% end %>
-            <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+         <div class="form-group string">
+           <label class="string control-label">
+            <%= t('activerecord.attributes.release.check_result') %>
+            </label>
+            <div>
+              <% if @product.last_release.check_result.nil? %>
+                <span class="label label-warning">NC</span>
+              <% else %>
+                <% if @product.last_release.check_result %>
+                  <span class="label label-success">OK</span>
+                <% else %>
+                  <span class="label label-danger">KO</span>
+                <% end %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group string">
-          <label class="string control-label">
-            <%= t('activerecord.attributes.product.groupage') %>
-          </label>
-          <div>
-            <%= @product.releases.last.groupage %>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group string">
+            <label class="string control-label">
+              <%= t('activerecord.attributes.product.groupage') %>
+            </label>
+            <div>
+              <%= @product.last_release.groupage %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
+    
     <div class="row">
       <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
     </div>
