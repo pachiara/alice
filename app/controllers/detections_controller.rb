@@ -84,7 +84,7 @@ class DetectionsController < ApplicationController
     @detection.destroy
 
     respond_to do |format|
-      format.html { redirect_to(detections_path + "?product_id=#{@detection.release_id}") }
+      format.html { redirect_to(detections_path + "?release_id=#{@detection.release_id}") }
       format.json { head :no_content }
     end
   end

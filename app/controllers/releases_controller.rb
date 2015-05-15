@@ -136,9 +136,10 @@ class ReleasesController < ApplicationController
   # DELETE /releases/1
   # DELETE /releases/1.json
   def destroy
+    @release = Release.find(params[:id])
     @release.destroy
     respond_to do |format|
-      format.html { redirect_to(releases_path + "?release_id=#{@release.release.id}", notice: t('flash.release.destroy.notice')) }
+      format.html { redirect_to(releases_path + "?product_id=#{@release.product.id}", notice: t('flash.release.destroy.notice')) }
 
       format.json { head :no_content }
     end
