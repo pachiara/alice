@@ -122,7 +122,7 @@ class DetectionsController < ApplicationController
     # 4 - file delle licenze
     # output:
     # 0 ok rilevamento acquisito 
-    # 1 prodotto/versione non trovato
+    # 1 prodotto non trovato
     # 2 importazione non riuscita
     # 3 errori sui componenti del rilevamento
     # 4 nome rilevamento duplicato
@@ -130,11 +130,27 @@ class DetectionsController < ApplicationController
     # 7 file licenses.xml non ricevuto
     @name    = params[:product_name]
     @version = params[:product_version]
-    # Controllo parametri product_name e product_version
-    @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
+    # Controllo parametro product_name
+    @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
-         "msg" => "** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"}
+         "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
+    end
+    # Controllo parametro product_version
+    @release = Release.where('product_id = ? and version_name = ?', "#{@product.id}", "#{@version}").take
+    if @release.nil?
+      @release = Release.new()
+      @release.product_id = @product.id
+      @release.version_name = @version
+      @release.license_id = License.where('name = "lispa"').take.id
+      if Release.where('product_id = ?', "#{@product.id}").empty?
+        @release.sequential_number = 1.0
+      else
+        @release.sequential_number = Release.where('product_id = ?', "#{@product.id}").order('sequential_number').last.sequential_number + 1
+      end
+      @release.save
+    else
+      @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
     end
     # Controllo parametro detection_name
     if @result.nil?
@@ -143,7 +159,7 @@ class DetectionsController < ApplicationController
       else
         @detection_name = params[:detection_name]
       end
-      if !(Detection.where('product_id = ? and name = ?', "#{@product.id}", "#{@detection_name}").take).nil?
+      if !@release.id.nil? and !(Detection.where('release_id = ? and name = ?', "#{@release.id}", "#{@detection_name}").take).nil?
         @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
            "msg" => "** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
       end
@@ -159,7 +175,7 @@ class DetectionsController < ApplicationController
       else  
         @detection = Detection.new(params[:detection])
         @detection.name = @detection_name 
-        @detection.product_id = @product.id
+        @detection.release_id = @release.id
       end
     end
 
@@ -205,32 +221,40 @@ class DetectionsController < ApplicationController
     # 2 - versione
     # output:
     # 0 controllo ok
-    # 1 prodotto/versione non trovato
+    # 1 prodotto non trovato
+    # 2 versione non trovata
     # 5 impossibile eseguire il controllo
     # 6 KO sul controllo
     @name    = params[:product_name]
     @version = params[:product_version]
-    @product = Product.where('name LIKE ? and version LIKE ?', "%#{@name}%", "%#{@version}%").take
+    @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
-         "msg" => "** Errore ** Prodotto/versione non trovato - prodotto: #{@name} versione: #{@version}"}
+         "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
     else
-      if @product.precheck 
-        @product.analyze_rules
-        if @product.errors.full_messages.length > 0
-          @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
-             "msg" => "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"}
-        else
-          @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
-             "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"}
-        end
-        # Aggiorno stato del prodotto
-        @product.update_attributes(checked_at: Time.now)
+      # Controllo parametro product_version
+      @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "%#{@version}%").take
+      if @release.nil?
+        @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}",
+           "msg" => "** Errore ** Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}"}
       else
-        @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
-           "msg" => "** Errore ** Prodotto: #{@name} versione: #{@version} - #{@product.errors.full_messages.last}"}
-        # Aggiorno stato del prodotto
-        @product.update_attributes(result: nil, checked_at: nil, compatible_license_id: nil)
+        if @release.precheck 
+          @release.analyze_rules
+          if @release.errors.full_messages.length > 0
+            @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
+               "msg" => "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@release.errors.full_messages.last}"}
+          else
+            @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
+               "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"}
+          end
+          # Aggiorno stato del prodotto
+          @release.update_attributes(checked_at: Time.now)
+        else
+          @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
+             "msg" => "** Errore ** Prodotto: #{@name} versione: #{@version} - #{@release.errors.full_messages.last}"}
+          # Aggiorno stato del prodotto
+          @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
+        end
       end
     end
     respond_to do |format|

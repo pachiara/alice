@@ -45,7 +45,7 @@ class CheckRulebook < Rulebook
       [Component,:comp ] do |v|
         seeking_license = v[:comp].license.similar_license_id.nil? ? license = v[:comp].license : License.find(v[:comp].license.similar_license_id)
         if !Floss_slide.include?(seeking_license)
-            v[:rel].result = nil
+            v[:rel].check_result = nil
             error_string = "impossibile verificare compatibilità. " +
                            "Mancano regole per la licenza #{v[:comp].license.name}."
             v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
@@ -56,7 +56,7 @@ class CheckRulebook < Rulebook
           error_string = "licenza #{v[:comp].license.name} " +
                          "incompatibile con licenza: #{v[:rel].compatible_license.name}"
           if (v[:rel].product.use.name == "DIS") # or v[:rel].use.name == "SUE")  
-            v[:rel].result = false
+            v[:rel].check_result = false
             v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
           else
             v[:rel].addWarning("Componente #{v[:comp].name}:", "#{error_string}")
@@ -85,7 +85,7 @@ class CheckRulebook < Rulebook
         if v[:rel].product.use.name == "DIS" and 
            v[:rel].compatible_license.license_type.protection_level > 1 and
            v[:rel].license.license_type.protection_level < 0
-              v[:rel].result = false
+              v[:rel].check_result = false
               v[:rel].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
         end
       end
@@ -96,7 +96,7 @@ class CheckRulebook < Rulebook
         if v[:rel].product.use.name == "SUE" and
            v[:rel].compatible_license.license_type.protection_level > 2 and
            v[:rel].license.license_type.protection_level < 0
-              v[:rel].result = false
+              v[:rel].check_result = false
               v[:rel].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
         end
       end
