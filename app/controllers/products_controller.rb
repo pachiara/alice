@@ -25,9 +25,9 @@ class ProductsController < ApplicationController
         session[:down_name] = @down_name      
       end 
       if @down_name 
-        @order = "name DESC, version DESC"
+        @order = "name DESC"
       else
-        @order = "name ASC, version ASC"
+        @order = "name ASC"
       end
       when "groupage"
       if session[:down_groupage].nil?
@@ -55,7 +55,7 @@ class ProductsController < ApplicationController
     @search_form_path = products_path
     
     if params[:order_search].nil? || params[:order_search].empty? then
-      @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
+      @products = Product.search(params[:product_name], params[:groupage], params[:page])
     else
       @products = Product.search_order(order_search, params[:page])
     end

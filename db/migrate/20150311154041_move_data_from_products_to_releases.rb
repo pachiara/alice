@@ -12,7 +12,6 @@ class MoveDataFromProductsToReleases < ActiveRecord::Migration
         check_result: product.result,
         checked_at: product.checked_at,
         compatible_license_id: product.compatible_license_id,
-        groupage: product.groupage
       )
     end
   end

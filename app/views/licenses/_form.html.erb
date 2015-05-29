@@ -11,7 +11,10 @@
   <div class="row">
     <%= f.association :license_type, label_method: :description, :wrapper_html => { :class => "col-md-4" }  %>
     <%= f.association :category, :wrapper_html => { :class => "col-md-4" } %>
-    <%= f.input :flag_osi, :wrapper_html => { :class => "col-md-2" } %>
+    <div class="col-md-2">
+      <div><%= f.label :flag_osi %></div>
+      <%= f.input_field :flag_osi, as: :boolean %>
+    </div>
   </div>
   <div class="row">
     <%= f.input :similar_license_id, collection: License.all.order('description'), value_method: :id, label_method: :description, :wrapper_html => { :class => "col-md-5" } %>

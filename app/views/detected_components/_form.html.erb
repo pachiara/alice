@@ -1,4 +1,4 @@
-<%= simple_form_for(@detected_component, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+<%= simple_form_for(@detected_component) do |f| %>
   <%= f.error_notification %>
 
   <%= hidden_field_tag 'detection_id', @detected_component.detection.id %>
@@ -25,13 +25,21 @@
       <dt><%= t('activerecord.attributes.detected_component.license_version') %></dt>
       <dd><%= @detected_component.license_version %></dd>
     </dl>
-    <% if @detected_component.component_id.nil? %>
-    <div class="col-md-12">
-      <%= f.input :license_id, collection: License.all.order('description'), value_method: :id, label_method: :description, :wrapper_html => { :class => "col-md-6" } %>
-    </div>
-    <div class="row col-md-6">
-      <%= f.input :own %>
-    </div>
+   </div>
+   <% if @detected_component.component_id.nil? %>
+     <div class="form-group">
+       <div class="row">
+         <div class="col-md-6">
+           <%= f.input :license_id, collection: License.all.order('description'), value_method: :id, label_method: :description %>
+         </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+           <%= f.label :own %>
+           <%= f.input_field :own, as: :boolean %>
+         </div>
+       </div>
+     </div>
     <% else %>
       <dl class="dl-horizontal">
         <dt><%= t('activerecord.attributes.detected_component.license_id') %></dt>
@@ -40,7 +48,6 @@
         <dd><%= @detected_component.own %></dd>
       </dl>
     <% end %>
-  </div>
 
   <div class="form-group">
   	<div class="col-md-6">

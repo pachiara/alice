@@ -276,6 +276,7 @@ it:
         description:  "Descrizione"
         use:          "Uso"           
         notes:        "Note"
+        groupage:     "Gruppo"
       release:
         version_name: "Versione"
         sequential_number: "Ordinamento"
@@ -285,7 +286,6 @@ it:
         check_result: "Esito"
         notes:        "Note"
         compatible_license_id: "Licenza compatibilità componenti"
-        groupage:     "Gruppo"
       component:
         name:         "Nome"
         version:      "Versione"

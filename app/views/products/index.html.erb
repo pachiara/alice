@@ -26,7 +26,7 @@
           <th><%= t('activerecord.attributes.product.title') %></th>
           <th>
             <%= button_tag(:class => class_groupage, :type => 'submit', :name => 'order_search', :value => 'groupage') do  %>
-            	<b><%= t('activerecord.attributes.release.groupage')%></b>
+            	<b><%= t('activerecord.attributes.product.groupage')%></b>
               <% if !@down_groupage.nil? %>
                 <% if @down_groupage %>
                   <span class="caret"></span>
@@ -56,7 +56,7 @@
             <td></td>
             <td></td>
           <% else %>
-            <td><%= unless product.last_release.groupage.nil?; product.last_release.groupage; end %></td>
+            <td><%= unless product.groupage.nil?; product.groupage; end %></td>
             <td><%= unless product.use.nil?; product.use.description; end %></td>
             <td><%= product.last_release.version_name %></td>
             <td>

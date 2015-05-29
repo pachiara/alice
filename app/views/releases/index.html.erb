@@ -20,7 +20,6 @@
       <th><%= t('activerecord.attributes.release.license') %></th>
       <th><%= t('activerecord.attributes.release.check_result') %></th>
       <th><%= t('activerecord.attributes.release.checked_at') %></th>
-      <th><%= t('activerecord.attributes.release.groupage')%></th>
       <th><%= t('actions.actions') %></th>
       </tr>
     </thead>
@@ -43,7 +42,6 @@
             <% end %>
           </td>
           <td><% if !release.checked_at.nil? %><%= l release.checked_at %><% end %></td>
-          <td><%= unless release.groupage.nil?; release.groupage; end %></td>
           <td>
             <div class="btn-group">
               <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), 

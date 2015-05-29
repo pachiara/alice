@@ -30,14 +30,25 @@
           });
         });
       </script>
-
-      <%= f.input :result, :wrapper_html => { :class => "col-md-1" } %>
+      <div class="col-md-1">
+        <div><%= f.label :result %></div>
+        <%= f.input_field :result, as: :boolean %>
+      </div>
     </div>
 
     <div class="row">
-      <%= f.input :purchased, :wrapper_html => { :class => "col-md-1" } %>
-      <%= f.input :own, :wrapper_html => { :class => "col-md-1" } %>
-      <%= f.input :leave_out, :wrapper_html => { :class => "col-md-1" } %>
+      <div class="col-md-1">
+        <div><%= f.label :purchased %></div>
+        <%= f.input_field :purchased, as: :boolean %>
+      </div>
+      <div class="col-md-1">
+        <div><%= f.label :own %></div> 
+        <%= f.input_field :own, as: :boolean %>
+      </div>
+      <div class="col-md-1">
+        <div><%= f.label :leave_out %></div> 
+        <%= f.input_field :leave_out, as: :boolean %>
+      </div>
     </div>
     <div class="row">  
       <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>

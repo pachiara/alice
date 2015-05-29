@@ -1,7 +1,7 @@
 class Release < ActiveRecord::Base
   include Ruleby
   attr_accessible :product_id, :version_name, :sequential_number, :license_id,
-                  :check_result, :checked_at, :compatible_license_id, :groupage, :notes
+                  :check_result, :checked_at, :compatible_license_id, :notes
   attr_accessor :warnings, :infos
    
   validates_presence_of :version_name, :sequential_number, :license_id
@@ -16,8 +16,8 @@ class Release < ActiveRecord::Base
   has_many :detections, :dependent => :destroy
 
 
-  def self.search_release(product_name, groupage, page, per_page = 10)
-    Release.joins(:product).order('products.name').where("name LIKE ? and groupage LIKE ?", "%#{product_name}%", "%#{groupage}%").paginate(page: page, per_page: per_page)
+  def self.search_release(product_name, page, per_page = 10)
+    Release.joins(:product).order('products.name').where("name LIKE ?", "%#{product_name}%").paginate(page: page, per_page: per_page)
   end
 
   def add_relation(component_add = [])

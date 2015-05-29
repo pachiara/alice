@@ -9,7 +9,6 @@ class CreateReleases < ActiveRecord::Migration
       t.date    :checked_at
       t.integer :compatible_license_id 
       t.text    :notes
-      t.string  :groupage,              :limit => 25
 
       t.timestamps
     end

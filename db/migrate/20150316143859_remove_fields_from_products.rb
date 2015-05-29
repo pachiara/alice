@@ -5,7 +5,6 @@ class RemoveFieldsFromProducts < ActiveRecord::Migration
     remove_column :products, :result
     remove_column :products, :checked_at
     remove_column :products, :compatible_license_id
-    remove_column :products, :groupage
   end
 
   def self.down
@@ -14,6 +13,5 @@ class RemoveFieldsFromProducts < ActiveRecord::Migration
     add_column :products, :result,                :boolean, :default => nil
     add_column :products, :checked_at,            :date
     add_column :products, :compatible_license_id, :integer
-    add_column :products, :groupage,               :string,  :limit => 25
   end
 end
