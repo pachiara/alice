@@ -16,10 +16,10 @@
         <% @products.each do |product| %>
         <tr>
           <td><%= product.name %></td>
-          <td><%= product.version %></td>
+          <td><%= product.last_release.version_name %></td>
           <td><%= product.description %></td>
           <td>
-          	<%= link_to product_ties_select_path(product), :class => "btn btn-sm btn-primary", :title => t('actions.select'), :alt => t('actions.select') do %>
+          	<%= link_to release_ties_select_path(product.last_release), :class => "btn btn-sm btn-primary", :title => t('actions.select'), :alt => t('actions.select') do %>
               <span class="glyphicon glyphicon-chevron-right glyphicon-inverse"></span>
             <% end %>
           </td>

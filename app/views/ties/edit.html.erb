@@ -1,16 +1,16 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <%= @product.name %> - v. <%= @product.version %></h3>
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <%= @release.product.name %> - v. <%= @release.version_name %></h3>
   </div>
   <div class="panel-body">
    	<div class="col-md-6">
   	<%= will_paginate @components_ties, :param_name => 'component_ties_page', :renderer => BootstrapPagination::Rails %>
   	</div>
-    <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
+    <%= form_tag release_ties_edit_path, :method => 'post' do |f| %>
   	<div class="tree col-md-12">
 	  <ul>
 	  	<li>
-          <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+          <%= link_to @release.product.name+" - v. "+@release.version_name, release_ties_select_path(@release) %>
         </li>
         <ul>
         <% @components_ties.each do |component| %> 
@@ -44,7 +44,7 @@
   	<div class="table-responsive">
     <%= render :partial => "components/search_component" %>
     <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>	
-    <%= form_tag product_ties_edit_path, :method => 'post' do |f| %>
+    <%= form_tag release_ties_edit_path, :method => 'post' do |f| %>
       <table class="table table-striped table-condensed table-bordered">
         <tr>
           <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.component.name') %></th>
@@ -76,7 +76,7 @@
   </div>
 </div>
 
-  <%= link_to product_ties_destroy_path, :class => "btn btn-default", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
+  <%= link_to release_ties_destroy_path, :class => "btn btn-default", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
     <span class="glyphicon glyphicon-trash"></span> <%= t('actions.destroy') %>      
   <% end %> 
   <%= link_to ties_index_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>

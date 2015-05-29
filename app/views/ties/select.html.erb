@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
-      <% if !@product.nil? %>
-    	<%= t('activerecord.models.product') %>: <%= @product.name %> - v. <%= @product.version %>
+      <% if !@release.nil? %>
+    	<%= t('activerecord.models.release') %>: <%= @release.product.name %> - v. <%= @release.version_name %>
       <% end %>
       <% if !@component.nil? %>
     	<%= t('activerecord.models.component') %>: <%= @component.name %> - v. <%= @component.version %>
@@ -13,15 +13,15 @@
   	<div class="tree col-md-6">
 	  <ul>
 	  	<li>
-          <% if !@product.nil? %>
-            <%= link_to @product.name+" - v. "+@product.version, product_ties_select_path(@product) %>
+          <% if !@release.nil? %>
+            <%= link_to @release.product.name+" - v. "+@release.version_name, release_ties_select_path(@release) %>
           <% end %>
           <% if !@component.nil? %>
             <%= link_to @component.name+" - v. "+@component.version, component_ties_select_path(@component) %>
           <% end %>
         </li>
         <ul>
-        <% if !@product.nil? %>
+        <% if !@release.nil? %>
           <% @components.each do |component| %> 
             <li>
               <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
@@ -29,9 +29,9 @@
           <% end %>
         <% end %>
         <% if !@component.nil? %>
-          <% @products.each do |product| %> 
+          <% @releases.each do |release| %> 
             <li>
-              <%= link_to product.name+" - v. "+product.version+" - lic. "+product.license.name, product_ties_select_path(product) %>
+              <%= link_to release.product.name+" - v. "+release.version_name+" - lic. "+release.license.name, release_ties_select_path(release) %>
             </li>
           <% end %>
         <% end %>
@@ -39,11 +39,11 @@
       </ul>
 	</div>
   	<div class="col-md-6">
-    <% if !@product.nil? %>
+    <% if !@release.nil? %>
       <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>
     <% end %>
     <% if !@component.nil? %>
-      <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+      <%= will_paginate @releases, :renderer => BootstrapPagination::Rails %>
     <% end %>
   	</div>
   </div>  
@@ -51,8 +51,8 @@
 <%= link_to ties_index_path, :class => "btn btn-default" do %>
   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
 <% end %>
-<% if !@product.nil? %>
-  <%= link_to product_ties_edit_path, :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') do %>
+<% if !@release.nil? %>
+  <%= link_to release_ties_edit_path, :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') do %>
     <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>
   <% end %>
 <% end %>
