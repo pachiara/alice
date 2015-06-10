@@ -75,11 +75,13 @@ div {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  /*
   -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -moz-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
   box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  */
   margin: 15px 15px 15px 15px; 
 }
 .content a:hover {
@@ -87,10 +89,17 @@ div {
   background: transparent;
 }
 footer {
+  position: absolute;
+  width: 100%;
+  background-color: #003A60;
+  color: #ffffff;
+  padding: 30px;
+/*  
   color: #fefefe;
   background: #3e3e3e;
   padding: 17px 0 18px 0;
   border-top: 1px solid #000;
+*/  
 }
 footer a {
   color: #fefefe;
