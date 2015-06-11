@@ -1,15 +1,17 @@
 Installazione
 
+0) installazione su		 Debian 8.1
+
 1) installare alcuni prerequisiti da root (pwd: alice)
 
-    apt-get install git
-    apt-get install apache2
     apt-get install openssl
+		apt-get install libssl-dev
     apt-get install vim
+    apt-get install mariadb-server (root pwd:alice)
+    apt-get install git
     apt-get install curl
-    apt-get install mysql-server
-    apt-get install mysql-client
     apt-get install libmysqlclient-dev
+    apt-get install apache2
     apt-get install graphviz
     apt-get install libcurl4-openssl-dev
     apt-get install apache2-threaded-dev
@@ -19,57 +21,69 @@ Installazione
     adduser alice
     (pwd: alice)
 
-3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione
+3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione dello user alice
 
+    su - alice
     vim .my_set
-
-export http_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
-export HTTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
-export https_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
-export HTTPS_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
-export ftp_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
-export FTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
-export rsync_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
-export RSYNC_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
-export all_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
-export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
-
+		
+		
+		################################### PROXY ###################################
+		PROXY_SERVER=xxx.xxx.xxx.xxx
+		PROXY_PORT=8080
+		PROXY_USERNAME=user
+		PROXY_PASSWORD=password
+		PROXY=$PROXY_USERNAME:$PROXY_PASSWORD@$PROXY_SERVER:$PROXY_PORT
+		# HTTP and HTTPS
+		export http_proxy=http://$PROXY
+		export HTTP_PROXY=http://$PROXY
+		export https_proxy=http://$PROXY
+		export HTTPS_PROXY=http://$PROXY
+		# RSYNC
+		export rsync_proxy=$PROXY
+		export RSYNC_PROXY=$PROXY
+		##############################################################################
+				
     vim .bashrc 
          . ~/.my_set        
     vim .profile
          . ~/.my_set        
-    vim .bash_profile 
-         source ~/.profile
 
 4) con user alice installare rbenv
 
-git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 5) configurare il proprio profilo
 
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.my_set
-echo 'eval "$(rbenv init -)"' >> ~/.my_set
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.my_set
+    echo 'eval "$(rbenv init -)"' >> ~/.my_set
 
 6) restart del terminale e installazione ruby 
 
+uscire con exit e rientrare con l'utente alice
+    su - alice
+
 verifica il comendo digitando
-type rbenv
+    type rbenv
 (deve essere riconosciuto come una funzione)
 
-rbenv install -l 
+    rbenv install -l 
 (elenca tutte le versioni disponibili)
 
-rbenv install 2.1.5
+    rbenv install 2.2.2
 (installa una versione)
-rbenv global 2.1.5
-(imposta una versione globalmente)
-rbenv local 2.1.5
-(imposta una versione localmente)
-rbenv rehash
 
-7) restart del terminale e installazione di rails 
-    gem install rails -v 4.1.7
+    rbenv global 2.2.2
+(imposta una versione globalmente)
+
+    rbenv local 2.2.2
+(imposta una versione localmente)
+
+    rbenv rehash
+
+7) restart del terminale e installazione di rails sempre con user alice
+    ruby -v
+    gem install rails -v 4.2.1
 
 8) Alice
     git clone https://github.com/pachiara/alice.git
