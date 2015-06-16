@@ -2,7 +2,7 @@ Installazione
 
 0) installazione su		 Debian 8.1
 
-1) installare alcuni prerequisiti da root (pwd: alice)
+1) installare alcuni prerequisiti da root
 
     apt-get install openssl
 		apt-get install libssl-dev
@@ -50,6 +50,8 @@ Installazione
          . ~/.my_set        
 
 4) con user alice installare rbenv
+
+uscire con exit e rientrare con l'utente alice
 
     git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
     git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
