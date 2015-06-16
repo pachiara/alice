@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20150429140818) do
     t.text     "notes",       limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "groupage",    limit: 25
   end
 
   add_index "products", ["name"], name: "index_products_on_name_and_version", unique: true, using: :btree
@@ -149,7 +150,6 @@ ActiveRecord::Schema.define(version: 20150429140818) do
     t.date     "checked_at"
     t.integer  "compatible_license_id", limit: 4
     t.text     "notes",                 limit: 65535
-    t.string   "groupage",              limit: 25
     t.datetime "created_at"
     t.datetime "updated_at"
   end
