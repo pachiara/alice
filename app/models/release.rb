@@ -6,6 +6,7 @@ class Release < ActiveRecord::Base
    
   validates_presence_of :version_name, :sequential_number, :license_id
   validates_uniqueness_of :version_name, scope: :product_id
+  validates_uniqueness_of :sequential_number, scope: :product_id
   
   has_and_belongs_to_many :components
   belongs_to :product
@@ -36,6 +37,14 @@ class Release < ActiveRecord::Base
         components.delete(component)
       end  
     end    
+  end
+  
+  def next_sequential_number
+    if self.product.nil? || self.product.releases.empty?
+      return 1
+    else
+      return (self.product.releases.order(:sequential_number).last.sequential_number.to_int + 1)
+    end
   end
    
   def delete_components

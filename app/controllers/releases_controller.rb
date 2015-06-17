@@ -91,6 +91,8 @@ class ReleasesController < ApplicationController
     @title = t('actions.new') + " " + t('activerecord.models.release')
     @release = Release.new
     @release.product = Product.find(params[:product_id])
+    @release.sequential_number = @release.next_sequential_number
+    @release.license_id = License.where('name = "lispa"').take.id
   end
 
   # GET /releases/1/edit

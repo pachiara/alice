@@ -143,11 +143,7 @@ class DetectionsController < ApplicationController
       @release.product_id = @product.id
       @release.version_name = @version
       @release.license_id = License.where('name = "lispa"').take.id
-      if Release.where('product_id = ?', "#{@product.id}").empty?
-        @release.sequential_number = 1.0
-      else
-        @release.sequential_number = Release.where('product_id = ?', "#{@product.id}").order('sequential_number').last.sequential_number + 1
-      end
+      @release.sequential_number = @release.next_squential_number
       @release.save
     else
       @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
