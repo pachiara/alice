@@ -49,14 +49,13 @@
         <tr>
           <td><%= product.name %></td>
           <td><%= product.title %></td>
+          <td><%= unless product.groupage.nil?; product.groupage; end %></td>
           <% if product.last_release.nil? %>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
           <% else %>
-            <td><%= unless product.groupage.nil?; product.groupage; end %></td>
             <td><%= unless product.use.nil?; product.use.description; end %></td>
             <td><%= product.last_release.version_name %></td>
             <td>
