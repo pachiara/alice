@@ -1,10 +1,20 @@
 class DetectionsController < ApplicationController
+  
+  def restore_search
+    if params[:page].nil? && !session[:detections_page].nil? then
+       params[:page] = session[:detections_page]
+    end
+  end
+  
   # GET /detections
   # GET /detections.json
   def index
+    restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.detections')
     @detections = Detection.where(release_id: params[:release_id]).order('name ASC').page(params[:page]).per_page(12)
     @release = Release.find(params[:release_id])
+
+    session[:detections_page] = params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -111,7 +121,7 @@ class DetectionsController < ApplicationController
     end
   end
 
-  # POST /detections/remote_check
+  # POST /detections/remote_detect
   # API 
   def remote_detect
     # parametri
@@ -143,7 +153,7 @@ class DetectionsController < ApplicationController
       @release.product_id = @product.id
       @release.version_name = @version
       @release.license_id = License.where('name = "lispa"').take.id
-      @release.sequential_number = @release.next_squential_number
+      @release.sequential_number = @release.next_sequential_number
       @release.save
     else
       @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
@@ -213,7 +223,7 @@ class DetectionsController < ApplicationController
   end
 
 
-  # POST /detections/remote_detect
+  # POST /detections/remote_check
   # API 
   def remote_check
     # parametri

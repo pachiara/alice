@@ -54,7 +54,7 @@
               <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'),
                release_check_path(release), :class => "btn btn-default", :title => t('actions.check'), :alt => t('actions.check') %>
               <%= link_to raw('<span class="glyphicon glyphicon-search"></span>'),
-               detections_path(:release_id => release.id), :class => "btn btn-default", :title => t('activerecord.models.detections'), 
+               detections_path(:release_id => release.id, :commit => "clear"), :class => "btn btn-default", :title => t('activerecord.models.detections'), 
                :alt => t('activerecord.models.detections') %>
               <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), 
                 release, method: :delete, data: { confirm: t('actions.are_you_sure') }, 
