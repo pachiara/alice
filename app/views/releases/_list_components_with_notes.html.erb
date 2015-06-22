@@ -27,6 +27,11 @@
   </tbody>
 </table>
 
+<% if !@release.notes.nil? && !@release.notes.empty? %>
+  <h3><%= t('activerecord.attributes.release.notes') + " " + t('activerecord.models.release') %></h3>
+    <div class="well"><%= simple_format(@release.notes) %></div>
+<% end %>
+
 <% if !@components_with_notes.empty? %>
   <h3><%= t('activerecord.attributes.component.notes') + " " + t('activerecord.models.components') %></h3>
   <% @components_with_notes.each do |name, notes| %>
