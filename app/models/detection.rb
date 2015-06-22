@@ -56,6 +56,10 @@ class Detection < ActiveRecord::Base
       major_release = detected_component.version.split('.')[0]
       component = Component.where("name = ? and version like ?", detected_component.name, "#{major_release}.%").first
     end
+    # per componenti propri non controlla corrispondenza della release.
+    if component == nil
+      component = Component.where("name = ? and own = true", detected_component.name).first
+    end
     if component != nil
       detected_component.component_id = component.id
       detected_component.license_id = component.license_id
