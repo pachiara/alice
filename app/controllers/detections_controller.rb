@@ -240,9 +240,12 @@ class DetectionsController < ApplicationController
     @version = params[:product_version]
     @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
-      @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
+      @result = {"result" => 1, "product" => "#{@name}",
          "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
     else
+      if @version.nil?
+        @version = @product.last_release.version_name
+      end
       # Controllo parametro product_version
       @ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.ip_address
       @link = releases_path(product_id: @product.id)
