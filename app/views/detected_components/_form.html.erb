@@ -37,6 +37,10 @@
          <%= f.label :own %>
          <%= f.input_field :own, as: :boolean %>
        </div>
+       <div class="col-md-offset-1 col-md-8">
+         <%= f.label :purchased %>
+         <%= f.input_field :purchased, as: :boolean %>
+       </div>
      </div>
     <% else %>
       <dl class="dl-horizontal">
@@ -44,6 +48,8 @@
         <dd><%= License.find(@detected_component.license_id).name %></dd>
         <dt><%= t('activerecord.attributes.detected_component.own') %></dt>
         <dd><%= @detected_component.own %></dd>
+        <dt><%= t('activerecord.attributes.detected_component.purchased') %></dt>
+        <dd><%= @detected_component.purchased %></dd>
       </dl>
     <% end %>
 

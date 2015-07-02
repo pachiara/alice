@@ -319,6 +319,7 @@ it:
         license_id:   "Licenza assegnata"
         license_id_version: "Versione assegnata"
         own:          "Proprio"
+        purchased:    "Acquistato"
       rule:
         name:         "Nome"
         license:      "Licenza"

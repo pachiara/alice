@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625144942) do
+ActiveRecord::Schema.define(version: 20150702134733) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150625144942) do
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
     t.boolean  "own",             limit: 1,   default: false
+    t.boolean  "purchased",       limit: 1,   default: false
   end
 
   add_index "detected_components", ["detection_id"], name: "index_detected_components_on_detection_id", using: :btree

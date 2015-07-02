@@ -64,6 +64,7 @@ class Detection < ActiveRecord::Base
       detected_component.component_id = component.id
       detected_component.license_id = component.license_id
       detected_component.own = component.own
+      detected_component.purchased = component.purchased
     end
   end
 
@@ -113,6 +114,7 @@ class Detection < ActiveRecord::Base
           c.description = component.name
           c.license_id = component.license_id
           c.own = component.own
+          c.purchased = component.purchased
           c.checked_at = Date.today
           c.use_id = 1
           c.save
