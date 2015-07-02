@@ -3,7 +3,7 @@ class Release < ActiveRecord::Base
   attr_accessible :product_id, :version_name, :sequential_number, :license_id,
                   :check_result, :checked_at, :compatible_license_id, :notes
   attr_accessor :warnings, :infos
-   
+  
   validates_presence_of :version_name, :sequential_number, :license_id
   validates_uniqueness_of :version_name, scope: :product_id
   validates_uniqueness_of :sequential_number, scope: :product_id
@@ -16,6 +16,16 @@ class Release < ActiveRecord::Base
   has_and_belongs_to_many :components
   has_many :detections, :dependent => :destroy
 
+  after_save do
+    product.update_last_release
+    product.save
+  end
+  
+  after_destroy do
+    product = Product.find(product_id)
+    product.update_last_release
+    product.save
+  end
 
   def self.search_release(product_name, page, per_page = 10)
     Release.joins(:product).order('products.name').where("name LIKE ?", "%#{product_name}%").paginate(page: page, per_page: per_page)

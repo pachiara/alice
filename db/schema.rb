@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429140818) do
+ActiveRecord::Schema.define(version: 20150625144942) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -127,14 +127,17 @@ ActiveRecord::Schema.define(version: 20150429140818) do
   add_index "licenses", ["name", "version"], name: "index_licenses_on_name_and_version", unique: true, using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",        limit: 30
-    t.string   "title",       limit: 100
-    t.text     "description", limit: 65535
-    t.integer  "use_id",      limit: 4
-    t.text     "notes",       limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "groupage",    limit: 25
+    t.string   "name",                      limit: 30
+    t.string   "title",                     limit: 100
+    t.text     "description",               limit: 65535
+    t.integer  "use_id",                    limit: 4
+    t.text     "notes",                     limit: 65535
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "groupage",                  limit: 25
+    t.date     "last_release_checked_at"
+    t.boolean  "last_release_check_result", limit: 1
+    t.string   "last_release_version_name", limit: 25
   end
 
   add_index "products", ["name"], name: "index_products_on_name_and_version", unique: true, using: :btree

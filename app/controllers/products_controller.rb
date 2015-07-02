@@ -1,7 +1,20 @@
 class ProductsController < ApplicationController
 
   def restore_search
-    if params[:page].nil? && !session[:products_page].nil? then
+    # Premuto tasto colonna
+    if !params[:sort_column].nil? && params[:page].nil? then
+      if params[:sort_column] != session[:products_sort_column] then
+        params[:sort_order] = " ASC"
+      else
+        if session[:products_sort_order] == " ASC" 
+          params[:sort_order] = " DESC"
+        else
+          params[:sort_order] =  " ASC"
+        end
+      end
+    end
+
+    if params[:page].nil? && params[:restart_page].nil? && !session[:products_page].nil? then
        params[:page] = session[:products_page]
     end
     if params[:product_name].nil? && !session[:products_search_name].nil? then
@@ -10,41 +23,13 @@ class ProductsController < ApplicationController
     if params[:product_groupage].nil? && !session[:products_search_groupage].nil? then
        params[:product_groupage] = session[:products_search_groupage]
     end
-  end
-  
-  def order_search
-    @order_search = params[:order_search]
-    case @order_search
-    when "name"
-      if session[:down_name].nil?
-        session[:down_name] = true
-      end
-      @down_name = session[:down_name]
-      if session[:products_page] == params[:page] then
-        @down_name = !session[:down_name]
-        session[:down_name] = @down_name      
-      end 
-      if @down_name 
-        @order = "name DESC"
-      else
-        @order = "name ASC"
-      end
-      when "groupage"
-      if session[:down_groupage].nil?
-        session[:down_groupage] = true
-      end
-      @down_groupage = session[:down_groupage]
-      if session[:products_page] == params[:page] then
-        @down_groupage = !session[:down_groupage]
-        session[:down_groupage] = @down_groupage
-      end         
-      if @down_groupage
-        @order = "groupage DESC"
-      else
-        @order = "groupage ASC"
-      end  
+    if params[:sort_column].nil? && !session[:products_sort_column].nil? then
+       params[:sort_column] = session[:products_sort_column]
     end
-    return @order  
+    if params[:sort_order].nil? && !session[:products_sort_order].nil? then
+       params[:sort_order] = session[:products_sort_order]
+    end
+    
   end
   
   # GET /products
@@ -53,16 +38,14 @@ class ProductsController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
     @search_form_path = products_path
-    
-    if params[:order_search].nil? || params[:order_search].empty? then
-      @products = Product.search(params[:product_name], params[:groupage], params[:page])
-    else
-      @products = Product.search_order(order_search, params[:page])
-    end
+
+    @products = Product.search_order(params[:product_name], params[:product_groupage], params[:sort_column], params[:sort_order], params[:page])
 
     session[:products_page] = params[:page]
     session[:products_search_name] = params[:product_name]
     session[:products_search_groupage] = params[:product_groupage]
+    session[:products_sort_column] = params[:sort_column]
+    session[:products_sort_order] = params[:sort_order]
 
     respond_to do |format|
       format.html # index.html.erb
