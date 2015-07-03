@@ -145,43 +145,44 @@ class DetectionsController < ApplicationController
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
          "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
-    end
-    # Controllo parametro product_version
-    @release = Release.where('product_id = ? and version_name = ?', "#{@product.id}", "#{@version}").take
-    if @release.nil?
-      @release = Release.new()
-      @release.product_id = @product.id
-      @release.version_name = @version
-      @release.license_id = License.where('name = "lispa"').take.id
-      @release.sequential_number = @release.next_sequential_number
-      @release.save
     else
-      @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
-    end
-    # Controllo parametro detection_name
-    if @result.nil?
-      if params[:detection_name].nil?
-        @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
+      # Controllo parametro product_version
+      @release = Release.where('product_id = ? and version_name = ?', "#{@product.id}", "#{@version}").take
+      if @release.nil?
+        @release = Release.new()
+        @release.product_id = @product.id
+        @release.version_name = @version
+        @release.license_id = License.where('name = "lispa"').take.id
+        @release.sequential_number = @release.next_sequential_number
+        @release.save
       else
-        @detection_name = params[:detection_name]
+        @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
       end
-      if !@release.id.nil? and !(Detection.where('release_id = ? and name = ?', "#{@release.id}", "#{@detection_name}").take).nil?
-        @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-           "msg" => "** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
+      # Controllo parametro detection_name
+      if @result.nil?
+        if params[:detection_name].nil?
+          @detection_name = "remote"+ Time.now.strftime("%Y-%d-%m-%H:%M:%S")
+        else
+          @detection_name = params[:detection_name]
+        end
+        if !@release.id.nil? and !(Detection.where('release_id = ? and name = ?', "#{@release.id}", "#{@detection_name}").take).nil?
+          @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+             "msg" => "** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
+        end
       end
-    end
-    # Controllo parametro detection
-    if @result.nil?
-      if params[:detection].nil? || 
-         !params[:detection].is_a?(ActionController::Parameters) ||
-         params[:detection][:xml].nil? ||
-         !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
-        @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-           "msg" => "** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
-      else  
-        @detection = Detection.new(params[:detection])
-        @detection.name = @detection_name 
-        @detection.release_id = @release.id
+      # Controllo parametro detection
+      if @result.nil?
+        if params[:detection].nil? || 
+           !params[:detection].is_a?(ActionController::Parameters) ||
+           params[:detection][:xml].nil? ||
+           !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
+          @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
+             "msg" => "** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+        else  
+          @detection = Detection.new(params[:detection])
+          @detection.name = @detection_name 
+          @detection.release_id = @release.id
+        end
       end
     end
 
