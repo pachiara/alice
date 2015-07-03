@@ -6,6 +6,20 @@ class DetectedComponent < ActiveRecord::Base
 
   @@grubber = ["license","public","software","none","and","the",'^no ', " no ","information","available", '\.']
   
+  after_update do
+    # Se il componente è presente in più rilevamenti della release, aggiorna i dati su tutti
+    same_release_detections = self.detection.release.detections
+    same_release_detections.each do |same_release_detection|
+      same_components = same_release_detection.detected_components.where(name: self.name, license_id: nil)
+      same_components.each do |same_component|
+        same_component.license_id = self.license_id
+        same_component.purchased = self.purchased
+        same_component.own= self.own
+        same_component.save
+      end
+    end
+  end
+  
   def purify_name(name)
     purified_name = String.new(str=name)
     @@grubber.each do |dirty|
