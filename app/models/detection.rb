@@ -9,7 +9,7 @@ class Detection < ActiveRecord::Base
   validates_presence_of :xml, :message => ''
   validates_uniqueness_of :name, scope: :release_id
   validates_attachment_content_type :xml, :content_type => "text/xml"
-  before_save :parse_file
+  before_create :parse_file
   
   def parse_file
     tempfile = xml.queued_for_write[:original]

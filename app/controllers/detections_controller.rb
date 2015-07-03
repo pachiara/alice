@@ -196,8 +196,9 @@ class DetectionsController < ApplicationController
             @link = detected_components_path(detection_id: @detection.id)
             if @detection.errors.full_messages[0].include? "Nessun componente"
               @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "** Errore ** File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}",
-                 "link" => "http://#{@ip}:#{request.port}#{@link}"}
+                 "msg" => "** Errore ** File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
+                  " - RILEVAMENTO ELIMINATO!"}
+              @detection.destroy
             else
               require 'socket'  
               @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
