@@ -5,35 +5,10 @@
     <div class="row">
       <%= f.input :name, :wrapper_html => { :class => "col-md-3" } %>
       <%= f.input :title, :wrapper_html => { :class => "col-md-5" } %>
-      <%= f.association :use, label_method: :description, :wrapper_html => { :class => "col-md-3" } %>
     </div>
     <div class="row">
       <%= f.input :version, :wrapper_html => { :class => "col-md-3" } %>
       <%= f.association :license, collection: License.all.order('name'), :wrapper_html => { :class => "col-md-3" } %>
-   
-      <div class="col-md-2">
-      	<%= f.label :checked_at %> 
-        <div id="date1" class="input-group date">
-          <%= f.text_field :checked_at, :class => "form-control", :value => unless @component.checked_at.nil?; @component.checked_at.strftime('%d/%m/%Y'); end %>
-          <span class="input-group-btn">
-          	<button class="btn btn-default" type="button">
-          	  <span class="glyphicon glyphicon-calendar"></span>
-          	</button>  
-          </span>
-        </div>  
-      </div>             
-      <script type="text/javascript">
-        $(function () {
-          $('#date1').datetimepicker({
-            pickTime: false,
-            language: 'it'
-          });
-        });
-      </script>
-      <div class="col-md-1">
-        <div><%= f.label :result %></div>
-        <%= f.input_field :result, as: :boolean %>
-      </div>
     </div>
 
     <div class="row">

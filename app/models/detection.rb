@@ -115,8 +115,6 @@ class Detection < ActiveRecord::Base
           c.license_id = component.license_id
           c.own = component.own
           c.purchased = component.purchased
-          c.checked_at = Date.today
-          c.use_id = 1
           c.save
         end
       end

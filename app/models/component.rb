@@ -1,7 +1,7 @@
 class Component < ActiveRecord::Base
-  attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version, :purchased, :own, :leave_out
+  attr_accessible :description, :license_id, :name, :notes, :title, :version, :purchased, :own, :leave_out
   
-  validates_presence_of :name, :title, :use_id, :license_id
+  validates_presence_of :name, :title, :license_id
   validates :version, :uniqueness => {:scope => [:name]}
   validate  :purchase_or_own
   

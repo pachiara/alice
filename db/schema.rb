@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702134733) do
+ActiveRecord::Schema.define(version: 20150706132925) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -46,9 +46,6 @@ ActiveRecord::Schema.define(version: 20150702134733) do
     t.string   "title",       limit: 50
     t.text     "description", limit: 65535
     t.integer  "license_id",  limit: 4
-    t.integer  "use_id",      limit: 4
-    t.date     "checked_at"
-    t.boolean  "result",      limit: 1,     default: true
     t.text     "notes",       limit: 65535
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
@@ -60,7 +57,6 @@ ActiveRecord::Schema.define(version: 20150702134733) do
   add_index "components", ["license_id"], name: "index_components_on_license_id", using: :btree
   add_index "components", ["name", "version"], name: "index_components_on_name_and_version", unique: true, using: :btree
   add_index "components", ["title"], name: "index_components_on_title", using: :btree
-  add_index "components", ["use_id"], name: "index_components_on_use_id", using: :btree
 
   create_table "components_releases", id: false, force: :cascade do |t|
     t.integer "release_id",   limit: 4, null: false
