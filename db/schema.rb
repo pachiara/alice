@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.text     "notes",       limit: 65535
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.boolean  "purchased",   limit: 1,     default: false
-    t.boolean  "own",         limit: 1,     default: false
-    t.boolean  "leave_out",   limit: 1,     default: false
+    t.boolean  "purchased",                 default: false
+    t.boolean  "own",                       default: false
+    t.boolean  "leave_out",                 default: false
   end
 
   add_index "components", ["license_id"], name: "index_components_on_license_id", using: :btree
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.integer  "license_id",      limit: 4
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.boolean  "own",             limit: 1,   default: false
-    t.boolean  "purchased",       limit: 1,   default: false
+    t.boolean  "own",                         default: false
+    t.boolean  "purchased",                   default: false
   end
 
   add_index "detected_components", ["detection_id"], name: "index_detected_components_on_detection_id", using: :btree
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.string   "xml_content_type", limit: 255
     t.integer  "xml_file_size",    limit: 4
     t.datetime "xml_updated_at"
-    t.boolean  "acquired",         limit: 1,   default: false
+    t.boolean  "acquired",                     default: false
     t.integer  "release_id",       limit: 4
   end
 
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.string   "version",            limit: 5
     t.integer  "category_id",        limit: 4
     t.integer  "license_type_id",    limit: 4
-    t.boolean  "flag_osi",           limit: 1,     default: true
+    t.boolean  "flag_osi",                         default: true
     t.text     "text_license",       limit: 65535
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.datetime "updated_at",                              null: false
     t.string   "groupage",                  limit: 25
     t.date     "last_release_checked_at"
-    t.boolean  "last_release_check_result", limit: 1
+    t.boolean  "last_release_check_result"
     t.string   "last_release_version_name", limit: 25
   end
 
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.string   "version_name",          limit: 25
     t.decimal  "sequential_number",                   precision: 9, scale: 3
     t.integer  "license_id",            limit: 4
-    t.boolean  "check_result",          limit: 1
+    t.boolean  "check_result"
     t.date     "checked_at"
     t.integer  "compatible_license_id", limit: 4
     t.text     "notes",                 limit: 65535
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
   create_table "rule_entries", force: :cascade do |t|
     t.integer  "rule_id",    limit: 4
     t.integer  "license_id", limit: 4
-    t.boolean  "plus",       limit: 1
+    t.boolean  "plus"
     t.integer  "order_id",   limit: 4
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
   create_table "rules", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "license_id", limit: 4
-    t.boolean  "plus",       limit: 1
+    t.boolean  "plus"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20150706132925) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.boolean  "admin",                  limit: 1,   default: false
+    t.boolean  "admin",                              default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
