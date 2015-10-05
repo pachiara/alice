@@ -34,9 +34,13 @@ Lombardia Informatica S.p.A.
 
 == Licenza
 
+<<<<<<< HEAD
+Alice e' rilasciata con licenza europea EUPL mantenuta e tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
+=======
 Alice e' rilasciata con licenza europea EUPL mantenuta a tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
 
 ## Help e Documentazione
 
 * [Gitter chat](https://gitter.im/pachiara/alice)
 * [Wiki](https://github.com/pachiara/alice/wiki)
+>>>>>>> v2.branch

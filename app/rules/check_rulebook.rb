@@ -51,6 +51,17 @@ class CheckRulebook < Rulebook
             v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
             next
         end
+<<<<<<< HEAD
+        new_compatible_license = self.search_compatible(seeking_license, v[:prod].compatible_license)
+        if new_compatible_license == nil
+          error_string = "licenza #{v[:comp].license.name} " +
+                         "incompatibile con licenza: #{v[:prod].compatible_license.name}"
+          if (v[:prod].use.name == "DIS") # or v[:prod].use.name == "SUE")  
+            v[:prod].result = false
+            v[:prod].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+          else
+            v[:prod].addWarning("Componente #{v[:comp].name}:", "#{error_string}")
+=======
         new_compatible_license = self.search_compatible(seeking_license, v[:rel].compatible_license)
         if new_compatible_license == nil
           error_string = "licenza #{v[:comp].license.name} " +
@@ -60,6 +71,7 @@ class CheckRulebook < Rulebook
             v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
           else
             v[:rel].addWarning("Componente #{v[:comp].name}:", "#{error_string}")
+>>>>>>> v2.branch
           end
         end
       end

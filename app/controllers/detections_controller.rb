@@ -11,10 +11,15 @@ class DetectionsController < ApplicationController
   def index
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.detections')
+<<<<<<< HEAD
+    @detections = Detection.where(product_id: params[:product_id]).order('name ASC').page(params[:page]).per_page(12)
+    @product = Product.find(params[:product_id])
+=======
     @detections = Detection.where(release_id: params[:release_id]).order('name ASC').page(params[:page]).per_page(12)
     @release = Release.find(params[:release_id])
 
     session[:detections_page] = params[:page]
+>>>>>>> v2.branch
 
     respond_to do |format|
       format.html # index.html.erb
