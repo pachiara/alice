@@ -1,24 +1,24 @@
-<ul class="nav pull-left">
-  <li><%= link_to raw("<i class='icon-home icon-white'></i> Home"), root_path %></li>
+<ul class="nav navbar-nav pull-left">
+  <li><%= link_to raw("<span class='glyphicon glyphicon-home glyphicon-inverse'></span> Home"), root_path %></li>
   <li class="divider-vertical"></li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-list icon-white'></i> Licenze <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><%= link_to( t('activerecord.models.licenses'), licenses_path(:commit => "clear"))  %></li>
-      <li><%= link_to( t('activerecord.models.categories'), categories_path)  %></li>
-      <li><%= link_to( t('activerecord.models.license_types'), license_types_path)  %></li>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-list glyphicon-inverse'></span> Licenze <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
+      <li><%= link_to( t('activerecord.models.licenses'), licenses_path(:commit => "clear") )  %></li>
+      <li><%= link_to( t('activerecord.models.categories'), categories_path )  %></li>
+      <li><%= link_to( t('activerecord.models.license_types'), license_types_path )  %></li>
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-ok icon-white'></i> Verifica <b class="caret"></b></a>
-    <ul class="dropdown-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-ok glyphicon-inverse'></span> Verifica <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
       <li><%= link_to(t('activerecord.models.uses'), uses_path)  %></li>
       <li><%= link_to('Regole', rules_path)  %></li>          	
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-book icon-white'></i> Prodotti <b class="caret"></b></a>
-    <ul class="dropdown-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-book glyphicon-inverse'></span> Prodotti <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
       <li><%= link_to(t('activerecord.models.products'), products_path(:commit => "clear"))  %></li>
       <li><%= link_to(t('activerecord.models.components'), components_path(:commit => "clear"))  %></li>
       <li><%= link_to(t('activerecord.models.ties'), ties_index_path)  %></li>
@@ -26,10 +26,10 @@
   </li>
 </ul>
 
-<ul class="nav pull-right">
+<ul class="nav navbar-nav pull-right">
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class='icon-user icon-white'></i> Accesso <b class="caret"></b></a>
-    <ul class="dropdown-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='glyphicon glyphicon-user glyphicon-inverse'></span> Accesso <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
   <% if user_signed_in? %>
     <li>
     <%= link_to(t('actions.sign_out'), destroy_user_session_path, :method=>'delete') %>
@@ -50,5 +50,4 @@
   <% end %>
     </ul>
   </li>	
-  <li><%= link_to raw("<i class='icon-asterisk icon-white'></i> About"), about_index_path %></li>
 </ul>	

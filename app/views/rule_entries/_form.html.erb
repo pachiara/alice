@@ -1,14 +1,14 @@
 <%= simple_form_for(@rule_rule_entry) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <%= f.association :rule %>
     <%= f.input :license_id %>
     <%= f.input :plus %>
     <%= f.input :order %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= f.button :submit %>
   </div>
 <% end %>

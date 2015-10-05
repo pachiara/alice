@@ -1,37 +1,68 @@
-<div class="container-fluid">
-<div class="row-fluid">
-
-<div class="span6">
-<div class="well sidebar-nav"> 	
-<div class="row-fluid"><%= render :partial => "products/search_product" %></div>
-<%= will_paginate @products, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.products') %></li>
-  <li class="divider"></li>
-  <% @products.each do |product| %>
-    <li<% if !@product.nil? and product.name.eql?(@product.name) %> class="active"<% end %>>
-       <%= link_to product.name+" - Vers. "+product.version, product_ties_select_path(product) %>
-    </li>
-  <% end %>
-</ul>
-</div><!--/.well -->
-</div><!--/span-->
-
-<div class="span6">
-<div class="well sidebar-nav">
-<div class="row-fluid"><%= render :partial => "components/search_component" %></div>
-<%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>		
-<ul class="nav nav-list">
-  <li class="nav-header"><%= t('activerecord.models.components') %></li>
-  <li class="divider"></li>
-  <% @components.each do |component| %>
-    <li<% if !@component.nil? and component.name.eql?(@component.name) %> class="active"<% end %>>
-       <%= link_to component.name+" - Vers. "+component.version, component_ties_select_path(component) %>
-    </li>
-  <% end %>
-</ul>
-</div><!--/.well -->
-</div><!--/span-->
-
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.ties') %>: <%= t('activerecord.models.product') %></h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive"> 
+    <%= render :partial => "products/search_product" %>	
+    <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+      <table class="table table-striped table-condensed table-bordered">
+        <tr>
+          <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.product.name') %></th>
+          <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><%= t('activerecord.attributes.product.version') %></th>
+          <th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><%= t('activerecord.attributes.product.title') %></th>
+          <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><%= t('actions.select') %></th>
+        </tr>
+        <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.last_release_version_name %></td>
+          <td><%= product.description %></td>
+          <td>
+          <% if !product.last_release.nil? %>
+          	<%= link_to release_ties_select_path(product.last_release), :class => "btn btn-sm btn-primary", :title => t('actions.select'), :alt => t('actions.select') do %>
+              <span class="glyphicon glyphicon-chevron-right glyphicon-inverse"></span>
+            <% end %>
+          <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.ties') %>: <%= t('activerecord.models.component')  %></h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive"> 
+    <%= render :partial => "components/search_component" %>	
+    <%= will_paginate @components, :param_name => 'component_page', :renderer => BootstrapPagination::Rails %>	
+      <table class="table table-striped table-condensed table-bordered">
+        <tr>
+          <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.component.name') %></th>
+          <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><%= t('activerecord.attributes.component.version') %></th>
+          <th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><%= t('activerecord.attributes.component.title') %></th>
+          <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><%= t('actions.select') %></th>
+        </tr>
+        <% @components.each do |component| %>
+        <tr>
+          <td><%= component.name %></td>
+          <td><%= component.version %></td>
+          <td><%= component.description %></td>
+          <td>
+          	<%= link_to component_ties_select_path(component), :class => "btn btn-sm btn-primary", :title => t('actions.select'), :alt => t('actions.select') do %>
+              <span class="glyphicon glyphicon-chevron-right glyphicon-inverse"></span>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
+ 
+<%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 

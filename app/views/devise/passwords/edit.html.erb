@@ -6,12 +6,12 @@
   <%= f.input :reset_password_token, :as => :hidden %>
   <%= f.full_error :reset_password_token %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <%= f.input :password, :label => "New password", :required => true, :autofocus => true %>
     <%= f.input :password_confirmation, :label => "Confirm your new password", :required => true %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= f.button :submit, "Change my password" %>
   </div>
 <% end %>

@@ -1,26 +1,38 @@
-<div class="container-fluid">	
-<div class="row-fluid">
-  <div class="span12">	
-  <div class="span4"></div>
-  <div class="span2">
-    <%= image_tag("alice2.png", :alt => "Logo Alice", :class => "img-rounded img-polaroid") %>
-  </div>
-  <div class="span6">
-  	<%= link_to "About: Alice", about_alice_path, :class => "btn btn-large btn-info disabled" %>
-  </div>	
-  </div>
-</div>  
+<br />
+<br />
 
-  <br /><br />
-<div class="row-fluid">
-  <div class="span12">	
-  <div class="span4"></div>
-  <div class="span2">
-    <%= image_tag("lispa.png", :alt => "Lombardia Informatica", :class => "img-rounded img-polaroid") %>
+<div class="container-fluid">
+
+<div class="col-md-6">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<h3 class="panel-title">Alice</h3>
   </div>
-  <div class="span6">
-  	<%= link_to "About: Lombardia Informatica", about_lispa_path, :class => "btn btn-large btn-info disabled" %>  	
+  <div class="panel-body center">
+    <%= image_tag("alice2.png", :alt => "Logo Alice", :class => "img-rounded img-thumbnail img-responsive") %>
+    <br /><br />
+   	<%= link_to "Chi è Alice ?", about_alice_path, :class => "btn btn-default" %>
   </div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<h3 class="panel-title">Lombardia Informatica</h3>
   </div>
-</div>  
+  <div class="panel-body center">
+  	<br /><br /><br />
+    <%= image_tag("lispa.png", :alt => "Lombardia Informatica", :class => "img-rounded img-thumbnail img-responsive") %>
+    <br /><br /><br /><br /><br /><br />
+  	<%= link_to "Lombardia Informatica", about_lispa_path, :class => "btn btn-default" %>    
+  </div>
+</div>
+</div>
+
+<div class="col-md-12">
+<%= link_to root_path, :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %>  
+</div>
 </div>  

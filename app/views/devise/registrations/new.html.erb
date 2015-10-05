@@ -3,15 +3,15 @@
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <%= f.input :email, :required => true, :autofocus => true %>
     <%= f.input :password, :required => true %>
     <%= f.input :password_confirmation, :required => true %>
   </div>
 
-  <div class="form-actions">
+  <div class="form-group">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <i class="icon-ok icon-white"></i> <%= t('actions.sign_up') %>  
+      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.sign_up') %>  
     <% end %>
     <%= render "devise/shared/links" %>
   </div>
