@@ -1,44 +1,33 @@
 <%= simple_form_for(@component) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-group">
+  <div class="form-inputs">
     <div class="row">
-      <%= f.input :name, :wrapper_html => { :class => "col-md-3" } %>
-      <%= f.input :title, :wrapper_html => { :class => "col-md-5" } %>
-    </div>
-    <div class="row">
-      <%= f.input :version, :wrapper_html => { :class => "col-md-3" } %>
-      <%= f.association :license, collection: License.all.order('name'), :wrapper_html => { :class => "col-md-3" } %>
-    </div>
-
-    <div class="row">
-      <div class="col-md-1">
-        <div><%= f.label :purchased %></div>
-        <%= f.input_field :purchased, as: :boolean %>
-      </div>
-      <div class="col-md-1">
-        <div><%= f.label :own %></div> 
-        <%= f.input_field :own, as: :boolean %>
-      </div>
-      <div class="col-md-1">
-        <div><%= f.label :leave_out %></div> 
-        <%= f.input_field :leave_out, as: :boolean %>
-      </div>
-    </div>
-    <div class="row">  
-      <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+      <%= f.input :name, :wrapper_html => { :class => "span3" } %>
+      <%= f.input :title, :wrapper_html => { :class => "span5" }, :input_html => { :class => "span5" } %>
+      <%= f.association :use, label_method: :description, :wrapper_html => { :class => "span3" } %>
     </div>
     <div class="row">
-      <%= f.input :notes, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+      <%= f.input :version, :wrapper_html => { :class => "span3" } %>
+      <%= f.association :license, collection: License.all(order: 'name'), :wrapper_html => { :class => "span3" } %>
+      <%= f.input :checked_at, :wrapper_html => { :class => "span3" },  :input_html => { :class => "span1" } %>
+      <%= f.input :result, :wrapper_html => { :class => "span1" } %>
     </div>
+    <div class="row">
+      <%= f.input :purchased, :wrapper_html => { :class => "span1" } %>
+      <%= f.input :own, :wrapper_html => { :class => "span1" } %>
+      <%= f.input :leave_out, :wrapper_html => { :class => "span1" } %>
+    </div>
+    <%= f.input :description, :input_html => { :class => "span11", :rows => 5 } %>
+    <%= f.input :notes, :input_html => { :class => "span11", :rows => 5 } %>
   </div>
-  
-  <div class="form-group">
+
+  <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
+      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
     <% end %>
-    <%= link_to components_path, :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <%= link_to components_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %> 
   </div>
 <% end %>

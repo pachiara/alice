@@ -1,7 +1,5 @@
 == Alice
 
-{<img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/pachiara/alice">}[https://gitter.im/pachiara/alice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge]
-
 Sistema open source per la gestione delle licenze d'uso nei prodotti software.
 
 == Premessa
@@ -34,13 +32,4 @@ Lombardia Informatica S.p.A.
 
 == Licenza
 
-<<<<<<< HEAD
 Alice e' rilasciata con licenza europea EUPL mantenuta e tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
-=======
-Alice e' rilasciata con licenza europea EUPL mantenuta a tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
-
-## Help e Documentazione
-
-* [Gitter chat](https://gitter.im/pachiara/alice)
-* [Wiki](https://github.com/pachiara/alice/wiki)
->>>>>>> v2.branch

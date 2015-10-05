@@ -1,5 +1,3 @@
-<br />
-<br />
 <p>
   <b><%= t('activerecord.attributes.category.name') %>:</b>
   <%= @category.name %>
@@ -10,12 +8,12 @@
   <%= @category.description %>
 </p>
 
-<br /><br />
-<div class="form-group">
-    <%= link_to edit_category_path(@category), :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
+<br />
+<div class="form-actions">
+    <%= link_to edit_category_path(@category), :class => "btn" do %>
+      <i class="icon-pencil"></i> <%= t('actions.edit') %>      
     <% end %>    
-    <%= link_to categories_path, :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <%= link_to categories_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %>    
 </div>

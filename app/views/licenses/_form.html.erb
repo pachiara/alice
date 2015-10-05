@@ -1,36 +1,28 @@
 <%= simple_form_for(@license) do |f| %>
   <%= f.error_notification %>
 
-  <div class="row">
-    <%= f.input :name, :wrapper_html => { :class => "col-md-4" } %>
-    <%= f.input :version, :wrapper_html => { :class => "col-md-4" } %>
-  </div>
-  <div class="row">
-    <%= f.input :description, :wrapper_html => { :class => "col-md-7" } %>
-  </div>
-  <div class="row">
-    <%= f.association :license_type, label_method: :description, :wrapper_html => { :class => "col-md-4" }  %>
-    <%= f.association :category, :wrapper_html => { :class => "col-md-4" } %>
-    <div class="col-md-2">
-      <div><%= f.label :flag_osi %></div>
-      <%= f.input_field :flag_osi, as: :boolean %>
+  <div class="form-inputs">
+    <div class="row">
+      <%= f.input :name, :wrapper_html => { :class => "span4" } %>
+      <%= f.input :version, :wrapper_html => { :class => "span4" } %>
     </div>
+    <%= f.input :description, :input_html => { :class => "span7" } %>
+    <div class="row">
+      <%= f.association :license_type, label_method: :description, :wrapper_html => { :class => "span4" }  %>
+      <%= f.association :category, :wrapper_html => { :class => "span4" } %>
+      <%= f.input :flag_osi, :wrapper_html => { :class => "span2" } %>
+    </div>
+      <%= f.input :similar_license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "span5" } %>
+    <%= f.input :text_license, :input_html => { :class => "span11", :rows => 10 } %>
+    <%= f.input :notes, :input_html => { :class => "span11", :rows => 5 } %>
   </div>
-  <div class="row">
-    <%= f.input :similar_license_id, collection: License.all.order('description'), value_method: :id, label_method: :description, :wrapper_html => { :class => "col-md-5" } %>
-  </div>
-  <div class="row">
-    <%= f.input :text_license, :input_html => { :rows => 10 }, :wrapper_html => { :class => "col-md-11" }  %>
-  </div>
-  <div class="row">
-    <%= f.input :notes, :input_html => { :rows => 5 }, :wrapper_html => { :class => "col-md-11" } %>
-  </div>
-  <div class="form-group">
+
+  <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
+      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
     <% end %>
-    <%= link_to licenses_path, :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <%= link_to licenses_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %> 
   </div>
 <% end %>

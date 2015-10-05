@@ -27,14 +27,14 @@ class CompatibilityRulebook < Rulebook
   def rules
     # Calcola la licenza richiesta 
     rule :Compatibility, {:priority => 4},
-      [Release, :rel],
+      [Product, :prod],
       [Component,:comp ] do |v|
         seeking_license = v[:comp].license.similar_license_id.nil? ? license = v[:comp].license : License.find(v[:comp].license.similar_license_id)
         if Floss_slide.include?(seeking_license)
-          new_compatible_license = self.search_compatible(seeking_license, v[:rel].compatible_license)
-          if new_compatible_license != nil and v[:rel].compatible_license != new_compatible_license
-            v[:rel].addInfo("Componente #{v[:comp].name} con licenza #{v[:comp].license.name} #{v[:comp].license.version}", "cambia licenza compatibilità componenti in: #{new_compatible_license.name} #{new_compatible_license.version}")
-            v[:rel].compatible_license = new_compatible_license
+          new_compatible_license = self.search_compatible(seeking_license, v[:prod].compatible_license)
+          if new_compatible_license != nil and v[:prod].compatible_license != new_compatible_license
+            v[:prod].addInfo("Componente #{v[:comp].name} con licenza #{v[:comp].license.name} #{v[:comp].license.version}", "cambia licenza compatibilità componenti in: #{new_compatible_license.name} #{new_compatible_license.version}")
+            v[:prod].compatible_license = new_compatible_license
           end
         end
     end

@@ -1,25 +1,19 @@
-<br />
-<br />
-<%= simple_form_for(@license_type, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+<%= simple_form_for(@license_type) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-group">
-  	<div class="col-sm-6 col-md-6 col-lg-6">
-      <%= f.input :code, input_html: { maxlength: 1 } %>
-      <%= f.input :description %>
-      <%= f.input :protection_level %>
-    </div>
+  <div class="form-inputs form-horizontal">
+    <%= f.input :code, input_html: { maxlength: 1, :class => "span1" } %>
+    <%= f.input :description, :input_html => { :class => "span6" } %>
+    <%= f.input :protection_level, :input_html => { :class => "span1" } %>
   </div>
 
   <br />
-  <div class="form-group">
-  	<div class="col-sm-6 col-md-6 col-lg-6">
+  <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
+      <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
     <% end %>
-    <%= link_to license_types_path, :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <%= link_to license_types_path, :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
     <% end %> 
-    </div>
   </div>
 <% end %>

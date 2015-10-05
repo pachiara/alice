@@ -1,92 +1,60 @@
 Installazione
 
-0) installazione su		 Debian 8.1
+1) installare alcuni prerequisiti da root (pwd: alice)
 
-1) installare alcuni prerequisiti da root
-
-    apt-get install openssl
-		apt-get install libssl-dev
-    apt-get install vim
-    apt-get install mariadb-server
-    apt-get install git
-    apt-get install curl
-    apt-get install libmysqlclient-dev
     apt-get install apache2
+    apt-get install openssl
+    apt-get install vim
+    apt-get install curl
+    apt-get install mysql-server
+    apt-get install mysql-client
+    apt-get install libmysqlclient-dev
     apt-get install graphviz
     apt-get install libcurl4-openssl-dev
     apt-get install apache2-threaded-dev
-		apt-get install libreadline-dev
 
 2) creare l'utente dell'applicazione rails
     
     adduser alice
     (pwd: alice)
 
-3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione dello user alice
+3) impostare i dati del proxy e importare il suo richiamo nei file iniziali di configurazione
 
-    su - alice
-    vim .my_set
-		
-		
-		################################### PROXY ###################################
-		PROXY_SERVER=xxx.xxx.xxx.xxx
-		PROXY_PORT=8080
-		PROXY_USERNAME=user
-		PROXY_PASSWORD=password
-		PROXY=$PROXY_USERNAME:$PROXY_PASSWORD@$PROXY_SERVER:$PROXY_PORT
-		# HTTP and HTTPS
-		export http_proxy=http://$PROXY
-		export HTTP_PROXY=http://$PROXY
-		export https_proxy=http://$PROXY
-		export HTTPS_PROXY=http://$PROXY
-		# RSYNC
-		export rsync_proxy=$PROXY
-		export RSYNC_PROXY=$PROXY
-		##############################################################################
-				
+    vim .set_proxy
+
+export http_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export HTTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export https_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export HTTPS_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export ftp_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export FTP_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export rsync_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export RSYNC_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+export all_proxy=http://user:password@xxx.xxx.xxx.xxx:8080
+export ALL_PROXY=http://user:password@xxx.xxx.xxx.xxx:8080
+
     vim .bashrc 
-         . ~/.my_set        
+         . ~/.set_proxy        
     vim .profile
-         . ~/.my_set        
+         . ~/.set_proxy        
+    vim .bash_profile 
+         source ~/.profile
 
-4) con user alice installare rbenv
+4) con user alice installare rvm
 
-uscire con exit e rientrare con l'utente alice
+    curl -L https://get.rvm.io | bash -s stable
+   
+5) aggiungere nei sudoers l'utente alice (serve per le dipendenze mancanti)
+   nel file /etc/group
+        sudo:x:27:alice
 
-    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+6) installare ruby (installa le dipendenze mancanti)
+   sempre con lo user alice, quando ne avra' bisogno chiedera' la password di root (alice)
 
-5) configurare il proprio profilo
+    rvm install 2.0.0-p247
 
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.my_set
-    echo 'eval "$(rbenv init -)"' >> ~/.my_set
-
-6) restart del terminale e installazione ruby 
-
-uscire con exit e rientrare con l'utente alice
-    su - alice
-
-verifica il comendo digitando
-    type rbenv
-(deve essere riconosciuto come una funzione)
-
-    rbenv install -l 
-(elenca tutte le versioni disponibili)
-
-    rbenv install 2.2.2
-(installa una versione)
-
-    rbenv global 2.2.2
-(imposta una versione globalmente)
-
-    rbenv local 2.2.2
-(imposta una versione localmente)
-
-    rbenv rehash
-
-7) restart del terminale e installazione di rails sempre con user alice
-    ruby -v
-    gem install rails -v 4.2.1
+7) installazione di rails 
+    gem install rails -v 3.2.13
 
 8) Alice
     git clone https://github.com/pachiara/alice.git
@@ -95,12 +63,12 @@ verifica il comendo digitando
     bundle exec rake db:setup RAILS_ENV=production
     bundle exec rake tmp:clear
     bundle exec rake assets:clean
-    RAILS_ENV=production bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+    bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
 
 9) Apache + Passenger
 
    gem install passenger
-   passenger-install-apache2-module
+   sudo passenger-install-apache2-module
 
    login con user root
 
@@ -109,12 +77,10 @@ verifica il comendo digitando
 
    vim /etc/apache2/sites-enabled/000-default
 
-....
-LoadModule passenger_module /home/alice/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/passenger-5.0.10/buildout/apache2/mod_passenger.so
-   <IfModule mod_passenger.c>
-     PassengerRoot /home/alice/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/passenger-5.0.10
-     PassengerDefaultRuby /home/alice/.rbenv/versions/2.2.2/bin/ruby
-   </IfModule>
+   
+LoadModule passenger_module /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13/buildout/apache2/mod_passenger.so
+   PassengerRoot /home/alice/.rvm/gems/ruby-2.0.0-p247/gems/passenger-4.0.13
+   PassengerDefaultRuby /home/alice/.rvm/wrappers/ruby-2.0.0-p247/ruby
 
 <VirtualHost *:80>
         ServerName  alice.lispa.it
@@ -122,14 +88,14 @@ LoadModule passenger_module /home/alice/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.
 
         DocumentRoot /var/www
         <Directory />
-          Options FollowSymLinks
-          AllowOverride None
+                Options FollowSymLinks
+                AllowOverride None
         </Directory>
         <Directory /var/www/>
-          Options Indexes FollowSymLinks MultiViews
-          AllowOverride None
-          # Uncomment this if you're on Apache >= 2.4:
-           Require all granted
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
         </Directory>
 
 ################ Applicazioni Rails ####################
@@ -138,12 +104,10 @@ LoadModule passenger_module /home/alice/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.
 
         RackBaseURI /alice
         <Directory /var/www/alice>
-          # This relaxes Apache security settings.
-          AllowOverride all
-          # MultiViews must be turned off.
-          Options -MultiViews
-          # Uncomment this if you're on Apache >= 2.4:
-          Require all granted
+                 # This relaxes Apache security settings.
+                 AllowOverride all
+                 # MultiViews must be turned off.
+                 Options -MultiViews
         </Directory>
 
         ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -156,21 +120,6 @@ LoadModule passenger_module /home/alice/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.
 </VirtualHost>
 
 
-10) impostare la secret_key per la produzione
-
-cd /alice
-RAILS_ENV=production rake secret
-
-viene stampata a video la nuova key
-
-sul server apache bisogna impostarla come variabile di environment
-vim /etc/apache2/envvars
-
-es.:
-
-export SECRET_KEY_BASE=1418c46ca0e87bb9b28c40601ecc356513211a6d812eebec818fd594af338696c1869fcd0f460f5e51ecaf8460912f3615a5ab840542b710cd7c68b2b45fed68
-
-
-11) riavviare apache2
+10) riavviare apache2
 
     apache2ctl restart

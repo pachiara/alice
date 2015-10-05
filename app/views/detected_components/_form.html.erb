@@ -1,21 +1,16 @@
-<%= simple_form_for(@detected_component, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+<%= simple_form_for(@detected_component) do |f| %>
   <%= f.error_notification %>
 
   <%= hidden_field_tag 'detection_id', @detected_component.detection.id %>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-     <%= t('activerecord.models.product') %>: <b><%= @detected_component.detection.release.product.name %></b>
-  	 - Vers. <b><%= @detected_component.detection.release.version_name %></b>	
-    </h3>
-  </div>
-  <div class="panel-body">
+  <button class="btn btn-large btn-block btn-primary disabled" type="button">
+  	<%= t('activerecord.models.product') %>: <%= @detected_component.detection.product.name %>
+  	 - Vers. <%= @detected_component.detection.product.version %>
+  </button>
 
   <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detected_component.detection.name %></h4>
   
-  <div class="form-group">
-  	<div class="col-md-6">
+  <div class="form-inputs form-horizontal">
     <dl class="dl-horizontal">
       <dt><%= t('activerecord.attributes.detected_component.name') %></dt>
       <dd><%= @detected_component.name %></dd>
@@ -26,44 +21,29 @@
       <dt><%= t('activerecord.attributes.detected_component.license_version') %></dt>
       <dd><%= @detected_component.license_version %></dd>
     </dl>
-   </div>
-   </div>
-   <% if @detected_component.component_id.nil? %>
-     <div class="form-group">
-       <div class="col-md-6">
-         <%= f.input :license_id, collection: License.all.order('description'), value_method: :id, label_method: :description %>
-       </div>
-       <div class="col-md-offset-1 col-md-8">
-         <%= f.label :own %>
-         <%= f.input_field :own, as: :boolean %>
-       </div>
-       <div class="col-md-offset-1 col-md-8">
-         <%= f.label :purchased %>
-         <%= f.input_field :purchased, as: :boolean %>
-       </div>
-     </div>
+    <% if @detected_component.component_id.nil? %>
+    <div class="row">
+      <%= f.input :license_id, collection: License.all(order: 'description'), value_method: :id, label_method: :description, :input_html => { :class => "span5" } %>
+    </div>
+    <div class="row">
+      <%= f.input :own %>
+    </div>
     <% else %>
       <dl class="dl-horizontal">
         <dt><%= t('activerecord.attributes.detected_component.license_id') %></dt>
         <dd><%= License.find(@detected_component.license_id).name %></dd>
         <dt><%= t('activerecord.attributes.detected_component.own') %></dt>
         <dd><%= @detected_component.own %></dd>
-        <dt><%= t('activerecord.attributes.detected_component.purchased') %></dt>
-        <dd><%= @detected_component.purchased %></dd>
       </dl>
     <% end %>
+  </div>
 
-  <div class="form-group">
-  	<div class="col-md-6">
+  <div class="form-actions">
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
+      <i class="icon-ok icon-white"></i> <%= t('actions.save') %>
     <% end %>
-    <%= link_to (detected_components_path + "?detection_id=#{@detected_component.detection.id}"), :class => "btn btn-default" do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+    <%= link_to (detected_components_path + "?detection_id=#{@detected_component.detection.id}"), :class => "btn" do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>
     <% end %>
-    </div>
   </div>
 <% end %>
-
-</div>
-</div>

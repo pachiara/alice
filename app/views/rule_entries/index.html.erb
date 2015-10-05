@@ -1,63 +1,92 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= t('activerecord.models.rule') %>: <b><%= @rule.name %></b> - <%= t('activerecord.models.license') %>: <b><%= @rule.license.name %></b><% if @rule.plus %> + <% end %></h3>
-  </div>
-  <div class="panel-body">
-  	<%= form_tag @rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do %> 	
-  	  <div class="row">
-  	    <% num = 0 %>
-  	    <% @rule_entries.each do |rule_entry| %>
-  	      <div class="alert alert-info col-xs-12 col-sm-6 col-md-4 col-lg-2" style="padding-left: 0; padding-right: 0;">	
-            <div class="col-md-12">
-      	      <div class="input-group input-group-sm">
-                <span class="input-group-addon"><%= rule_entry.order_id %></span>
-                <input type="text" class="form-control" value="<%= rule_entry.license.name %>" disabled style="background-color: #FFFFFF;">
-                <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "del", value: rule_entry.id) do %>
-                  <span class="glyphicon glyphicon-minus glyphicon-inverse"></span>  
-                  <% end %>
-                </span>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.license') %></h3>
-  </div>
-  <div class="panel-body">
-    <div class="table-responsive"> 
-      <%= render :partial => "licenses/search_license" %>
-      <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>	
-      <%= form_tag rule_rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do |f| %>
-        <table class="table table-striped table-condensed table-bordered">
-          <tr>
-            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><%= t('actions.add') %></th>
-            <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.rule_entry.license') %></th>
-            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><%= t('activerecord.attributes.license.version') %></th>
-            <th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><%= t('activerecord.attributes.license.description') %></th>
-          </tr>
-          <% @licenses.each do |license| %>
-            <tr>
-              <td>
-              	<span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "add", value: license.id) do %>
-                  <span class="glyphicon glyphicon-plus glyphicon-inverse"></span>  
-                  <% end %>
-                </span>
-              </td>
-              <td><%= license.name %></td>
-              <td><%= license.version %></td>
-              <td><%= license.description %></td>
-            </tr>
-          <% end %>
-        </table>
-      <% end %>
-    </div>
-  </div>
-</div>
-<%= link_to rules_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
-      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<button class="btn btn-large btn-block btn-primary disabled" type="button">
+  <%= t('activerecord.models.rule') %>: <%= @rule.name %> - <%= t('activerecord.models.license') %>: <%= @rule.license.name %><% if @rule.plus %> + <% end %>
+</button>
+<br />
+
+<div class="container-fluid">
+<%= render :partial => "licenses/search_license" %>
+<div class="row-fluid">
+<div class="span12">
+
+<div class="span6">
+<div class="well sidebar-nav">
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('actions.new') %> <%= t('activerecord.models.rules') %></li>
+  <li class="divider"></li>
+</ul>  
+<%= will_paginate @licenses, :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2 %>	
+
+<%= form_tag rule_rule_entries_path, :method => 'post' do |f| %>
+
+<table class="table table-striped">
+  <tr>
+    <th><%= t('actions.add') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.license') %></th>
+    <th><%= t('activerecord.attributes.license.version') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
+  </tr>
+
+<% @licenses.each do |license| %>
+  <tr>
+    <td><%= check_box_tag "license_add[]", license.id, false, :multiple => "true" %></td>
+    <td><%= license.name %></td>
+    <td><%= license.version %></td>
+    <td><%= license.description %></td>
+  </tr>
+<% end %>
+</table>
+
+</div><!--/.well -->
+</div><!--/.span6 -->
+
+<div class="span6">
+<div class="well sidebar-nav">
+<ul class="nav nav-list">
+  <li class="nav-header"><%= t('actions.destroy') %> <%= t('activerecord.models.rules') %></li>
+  <li class="divider"></li>
+</ul>  	
+<!--Rule selected content-->
+<table class="table table-striped">
+  <tr>
+  	<th><%= t('actions.delete') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.license') %></th>
+    <th><%= t('activerecord.attributes.license.description') %></th>
+    <th><%= t('activerecord.attributes.rule_entry.order') %></th>
+    <th><%= t('actions.edit') %></th>
+  </tr>
+
+<%= will_paginate @rule_entries, :param_name => 'rule_page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2 %>
+
+<% @rule_entries.each do |rule_entry| %>
+  <tr>
+    <td><%= check_box_tag "license_del[]", rule_entry.id, false, :multiple => "true" %></td>
+    <td><%= rule_entry.license.name %></td>
+    <td><%= rule_entry.license.description %></td>
+    <td><%= rule_entry.order_id %></td>
+    <td>
+      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'up', :value => rule_entry.id) do  %>
+      <i class="icon-chevron-up"></i><% end %>
+      <%= button_tag(:class => 'btn btn-mini', :type => 'submit', :name => 'down', :value => rule_entry.id) do  %>
+      <i class="icon-chevron-down"></i><% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+</div><!--/.well -->
+</div><!--/.span6 -->
+
+</div><!--/span12 -->
+</div><!--/.row -->
+</div><!--/.container -->
+
+<br />
+
+<%= button_tag(type: 'submit', class: "btn btn-primary", :title => t('actions.update'), :alt => t('actions.update')) do %>
+  <i class="icon-ok icon-white"></i> <%= t('actions.update') %>  
+<% end %>
+<%= link_to rules_path, :class => "btn", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
 <% end %> 
+
+<% end %>
