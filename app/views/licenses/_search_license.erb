@@ -1,6 +1,8 @@
-<%= form_tag @search_form_path, :method => 'get', :class => "form-search", :style => "float: right;" do %> 
-  <div class="input-append">
-    <%= text_field_tag :license_name, params[:license_name], :class => "search-query" %>
-    <button type="submit" class="btn"><i class="icon-search"></i> <%= t('activerecord.models.license') %></button>
+<%= form_tag @search_form_path, :method => 'get', :class => "form-group pull-right form-inline", :role => "form" do %> 
+  <div class="input-group-sm">
+    <%= text_field_tag :license_name, params[:license_name], :class => "pull-left form-control", :placeholder => t('activerecord.models.license'), :type => "search" %>
+    <span class="pull-left input-group-btn">
+      <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span> </button>
+    </span>
   </div>
 <% end %>

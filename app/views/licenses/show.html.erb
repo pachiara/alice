@@ -26,14 +26,14 @@
 </p>
 
 <br />
-<div class="form-actions">
-    <%= link_to edit_license_path(@license), :class => "btn" do %>
-      <i class="icon-pencil"></i> <%= t('actions.edit') %>      
+<div class="form-group">
+    <%= link_to edit_license_path(@license), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
     <% end %>    
-    <%= link_to license_download_path(@license), :class => "btn" do %>
-      <i class="icon-download-alt"></i> <%= t('actions.download') %>      
+    <%= link_to license_download_path(@license), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-download-alt"></span> <%= t('actions.download') %>      
     <% end %>    
-    <%= link_to licenses_path, :class => "btn" do %>
-      <i class="icon-arrow-left"></i> <%= t('actions.back') %>      
+    <%= link_to licenses_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
     <% end %>    
 </div>

@@ -1,12 +1,20 @@
-# encoding: utf-8
-require 'ruleby'
-require 'json'
-
 class ProductsController < ApplicationController
-  include Ruleby
 
   def restore_search
-    if params[:page].nil? && !session[:products_page].nil? then
+    # Premuto tasto colonna
+    if !params[:sort_column].nil? && params[:page].nil? then
+      if params[:sort_column] != session[:products_sort_column] then
+        params[:sort_order] = " ASC"
+      else
+        if session[:products_sort_order] == " ASC" 
+          params[:sort_order] = " DESC"
+        else
+          params[:sort_order] =  " ASC"
+        end
+      end
+    end
+
+    if params[:page].nil? && params[:restart_page].nil? && !session[:products_page].nil? then
        params[:page] = session[:products_page]
     end
     if params[:product_name].nil? && !session[:products_search_name].nil? then
@@ -15,6 +23,7 @@ class ProductsController < ApplicationController
     if params[:product_groupage].nil? && !session[:products_search_groupage].nil? then
        params[:product_groupage] = session[:products_search_groupage]
     end
+<<<<<<< HEAD
   end
   
   def order_search
@@ -109,54 +118,16 @@ class ProductsController < ApplicationController
     license_types = Hash.new
     LicenseType.all.each do |license_type|
       license_types[license_type.description] = 0
+=======
+    if params[:sort_column].nil? && !session[:products_sort_column].nil? then
+       params[:sort_column] = session[:products_sort_column]
+>>>>>>> v2.branch
     end
-    license_types[t('activerecord.attributes.license_type.unidentified')] = 0
-
-    # Contatori licenze
-    licenses = Hash.new
-    licenses[t('activerecord.attributes.license_type.unidentified')] = 0
-
-    # Lettura componenti del prodotto e incremento contatori
-    @product.components.each do |component|
-      purchased += 1 if component.purchased
-      own += 1 if component.own
-      open_source += 1 if !component.purchased && !component.own
-      if component.license.license_type.nil? 
-        license_types[t('activerecord.attributes.license_type.unidentified')] += 1
-      else
-        license_types[component.license.license_type.description] += 1
-      end  
-      if component.license.nil?
-        licenses[t('activerecord.attributes.license_type.unidentified')] += 1
-      elsif licenses[component.license.description].nil?
-        licenses[component.license.description] = 1
-      else
-        licenses[component.license.description] += 1
-      end
+    if params[:sort_order].nil? && !session[:products_sort_order].nil? then
+       params[:sort_order] = session[:products_sort_order]
     end
     
-    # Creazione array tipi componente in json
-    @component_types = Array.new
-    @component_types.push({:item => t('activerecord.attributes.component.purchased'), :qty => purchased}) if purchased > 0
-    @component_types.push({:item => t('activerecord.attributes.component.own'), :qty => own}) if own > 0
-    @component_types.push({:item => "Open source", :qty => open_source}) if open_source > 0
-    @component_types = @component_types.sort_by {|o| o[:qty]}.reverse.to_json
-
-    # Creazione array tipi licenze in json
-    @license_types = Array.new
-    license_types.each do |data|
-      @license_types.push({:item => data[0], :qty => data[1]}) if data[1] > 0
-    end
-    @license_types = @license_types.sort_by {|o| o[:qty]}.reverse.to_json
-    
-    # Creazione array licenze in json
-    @licenses = Array.new
-    licenses.each do |data|
-      @licenses.push({:item => data[0], :qty => data[1]}) if data[1] > 0
-    end
-    @licenses = @licenses.sort_by {|o| o[:qty]}.reverse.to_json
   end
-  
   
   # GET /products
   # GET /products.json
@@ -164,18 +135,14 @@ class ProductsController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.products')
     @search_form_path = products_path
-    @class_name = "btn btn-mini"
-    @class_groupage = "btn btn-mini"
-    
-    if params[:order].nil? || params[:order].empty? then
-      @products = Product.search(params[:product_name], params[:product_groupage], params[:page])
-    else
-      @products = Product.search_order(order_search, params[:page])
-    end
+
+    @products = Product.search_order(params[:product_name], params[:product_groupage], params[:sort_column], params[:sort_order], params[:page])
 
     session[:products_page] = params[:page]
     session[:products_search_name] = params[:product_name]
     session[:products_search_groupage] = params[:product_groupage]
+    session[:products_sort_column] = params[:sort_column]
+    session[:products_sort_order] = params[:sort_order]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -189,28 +156,6 @@ class ProductsController < ApplicationController
     @title = t('actions.messages.graphics')
     @product = Product.find(params[:id])
     count_types
-  end
-  
-  # GET /products/1/print
-  def print
-    @title = t('actions.messages.graphics')
-    @product = Product.find(params[:product_id])
-    count_types
-    @components = @product.components.order("name")
-        
-    respond_to do |format|
-      format.pdf do
-        render :pdf => @product.name.gsub(' ', '_'),
-               :header => { :left => 'Alice',
-                            :center => @title,
-                            :right => t('actions.messages.classification'),
-                            :line => true
-                          },
-               :footer => { :center => "#{t('actions.messages.date')} #{Time.now.strftime('%d/%m/%Y')}    #{t('actions.messages.hour')} #{Time.now.strftime('%H:%M')}",
-                            :right => 'Pag. [page] / [topage]', :line => true },
-               :show_as_html => params[:debug].present?
-      end
-    end
   end
 
   # GET /products/new
@@ -277,6 +222,7 @@ class ProductsController < ApplicationController
     end
   end
   
+<<<<<<< HEAD
     
   # GET /products/1/check
   def check
@@ -338,3 +284,6 @@ class ProductsController < ApplicationController
   end
   
 end
+=======
+end
+>>>>>>> v2.branch

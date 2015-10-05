@@ -1,7 +1,8 @@
 class LicensesController < ApplicationController
 
   def order_search
-    case params[:order]
+    @order_search = params[:order_search]
+    case @order_search
     when "name"
       if session[:down_name].nil?
         session[:down_name] = true
@@ -16,7 +17,6 @@ class LicensesController < ApplicationController
       else
         @order = "name ASC, version ASC"
       end
-      @class_name = "btn btn-mini btn-info" 
     when "description"
       if session[:down_description].nil?
         session[:down_description] = true
@@ -31,7 +31,6 @@ class LicensesController < ApplicationController
       else
         @order = "description ASC"
       end
-      @class_description = "btn btn-mini btn-info"
     when "license_type"
       if session[:down_license_type].nil?
         session[:down_license_type] = true
@@ -46,7 +45,6 @@ class LicensesController < ApplicationController
       else  
         @order = "license_type_id ASC"
       end
-      @class_license_type = "btn btn-mini btn-info"
     when "category"
       if session[:down_category].nil?
         session[:down_category] = true
@@ -61,9 +59,8 @@ class LicensesController < ApplicationController
       else
         @order = "category_id ASC"
       end  
-      @class_category = "btn btn-mini btn-info"
     end
-    return @order  
+    return @order
   end
 
   def restore_search
@@ -84,12 +81,8 @@ class LicensesController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
     @search_form_path = licenses_path
-    @class_name = "btn btn-mini"
-    @class_description = "btn btn-mini"
-    @class_category = "btn btn-mini"
-    @class_license_type = "btn btn-mini"
         
-    if params[:order].nil? || params[:order].empty? then
+    if params[:order_search].nil? || params[:order_search].empty? then
       @licenses = License.search(params[:license_name], params[:page])
     else
       @licenses = License.search_order(order_search, params[:page])

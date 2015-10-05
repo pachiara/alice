@@ -1,15 +1,15 @@
 class Detection < ActiveRecord::Base
-  attr_accessible :name, :product_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
+  attr_accessible :name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
   
   has_attached_file :xml
-  belongs_to :product
+  belongs_to :release
   has_many :detected_components, :dependent => :destroy
   
   validates_presence_of :name
   validates_presence_of :xml, :message => ''
-  validates :name, :uniqueness => {:scope => [:product_id]}
-  
-  before_save :parse_file
+  validates_uniqueness_of :name, scope: :release_id
+  validates_attachment_content_type :xml, :content_type => "text/xml"
+  before_create :parse_file
   
   def parse_file
     tempfile = xml.queued_for_write[:original]
@@ -56,10 +56,18 @@ class Detection < ActiveRecord::Base
       major_release = detected_component.version.split('.')[0]
       component = Component.where("name = ? and version like ?", detected_component.name, "#{major_release}.%").first
     end
+<<<<<<< HEAD
+=======
+    # per componenti propri non controlla corrispondenza della release.
+    if component == nil
+      component = Component.where("name = ? and own = true", detected_component.name).first
+    end
+>>>>>>> v2.branch
     if component != nil
       detected_component.component_id = component.id
       detected_component.license_id = component.license_id
       detected_component.own = component.own
+      detected_component.purchased = component.purchased
     end
   end
 
@@ -80,15 +88,19 @@ class Detection < ActiveRecord::Base
   end
 
   def validate_acquire
-    detected_components.each do |component|
-      if component.license_id.nil?
-         errors.add("#{component.name}", "#{component.version}")
+    if detected_components.empty?
+      errors.add("Rilevamento: #{name}", "Nessun componente rilevato")
+    else
+      detected_components.each do |component|
+        if component.license_id.nil?
+           errors.add("#{component.name}", "#{component.version}")
+        end
       end
     end
   end
   
   def acquire
-    p = Product.find(product_id)
+    r = Release.find(release_id)
     detected_components.each do |component|
       if !component.component_id.nil?
         c = Component.find(component.component_id)
@@ -105,12 +117,16 @@ class Detection < ActiveRecord::Base
           c.description = component.name
           c.license_id = component.license_id
           c.own = component.own
+<<<<<<< HEAD
           c.checked_at = Date.today
           c.use_id = 1
+=======
+          c.purchased = component.purchased
+>>>>>>> v2.branch
           c.save
         end
       end
-      p.components.push(c) unless p.components.include?(c)
+      r.components.push(c) unless r.components.include?(c)
     end
     acquired = true
   end

@@ -1,9 +1,8 @@
-<%= form_tag @search_form_path, :method => 'get', :class => "form-search", :style => "float: right;" do %>	
-  <div class="input-append">
-    <%= text_field_tag :product_name, params[:product_name], :class => "search-query" %>
-    <button type="submit" class="btn" name="commit" value="clear">
-      <i class="icon-search"></i>
-       <%= t('activerecord.models.product') %>
-    </button>
+<%= form_tag @search_form_path, :method => 'get', :class => "form-group pull-right form-inline", :role => "form" do %>	
+  <div class="input-group-sm">
+    <%= text_field_tag :product_name, params[:product_name], :class => "pull-left form-control", :placeholder => t('activerecord.models.product'), :type => "search" %>
+    <span class="pull-left input-group-btn">
+      <button type="submit" class="btn btn-sm btn-primary" name="restart_page" value="true"><span class="glyphicon glyphicon-search"></span> </button>
+    </span>
   </div>
 <% end %>

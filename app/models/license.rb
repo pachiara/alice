@@ -10,13 +10,11 @@ class License < ActiveRecord::Base
   has_many   :products
   
   def self.search(name, page, per_page = 10)
-    conditions = sanitize_sql_for_conditions(["description like '%s'", "%#{name}%"])      
-    paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
+    order('name, version').where('name LIKE ?', "%#{name}%").paginate(page: page, per_page: per_page)
   end
 
-# order = 'description ASC', 'description DESC', 'category_id ASC', category_id DESC', 'license_type_id ASC', 'license_type_id DESC'
   def self.search_order(order, page, per_page = 10)
-    paginate :order => order, :per_page => per_page, :page => page
+    order(order).paginate(page: page, per_page: per_page)
   end
 
 end

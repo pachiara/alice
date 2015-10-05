@@ -1,28 +1,40 @@
-<table class="table table-striped table-bordered">
-  <tr>
-    <th><%= t('activerecord.attributes.license_type.code') %></th>
-    <th><%= t('activerecord.attributes.license_type.description') %></th>
-    <th><%= t('activerecord.attributes.license_type.protection_level') %></th>
-    <th><%= t('actions.actions') %></th>
-  </tr>
+<br />
+<br />
 
-<% @license_types.each do |license_type| %>
+<div class="table-responsive">
+<table class="table table-striped table-bordered">
+  <thead>	
+  <tr>
+    <th class="col-sm-2 col-xs-1"><%= t('activerecord.attributes.license_type.code') %></th>
+    <th class="col-sm-2 col-xs-6"><%= t('activerecord.attributes.license_type.description') %></th>
+    <th class="col-sm-2 col-xs-1"><%= t('activerecord.attributes.license_type.protection_level') %></th>
+    <th class="col-sm-2 col-xs-4"><%= t('actions.actions') %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @license_types.each do |license_type| %>
   <tr>
     <td><%= license_type.code %></td>
     <td><%= license_type.description %></td>
     <td><%= license_type.protection_level %></td>
     <td>
       <div class="btn-group">
-    	<%= link_to raw('<i class="icon-eye-open"></i>'), license_type, :class => "btn", :title => t('actions.show'), :alt => t('actions.show') %>
-    	<%= link_to raw('<i class="icon-pencil"></i>'), edit_license_type_path(license_type), :class => "btn", :title => t('actions.edit'), :alt => t('actions.edit') %>
-    	<%= link_to raw('<i class="icon-trash"></i>'), license_type, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), license_type, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_license_type_path(license_type), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), license_type, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
       </div>
     </td>
   </tr>
 <% end %>
+</tbody>
 </table>
+</div>
 
 <br />
-<%= link_to new_license_type_path, :class => "btn", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <i class="icon-plus"></i> <%= t('actions.new') %>
+<%= link_to new_license_type_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
+ 
+<%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 

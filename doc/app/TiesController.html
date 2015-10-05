@@ -2,197 +2,98 @@
 
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta charset="utf-8">
 
 <title>class TiesController - Rails Application Documentation</title>
-
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
 
 
-<body id="top" class="class">
-<nav id="metadata">
-  <nav id="home-section" class="section">
-  <h3 class="section-header">
-    <a href="./index.html">Home</a>
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
     <a href="./table_of_contents.html#classes">Classes</a>
     <a href="./table_of_contents.html#methods">Methods</a>
-  </h3>
-</nav>
-
-
-  <nav id="search-section" class="section project-section" class="initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <h3 class="section-header">
-      <input type="text" name="search" placeholder="Search" id="search-field"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </h3>
-  </form>
-
-  <ul id="search-results" class="initially-hidden"></ul>
-</nav>
-
-
-  <div id="file-metadata">
-    <nav id="file-list-section" class="section">
-  <h3 class="section-header">Defined In</h3>
-  <ul>
-    <li>app/controllers/ties_controller.rb
-  </ul>
-</nav>
-
-    
   </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
   
   <p class="link"><a href="ApplicationController.html">ApplicationController</a>
   
-</nav>
+</div>
 
+    
     
     <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
+  <ul class="link-list" role="directory">
     
-    <li><a href="#method-i-edit">#edit</a>
+    <li ><a href="#method-i-destroy">#destroy</a>
     
-    <li><a href="#method-i-index">#index</a>
+    <li ><a href="#method-i-edit">#edit</a>
     
-    <li><a href="#method-i-select">#select</a>
+    <li ><a href="#method-i-index">#index</a>
+    
+    <li ><a href="#method-i-select">#select</a>
+    
+    <li ><a href="#method-i-show">#show</a>
     
   </ul>
-</nav>
-
-  </div>
-
-  <div id="project-metadata">
-    <nav id="fileindex-section" class="section project-section">
-  <h3 class="section-header">Pages</h3>
-
-  <ul>
-  
-    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
-  
-  </ul>
-</nav>
-
-    <nav id="classindex-section" class="section project-section">
-  <h3 class="section-header">Class and Module Index</h3>
-
-  <ul class="link-list">
-  
-    <li><a href="./AboutController.html">AboutController</a>
-  
-    <li><a href="./AboutHelper.html">AboutHelper</a>
-  
-    <li><a href="./Admin.html">Admin</a>
-  
-    <li><a href="./ApplicationController.html">ApplicationController</a>
-  
-    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
-  
-    <li><a href="./CategoriesController.html">CategoriesController</a>
-  
-    <li><a href="./CategoriesHelper.html">CategoriesHelper</a>
-  
-    <li><a href="./Category.html">Category</a>
-  
-    <li><a href="./Component.html">Component</a>
-  
-    <li><a href="./ComponentsController.html">ComponentsController</a>
-  
-    <li><a href="./ComponentsHelper.html">ComponentsHelper</a>
-  
-    <li><a href="./DetectedComponent.html">DetectedComponent</a>
-  
-    <li><a href="./DetectedComponentsController.html">DetectedComponentsController</a>
-  
-    <li><a href="./DetectedComponentsHelper.html">DetectedComponentsHelper</a>
-  
-    <li><a href="./Detection.html">Detection</a>
-  
-    <li><a href="./DetectionsController.html">DetectionsController</a>
-  
-    <li><a href="./DetectionsHelper.html">DetectionsHelper</a>
-  
-    <li><a href="./HomeController.html">HomeController</a>
-  
-    <li><a href="./HomeHelper.html">HomeHelper</a>
-  
-    <li><a href="./License.html">License</a>
-  
-    <li><a href="./LicenseRulebook.html">LicenseRulebook</a>
-  
-    <li><a href="./LicenseType.html">LicenseType</a>
-  
-    <li><a href="./LicenseTypesController.html">LicenseTypesController</a>
-  
-    <li><a href="./LicensesController.html">LicensesController</a>
-  
-    <li><a href="./LicensesHelper.html">LicensesHelper</a>
-  
-    <li><a href="./Object.html">Object</a>
-  
-    <li><a href="./Product.html">Product</a>
-  
-    <li><a href="./ProductsController.html">ProductsController</a>
-  
-    <li><a href="./ProductsHelper.html">ProductsHelper</a>
-  
-    <li><a href="./Rule.html">Rule</a>
-  
-    <li><a href="./RuleEntriesController.html">RuleEntriesController</a>
-  
-    <li><a href="./RuleEntriesHelper.html">RuleEntriesHelper</a>
-  
-    <li><a href="./RuleEntry.html">RuleEntry</a>
-  
-    <li><a href="./RulesController.html">RulesController</a>
-  
-    <li><a href="./RulesHelper.html">RulesHelper</a>
-  
-    <li><a href="./TiesController.html">TiesController</a>
-  
-    <li><a href="./TiesHelper.html">TiesHelper</a>
-  
-    <li><a href="./TypeLicensesHelper.html">TypeLicensesHelper</a>
-  
-    <li><a href="./Use.html">Use</a>
-  
-    <li><a href="./User.html">User</a>
-  
-    <li><a href="./UsesController.html">UsesController</a>
-  
-    <li><a href="./UsesHelper.html">UsesHelper</a>
-  
-  </ul>
-</nav>
+</div>
 
   </div>
 </nav>
 
-<div id="documentation">
-  <h1 class="class">class TiesController</h1>
+<main role="main" aria-labelledby="class-TiesController">
+  <h1 id="class-TiesController" class="class">
+    class TiesController
+  </h1>
 
-  <div id="description" class="description">
+  <section class="description">
     
-  </div><!-- description -->
+  </section>
 
   
   
@@ -206,10 +107,50 @@
 
     
 
-    <!-- Methods -->
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroy</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>DELETE /product/1/ties/destroy DELETE /product/1/ties/destroy.json</p>
+          
+          
+
+          
+          <div class="method-source-code" id="destroy-source">
+            <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-ivar">@release</span> = <span class="ruby-constant">Release</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:release_id</span>])
+  <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">delete_components</span>
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">release_ties_edit_url</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">head</span> <span class="ruby-value">:no_content</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
 
     
       <div id="method-i-edit" class="method-detail ">
@@ -217,7 +158,9 @@
         <div class="method-heading">
           <span class="method-name">edit</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -225,39 +168,40 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 38</span>
+            <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
   <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.edit&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.tie&#39;</span>)
   <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;will_paginate/array&#39;</span>
-  
-  <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:product_id</span>])
-  <span class="ruby-ivar">@components_ties</span> = <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_ties_page</span>]
-  <span class="ruby-ivar">@components</span> = (<span class="ruby-constant">Component</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name like ?&quot;</span>, <span class="ruby-node">&quot;%#{params[:component_name]}%&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>)).<span class="ruby-identifier">paginate</span>(<span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>])
-  <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">product_ties_edit_path</span>
+  <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">release_ties_edit_path</span>
+  <span class="ruby-ivar">@release</span> = <span class="ruby-constant">Release</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:release_id</span>])
   
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:component_del</span>].<span class="ruby-identifier">nil?</span>
-    <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">del_relation</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_del</span>])
+    <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">del_relation</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_del</span>])
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:component_add</span>].<span class="ruby-identifier">nil?</span>
-    <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">add_relation</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_add</span>])
+    <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">add_relation</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_add</span>])
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@components_ties</span> = <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_ties_page</span>], <span class="ruby-identifier">per_page</span><span class="ruby-operator">:</span> <span class="ruby-value">6</span>)
+  <span class="ruby-ivar">@components</span> = (<span class="ruby-constant">Component</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name like ?&quot;</span>, <span class="ruby-node">&quot;%#{params[:component_name]}%&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>)).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>], <span class="ruby-identifier">per_page</span><span class="ruby-operator">:</span> <span class="ruby-value">6</span>)
        
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
-    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span> }
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@release</span> }
   <span class="ruby-keyword">end</span>    
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- edit-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- edit-method -->
+      </div>
 
     
       <div id="method-i-index" class="method-detail ">
@@ -265,11 +209,14 @@
         <div class="method-heading">
           <span class="method-name">index</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -280,8 +227,8 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   
   <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.listing&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.ties&#39;</span>)
-  <span class="ruby-ivar">@products</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:product_name</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>])
-  <span class="ruby-ivar">@components</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_name</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>])
+  <span class="ruby-ivar">@products</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:product_name</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:product_groupage</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>], <span class="ruby-value">5</span>)
+  <span class="ruby-ivar">@components</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_name</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>], <span class="ruby-value">5</span>)
   <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">ties_index_path</span>
   
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
@@ -290,14 +237,14 @@
   <span class="ruby-keyword">end</span>
       
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- index-source -->
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- index-method -->
+      </div>
 
     
       <div id="method-i-select" class="method-detail ">
@@ -305,7 +252,9 @@
         <div class="method-heading">
           <span class="method-name">select</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -313,51 +262,96 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="select-source">
             <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 16</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">select</span>
-  <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.listing&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.ties&#39;</span>)
-  <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">ties_index_path</span>
-      
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:product_id</span>].<span class="ruby-identifier">nil?</span>
-    <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:product_id</span>])
-    <span class="ruby-ivar">@components</span> = <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>]
-    <span class="ruby-ivar">@products</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]).<span class="ruby-identifier">per_page</span>(<span class="ruby-value">10</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">select</span>
+    <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.listing&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.ties&#39;</span>)
+    <span class="ruby-ivar">@search_form_path</span> = <span class="ruby-identifier">ties_index_path</span>
+        
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:release_id</span>].<span class="ruby-identifier">nil?</span>
+      <span class="ruby-ivar">@release</span> = <span class="ruby-constant">Release</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:release_id</span>])
+<span class="ruby-comment">#      @components = @product.components.order(&#39;name, version&#39;).paginate(page: params[:component_page], per_page: 10)   </span>
+      <span class="ruby-ivar">@components</span> = <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name&#39;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>], <span class="ruby-identifier">per_page</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>)   
+<span class="ruby-comment">#      @products = Product.order(&#39;name, version&#39;).page(params[:page]).per_page(10)</span>
+<span class="ruby-comment">#TODO rivedere criterio selezione/ordinamento: tutte le release o una per prodotto (ultima)?</span>
+      <span class="ruby-ivar">@products</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name&#39;</span>).<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]).<span class="ruby-identifier">per_page</span>(<span class="ruby-value">10</span>)
+    <span class="ruby-keyword">end</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:component_id</span>].<span class="ruby-identifier">nil?</span>  
-    <span class="ruby-ivar">@component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_id</span>])
-    <span class="ruby-ivar">@products</span> = <span class="ruby-ivar">@component</span>.<span class="ruby-identifier">products</span>.<span class="ruby-identifier">paginate</span> <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;name, version&#39;</span>, <span class="ruby-value">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]
-    <span class="ruby-ivar">@components</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>]).<span class="ruby-identifier">per_page</span>(<span class="ruby-value">10</span>)
-  <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:component_id</span>].<span class="ruby-identifier">nil?</span>  
+      <span class="ruby-ivar">@component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_id</span>])
+<span class="ruby-comment">#      @products = @component.products.order(&#39;name, version&#39;).paginate(page: params[:page], per_page: 10)   </span>
+      <span class="ruby-ivar">@releases</span> = <span class="ruby-ivar">@component</span>.<span class="ruby-identifier">releases</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;version_name&#39;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>], <span class="ruby-identifier">per_page</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>)   
+      <span class="ruby-ivar">@components</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:component_page</span>]).<span class="ruby-identifier">per_page</span>(<span class="ruby-value">10</span>)
+    <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
-    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span> }
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- select-source -->
+    <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@product</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div>
           
         </div>
 
         
 
         
-      </div><!-- select-method -->
+      </div>
 
     
-    </section><!-- public-instance-method-details -->
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET /product/1/ties/show GET /product/1/ties/show.json</p>
+          
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/ties_controller.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;actions.show&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&#39;activerecord.models.ties&#39;</span>)
+      
+  <span class="ruby-ivar">@release</span> = <span class="ruby-constant">Release</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:release_id</span>])
+  <span class="ruby-ivar">@components</span> = <span class="ruby-ivar">@release</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;name, version&#39;</span>).<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">page</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>], <span class="ruby-identifier">per_page</span><span class="ruby-operator">:</span> <span class="ruby-value">10</span>)   
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment"># show.html.erb</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@release</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
   
-  </section><!-- 5Buntitled-5D -->
+  </section>
+</main>
 
-</div><!-- documentation -->
 
-
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

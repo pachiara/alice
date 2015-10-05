@@ -1,67 +1,44 @@
 class Product < ActiveRecord::Base
-  attr_accessible :checked_at, :description, :license_id, :name, :notes, :result, :title, :use_id, :version,
-   :compatible_license_id, :groupage
-   
-  attr_accessor :warnings, :infos
+  attr_accessible :description, :name, :groupage, :notes, :title, :use_id,
+                  :last_release_version_name, :last_release_checked_at, :last_release_check_result
   
   validates_presence_of :name, :title, :use_id
   validates_uniqueness_of :name
   
   belongs_to :use
-  belongs_to :license
-  belongs_to :compatible_license, :class_name => "License", :foreign_key => "compatible_license_id"
+  has_many :releases, :dependent => :destroy
   
-  has_and_belongs_to_many :components
-  has_many :detections, :dependent => :destroy
-  
-  def add_relation(component_add = [])
-    component_add.each do |component_id|
-      component = Component.find(component_id)
-      unless self.components.include?(component)
-        components<<component
-      end
+  def last_release
+    return self.releases.order("sequential_number").last
+  end
+
+  def self.search_order(name, groupage, sort_column, sort_order, page, per_page = 10)
+    if sort_column.nil? then sort_column = 'name' end  
+    if sort_order.nil? then sort_order = ' ASC' end  
+
+    sort = case sort_column.nil? ? 'name' : sort_column
+      when 'name' then
+        sort_column + sort_order
+      when 'groupage' then
+        sort_column + sort_order + ', name'
+      when 'check_result' then
+        'last_release_' + sort_column + sort_order + ', name'
+      else #checked_at
+        'last_release_' + sort_column + sort_order + ', name'
+    end
+    order(sort).where('name LIKE ? and groupage LIKE ? ', "%#{name}%", "%#{groupage}%").paginate(page: page, per_page: per_page)
+  end
+
+  def update_last_release
+    if !last_release.nil?
+      self.last_release_version_name = last_release.version_name
+      self.last_release_checked_at = last_release.checked_at
+      self.last_release_check_result = last_release.check_result
+    else
+      self.last_release_version_name = nil
+      self.last_release_checked_at = nil
+      self.last_release_check_result = nil
     end
   end
 
-  def del_relation(component_del = [])
-   component_del.each do |component_id|
-      component = Component.find(component_id)
-      if self.components.include?(component)
-        components.delete(component)
-      end  
-    end    
-  end
-   
-  def delete_components
-    self.components.clear
-  end 
-   
-  def self.search(name, groupage, page, per_page = 10)
-   conditions = sanitize_sql_for_conditions(["name like '%s'", "%#{name}%"])      
-   conditions << sanitize_sql_for_conditions([" and groupage like '%s'", "%#{groupage}%"]) unless groupage.nil? or groupage.empty?
-   paginate :order => 'name, version', :per_page => per_page, :page => page, :conditions => conditions
-  end
-  
-  def self.search_order(order, page, per_page = 10)
-    paginate :order => order, :per_page => per_page, :page => page
-  end
-  
-  def check
-    engine = Ruleby::Core::Engine.new
-    engine do |e|
-      LicenseRulebook.new(e).rules
-    end
-  end
-  
-  def addWarning(key, text)
-    @warnings || @warnings = ActiveModel::Errors.new(self)
-    @warnings.add(key, text)
-  end
-
-  def addInfo(key, text)
-    @infos || @infos = ActiveModel::Errors.new(self)
-    @infos.add(key, text)
-  end
-
-  
 end

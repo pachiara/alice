@@ -244,6 +244,8 @@ it:
       rule_entry: "Voce della regola"
       rule_entries: "Voci delle regole"
       user: "Utente"
+      release: "Versione"
+      releases: "Versioni"
     
     attributes:
       license:
@@ -269,20 +271,21 @@ it:
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"
-        version:      "Versione"
+        version:      "Ultima versione"
         title:        "Titolo"    
         description:  "Descrizione"
-        license:      "Licenza"
         use:          "Uso"           
-        checked_at:   "Data controllo"
-        result:       "Esito"
         notes:        "Note"
-        license_id:   "Licenza prodotto"
+        groupage:     "Gruppo"
+      release:
+        version_name: "Versione"
+        sequential_number: "Ordinamento"
+        sequential_number_short: "Ord."
+        license:      "Licenza"
+        checked_at:   "Data controllo"
+        check_result: "Esito"
+        notes:        "Note"
         compatible_license_id: "Licenza compatibilità componenti"
-        groupage:        "Raggruppamento"
-      use:
-        name:         "Nome"
-        description:  "Descrizione"  
       component:
         name:         "Nome"
         version:      "Versione"
@@ -290,9 +293,6 @@ it:
         title:        "Titolo"    
         description:  "Descrizione"
         license:      "Licenza"
-        use:          "Uso"           
-        checked_at:   "Data controllo"
-        result:       "Esito"
         notes:        "Note"
         purchased:    "Acquistato"
         own:          "Proprio"
@@ -316,6 +316,7 @@ it:
         license_id:   "Licenza assegnata"
         license_id_version: "Versione assegnata"
         own:          "Proprio"
+        purchased:    "Acquistato"
       rule:
         name:         "Nome"
         license:      "Licenza"
@@ -366,6 +367,7 @@ it:
     save: "Salva"
     details: "Dettagli"
     select: "Seleziona"
+    selected: "Selezionati"
     acquire: "Acquisisci"
     disabled: "Disabilitato"
     check: "Controllo"
@@ -391,7 +393,7 @@ it:
       password_wont_change: "La password rimane invariata fino a quando non si accede al link qui sopra e se ne crea una nuova."
       date: "Data"
       hour: "Ora"
-      classification: "Classificazione: uso interno"
+      classification: "Classificazione: circolazione limitata"
       components_for_ownership: "Componenti per proprietà"
       licenses_for_protection_level: "Licenze per livello di protezione"
       licenses_for_type: "Licenze per tipo"
@@ -401,8 +403,8 @@ it:
       acquisition: "Acquisizione"
   
   will_paginate:
-    next_label: "Sucessivi"
-    previous_label: "Precedenti"
+    next_label: "&rarr;"
+    previous_label: "&larr;"
   
   devise:
     sessions:
@@ -479,6 +481,16 @@ it:
       destroy:
         notice: "Prodotto: eliminazione avvenuta con successo!"
         alert: "Prodotto: errore durante l'eliminazione!"     
+    release:
+      create:
+        notice: "Versione: creazione avvenuta con successo!"
+        alert: "Versione: errore durante la creazione!"
+      update:
+        notice: "Versione: aggiornamento avvenuto con successo!"
+        alert: "Versione: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Versione: eliminazione avvenuta con successo!"
+        alert: "Versione: errore durante l'eliminazione!"
     use:
       create:
         notice: "Uso: creazione avvenuta con successo!"
