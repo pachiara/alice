@@ -251,7 +251,7 @@ class DetectionsController < ApplicationController
       # Controllo parametro product_version
       @ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.ip_address
       @link = releases_path(product_id: @product.id)
-      @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "%#{@version}%").take
+      @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "#{@version}%").order('sequential_number desc').take
       if @release.nil?
         @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}",
            "msg" => "** Errore ** Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}",
@@ -265,7 +265,7 @@ class DetectionsController < ApplicationController
                "link" => "http://#{@ip}:#{request.port}#{@link}"}
           else
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@version}"}
+               "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@release.version_name}"}
           end
           # Aggiorno stato del prodotto
           @release.update_attributes(checked_at: Time.now)

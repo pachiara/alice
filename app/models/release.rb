@@ -35,7 +35,7 @@ class Release < ActiveRecord::Base
     component_add.each do |component_id|
       component = Component.find(component_id)
       unless self.components.include?(component)
-        components<<component
+        components<< component
       end
     end
   end
