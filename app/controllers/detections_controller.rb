@@ -261,7 +261,7 @@ class DetectionsController < ApplicationController
           @release.analyze_rules
           if @release.errors.full_messages.length > 0
             @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "6 ** KO ** Prodotto: #{@name} versione: #{@version} - #{@release.errors.full_messages.last}",
+               "msg" => "Difformità di licenze sul prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
                "link" => "http://#{@ip}:#{request.port}#{@link}"}
           else
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
