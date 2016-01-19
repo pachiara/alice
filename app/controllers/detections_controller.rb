@@ -144,7 +144,7 @@ class DetectionsController < ApplicationController
     @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
-         "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
+         "msg" => "Prodotto non trovato - prodotto: #{@name}"}
     else
       # Controllo parametro product_version
       @release = Release.where('product_id = ? and version_name = ?', "#{@product.id}", "#{@version}").take
@@ -167,7 +167,7 @@ class DetectionsController < ApplicationController
         end
         if !@release.id.nil? and !(Detection.where('release_id = ? and name = ?', "#{@release.id}", "#{@detection_name}").take).nil?
           @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "** Errore ** Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
+             "msg" => "Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
         end
       end
       # Controllo parametro detection
@@ -177,7 +177,7 @@ class DetectionsController < ApplicationController
            params[:detection][:xml].nil? ||
            !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
           @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "** Errore ** File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+             "msg" => "File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
         else  
           @detection = Detection.new(params[:detection])
           @detection.name = @detection_name 
@@ -197,13 +197,13 @@ class DetectionsController < ApplicationController
             @link = detected_components_path(detection_id: @detection.id)
             if @detection.errors.full_messages[0].include? "Nessun componente"
               @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "** Errore ** File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
+                 "msg" => "File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
                   " - RILEVAMENTO ELIMINATO!"}
               @detection.destroy
             else
               require 'socket'  
               @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "** Errore ** Errori sui componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
+                 "msg" => "Errori sui componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
                  "link" => "http://#{@ip}:#{request.port}#{@link}"}
             end
           else 
@@ -212,11 +212,11 @@ class DetectionsController < ApplicationController
             # Modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-               "msg" => "** OK ** Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+               "msg" => "Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
           end
         else
           @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "** Errore ** Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+             "msg" => "Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
         end
       end
       format.html { render json: @result }
@@ -243,7 +243,7 @@ class DetectionsController < ApplicationController
     @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}",
-         "msg" => "** Errore ** Prodotto non trovato - prodotto: #{@name}"}
+         "msg" => "Prodotto non trovato - prodotto: #{@name}"}
     else
       if @version.nil?
         @version = @product.last_release.version_name
@@ -254,24 +254,24 @@ class DetectionsController < ApplicationController
       @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "#{@version}%").order('sequential_number desc').take
       if @release.nil?
         @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}",
-           "msg" => "** Errore ** Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}",
+           "msg" => "Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}",
            "link" => "http://#{@ip}:#{request.port}#{@link}"}
       else
         if @release.precheck 
           @release.analyze_rules
           if @release.errors.full_messages.length > 0
             @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "Difformità di licenze sul prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
+               "msg" => "Difformita' di licenze sul prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
                "link" => "http://#{@ip}:#{request.port}#{@link}"}
           else
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "** OK ** Controllo ok prodotto: #{@name} versione: #{@release.version_name}"}
+               "msg" => "Controllo ok prodotto: #{@name} versione: #{@release.version_name}"}
           end
           # Aggiorno stato del prodotto
           @release.update_attributes(checked_at: Time.now)
         else
           @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
-             "msg" => "** Errore ** Prodotto: #{@name} versione: #{@version} - #{@release.errors.full_messages.last}",
+             "msg" => "Prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
              "link" => "http://#{@ip}:#{request.port}#{@link}"}
 
           # Aggiorno stato del prodotto
