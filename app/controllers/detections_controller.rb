@@ -203,7 +203,7 @@ class DetectionsController < ApplicationController
             else
               require 'socket'  
               @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "Errori sui componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
+                 "msg" => "Licenza non trovata per uno o piu' componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
                  "link" => "http://#{@ip}:#{request.port}#{@link}"}
             end
           else 
