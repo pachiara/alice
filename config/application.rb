@@ -26,5 +26,10 @@ module Alice
     I18n.enforce_available_locales = false
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # Custom configuration
+    config.x.alice = Rails.application.config_for(:alice)
   end
+  
+  
 end

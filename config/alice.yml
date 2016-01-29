@@ -1,0 +1,13 @@
+default: &default
+  own_component_tag_xpath: license/name
+  own_component_tag_value: "Lispa License"
+  # xpath relativo dall'interno dei tag //licences 
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

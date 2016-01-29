@@ -34,6 +34,11 @@ class Detection < ActiveRecord::Base
             # cerca licenza corrispondente 
             versions = dc.search_licenses(dc.license_name, dc.license_version)
             dc.license_id = versions[0].id if versions.length == 1
+            # cerca tag che segnala componente proprio (own)
+            own_tag = node.xpath('../' + Rails.configuration.x.alice["own_component_tag_xpath"])
+            if !own_tag.nil? and own_tag.text.include? Rails.configuration.x.alice["own_component_tag_value"]
+              dc.own = true
+            end
           end
           self.detected_components << dc
         end
@@ -43,6 +48,11 @@ class Detection < ActiveRecord::Base
         dc.name = node.xpath('../artifactId').text
         dc.version = node.xpath('../version').text
         dc.license_name = node.xpath('comment()').text
+        # cerca tag che segnala componente proprio (own)
+        own_tag = node.xpath(Rails.configuration.x.alice["own_component_tag_xpath"])
+        if !own_tag.nil? and own_tag.text.include? Rails.configuration.x.alice["own_component_tag_value"]
+          dc.own = true
+        end
         identify_component(dc)
         self.detected_components << dc
       end
