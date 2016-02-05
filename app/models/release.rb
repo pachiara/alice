@@ -77,6 +77,13 @@ class Release < ActiveRecord::Base
       self.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
       check_result = false
     end
+    self.detections.each do |detection|
+      if !detection.acquired
+        self.errors.add("Impossibile eseguire il controllo:", 
+          "non tutti i rilevamenti della release sono stati acquisiti.")
+        return check_result = false
+      end
+    end
     if self.components.empty? 
       self.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
       check_result = false
