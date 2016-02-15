@@ -17,7 +17,7 @@ class Product < ActiveRecord::Base
     if sort_order.nil? then sort_order = ' ASC' end  
 
     sort = case sort_column.nil? ? 'name' : sort_column
-      when 'name' then
+      when 'name', 'updated_at' then
         sort_column + sort_order
       when 'groupage' then
         sort_column + sort_order + ', name'

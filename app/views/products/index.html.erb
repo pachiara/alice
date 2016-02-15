@@ -10,7 +10,9 @@
      else class_check_result = 'btn btn-default btn-block btn-sm' end %>
   <% if params[:sort_column] == 'checked_at' then class_checked_at = 'btn btn-primary btn-block btn-sm'
      else class_checked_at = 'btn btn-default btn-block btn-sm' end %>
-       
+  <% if params[:sort_column] == 'updated_at' then class_updated_at = 'btn btn-primary btn-block btn-sm'
+     else class_updated_at = 'btn btn-default btn-block btn-sm' end %>
+     
   <%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
     <table class="table table-striped table-condensed table-bordered">
       <thead>
@@ -66,6 +68,18 @@
               <% end %>
             <% end %>
           </th>
+          <th>
+            <%= button_tag(:class => class_updated_at, :type => 'submit', :name => 'sort_column', :value => 'updated_at') do  %>
+              <b><%= t('activerecord.attributes.product.updated_at')%></b>
+              <% if params[:sort_column] == 'updated_at' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
           <th><%= t('actions.actions') %></th>
         </tr>
       </thead>
@@ -75,7 +89,7 @@
         <tr>
           <td><%= product.name %></td>
           <td><%= product.title %></td>
-          <td><%= unless product.groupage.nil?; product.groupage; end %></td>
+          <td class="text-center"><%= unless product.groupage.nil?; product.groupage; end %></td>
           <td><%= unless product.use.nil?; product.use.description; end %></td>
           <% if product.last_release.nil? %>
             <td></td>
@@ -83,7 +97,7 @@
             <td></td>
           <% else %>
             <td><%= product.last_release_version_name %></td>
-            <td>
+            <td class="text-center">
               <% if product.last_release_check_result.nil? %>
                 <span class="label label-warning">NC</span>
                 <% else %>
@@ -94,7 +108,8 @@
                   <% end %>
             	<% end %>
             </td>
-            <td><% if !product.last_release_checked_at.nil? %><%= l product.last_release_checked_at %><% end %></td>
+            <td class="text-center"><% if !product.last_release_checked_at.nil? %><%= l product.last_release_checked_at %><% end %></td>
+            <td class="text-center"><%= (product.updated_at).strftime("%d/%m/%Y %H:%M") %></td>
           <% end %>
           <td>
             <div class="btn-group">
