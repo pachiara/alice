@@ -1,5 +1,8 @@
 class LicensesController < ApplicationController
 
+  before_filter :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+
+  
   def order_search
     @order_search = params[:order_search]
     case @order_search

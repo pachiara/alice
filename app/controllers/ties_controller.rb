@@ -1,4 +1,7 @@
 class TiesController < ApplicationController
+  
+  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
     @products = Product.search_order(params[:product_name], params[:product_groupage], 'name', ' ASC', params[:page], 5)

@@ -1,5 +1,7 @@
 class ComponentsController < ApplicationController
   
+    before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  
   def restore_search
     if params[:page].nil? && !session[:components_page].nil? then
        params[:page] = session[:components_page]
