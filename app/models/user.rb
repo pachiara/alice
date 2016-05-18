@@ -8,4 +8,16 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
+  
+  validate  :email_domain
+  
+  def email_domain
+    if !Rails.configuration.x.alice["users_email_domain_validation_regex"].nil?
+      r = Regexp.new(Rails.configuration.x.alice["users_email_domain_validation_regex"])
+      if (r =~ email).nil?
+        errors.add(:email, "dominio non valido")
+      end
+    end
+  end
+  
 end

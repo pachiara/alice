@@ -1,7 +1,9 @@
 default: &default
+  # xpath relativo dall'interno dei tag //licences 
   own_component_tag_xpath: license/name
   own_component_tag_value: "Lispa License"
-  # xpath relativo dall'interno dei tag //licences 
+  # espressione regolare x validazione email utenti
+  users_email_domain_validation_regex: lispa.it$
 
 development:
   <<: *default
