@@ -12,7 +12,7 @@
       	      <div class="input-group input-group-sm">
                 <span class="input-group-addon"><%= rule_entry.order_id %></span>
                 <input type="text" class="form-control" value="<%= rule_entry.license.name %>" disabled style="background-color: #FFFFFF;">
-                <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "del", value: rule_entry.id) do %>
+                <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "del", value: rule_entry.id, disabled: current_user.try(:admin?) ? false : true) do %>
                   <span class="glyphicon glyphicon-minus glyphicon-inverse"></span>  
                   <% end %>
                 </span>
@@ -43,7 +43,7 @@
           <% @licenses.each do |license| %>
             <tr>
               <td>
-              	<span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "add", value: license.id) do %>
+              	<span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "add", value: license.id, disabled: current_user.try(:admin?) ? false : true) do %>
                   <span class="glyphicon glyphicon-plus glyphicon-inverse"></span>  
                   <% end %>
                 </span>

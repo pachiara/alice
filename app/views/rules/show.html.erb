@@ -17,7 +17,7 @@
 
 <br />
 <div class="form-group">
-    <%= link_to edit_rule_path(@rule), :class => "btn btn-default" do %>
+    <%= link_to edit_rule_path(@rule), :class => "btn btn-default", :disabled => current_user.admin? ? false : true do %>
       <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
     <% end %>    
     <%= link_to rules_path, :class => "btn btn-default" do %>

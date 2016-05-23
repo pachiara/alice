@@ -1,4 +1,10 @@
 class RuleEntriesController < ApplicationController
+
+  before_filter :authenticate_user!, only: [:create]
+  before_filter :only => [:create] do 
+    redirect_to :new_user_session unless current_user && current_user.admin?
+  end
+  
   # GET /rule_entries
   # GET /rule_entries.json
   def index
