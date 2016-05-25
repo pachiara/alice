@@ -1,4 +1,6 @@
 class DetectionsController < ApplicationController
+    
+  before_filter :authenticate_user!, only: [:destroy]
   
   def restore_search
     if params[:page].nil? && !session[:detections_page].nil? then
@@ -91,6 +93,7 @@ class DetectionsController < ApplicationController
   # DELETE /detections/1.json
   def destroy
     @detection = Detection.find(params[:id])
+    @detection.user = current_user.email
     @detection.destroy
 
     respond_to do |format|

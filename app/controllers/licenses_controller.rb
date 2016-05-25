@@ -152,6 +152,7 @@ class LicensesController < ApplicationController
   def create
     @title = t('actions.new') + " " + t('activerecord.models.license')
     @license = License.new(params[:license])
+    @license.user = current_user.email
 
     respond_to do |format|
       if @license.save
@@ -169,6 +170,7 @@ class LicensesController < ApplicationController
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.license')
     @license = License.find(params[:id])
+    @license.user = current_user.email
 
     respond_to do |format|
       if @license.update_attributes(params[:license])
@@ -185,6 +187,7 @@ class LicensesController < ApplicationController
   # DELETE /licenses/1.json
   def destroy
     @license = License.find(params[:id])
+    @license.user = current_user.email
     @license.destroy
 
     respond_to do |format|

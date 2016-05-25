@@ -78,6 +78,7 @@ class DetectedComponentsController < ApplicationController
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.detected_component')
     @detected_component = DetectedComponent.find(params[:id])
+    @detected_component.user = current_user.email
 
     respond_to do |format|
       if @detected_component.update_attributes(params[:detected_component])
@@ -94,6 +95,7 @@ class DetectedComponentsController < ApplicationController
   # DELETE /detected_components/1.json
   def destroy
     @detected_component = DetectedComponent.find(params[:id])
+    @detected_component.user = current_user.email
     @detected_component.destroy
 
     respond_to do |format|

@@ -17,4 +17,47 @@ class License < ActiveRecord::Base
     order(order).paginate(page: page, per_page: per_page)
   end
 
+    def alice_logger
+    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
+  end
+
+  def user=(u)
+    @user = u
+  end
+
+  def user
+    @user
+  end
+  
+  before_update do
+    previous = License.find(id)
+    if (license_type_id != previous.license_type_id or similar_license_id != previous.similar_license_id or name != previous.name) then
+      alice_logger.info("
+        License: #{name}
+        Version: #{version}
+        Name previous: #{name}               
+        Similar_License: #{License.find(similar_license_id).description}
+        Similar_License previous: #{License.find(previous.similar_license_id).description}          
+        License_type: #{LicenseType.find(license_type_id).description}
+        License_type previous: #{LicenseType.find(previous.license_type_id).description}          
+        Updated_by: #{user} ")
+    end
+  end
+  
+  before_destroy do
+    alice_logger.info("
+      License: #{name}
+      Version: #{version}
+      Destroyed_by: #{user} ")
+  end
+
+  before_create do
+    alice_logger.info("
+      License: #{name}
+      Version: #{version}
+      Similar_License: #{License.find(similar_license_id).description}
+      License_type: #{LicenseType.find(license_type_id).description}
+      Created_by: #{user} ")
+  end
+  
 end

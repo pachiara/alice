@@ -44,6 +44,12 @@ class Release < ActiveRecord::Base
    component_del.each do |component_id|
       component = Component.find(component_id)
       if self.components.include?(component)
+        alice_logger.info("
+          Product: #{product.name}
+          Release: #{version_name}
+          Component: #{component.name}
+          Destroyed_by: #{user} ")
+
         components.delete(component)
       end  
     end    
@@ -58,6 +64,13 @@ class Release < ActiveRecord::Base
   end
    
   def delete_components
+    self.components.each do |component|
+      alice_logger.info("
+        Product: #{product.name}
+        Release: #{version_name}
+        Component: #{component.name}
+        Destroyed_by: #{user} ")
+    end 
     self.components.clear
   end
 
@@ -126,6 +139,20 @@ class Release < ActiveRecord::Base
       e.match
     end
   end
+
+    
+  def alice_logger
+    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
+  end
+
+  def user=(u)
+    @user = u
+  end
+
+  def user
+    @user
+  end
+ 
 
 
    

@@ -1,6 +1,6 @@
 class TiesController < ApplicationController
   
-  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:edit, :destroy]
   
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.ties')
@@ -47,6 +47,7 @@ class TiesController < ApplicationController
     @release = Release.find(params[:release_id])
     
     if !params[:component_del].nil?
+      @release.user = current_user.email
       @release.del_relation(params[:component_del])
     end
     if !params[:component_add].nil?
@@ -66,6 +67,7 @@ class TiesController < ApplicationController
   # DELETE /product/1/ties/destroy.json
   def destroy
     @release = Release.find(params[:release_id])
+    @release.user = current_user.email
     @release.delete_components
 
     respond_to do |format|

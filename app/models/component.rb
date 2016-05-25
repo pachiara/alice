@@ -7,7 +7,7 @@ class Component < ActiveRecord::Base
   
   belongs_to :use
   belongs_to :license
-    
+
   has_and_belongs_to_many :releases
   
   def self.search(name, page, per_page = 10)
@@ -20,5 +20,44 @@ class Component < ActiveRecord::Base
       errors.add(:own, "")
     end
   end
+  
+  def alice_logger
+    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
+  end
+
+  def user=(u)
+    @user = u
+  end
+
+  def user
+    @user
+  end
+  
+  before_update do
+    previous = Component.find(id)
+    if (license_id != previous.license_id or purchased != previous.purchased or own != previous.own or leave_out != previous.leave_out) then
+      alice_logger.info("
+        Component: #{name}
+        Version: #{version}
+        License: #{License.find(license_id).description}
+        License previous: #{License.find(previous.license_id).description}          
+        Own: #{own}
+        Own previous: #{previous.own}
+        Purchased: #{purchased}
+        Purchased previous: #{previous.purchased}
+        Leave_out: #{leave_out}
+        Leave_out previous: #{previous.leave_out}
+        Updated_by: #{user} ")
+    end
+  end
+  
+  before_destroy do
+    alice_logger.info("
+      Component: #{name}
+      Version: #{version}
+      License: #{License.find(license_id).description}
+      Destroyed_by: #{user} ")
+  end
+
   
 end

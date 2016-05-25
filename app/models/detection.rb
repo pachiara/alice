@@ -132,5 +132,13 @@ class Detection < ActiveRecord::Base
     end
     acquired = true
   end
+  
+  def user=(u)
+    @user = u
+  end
 
+  def user
+    @user
+  end
+  
 end

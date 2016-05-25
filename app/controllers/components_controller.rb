@@ -80,7 +80,8 @@ class ComponentsController < ApplicationController
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.component')
     @component = Component.find(params[:id])
-
+    @component.user = current_user.email
+    
     respond_to do |format|
       if @component.update_attributes(params[:component])
         format.html { redirect_to(components_path, notice: t('flash.component.update.notice')) }
@@ -96,6 +97,7 @@ class ComponentsController < ApplicationController
   # DELETE /components/1.json
   def destroy
     @component = Component.find(params[:id])
+    @component.user = current_user.email
     @component.destroy
 
     respond_to do |format|
