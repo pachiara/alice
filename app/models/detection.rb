@@ -1,4 +1,6 @@
 class Detection < ActiveRecord::Base
+  include Loggable
+  
   attr_accessible :name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
   
   has_attached_file :xml
@@ -131,14 +133,6 @@ class Detection < ActiveRecord::Base
       r.components.push(c) unless r.components.include?(c)
     end
     acquired = true
-  end
-  
-  def user=(u)
-    @user = u
-  end
-
-  def user
-    @user
   end
   
 end

@@ -7,9 +7,12 @@ default: &default
 
 development:
   <<: *default
+  alice_logger_path: log/alice_devel.log
 
 test:
   <<: *default
+  alice_logger_path: log/alice_test.log
 
 production:
   <<: *default
+  alice_logger_path: log/alice_prod.log

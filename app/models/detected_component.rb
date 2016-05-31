@@ -1,4 +1,6 @@
 class DetectedComponent < ActiveRecord::Base
+  include Loggable
+  
   belongs_to :detection
   attr_accessible :component_id, :license_id, :license_name, :license_version, :name, :version, :own, :purchased
   
@@ -49,29 +51,18 @@ class DetectedComponent < ActiveRecord::Base
     end
   end
 
-  
-  def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
-  end
-
-  def user=(u)
-    @user = u
-  end
-
-  def user
-    @user
-  end
- 
   before_update do
     previous = DetectedComponent.find(id)
+    license = license_id.nil? ? " " :  License.find(license_id).description
+    license_previous = previous.license_id.nil? ? " " :  License.find(previous.license_id).description
     if (license_id != previous.license_id or purchased != previous.purchased or own != previous.own) then
       alice_logger.info("
         Product: #{detection.release.product.name}
         Release: #{detection.release.version_name}
         Detection: #{detection.name}
         DetectedComponent: #{name}
-        License: #{License.find(license_id).description}
-        License previous: #{License.find(previous.license_id).description}          
+        License: #{license}
+        License previous: #{license_previous}          
         Own: #{own}
         Own previous: #{previous.own}
         Purchased: #{purchased}
@@ -81,18 +72,19 @@ class DetectedComponent < ActiveRecord::Base
   end
   
   before_destroy do
-    # User impostato a livello detection => su sta cancellando tutta la detection
+    # User impostato a livello detection => si sta cancellando tutta la detection
     if !detection.user.nil? 
-      user = detection.user
+      self.user = detection.user
     end
     # User non impostato => si sta cancellando tutta la release (niente log)
-    if !user.nil? then
+    if !self.user.nil? then
+      license = license_id.nil? ? " " : License.find(license_id).description
       alice_logger.info("
         Product: #{detection.release.product.name}
         Release: #{detection.release.version_name}
         Detection: #{detection.name}
         DetectedComponent: #{name}
-        License: #{License.find(license_id).description}
+        License: #{license}
         Destroyed_by: #{user} ")
     end
   end

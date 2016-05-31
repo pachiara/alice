@@ -1,0 +1,70 @@
+Logging di Alice
+
+Scopo:
+Tracciare le operazioni eseguite dagli utenti, rilevanti ai fini del corretto controllo delle licenze per i prodotti
+
+Obbligo di autenticazione per accedere alle seguenti funzionalità
+Modifica di:
+  Componenti rilevati
+  Componenti
+  Legami
+  Licenze
+
+Cancellazione di:
+  Rilevamenti
+  Componenti rilevati
+  Componenti
+  Legami
+  Licenze
+
+Creazione di:
+  Licenze
+
+Autenticazione:
+libera via email, ma dominio dell'indirizzo di posta deve finire per lispa.it
+(modificabile tramite espressione regolare memorizzata in variabile di configurazione)
+config/alice.yml
+  users_email_domain_validation_regex: lispa.it$
+
+Quali operazioni vengono tracciate:
+Viene scritto un record di log
+Per Modifica di:
+  Componenti rilevati
+    quando viene modificato almeno 1 di questi dati
+      licenza
+      flag acquistato
+      flag proprio
+
+  Componenti
+    quando viene modificato almeno 1 di questi dati
+      licenza
+      flag acquistato
+      flag proprio
+      flag escluso
+
+  Licenze
+    quando viene modificato almeno 1 di questi dati
+      nome licenza
+      tipo licenza
+      licenza equivalente
+    
+  Legami
+    quando viene cancellato eliminato un componente
+
+Sempre in caso di:
+  Cancellazione di:
+    Rilevamenti
+    Componenti rilevati
+    Componenti
+    Legami
+    Licenze
+
+  Creazione di:
+    Licenze
+
+Il file di log è impostato in models/concerns/loggable.rb
+  def alice_logger
+    @@alice_logger ||= Logger.new("#{Rails.root}/#{Rails.configuration.x.alice['alice_logger_path']}")
+  end
+  
+  La variabile "alice_logger_path" è impostat in config/alice.yml

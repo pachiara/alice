@@ -1,4 +1,6 @@
 class License < ActiveRecord::Base
+  include Loggable
+  
   attr_accessible :license_type_id, :category_id, :description, :name, :text_license, :version, :flag_osi, :id, :notes, :similar_license_id
   
   validates_presence_of :name, :description
@@ -16,30 +18,28 @@ class License < ActiveRecord::Base
   def self.search_order(order, page, per_page = 10)
     order(order).paginate(page: page, per_page: per_page)
   end
-
-    def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
-  end
-
-  def user=(u)
-    @user = u
-  end
-
-  def user
-    @user
-  end
   
   before_update do
     previous = License.find(id)
+    if previous.similar_license_id.nil? then
+      similar_license_previous = " "
+    else
+      similar_license_previous = License.find(previous.similar_license_id).description
+    end
+    if previous.license_type_id.nil? then
+      license_type_previous = " "
+    else
+      license_type_previous = LicenseType.find(previous.license_type_id).description
+    end
     if (license_type_id != previous.license_type_id or similar_license_id != previous.similar_license_id or name != previous.name) then
       alice_logger.info("
         License: #{name}
         Version: #{version}
         Name previous: #{name}               
         Similar_License: #{License.find(similar_license_id).description}
-        Similar_License previous: #{License.find(previous.similar_license_id).description}          
+        Similar_License previous: #{similar_license_previous}          
         License_type: #{LicenseType.find(license_type_id).description}
-        License_type previous: #{LicenseType.find(previous.license_type_id).description}          
+        License_type previous: #{license_type_previous}          
         Updated_by: #{user} ")
     end
   end
@@ -52,11 +52,21 @@ class License < ActiveRecord::Base
   end
 
   before_create do
+    if similar_license_id.nil? then
+      similar_license = " "
+    else
+      similar_license = License.find(similar_license_id).description
+    end
+    if license_type_id.nil? then
+      license_type = " "
+    else
+      license_type = LicenseType.find(license_type_id).description
+    end
     alice_logger.info("
       License: #{name}
       Version: #{version}
-      Similar_License: #{License.find(similar_license_id).description}
-      License_type: #{LicenseType.find(license_type_id).description}
+      Similar_License: #{similar_license}
+      License_type: #{license_type}
       Created_by: #{user} ")
   end
   

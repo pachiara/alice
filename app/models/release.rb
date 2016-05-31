@@ -1,5 +1,7 @@
 class Release < ActiveRecord::Base
   include Ruleby
+  include Loggable
+  
   attr_accessible :product_id, :version_name, :sequential_number, :license_id,
                   :check_result, :checked_at, :compatible_license_id, :notes
   attr_accessor :warnings, :infos
@@ -139,21 +141,5 @@ class Release < ActiveRecord::Base
       e.match
     end
   end
-
-    
-  def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
-  end
-
-  def user=(u)
-    @user = u
-  end
-
-  def user
-    @user
-  end
- 
-
-
    
 end

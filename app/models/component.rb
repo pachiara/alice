@@ -1,4 +1,6 @@
 class Component < ActiveRecord::Base
+  include Loggable
+
   attr_accessible :description, :license_id, :name, :notes, :title, :version, :purchased, :own, :leave_out
   
   validates_presence_of :name, :title, :license_id
@@ -19,18 +21,6 @@ class Component < ActiveRecord::Base
       errors.add(:purchased, "valori imcompatibili")
       errors.add(:own, "")
     end
-  end
-  
-  def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/log/alice.log")
-  end
-
-  def user=(u)
-    @user = u
-  end
-
-  def user
-    @user
   end
   
   before_update do
