@@ -67,4 +67,4 @@ Il file di log è impostato in models/concerns/loggable.rb
     @@alice_logger ||= Logger.new("#{Rails.root}/#{Rails.configuration.x.alice['alice_logger_path']}")
   end
   
-  La variabile "alice_logger_path" è impostat in config/alice.yml
+La variabile "alice_logger_path" è impostata in config/alice.yml
