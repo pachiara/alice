@@ -2,8 +2,8 @@
   <%= f.error_notification %>
 
   <div class="row">
-    <%= f.input :name, :wrapper_html => { :class => "col-md-4" } %>
-    <%= f.input :version, :wrapper_html => { :class => "col-md-4" } %>
+    <%= f.input :name, :input_html => { :maxlength => 15 }, :wrapper_html => { :class => "col-md-4" } %>
+    <%= f.input :version, :input_html => { :maxlength => 5 }, :wrapper_html => { :class => "col-md-4" } %>
   </div>
   <div class="row">
     <%= f.input :description, :wrapper_html => { :class => "col-md-7" } %>
