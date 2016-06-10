@@ -12,18 +12,9 @@
     </div>
 
     <div class="row">
-      <div class="col-md-1">
-        <div><%= f.label :purchased %></div>
-        <%= f.input_field :purchased, as: :boolean %>
-      </div>
-      <div class="col-md-1">
-        <div><%= f.label :own %></div> 
-        <%= f.input_field :own, as: :boolean %>
-      </div>
-      <div class="col-md-1">
-        <div><%= f.label :leave_out %></div> 
-        <%= f.input_field :leave_out, as: :boolean %>
-      </div>
+      <%= f.input :purchased, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :own, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :leave_out, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
     </div>
     <div class="row">  
       <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>

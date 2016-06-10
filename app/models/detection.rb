@@ -98,7 +98,8 @@ class Detection < ActiveRecord::Base
 
   def validate_acquire
     if detected_components.empty?
-      errors.add("Rilevamento: #{name}", "Nessun componente rilevato")
+      errors.add(I18n.t("activerecord.models.detection"),
+                 I18n.t("errors.messages.check.no_detected_components", detection_name: "#{name}"))
     else
       detected_components.each do |component|
         if component.license_id.nil?

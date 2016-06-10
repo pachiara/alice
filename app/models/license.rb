@@ -21,10 +21,20 @@ class License < ActiveRecord::Base
   
   before_update do
     previous = License.find(id)
+    if similar_license_id.nil? then
+      similar_license = " "
+    else
+      similar_license = License.find(similar_license_id).description
+    end
     if previous.similar_license_id.nil? then
       similar_license_previous = " "
     else
       similar_license_previous = License.find(previous.similar_license_id).description
+    end
+    if license_type_id.nil? then
+      lcense_type = " "
+    else
+      license_type = LicenseType.find(license_type_id).description
     end
     if previous.license_type_id.nil? then
       license_type_previous = " "
@@ -36,9 +46,9 @@ class License < ActiveRecord::Base
         License: #{name}
         Version: #{version}
         Name previous: #{name}               
-        Similar_License: #{License.find(similar_license_id).description}
+        Similar_License: #{similar_license}
         Similar_License previous: #{similar_license_previous}          
-        License_type: #{LicenseType.find(license_type_id).description}
+        License_type: #{license_type}
         License_type previous: #{license_type_previous}          
         Updated_by: #{user} ")
     end

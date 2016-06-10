@@ -12,7 +12,7 @@
 
   <% if @detection.errors.full_messages.length > 0 %>
     <div class="alert alert-danger">
-      <span class="lead text-error">I seguenti componenti non hanno una licenza assegnata:</span>
+      <span class="lead text-error"><%= t('errors.messages.check.components_without_license') %></span>
       <ol>
         <% @detection.errors.full_messages.each do |msg| %>
            <li><label class="text-error"><%= msg %></label></li>

@@ -18,8 +18,8 @@ class Component < ActiveRecord::Base
   
   def purchase_or_own
     if purchased and own
-      errors.add(:purchased, "valori imcompatibili")
-      errors.add(:own, "")
+      errors.add(:purchased, :incompatible)
+      errors.add(:own, :incompatible)
     end
   end
   

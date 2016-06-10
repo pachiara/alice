@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     if !Rails.configuration.x.alice["users_email_domain_validation_regex"].nil?
       r = Regexp.new(Rails.configuration.x.alice["users_email_domain_validation_regex"])
       if (r =~ email).nil?
-        errors.add(:email, "dominio non valido")
+        errors.add(:email, :invalid_domain)
       end
     end
   end

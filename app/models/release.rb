@@ -89,24 +89,27 @@ class Release < ActiveRecord::Base
   def precheck
     check_result = true
     if self.license.nil?
-      self.errors.add("Impossibile eseguire il controllo:", "specificare una licenza per il prodotto.")
+      self.errors.add(I18n.t("errors.messages.check.not_executable"),
+         I18n.t("errors.messages.check.no_license"))
       check_result = false
     end
     self.detections.each do |detection|
       if !detection.acquired
-        self.errors.add("Impossibile eseguire il controllo:", 
-          "non tutti i rilevamenti della release sono stati acquisiti.")
+        self.errors.add(I18n.t("errors.messages.check.not_executable"),
+           I18n.t("errors.messages.check.detection_not_acquired"))
         return check_result = false
       end
     end
     if self.components.empty? 
-      self.errors.add("Impossibile eseguire il controllo:", "il prodotto non ha componenti.")
+      self.errors.add(I18n.t("errors.messages.check.not_executable"),
+         I18n.t("errors.messages.check.no_components"))
       check_result = false
     else
       self.components.each do |component|
         if component.license.license_type.nil?
-          self.errors.add("Impossibile eseguire il controllo:", 
-           "specificare tipo licenza per licenza #{component.license.name} versione #{component.license.version}.")
+          self.errors.add(I18n.t("errors.messages.check.not_executable"),
+            I18n.t("errors.messages.check.no_license_type", license_name: "#{component.license.name}",
+                   license_version: "#{component.license.version}"))
           check_result = false
         end
       end
@@ -120,8 +123,9 @@ class Release < ActiveRecord::Base
     # Inizializzazione
     @release.compatible_license = License.where("name=?", "public").first
     @release.check_result = true
-    @release.addInfo("Licenza compatibilità componenti iniziale:",
-                     " #{@release.compatible_license.name} #{@release.compatible_license.version}")
+    @release.addInfo(I18n.t("activerecord.models.license"),
+                     I18n.t("infos.check.start_license", license_name: "#{@release.compatible_license.name}",
+                     license_version: "#{@release.compatible_license.version}"))
 
     engine :engine do |e|
       CompatibilityRulebook.new(e).rules

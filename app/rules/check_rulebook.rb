@@ -33,8 +33,9 @@ class CheckRulebook < Rulebook
           @not_free_components = true
           if !v[:comp].purchased
             v[:rel].check_result = false
-            error_string = "con licenza proprietaria #{v[:comp].license.name} non acquistato"
-            v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+            v[:rel].errors.add(I18n.t("activerecord.models.component"),
+                               I18n.t("errors.messages.check.not_purchased_component",
+                                      component_name: "#{v[:comp].name}", license_name: "#{v[:comp].license.name}"))
           end
         end
       end
@@ -46,20 +47,24 @@ class CheckRulebook < Rulebook
         seeking_license = v[:comp].license.similar_license_id.nil? ? license = v[:comp].license : License.find(v[:comp].license.similar_license_id)
         if !Floss_slide.include?(seeking_license)
             v[:rel].check_result = nil
-            error_string = "impossibile verificare compatibilità. " +
-                           "Mancano regole per la licenza #{v[:comp].license.name}."
-            v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+            v[:rel].errors.add(I18n.t("activerecord.models.component"),
+                               I18n.t("errors.messages.check.no_rules",
+                                      component_name: "#{v[:comp].name}", license_name: "#{v[:comp].license.name}"))
             next
         end
         new_compatible_license = self.search_compatible(seeking_license, v[:rel].compatible_license)
         if new_compatible_license == nil
-          error_string = "licenza #{v[:comp].license.name} " +
-                         "incompatibile con licenza: #{v[:rel].compatible_license.name}"
           if (v[:rel].product.use.name == "DIS") # or v[:rel].use.name == "SUE")  
             v[:rel].check_result = false
-            v[:rel].errors.add("Componente #{v[:comp].name}:", "#{error_string}")
+            v[:rel].errors.add(I18n.t("activerecord.models.component"),
+                               I18n.t("errors.messages.check.incompatible_component",
+                                      component_name: "#{v[:comp].name}", license_name: "#{v[:comp].license.name}",
+                                      compatible_license_name: "#{v[:rel].compatible_license.name}" ))
           else
-            v[:rel].addWarning("Componente #{v[:comp].name}:", "#{error_string}")
+            v[:rel].addWarning(I18n.t("activerecord.models.component"),
+                               I18n.t("errors.messages.check.incompatible_component",
+                                      component_name: "#{v[:comp].name}", license_name: "#{v[:comp].license.name}",
+                                      compatible_license_name: "#{v[:rel].compatible_license.name}" ))
           end
         end
       end
@@ -86,7 +91,8 @@ class CheckRulebook < Rulebook
            v[:rel].compatible_license.license_type.protection_level > 1 and
            v[:rel].license.license_type.protection_level < 0
               v[:rel].check_result = false
-              v[:rel].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
+              v[:rel].errors.add(I18n.t("activerecord.models.license"),
+                                 I18n.t("errors.messages.check.product_use_and_license"))
         end
       end
     
@@ -97,7 +103,8 @@ class CheckRulebook < Rulebook
            v[:rel].compatible_license.license_type.protection_level > 2 and
            v[:rel].license.license_type.protection_level < 0
               v[:rel].check_result = false
-              v[:rel].errors.add("Licenza e uso del prodotto", "contrastano con la licenza compatibilità componenti.")
+              v[:rel].errors.add(I18n.t("activerecord.models.license"),
+                                 I18n.t("errors.messages.check.product_use_and_license"))
         end
       end
       

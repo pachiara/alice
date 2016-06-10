@@ -101,7 +101,30 @@ it:
       year: Anno
   errors: &errors
     format: ! '%{attribute} %{message}'
+    models:
+      component:
+        attributes:
+          purchased:
+            incompatible: valore incompatibile
+          own:
+            incompatible: valore incompatibile
+      user:
+        attributes:
+          email:
+            invalid_domain: dominio non valido
     messages:
+      check:
+        not_executable: "Impossibile eseguire il controllo:"
+        detection_not_acquired: "non tutti i rilevamenti della release sono stati acquisiti."
+        no_components: "il prodotto non ha componenti."
+        no_license: "specificare una licenza per il prodotto."
+        no_license_type: "specificare tipo licenza per licenza %{license_name} versione %{license_version}."
+        no_detected_components: "%{detection_name}: Nessun componente rilevato."
+        components_without_license: "I seguenti componenti non hanno una licenza assegnata:"
+        not_purchased_component: "%{component_name}: con licenza proprietaria %{license_name} non acquistato."
+        no_rules: "%{component_name}: impossibile verificare compatibilità. Mancano regole per la licenza %{license_name}."
+        product_use_and_license: " e uso del prodotto contrastano con la licenza compatibilità componenti."
+        incompatible_component: "%{component_name}: licenza %{license_name} incompatibile con licenza: %{compatible_license_name}"
       accepted: deve essere accettata
       blank: non può essere lasciato in bianco
       confirmation: non coincide con la conferma
@@ -542,3 +565,7 @@ it:
       destroy:
         notice: "Regola: eliminazione avvenuta con successo!"
         alert: "Regola: errore durante l'eliminazione!"         
+
+  infos:
+    check:
+      start_license: "compatibilità componenti iniziale: %{license_name} %{license_version}"
