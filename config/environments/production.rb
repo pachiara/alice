@@ -84,7 +84,7 @@ Rails.application.configure do
   
   # Mailer per devise
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'smtp.it.lispa.local', port: 25,
+  config.action_mailer.smtp_settings = { address: 'smtp.lispadev.local', port: 25,
     authentication: 'plain', enable_starttls_auto: false }
   config.action_mailer.default_url_options = { :host => '10.202.104.2', :port => '80' }
   
