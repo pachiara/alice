@@ -1,5 +1,5 @@
 class ComponentsController < ApplicationController
-  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :set_component, only: [:show, :edit, :update, :destroy]
 
   def restore_search

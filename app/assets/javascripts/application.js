@@ -18,6 +18,5 @@
 //= require moment/it
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.it
-//= require d3
+//= require d3.v3
 //= require_tree .
-

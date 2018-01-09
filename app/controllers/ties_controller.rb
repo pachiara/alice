@@ -1,5 +1,5 @@
 class TiesController < ApplicationController
-  before_filter :authenticate_user!, only: [:edit, :destroy]
+  before_action :authenticate_user!, only: [:edit, :destroy]
 
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.ties')

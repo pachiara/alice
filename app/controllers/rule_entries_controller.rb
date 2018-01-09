@@ -1,6 +1,6 @@
 class RuleEntriesController < ApplicationController
-  before_filter :authenticate_user!, only: [:create]
-  before_filter :only => [:create] do
+  before_action :authenticate_user!, only: [:create]
+  before_action :only => [:create] do
     redirect_to :new_user_session unless current_user && current_user.admin?
   end
 

@@ -1,5 +1,5 @@
 class DetectionsController < ApplicationController
-  before_filter :authenticate_user!, only: [:destroy]
+  before_action :authenticate_user!, only: [:destroy]
   before_action :set_detection, only: [:show, :edit, :update, :destroy]
 
   def restore_search

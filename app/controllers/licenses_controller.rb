@@ -1,5 +1,5 @@
 class LicensesController < ApplicationController
-  before_filter :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
   before_action :set_license, only: [:show, :edit, :update, :destroy]
 
   def order_search
