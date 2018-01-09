@@ -47,7 +47,7 @@ Per Modifica di:
       nome licenza
       tipo licenza
       licenza equivalente
-    
+
   Legami
     quando viene cancellato eliminato un componente
 
@@ -64,7 +64,7 @@ Sempre in caso di:
 
 Il file di log è impostato in models/concerns/loggable.rb
   def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/#{Rails.configuration.x.alice['alice_logger_path']}")
+    @@alice_logger ||= Logger.new(ALICE['alice_logger_path']}")
   end
-  
+
 La variabile "alice_logger_path" è impostata in config/alice.yml

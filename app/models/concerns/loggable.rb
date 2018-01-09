@@ -1,8 +1,8 @@
 module Loggable
   extend ActiveSupport::Concern
-  
+
   def alice_logger
-    @@alice_logger ||= Logger.new("#{Rails.root}/#{Rails.configuration.x.alice['alice_logger_path']}")
+    @@alice_logger ||= Logger.new(ALICE['alice_logger_path']}")
   end
 
   def user=(u)
@@ -12,5 +12,5 @@ module Loggable
   def user
     @user
   end
-  
+
 end

@@ -1,28 +1,28 @@
 class Detection < ActiveRecord::Base
   include Loggable
-  
+
   attr_accessible :name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
-  
+
   has_attached_file :xml
   belongs_to :release
   has_many :detected_components, :dependent => :destroy
-  
+
   validates_presence_of :name
   validates_presence_of :xml, :message => ''
   validates_uniqueness_of :name, scope: :release_id
   validates_attachment_content_type :xml, :content_type => "text/xml"
   before_create :parse_file
-  
+
   def parse_file
     tempfile = xml.queued_for_write[:original]
     doc = Nokogiri::XML(tempfile)
     parse_xml(doc)
   end
-  
+
   def parse_xml(doc)
     doc.xpath('//licenses').each do |node|
       if node.xpath('license').length > 0
-        # un componente può avere più tag <license> 
+        # un componente può avere più tag <license>
         node.xpath('license').each do |node|
           dc = DetectedComponent.new
           dc.name = node.xpath('../../artifactId').text
@@ -33,12 +33,12 @@ class Detection < ActiveRecord::Base
           end
           identify_component(dc)
           if dc.component_id.nil?
-            # cerca licenza corrispondente 
+            # cerca licenza corrispondente
             versions = dc.search_licenses(dc.license_name, dc.license_version)
             dc.license_id = versions[0].id if versions.length == 1
             # cerca tag che segnala componente proprio (own)
-            own_tag = node.xpath('../' + Rails.configuration.x.alice["own_component_tag_xpath"])
-            if !own_tag.nil? and own_tag.text.include? Rails.configuration.x.alice["own_component_tag_value"]
+            own_tag = node.xpath('../' + ALICE["own_component_tag_xpath"])
+            if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
               dc.own = true
             end
           end
@@ -51,8 +51,8 @@ class Detection < ActiveRecord::Base
         dc.version = node.xpath('../version').text
         dc.license_name = node.xpath('comment()').text
         # cerca tag che segnala componente proprio (own)
-        own_tag = node.xpath(Rails.configuration.x.alice["own_component_tag_xpath"])
-        if !own_tag.nil? and own_tag.text.include? Rails.configuration.x.alice["own_component_tag_value"]
+        own_tag = node.xpath(ALICE["own_component_tag_xpath"])
+        if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
           dc.own = true
         end
         identify_component(dc)
@@ -60,8 +60,8 @@ class Detection < ActiveRecord::Base
       end
     end
   end
-  
-  # Se il componente è registrato assegna id e licenza corrispondente 
+
+  # Se il componente è registrato assegna id e licenza corrispondente
   def identify_component(detected_component)
     component = Component.where("name = ? and version = ?", detected_component.name, detected_component.version).first
     if component == nil
@@ -89,7 +89,7 @@ class Detection < ActiveRecord::Base
     new_name = new_name.split('- v')[0].rstrip
     return new_name
   end
-  
+
   def parse_version(name, url)
     version = name.slice(/\d+\.\d*\.*\d+/)
     version = url.slice(/\d+\.\d*\.*\d+/) if (version.nil? && !url.nil?)
@@ -108,7 +108,7 @@ class Detection < ActiveRecord::Base
       end
     end
   end
-  
+
   def acquire
     r = Release.find(release_id)
     detected_components.each do |component|
@@ -116,7 +116,7 @@ class Detection < ActiveRecord::Base
         c = Component.find(component.component_id)
       # detected_component.component_id è impostato durante il parsing del file .xml
       # Il metodo acquire è eseguito a distanza di tempo, durante il quale un componente con stesso nome e versione
-      # potrebbe essere stato creato manualmente o da un'altra acquisizione. 
+      # potrebbe essere stato creato manualmente o da un'altra acquisizione.
       else
         c = Component.where("name = ? AND version = ?", component.name, component.version).first
         if c.nil?
@@ -135,5 +135,5 @@ class Detection < ActiveRecord::Base
     end
     acquired = true
   end
-  
+
 end
