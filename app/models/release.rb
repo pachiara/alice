@@ -1,20 +1,18 @@
-class Release < ActiveRecord::Base
+class Release < ApplicationRecord
   include Ruleby
   include Loggable
-  
-  attr_accessible :product_id, :version_name, :sequential_number, :license_id,
-                  :check_result, :checked_at, :compatible_license_id, :notes
+
   attr_accessor :warnings, :infos
-  
+
   validates_presence_of :version_name, :sequential_number, :license_id
   validates_uniqueness_of :version_name, scope: :product_id
   validates_uniqueness_of :sequential_number, scope: :product_id
-  
+
   has_and_belongs_to_many :components
   belongs_to :product
   belongs_to :license
   belongs_to :compatible_license, :class_name => "License", :foreign_key => "compatible_license_id"
-  
+
   has_and_belongs_to_many :components
   has_many :detections, :dependent => :destroy
 
@@ -22,7 +20,7 @@ class Release < ActiveRecord::Base
     product.update_last_release
     product.save
   end
-  
+
   after_destroy do
     product = Product.find(product_id)
     product.update_last_release
@@ -53,10 +51,10 @@ class Release < ActiveRecord::Base
           Destroyed_by: #{user} ")
 
         components.delete(component)
-      end  
-    end    
+      end
+    end
   end
-  
+
   def next_sequential_number
     if self.product.nil? || self.product.releases.empty?
       return 1
@@ -64,7 +62,7 @@ class Release < ActiveRecord::Base
       return (self.product.releases.order(:sequential_number).last.sequential_number.to_int + 1)
     end
   end
-   
+
   def delete_components
     self.components.each do |component|
       alice_logger.info("
@@ -72,7 +70,7 @@ class Release < ActiveRecord::Base
         Release: #{version_name}
         Component: #{component.name}
         Destroyed_by: #{user} ")
-    end 
+    end
     self.components.clear
   end
 
@@ -100,7 +98,7 @@ class Release < ActiveRecord::Base
         return check_result = false
       end
     end
-    if self.components.empty? 
+    if self.components.empty?
       self.errors.add(I18n.t("errors.messages.check.not_executable"),
          I18n.t("errors.messages.check.no_components"))
       check_result = false
@@ -145,5 +143,5 @@ class Release < ActiveRecord::Base
       e.match
     end
   end
-   
+
 end

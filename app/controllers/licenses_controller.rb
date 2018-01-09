@@ -1,8 +1,7 @@
 class LicensesController < ApplicationController
-
   before_filter :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+  before_action :set_license, only: [:show, :edit, :update, :destroy]
 
-  
   def order_search
     @order_search = params[:order_search]
     case @order_search
@@ -13,9 +12,9 @@ class LicensesController < ApplicationController
       @down_name = session[:down_name]
       if session[:licenses_page] == params[:page] then
         @down_name = !session[:down_name]
-        session[:down_name] = @down_name      
-      end 
-      if @down_name 
+        session[:down_name] = @down_name
+      end
+      if @down_name
         @order = "name DESC, version DESC"
       else
         @order = "name ASC, version ASC"
@@ -28,9 +27,9 @@ class LicensesController < ApplicationController
       if session[:licenses_page] == params[:page] then
         @down_description = !session[:down_description]
         session[:down_description] = @down_description
-      end      
+      end
       if @down_description
-        @order = "description DESC"        
+        @order = "description DESC"
       else
         @order = "description ASC"
       end
@@ -45,7 +44,7 @@ class LicensesController < ApplicationController
       end
       if @down_license_type
         @order = "license_type_id DESC"
-      else  
+      else
         @order = "license_type_id ASC"
       end
     when "category"
@@ -56,12 +55,12 @@ class LicensesController < ApplicationController
       if session[:licenses_page] == params[:page] then
         @down_category = !session[:down_category]
         session[:down_category] = @down_category
-      end         
+      end
       if @down_category
         @order = "category_id DESC"
       else
         @order = "category_id ASC"
-      end  
+      end
     end
     return @order
   end
@@ -84,7 +83,7 @@ class LicensesController < ApplicationController
     restore_search if params[:commit] != "clear"
     @title = t('actions.listing') + " " + t('activerecord.models.licenses')
     @search_form_path = licenses_path
-        
+
     if params[:order_search].nil? || params[:order_search].empty? then
       @licenses = License.search(params[:license_name], params[:page])
     else
@@ -104,7 +103,6 @@ class LicensesController < ApplicationController
   # GET /licenses/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.license')
-    @license = License.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -126,7 +124,7 @@ class LicensesController < ApplicationController
         format.json { render json: @license }
       end
     end
-    
+
   end
 
   # GET /licenses/new
@@ -144,14 +142,13 @@ class LicensesController < ApplicationController
   # GET /licenses/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.license')
-    @license = License.find(params[:id])
   end
 
   # POST /licenses
   # POST /licenses.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.license')
-    @license = License.new(params[:license])
+    @license = License.new(license_params)
     @license.user = current_user.email
 
     respond_to do |format|
@@ -169,11 +166,10 @@ class LicensesController < ApplicationController
   # PUT /licenses/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.license')
-    @license = License.find(params[:id])
     @license.user = current_user.email
 
     respond_to do |format|
-      if @license.update_attributes(params[:license])
+      if @license.update(license_params)
         format.html { redirect_to licenses_url, notice:  t('flash.license.update.notice') }
         format.json { head :no_content }
       else
@@ -186,7 +182,6 @@ class LicensesController < ApplicationController
   # DELETE /licenses/1
   # DELETE /licenses/1.json
   def destroy
-    @license = License.find(params[:id])
     @license.user = current_user.email
     @license.destroy
 
@@ -195,4 +190,16 @@ class LicensesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_license
+      @license = License.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def license_params
+      params.require(:license).permit(:license_type_id, :category_id, :description, :name, :text_license, :version, :flag_osi, :id, :notes, :similar_license_id)
+    end
+
 end

@@ -1,4 +1,6 @@
 class LicenseTypesController < ApplicationController
+  before_action :set_license_type, only: [:show, :edit, :update, :destroy]
+
   # GET /license_types
   # GET /license_types.json
   def index
@@ -15,7 +17,6 @@ class LicenseTypesController < ApplicationController
   # GET /license_types/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.license_type')
-    @license_type = LicenseType.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,14 +39,13 @@ class LicenseTypesController < ApplicationController
   # GET /license_types/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.license_type')
-    @license_type = LicenseType.find(params[:id])
   end
 
   # POST /license_types
   # POST /license_types.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.license_type')
-    @license_type = LicenseType.new(params[:license_type])
+    @license_type = LicenseType.new(license_type_params)
 
     respond_to do |format|
       if @license_type.save
@@ -62,10 +62,9 @@ class LicenseTypesController < ApplicationController
   # PUT /license_types/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.license_type')
-    @license_type = LicenseType.find(params[:id])
 
     respond_to do |format|
-      if @license_type.update_attributes(params[:license_type])
+      if @license_type.update(license_type_params)
         format.html { redirect_to license_types_path, notice: t('flash.license_type.update.notice') }
         format.json { head :no_content }
       else
@@ -78,7 +77,6 @@ class LicenseTypesController < ApplicationController
   # DELETE /license_types/1
   # DELETE /license_types/1.json
   def destroy
-    @license_type = LicenseType.find(params[:id])
     @license_type.destroy
 
     respond_to do |format|
@@ -86,4 +84,16 @@ class LicenseTypesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_license_type
+      @license_type = LicenseType.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def license_type_params
+      params.require(:license_type).permit(:code, :description, :protection_level)
+    end
+
 end

@@ -1,13 +1,13 @@
 class DetectionsController < ApplicationController
-    
   before_filter :authenticate_user!, only: [:destroy]
-  
+  before_action :set_detection, only: [:show, :edit, :update, :destroy]
+
   def restore_search
     if params[:page].nil? && !session[:detections_page].nil? then
        params[:page] = session[:detections_page]
     end
   end
-  
+
   # GET /detections
   # GET /detections.json
   def index
@@ -27,7 +27,6 @@ class DetectionsController < ApplicationController
   # GET /detections/1
   # GET /detections/1.json
   def show
-    @detection = Detection.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -51,14 +50,13 @@ class DetectionsController < ApplicationController
   # GET /detections/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.detection')
-    @detection = Detection.find(params[:id])
   end
 
   # POST /detections
   # POST /detections.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.detection')
-    @detection = Detection.new(params[:detection])
+    @detection = Detection.new(detection_params)
     @detection.release_id = params[:release_id]
 
     respond_to do |format|
@@ -76,10 +74,9 @@ class DetectionsController < ApplicationController
   # PUT /detections/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.detection')
-    @detection = Detection.find(params[:id])
 
     respond_to do |format|
-      if @detection.update_attributes(params[:detection])
+      if @detection.update(detection_params)
         format.html { redirect_to(detections_path + "?release_id=#{@detection.release_id}", notice: t('flash.detection.update.notice')) }
         format.json { head :no_content }
       else
@@ -92,7 +89,6 @@ class DetectionsController < ApplicationController
   # DELETE /detections/1
   # DELETE /detections/1.json
   def destroy
-    @detection = Detection.find(params[:id])
     @detection.user = current_user.email
     @detection.destroy
 
@@ -101,23 +97,23 @@ class DetectionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   # GET /detections/validate_components
   def validate_components
     @title = t('actions.acquire') + " " + t('activerecord.models.components')
     @detection = Detection.find(params[:detection_id])
     @detection.validate_acquire
-      
+
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
-  
+
   # POST /detections/acquire
   def acquire
     @detection = Detection.find(params[:detection_id])
     @detection.acquire
-    
+
     respond_to do |format|
       @detection.update_attributes(acquired: true)
       format.html { redirect_to(detections_path + "?release_id=#{@detection.release_id}", notice: t('flash.detection.update.notice')) }
@@ -125,16 +121,16 @@ class DetectionsController < ApplicationController
   end
 
   # POST /detections/remote_detect
-  # API 
+  # API
   def remote_detect
     # parametri
-    # input: 
+    # input:
     # 1 - nome/sigla prodotto
     # 2 - versione
     # 3 - nome rilevamento (facoltativo default "remote+time")
     # 4 - file delle licenze
     # output:
-    # 0 ok rilevamento acquisito 
+    # 0 ok rilevamento acquisito
     # 1 prodotto non trovato
     # 2 importazione non riuscita
     # 3 errori sui componenti del rilevamento
@@ -175,22 +171,22 @@ class DetectionsController < ApplicationController
       end
       # Controllo parametro detection
       if @result.nil?
-        if params[:detection].nil? || 
+        if params[:detection].nil? ||
            !params[:detection].is_a?(ActionController::Parameters) ||
            params[:detection][:xml].nil? ||
            !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
           @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
              "msg" => "File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
-        else  
+        else
           @detection = Detection.new(params[:detection])
-          @detection.name = @detection_name 
+          @detection.name = @detection_name
           @detection.release_id = @release.id
         end
       end
     end
 
     respond_to do |format|
-      if @result.nil? 
+      if @result.nil?
         # Registro il rilevamento
         if @detection.save
           # Valido l'acquisizione
@@ -204,12 +200,12 @@ class DetectionsController < ApplicationController
                   " - RILEVAMENTO ELIMINATO!"}
               @detection.destroy
             else
-              require 'socket'  
+              require 'socket'
               @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
                  "msg" => "Licenza non trovata per uno o piu' componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
                  "link" => "http://#{@ip}:#{request.port}#{@link}"}
             end
-          else 
+          else
             # Acquisisco il rilevamento
             @detection.acquire
             # Modifico lo stato del rilevamento
@@ -229,10 +225,10 @@ class DetectionsController < ApplicationController
 
 
   # POST /detections/remote_check
-  # API 
+  # API
   def remote_check
     # parametri
-    # input: 
+    # input:
     # 1 - nome/sigla prodotto
     # 2 - versione
     # output:
@@ -260,7 +256,7 @@ class DetectionsController < ApplicationController
            "msg" => "Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}",
            "link" => "http://#{@ip}:#{request.port}#{@link}"}
       else
-        if @release.precheck 
+        if @release.precheck
           @release.analyze_rules
           if @release.errors.full_messages.length > 0
             @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
@@ -289,5 +285,15 @@ class DetectionsController < ApplicationController
     end
   end
 
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_detection
+      @detection = Detection.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def detection_params
+      params.require(:detection).permit(:name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired)
+    end
 
 end

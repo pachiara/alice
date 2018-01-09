@@ -1,20 +1,18 @@
-class Product < ActiveRecord::Base
-  attr_accessible :description, :name, :groupage, :notes, :title, :use_id,
-                  :last_release_version_name, :last_release_checked_at, :last_release_check_result
-  
+class Product < ApplicationRecord
+
   validates_presence_of :name, :title, :use_id
   validates_uniqueness_of :name
-  
+
   belongs_to :use
   has_many :releases, :dependent => :destroy
-  
+
   def last_release
     return self.releases.order("sequential_number").last
   end
 
   def self.search_order(name, groupage, sort_column, sort_order, page, per_page = 10)
-    if sort_column.nil? then sort_column = 'name' end  
-    if sort_order.nil? then sort_order = ' ASC' end  
+    if sort_column.nil? then sort_column = 'name' end
+    if sort_order.nil? then sort_order = ' ASC' end
 
     sort = case sort_column.nil? ? 'name' : sort_column
       when 'name', 'updated_at' then

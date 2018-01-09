@@ -1,14 +1,13 @@
-class DetectedComponent < ActiveRecord::Base
+class DetectedComponent < ApplicationRecord
   include Loggable
-  
+
   belongs_to :detection
-  attr_accessible :component_id, :license_id, :license_name, :license_version, :name, :version, :own, :purchased
-  
+
   validates_presence_of :name, :version
 
   @@grubber = ["license","public","software","none","and","the",'^no ', " no ","information","available", '\.']
-  
- 
+
+
   def purify_name(name)
     purified_name = String.new(str=name)
     @@grubber.each do |dirty|
@@ -16,7 +15,7 @@ class DetectedComponent < ActiveRecord::Base
     end
     return purified_name.strip
   end
-  
+
   def search_licenses(name, version)
     return License.all if name.nil?
     words = purify_name(name).split
@@ -25,7 +24,7 @@ class DetectedComponent < ActiveRecord::Base
     queryString = "("
     words.each do |word|
       queryString << "description LIKE '%#{word}%' or "
-    end 
+    end
     queryString = queryString[0..-5] + ')'
     if version != nil
       queryString << " and version LIKE '%#{version}%'"
@@ -62,7 +61,7 @@ class DetectedComponent < ActiveRecord::Base
         Detection: #{detection.name}
         DetectedComponent: #{name}
         License: #{license}
-        License previous: #{license_previous}          
+        License previous: #{license_previous}
         Own: #{own}
         Own previous: #{previous.own}
         Purchased: #{purchased}
@@ -70,10 +69,10 @@ class DetectedComponent < ActiveRecord::Base
         Updated_by: #{user} ")
     end
   end
-  
+
   before_destroy do
     # User impostato a livello detection => si sta cancellando tutta la detection
-    if !detection.user.nil? 
+    if !detection.user.nil?
       self.user = detection.user
     end
     # User non impostato => si sta cancellando tutta la release (niente log)
@@ -88,5 +87,5 @@ class DetectedComponent < ActiveRecord::Base
         Destroyed_by: #{user} ")
     end
   end
- 
+
 end

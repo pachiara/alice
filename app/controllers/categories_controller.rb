@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  before_action :set_category, only: [:show, :edit, :update, :destroy]
+
   # GET /categories
   # GET /categories.json
   def index
@@ -15,7 +17,6 @@ class CategoriesController < ApplicationController
   # GET /categories/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.category')
-    @category = Category.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,15 +38,14 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @title = t('actions.edit') + " " + t('activerecord.models.category')    
-    @category = Category.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.category')
   end
 
   # POST /categories
   # POST /categories.json
   def create
-    @title = t('actions.new') + " " + t('activerecord.models.category')    
-    @category = Category.new(params[:category])
+    @title = t('actions.new') + " " + t('activerecord.models.category')
+    @category = Category.new(category_params)
 
     respond_to do |format|
       if @category.save
@@ -61,11 +61,10 @@ class CategoriesController < ApplicationController
   # PUT /categories/1
   # PUT /categories/1.json
   def update
-    @title = t('actions.edit') + " " + t('activerecord.models.category')    
-    @category = Category.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.category')
 
     respond_to do |format|
-      if @category.update_attributes(params[:category])
+      if @category.update(category_params)
         format.html { redirect_to categories_path, notice:  t('flash.category.update.notice') }
         format.json { head :no_content }
       else
@@ -78,7 +77,6 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    @category = Category.find(params[:id])
     @category.destroy
 
     respond_to do |format|
@@ -86,4 +84,16 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_category
+      @category = Category.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def category_params
+      params.require(:category).permit(:description, :name)
+    end
+
 end

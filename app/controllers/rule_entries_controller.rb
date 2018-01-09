@@ -1,15 +1,14 @@
 class RuleEntriesController < ApplicationController
-
   before_filter :authenticate_user!, only: [:create]
-  before_filter :only => [:create] do 
+  before_filter :only => [:create] do
     redirect_to :new_user_session unless current_user && current_user.admin?
   end
-  
+
   # GET /rule_entries
   # GET /rule_entries.json
   def index
     @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')
-    @rule = Rule.find(params[:rule_id])    
+    @rule = Rule.find(params[:rule_id])
     @rule_entries = @rule.rule_entries.order('order_id')
     @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 6)
@@ -23,9 +22,9 @@ class RuleEntriesController < ApplicationController
   # POST /rule_entries
   # POST /rule_entries.json
   def create
-    @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')    
-    @rule = Rule.find(params[:rule_id])    
-    
+    @title = t('actions.listing') + " " + t('activerecord.models.rule_entries')
+    @rule = Rule.find(params[:rule_id])
+
     @rule_entries = @rule.rule_entries.order('order_id')
     @search_form_path = rule_rule_entries_path(@rule)
     @licenses = License.search(params[:license_name], params[:page], 6)
@@ -57,5 +56,16 @@ class RuleEntriesController < ApplicationController
       format.json { render json: @rule_entry }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_rule_entry
+      @rule_entry = RuleEntry.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def rule_entry_params
+      params.require(:rule_entry).permit(:license_id, :order_id, :plus)
+    end
 
 end

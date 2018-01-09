@@ -1,4 +1,6 @@
 class UsesController < ApplicationController
+  before_action :set_use, only: [:show, :edit, :update, :destroy]
+
   # GET /uses
   # GET /uses.json
   def index
@@ -15,7 +17,6 @@ class UsesController < ApplicationController
   # GET /uses/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.use')
-    @use = Use.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,7 +27,7 @@ class UsesController < ApplicationController
   # GET /uses/new
   # GET /uses/new.json
   def new
-    @title = t('actions.new') + " " + t('activerecord.models.use')    
+    @title = t('actions.new') + " " + t('activerecord.models.use')
     @use = Use.new
 
     respond_to do |format|
@@ -37,15 +38,14 @@ class UsesController < ApplicationController
 
   # GET /uses/1/edit
   def edit
-    @title = t('actions.edit') + " " + t('activerecord.models.use')    
-    @use = Use.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.use')
   end
 
   # POST /uses
   # POST /uses.json
   def create
-    @title = t('actions.new') + " " + t('activerecord.models.use')    
-    @use = Use.new(params[:use])
+    @title = t('actions.new') + " " + t('activerecord.models.use')
+    @use = Use.new(use_params)
 
     respond_to do |format|
       if @use.save
@@ -61,11 +61,10 @@ class UsesController < ApplicationController
   # PUT /uses/1
   # PUT /uses/1.json
   def update
-    @title = t('actions.edit') + " " + t('activerecord.models.use')    
-    @use = Use.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.use')
 
     respond_to do |format|
-      if @use.update_attributes(params[:use])
+      if @use.update(use_params)
         format.html { redirect_to uses_path, notice: t('flash.use.update.notice') }
         format.json { head :no_content }
       else
@@ -78,7 +77,6 @@ class UsesController < ApplicationController
   # DELETE /uses/1
   # DELETE /uses/1.json
   def destroy
-    @use = Use.find(params[:id])
     @use.destroy
 
     respond_to do |format|
@@ -86,4 +84,16 @@ class UsesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_use
+      @use = Use.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def use_params
+      params.require(:use).permit(:description, :name)
+    end
+
 end

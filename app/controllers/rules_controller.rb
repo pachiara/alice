@@ -1,7 +1,7 @@
 class RulesController < ApplicationController
-  
   before_filter :authenticate_user!, except: [:index, :show]
-  
+  before_action :set_rule, only: [:show, :edit, :update, :destroy]
+
   # GET /rules
   # GET /rules.json
   def index
@@ -18,7 +18,6 @@ class RulesController < ApplicationController
   # GET /rules/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.rule')
-    @rule = Rule.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,15 +39,14 @@ class RulesController < ApplicationController
 
   # GET /rules/1/edit
   def edit
-    @title = t('actions.edit') + " " + t('activerecord.models.rule') 
-    @rule = Rule.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.rule')
   end
 
   # POST /rules
   # POST /rules.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.rule')
-    @rule = Rule.new(params[:rule])
+    @rule = Rule.new(rule_params)
 
     respond_to do |format|
       if @rule.save
@@ -64,11 +62,10 @@ class RulesController < ApplicationController
   # PUT /rules/1
   # PUT /rules/1.json
   def update
-    @title = t('actions.edit') + " " + t('activerecord.models.rule')     
-    @rule = Rule.find(params[:id])
+    @title = t('actions.edit') + " " + t('activerecord.models.rule')
 
     respond_to do |format|
-      if @rule.update_attributes(params[:rule])
+      if @rule.update(rule_params)
         format.html { redirect_to rules_path, notice: t('flash.rule.update.notice') }
         format.json { head :no_content }
       else
@@ -81,7 +78,6 @@ class RulesController < ApplicationController
   # DELETE /rules/1
   # DELETE /rules/1.json
   def destroy
-    @rule = Rule.find(params[:id])
     @rule.destroy
 
     respond_to do |format|
@@ -89,4 +85,17 @@ class RulesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_rule
+      @rule = Rule.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def rule_params
+      params.require(:rule).permit(:name, :license_id, :plus)
+    end
+
+
 end

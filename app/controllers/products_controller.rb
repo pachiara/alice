@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def restore_search
     # Premuto tasto colonna
@@ -6,7 +7,7 @@ class ProductsController < ApplicationController
       if params[:sort_column] != session[:products_sort_column] then
         params[:sort_order] = " ASC"
       else
-        if session[:products_sort_order] == " ASC" 
+        if session[:products_sort_order] == " ASC"
           params[:sort_order] = " DESC"
         else
           params[:sort_order] =  " ASC"
@@ -29,9 +30,9 @@ class ProductsController < ApplicationController
     if params[:sort_order].nil? && !session[:products_sort_order].nil? then
        params[:sort_order] = session[:products_sort_order]
     end
-    
+
   end
-  
+
   # GET /products
   # GET /products.json
   def index
@@ -57,7 +58,6 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @title = t('actions.messages.graphics')
-    @product = Product.find(params[:id])
     count_types
   end
 
@@ -76,14 +76,13 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.product')
-    @product = Product.find(params[:id])
   end
 
   # POST /products
   # POST /products.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.product')
-    @product = Product.new(params[:product])
+    @product = Product.new(product_params)
 
     respond_to do |format|
       if @product.save
@@ -100,10 +99,9 @@ class ProductsController < ApplicationController
   # PUT /products/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.product')
-    @product = Product.find(params[:id])
 
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if @product.update(product_params)
         format.html { redirect_to(products_path, notice: t('flash.product.update.notice')) }
         format.json { head :no_content }
       else
@@ -116,7 +114,6 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product = Product.find(params[:id])
     @product.destroy
 
     respond_to do |format|
@@ -124,5 +121,16 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_product
+      @product = Product.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def product_params
+      params.require(:product).permit(:description, :name, :groupage, :notes, :title, :use_id, :last_release_version_name, :last_release_checked_at, :last_release_check_result)
+    end
+
 end

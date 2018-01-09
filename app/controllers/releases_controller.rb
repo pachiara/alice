@@ -1,6 +1,6 @@
 class ReleasesController < ApplicationController
-#  before_action :set_release, only: [:show, :edit, :update, :destroy]
-  
+  before_action :set_release, only: [:show, :edit, :update, :destroy]
+
   def restore_search
     if params[:page].nil? && !session[:releases_page].nil? then
        params[:page] = session[:releases_page]
@@ -12,11 +12,11 @@ class ReleasesController < ApplicationController
        params[:groupage] = session[:products_search_groupage]
     end
   end
-  
+
   def count_types
     # Contatori tipi componente
     purchased = own = open_source = 0
-    
+
     # Contatori tipi licenza
     license_types = Hash.new
     LicenseType.all.each do |license_type|
@@ -33,11 +33,11 @@ class ReleasesController < ApplicationController
       purchased += 1 if component.purchased
       own += 1 if component.own
       open_source += 1 if !component.purchased && !component.own
-      if component.license.license_type.nil? 
+      if component.license.license_type.nil?
         license_types[t('activerecord.attributes.license_type.unidentified')] += 1
       else
         license_types[component.license.license_type.description] += 1
-      end  
+      end
       if component.license.nil?
         licenses[t('activerecord.attributes.license_type.unidentified')] += 1
       elsif licenses[component.license.description].nil?
@@ -46,7 +46,7 @@ class ReleasesController < ApplicationController
         licenses[component.license.description] += 1
       end
     end
-    
+
     # Creazione array tipi componente in json
     @component_types = Array.new
     @component_types.push({:item => t('activerecord.attributes.component.purchased'), :qty => purchased}) if purchased > 0
@@ -60,7 +60,7 @@ class ReleasesController < ApplicationController
       @license_types.push({:item => data[0], :qty => data[1]}) if data[1] > 0
     end
     @license_types = @license_types.sort_by {|o| o[:qty]}.reverse.to_json
-    
+
     # Creazione array licenze in json
     @licenses = Array.new
     licenses.each do |data|
@@ -82,7 +82,6 @@ class ReleasesController < ApplicationController
   # GET /releases/1.json
   def show
     @title = t('actions.messages.graphics')
-    @release = Release.find(params[:id])
     count_types
   end
 
@@ -98,7 +97,6 @@ class ReleasesController < ApplicationController
   # GET /releases/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.release')
-    @release = Release.find(params[:id])
   end
 
   # POST /releases
@@ -123,7 +121,6 @@ class ReleasesController < ApplicationController
   # PATCH/PUT /releases/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.release')
-    @release = Release.find(params[:id])
     respond_to do |format|
       if @release.update(release_params)
         format.html { redirect_to(releases_path + "?product_id=#{@release.product.id}", notice: t('flash.release.update.notice')) }
@@ -138,7 +135,6 @@ class ReleasesController < ApplicationController
   # DELETE /releases/1
   # DELETE /releases/1.json
   def destroy
-    @release = Release.find(params[:id])
     @release.destroy
     respond_to do |format|
       format.html { redirect_to(releases_path + "?product_id=#{@release.product.id}", notice: t('flash.release.destroy.notice')) }
@@ -146,12 +142,12 @@ class ReleasesController < ApplicationController
       format.json { head :no_content }
     end
   end
-        
+
   # GET /releases/1/check
   def check
     @title = t('actions.check') + " " + t('actions.messages.compatibility')
     @release = Release.find(params[:release_id])
-    if @release.precheck 
+    if @release.precheck
       @release.analyze_rules
     else
       @release.check_result = nil
@@ -162,11 +158,11 @@ class ReleasesController < ApplicationController
       format.html
     end
   end
-  
+
   # POST /releases/1/update_check
   def update_check
     @release = Release.find(params[:release_id])
-    
+
     respond_to do |format|
       @release.update_attributes(check_result: params[:check_result], compatible_license_id: params[:compatible_license_id], checked_at: Time.now)
       format.html { redirect_to(releases_path + "?product_id=#{@release.product.id}", notice: t('flash.release.update.notice')) }
@@ -178,19 +174,19 @@ class ReleasesController < ApplicationController
     @title = t('actions.messages.print_check')
     @release = Release.find(params[:release_id])
 
-    @release.analyze_rules 
-    
-    # Nella stampa devono apparire anche i componenti esclusi dal controllo 
+    @release.analyze_rules
+
+    # Nella stampa devono apparire anche i componenti esclusi dal controllo
     @components = @release.components.order("name")
     @components_with_notes = Hash.new
     @licenses_with_notes = Hash.new
-    @components.each do |component| 
-      @components_with_notes[component.name] = component.notes unless component.notes.blank?  
-      @licenses_with_notes[component.license.name] = component.license unless component.license.notes.blank?  
+    @components.each do |component|
+      @components_with_notes[component.name] = component.notes unless component.notes.blank?
+      @licenses_with_notes[component.license.name] = component.license unless component.license.notes.blank?
     end
     @components_with_notes.sort
     @licenses_with_notes.sort
-        
+
     respond_to do |format|
       format.pdf do
         render :pdf => @release.product.name.gsub(' ', '_'),
@@ -206,14 +202,14 @@ class ReleasesController < ApplicationController
     end
   end
 
-  
+
   # GET /products/1/print
   def print
     @title = t('actions.messages.graphics')
     @release = Release.find(params[:release_id])
     count_types
     @components = @release.components.order("name")
-        
+
     respond_to do |format|
       format.pdf do
         render :pdf => @release.product.name.gsub(' ', '_'),
@@ -238,6 +234,6 @@ class ReleasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def release_params
-      params[:release]
+      params.require(:release).permit(:product_id, :version_name, :sequential_number, :license_id, :check_result, :checked_at, :compatible_license_id, :notes)
     end
 end

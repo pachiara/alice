@@ -1,13 +1,13 @@
 class DetectedComponentsController < ApplicationController
-  
   before_filter :authenticate_user!, only: [:edit, :update, :destroy]
-  
+  before_action :set_detected_component, only: [:show, :edit, :update, :destroy]
+
   def restore_search
     if params[:page].nil? && !session[:detected_components_page].nil? then
        params[:page] = session[:detected_components_page]
     end
   end
-  
+
   # GET /detected_components
   # GET /detected_components.json
   def index
@@ -27,7 +27,6 @@ class DetectedComponentsController < ApplicationController
   # GET /detected_components/1
   # GET /detected_components/1.json
   def show
-    @detected_component = DetectedComponent.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -51,7 +50,6 @@ class DetectedComponentsController < ApplicationController
   # GET /detected_components/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.detected_component')
-    @detected_component = DetectedComponent.find(params[:id])
     @licenses = @detected_component.search_licenses(@detected_component.license_name, @detected_component.license_version)
   end
 
@@ -59,7 +57,7 @@ class DetectedComponentsController < ApplicationController
   # POST /detected_components.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.detected_component')
-    @detected_component = DetectedComponent.new(params[:detected_component])
+    @detected_component = DetectedComponent.new(detected_component_params)
     @detected_component.detection = Detection.find(params[:detection_id])
 
     respond_to do |format|
@@ -77,11 +75,10 @@ class DetectedComponentsController < ApplicationController
   # PUT /detected_components/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.detected_component')
-    @detected_component = DetectedComponent.find(params[:id])
     @detected_component.user = current_user.email
 
     respond_to do |format|
-      if @detected_component.update_attributes(params[:detected_component])
+      if @detected_component.update(detected_component_params)
         format.html { redirect_to(detected_components_path + "?detection_id=#{@detected_component.detection.id}", notice: t('flash.detected_component.update.notice')) }
         format.json { head :no_content }
       else
@@ -94,7 +91,6 @@ class DetectedComponentsController < ApplicationController
   # DELETE /detected_components/1
   # DELETE /detected_components/1.json
   def destroy
-    @detected_component = DetectedComponent.find(params[:id])
     @detected_component.user = current_user.email
     @detected_component.destroy
 
@@ -103,4 +99,16 @@ class DetectedComponentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_detected_component
+      @detected_component = DetectedComponent.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def detected_component_params
+      params.require(:detected_component).permit(:component_id, :license_id, :license_name, :license_version, :name, :version, :own, :purchased)
+    end
+
 end

@@ -1,7 +1,7 @@
 class ComponentsController < ApplicationController
-  
-    before_filter :authenticate_user!, only: [:edit, :update, :destroy]
-  
+  before_filter :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :set_component, only: [:show, :edit, :update, :destroy]
+
   def restore_search
     if params[:page].nil? && !session[:components_page].nil? then
        params[:page] = session[:components_page]
@@ -10,7 +10,7 @@ class ComponentsController < ApplicationController
        params[:component_name] = session[:components_search_name]
     end
   end
-  
+
   # GET /components
   # GET /components.json
   def index
@@ -18,7 +18,7 @@ class ComponentsController < ApplicationController
     @title = t('actions.listing') + " " + t('activerecord.models.components')
     @search_form_path = components_path
     @components = Component.search(params[:component_name], params[:page])
-    
+
     session[:components_page] = params[:page]
     session[:components_search_name] = params[:component_name]
 
@@ -32,7 +32,6 @@ class ComponentsController < ApplicationController
   # GET /components/1.json
   def show
     @title = t('actions.show') + " " + t('activerecord.models.component')
-    @component = Component.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -55,14 +54,13 @@ class ComponentsController < ApplicationController
   # GET /components/1/edit
   def edit
     @title = t('actions.edit') + " " + t('activerecord.models.component')
-    @component = Component.find(params[:id])
   end
 
   # POST /components
   # POST /components.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.component')
-    @component = Component.new(params[:component])
+    @component = Component.new(component_params)
 
     respond_to do |format|
       if @component.save
@@ -79,11 +77,10 @@ class ComponentsController < ApplicationController
   # PUT /components/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.component')
-    @component = Component.find(params[:id])
     @component.user = current_user.email
-    
+
     respond_to do |format|
-      if @component.update_attributes(params[:component])
+      if @component.update(component_params)
         format.html { redirect_to(components_path, notice: t('flash.component.update.notice')) }
         format.json { head :no_content }
       else
@@ -96,7 +93,6 @@ class ComponentsController < ApplicationController
   # DELETE /components/1
   # DELETE /components/1.json
   def destroy
-    @component = Component.find(params[:id])
     @component.user = current_user.email
     @component.destroy
 
@@ -105,4 +101,16 @@ class ComponentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_component
+      @component = Component.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def component_params
+      params.require(:component).permit(:description, :license_id, :name, :notes, :title, :version, :purchased, :own, :leave_out)
+    end
+
 end

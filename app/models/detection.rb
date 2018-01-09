@@ -1,7 +1,5 @@
-class Detection < ActiveRecord::Base
+class Detection < ApplicationRecord
   include Loggable
-
-  attr_accessible :name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired
 
   has_attached_file :xml
   belongs_to :release

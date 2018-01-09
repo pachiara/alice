@@ -1,16 +1,14 @@
-class License < ActiveRecord::Base
+class License < ApplicationRecord
   include Loggable
-  
-  attr_accessible :license_type_id, :category_id, :description, :name, :text_license, :version, :flag_osi, :id, :notes, :similar_license_id
-  
+
   validates_presence_of :name, :description
   validates_uniqueness_of :name
-  
+
   belongs_to :category
   belongs_to :license_type
-  
+
   has_many   :products
-  
+
   def self.search(name, page, per_page = 10)
     order('name, version').where('name LIKE ?', "%#{name}%").paginate(page: page, per_page: per_page)
   end
@@ -18,7 +16,7 @@ class License < ActiveRecord::Base
   def self.search_order(order, page, per_page = 10)
     order(order).paginate(page: page, per_page: per_page)
   end
-  
+
   before_update do
     previous = License.find(id)
     if similar_license_id.nil? then
@@ -45,15 +43,15 @@ class License < ActiveRecord::Base
       alice_logger.info("
         License: #{name}
         Version: #{version}
-        Name previous: #{name}               
+        Name previous: #{name}
         Similar_License: #{similar_license}
-        Similar_License previous: #{similar_license_previous}          
+        Similar_License previous: #{similar_license_previous}
         License_type: #{license_type}
-        License_type previous: #{license_type_previous}          
+        License_type previous: #{license_type_previous}
         Updated_by: #{user} ")
     end
   end
-  
+
   before_destroy do
     alice_logger.info("
       License: #{name}
@@ -79,5 +77,5 @@ class License < ActiveRecord::Base
       License_type: #{license_type}
       Created_by: #{user} ")
   end
-  
+
 end
