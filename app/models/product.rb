@@ -3,9 +3,10 @@ class Product < ApplicationRecord
   validates_presence_of :name, :title, :use_id
   validates_uniqueness_of :name
 
+  before_validation :strip_whitespace, :only => [:name]
+  
   belongs_to :use
   has_many :releases, :dependent => :destroy
-
   def last_release
     return self.releases.order("sequential_number").last
   end
@@ -37,6 +38,10 @@ class Product < ApplicationRecord
       self.last_release_checked_at = nil
       self.last_release_check_result = nil
     end
+  end
+  
+  def strip_whitespace
+    self.name = self.name.strip unless self.name.nil?
   end
 
 end
