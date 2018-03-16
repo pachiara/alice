@@ -216,10 +216,15 @@ class ReleasesController < ApplicationController
                :header => { :left => 'Alice',
                             :center => @title,
                             :right => t('actions.messages.classification'),
-                            :line => true
+                            :line => true,
+                            :font_size => 10
                           },
                :footer => { :center => "#{t('actions.messages.date')} #{Time.now.strftime('%d/%m/%Y')}    #{t('actions.messages.hour')} #{Time.now.strftime('%H:%M')}",
-                            :right => 'Pag. [page] / [topage]', :line => true },
+                            :right => 'Pag. [page] / [topage]',
+                            :line => true,
+                            :font_size => 10
+                          },
+               :print_media_type => true,
                :show_as_html => params[:debug].present?
       end
     end

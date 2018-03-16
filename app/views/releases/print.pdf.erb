@@ -1,6 +1,9 @@
 <meta charset="utf-8">
 <%= wicked_pdf_stylesheet_link_tag "application" -%>
+<%= wicked_pdf_stylesheet_link_tag "bootstrap_and_overrides" -%>
 <%= wicked_pdf_javascript_include_tag "application" %>
+<%= wicked_pdf_javascript_include_tag "d3.v3" %>
+
 <style>
   body {
     background-color:#ffffff;
@@ -49,4 +52,3 @@
   legend_width = 547;
   donut(dataset, "#graphics_area_3", "<%= t('activerecord.models.licenses') %>");
 </script>
-
