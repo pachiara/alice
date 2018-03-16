@@ -9,7 +9,7 @@ it:
     - ven
     - sab
     abbr_month_names:
-    - 
+    -
     - gen
     - feb
     - mar
@@ -37,9 +37,9 @@ it:
     order:
       - :day
       - :month
-      - :year  
+      - :year
     month_names:
-    - 
+    -
     - gennaio
     - febbraio
     - marzo
@@ -236,20 +236,20 @@ it:
 
 # modifiche applicative
 # nodo activerecord:
-     
+
       messages:
         error: "errore"
         errors: "errori"
         taken: "è già in uso"
         record_invalid: "Validazione fallita: %{errors}"
-  
+
     models:
       license: Licenza
       licenses: Licenze
       category: Categoria
       categories: Categorie
       license_type: "Tipo Licenza"
-      license_types: "Tipologia di Licenze" 
+      license_types: "Tipologia di Licenze"
       product: Prodotto
       products: Prodotti
       use: Uso
@@ -261,7 +261,7 @@ it:
       detected_component: "Componente rilevato"
       detected_components: "Componenti rilevati"
       tie: Legame
-      ties: Legami 
+      ties: Legami
       rule: Regola
       rules: Regole
       rule_entry: "Voce della regola"
@@ -269,35 +269,35 @@ it:
       user: "Utente"
       release: "Versione"
       releases: "Versioni"
-    
+
     attributes:
       license:
         description:  "Descrizione"
         category_id:  "Id Categoria"
         text_license: "Testo"
-        name:         "Nome"    
+        name:         "Nome"
         version:      "Versione"
-        category:     "Categoria" 
+        category:     "Categoria"
         license_type: "Tipo Licenza"
         flag_osi:     "OSI"
         notes:        "Note"
         similar_license_id: "Licenza equivalente"
       category:
-        name:         "Nome Categoria"    
+        name:         "Nome Categoria"
         description:  "Descrizione"
       license_type:
-        code:         "Codice"    
+        code:         "Codice"
         description:  "Descrizione"
         protection_level: "Livello protezione"
         protection_level_short: "Protezione"
-        unidentified: "Non identificata"           
+        unidentified: "Non identificata"
       product:
         name:         "Nome"
         name_long:    "Nome prodotto"
         version:      "Ultima versione"
-        title:        "Titolo"    
+        title:        "Titolo"
         description:  "Descrizione"
-        use:          "Uso"           
+        use:          "Uso"
         notes:        "Note"
         groupage:     "Gruppo"
         updated_at:   "Ultimo agg."
@@ -314,7 +314,7 @@ it:
         name:         "Nome"
         version:      "Versione"
         version_short: "Vers."
-        title:        "Titolo"    
+        title:        "Titolo"
         description:  "Descrizione"
         license:      "Licenza"
         notes:        "Note"
@@ -327,7 +327,7 @@ it:
         created_at:   "Data rilevamento"
         xml_file_name: "Nome file xml"
         xml_updated_at: "Data file xml"
-        acquired:     "Acquisito"  
+        acquired:     "Acquisito"
       detected_component:
         name:         "Nome"
         name_long:    "Nome componente"
@@ -348,7 +348,7 @@ it:
       rule_entry:
         license:      "Licenza"
         plus:         "in poi"
-        order:        "Ordine"  
+        order:        "Ordine"
       user:
         sign_in_count: "Accessi"
         current_sign_in_at: "Ultimo accesso"
@@ -384,8 +384,8 @@ it:
     assign: "Assegna"
     release: "Rilascia"
     report: "Stampa"
-    email: "Email"    
-    management: "Gestione"  
+    email: "Email"
+    management: "Gestione"
     view_details: "Vedere i dettagli »"
     download: "Scarica"
     save: "Salva"
@@ -405,7 +405,7 @@ it:
     cancel_my_account: "Cancellami"
     send_reset_instructions: "Invia istruzioni reimpostazione password"
     change_my_password: "Cambia la mia password"
-    
+
     messages:
       graphics: "Report composizione prodotto"
       need_password: "La password è necessaria per eseguire le modifiche"
@@ -425,11 +425,11 @@ it:
       compatibility: "compatibilità licenze"
       components_list_legend: "Legenda: Pr=Proprio, Ac=Acquistato, Es=Escluso, Nt=Note"
       acquisition: "Acquisizione"
-  
+
   will_paginate:
     next_label: "&rarr;"
     previous_label: "&larr;"
-  
+
   devise:
     sessions:
       user:
@@ -450,7 +450,7 @@ it:
         timeout: "Sessione scaduta, accedere nuovamente per continuare."
         inactive: "Il tuo account non è stato ancora attivato."
         not_found_in_database: "Utente non trovato nel database"
-        
+
 
   simple_form:
     "yes": 'Si'
@@ -458,12 +458,12 @@ it:
     required:
       text: 'richiesto'
       mark: '*'
-    error_notification: 
-      default_message: "Correggere i problemi segnalati prima di procedere."        
+    error_notification:
+      default_message: "Correggere i problemi segnalati prima di procedere."
     labels:
       user:
         remember_me: "Ricordami"
- 
+
   flash:
     license:
       create:
@@ -494,7 +494,7 @@ it:
         alert: "Tipo di licenza: errore durante l'aggiornamento!"
       destroy:
         notice: "Tipo di licenza: eliminazione avvenuta con successo!"
-        alert: "Tipo di licenza: errore durante l'eliminazione!"        
+        alert: "Tipo di licenza: errore durante l'eliminazione!"
     product:
       create:
         notice: "Prodotto: creazione avvenuta con successo!"
@@ -504,7 +504,7 @@ it:
         alert: "Prodotto: errore durante l'aggiornamento!"
       destroy:
         notice: "Prodotto: eliminazione avvenuta con successo!"
-        alert: "Prodotto: errore durante l'eliminazione!"     
+        alert: "Prodotto: errore durante l'eliminazione!"
     release:
       create:
         notice: "Versione: creazione avvenuta con successo!"
@@ -524,7 +524,7 @@ it:
         alert: "Uso: errore durante l'aggiornamento!"
       destroy:
         notice: "Uso: eliminazione avvenuta con successo!"
-        alert: "Uso: errore durante l'eliminazione!"        
+        alert: "Uso: errore durante l'eliminazione!"
     component:
       create:
         notice: "Componente: creazione avvenuta con successo!"
@@ -564,7 +564,7 @@ it:
         alert: "Regola: errore durante l'aggiornamento!"
       destroy:
         notice: "Regola: eliminazione avvenuta con successo!"
-        alert: "Regola: errore durante l'eliminazione!"         
+        alert: "Regola: errore durante l'eliminazione!"
 
   infos:
     check:

@@ -1,7 +1,7 @@
 class License < ApplicationRecord
   include Loggable
 
-  validates_presence_of :name, :description
+  validates_presence_of :name, :description, :category, :license_type
   validates_uniqueness_of :name
 
   belongs_to :category
