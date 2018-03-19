@@ -11,7 +11,7 @@ class Release < ApplicationRecord
   has_and_belongs_to_many :components
   belongs_to :product
   belongs_to :license
-  belongs_to :compatible_license, :class_name => "License", :foreign_key => "compatible_license_id"
+  belongs_to :compatible_license, :optional => true, :class_name => "License", :foreign_key => "compatible_license_id"
 
   has_and_belongs_to_many :components
   has_many :detections, :dependent => :destroy
