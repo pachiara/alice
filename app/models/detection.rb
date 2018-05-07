@@ -8,7 +8,7 @@ class Detection < ApplicationRecord
   validates_presence_of :name
   validates_presence_of :xml, :message => ''
   validates_uniqueness_of :name, scope: :release_id
-  validates_attachment_content_type :xml, :content_type => "text/xml"
+  validates_attachment_content_type :xml, :content_type => ["text/xml", "application/xml"]
   before_create :parse_file
 
   def parse_file
