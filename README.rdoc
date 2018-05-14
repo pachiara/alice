@@ -40,3 +40,4 @@ Alice e' rilasciata con licenza europea EUPL mantenuta a tradotta nelle 22 lingu
 
 * [Gitter chat](https://gitter.im/pachiara/alice)
 * [Wiki](https://github.com/pachiara/alice/wiki)
+* [EUPL](https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12)
