@@ -2,6 +2,10 @@ class DetectionsController < ApplicationController
   before_action :authenticate_user!, only: [:destroy]
   before_action :set_detection, only: [:show, :edit, :update, :destroy]
 
+  def params
+    request.parameters
+  end
+  
   def restore_search
     if params[:page].nil? && !session[:detections_page].nil? then
        params[:page] = session[:detections_page]
@@ -171,8 +175,14 @@ class DetectionsController < ApplicationController
       end
       # Controllo parametro detection
       if @result.nil?
+puts "**** detection xml *******************************"
+puts  params[:detection].nil? 
+puts  !params[:detection].is_a?(ActionController::Parameters)
+puts  params[:detection][:xml].nil? 
+puts  params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
+puts "***********************************"
         if params[:detection].nil? ||
-           !params[:detection].is_a?(ActionController::Parameters) ||
+           !params[:detection].is_a?(ActiveSupport::HashWithIndifferentAccess) ||
            params[:detection][:xml].nil? ||
            !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
           @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
