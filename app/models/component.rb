@@ -5,7 +5,7 @@ class Component < ApplicationRecord
   validates :version, :uniqueness => {:scope => [:name]}
   validate  :purchase_or_own
 
-  belongs_to :use
+#  belongs_to :use
   belongs_to :license
 
   has_and_belongs_to_many :releases

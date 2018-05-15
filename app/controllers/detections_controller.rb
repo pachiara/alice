@@ -175,12 +175,6 @@ class DetectionsController < ApplicationController
       end
       # Controllo parametro detection
       if @result.nil?
-puts "**** detection xml *******************************"
-puts  params[:detection].nil? 
-puts  !params[:detection].is_a?(ActionController::Parameters)
-puts  params[:detection][:xml].nil? 
-puts  params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
-puts "***********************************"
         if params[:detection].nil? ||
            !params[:detection].is_a?(ActiveSupport::HashWithIndifferentAccess) ||
            params[:detection][:xml].nil? ||
