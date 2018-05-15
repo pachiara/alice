@@ -2,9 +2,9 @@ class DetectionsController < ApplicationController
   before_action :authenticate_user!, only: [:destroy]
   before_action :set_detection, only: [:show, :edit, :update, :destroy]
 
-  def params
-    request.parameters
-  end
+#  def params
+#    request.parameters
+#  end
   
   def restore_search
     if params[:page].nil? && !session[:detections_page].nil? then
