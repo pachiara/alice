@@ -60,9 +60,8 @@ class DetectionsController < ApplicationController
   # POST /detections.json
   def create
     @title = t('actions.new') + " " + t('activerecord.models.detection')
-    @detection = Detection.new(detection_params)
+    @detection = Detection.new(params[:detection])
     @detection.release_id = params[:release_id]
-
     respond_to do |format|
       if @detection.save
         format.html { redirect_to(detections_path + "?release_id=#{params[:release_id]}", notice: t('flash.detection.create.notice')) }
