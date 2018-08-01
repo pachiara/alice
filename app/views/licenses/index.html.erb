@@ -42,7 +42,11 @@
       <div class="btn-group">
     	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), license, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
     	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_license_path(license), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
-    	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+    	<% if (license.components.length > 0) or (license.releases.length > 0) %>
+        <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+      <% else %>
+        <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), license, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      <% end %>
       </div>
     </td>
   </tr>

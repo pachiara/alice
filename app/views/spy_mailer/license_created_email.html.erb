@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Creazione Licenza</h1>
+    <p>
+      Licenza: <strong><%= @license.name %></strong><br/>
+      versione: <strong><%= @license.version %></strong>
+    </p>
+    <p>
+      La licenza è stata creata da: <strong><a href="mailto:<%= @license.user %>"><%= @license.user %></a></strong><br/>
+      Licenza equivalente: <strong><%= @similar_license_description %></strong><br/>
+      Tipo licenza: <strong><%= @license_type_description %></strong>
+    </p>
+  </body>
+</html>

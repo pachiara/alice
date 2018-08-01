@@ -13,7 +13,6 @@ class Release < ApplicationRecord
   belongs_to :license
   belongs_to :compatible_license, :optional => true, :class_name => "License", :foreign_key => "compatible_license_id"
 
-  has_and_belongs_to_many :components
   has_many :detections, :dependent => :destroy
 
   after_save do
@@ -43,12 +42,29 @@ class Release < ApplicationRecord
   def del_relation(component_del = [])
    component_del.each do |component_id|
       component = Component.find(component_id)
+      component_license = License.find(component.license_id)
       if self.components.include?(component)
-        alice_logger.info("
-          Product: #{product.name}
-          Release: #{version_name}
-          Component: #{component.name}
-          Destroyed_by: #{user} ")
+        if ALICE['txt_logging']
+          alice_logger.info("
+            Product: #{product.name}
+            Release: #{version_name}
+            Component: #{component.name}
+            Component_license: #{component_license.description}
+            Destroyed_by: #{user} ")
+        end
+        if ALICE['db_logging']
+          le = LogEntry.new
+          le.date = Time.now
+          le.user =user
+          le.object = "relation"
+          le.operation = "D"
+          le.product = product.name
+          le.product_release = version_name
+          le.component = component.name
+          le.license = component_license.description
+          le.save
+        end
+        SpyMailer.relation_destroyed_email(product.name, version_name, component, component_license, user).deliver_now unless ALICE['spy_mail_list'].blank?
 
         components.delete(component)
       end
@@ -61,17 +77,6 @@ class Release < ApplicationRecord
     else
       return (self.product.releases.order(:sequential_number).last.sequential_number.to_int + 1)
     end
-  end
-
-  def delete_components
-    self.components.each do |component|
-      alice_logger.info("
-        Product: #{product.name}
-        Release: #{version_name}
-        Component: #{component.name}
-        Destroyed_by: #{user} ")
-    end
-    self.components.clear
   end
 
   def addWarning(key, text)

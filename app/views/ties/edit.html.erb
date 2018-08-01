@@ -76,9 +76,6 @@
   </div>
 </div>
 
-  <%= link_to release_ties_destroy_path, :class => "btn btn-default", :method => 'delete', :action => 'destroy', :data => { confirm: t('actions.are_you_sure') },  :title => t('actions.destroy'), :alt => t('actions.destroy') do %>
-    <span class="glyphicon glyphicon-trash"></span> <%= t('actions.destroy') %>      
-  <% end %> 
   <%= link_to ties_index_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
     <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
   <% end %> 

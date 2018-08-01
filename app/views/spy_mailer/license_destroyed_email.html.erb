@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Cancellazione Licenza</h1>
+    <p>
+      Licenza: <strong><%= @license.name %></strong><br/>
+      versione: <strong><%= @license.version %></strong>
+    </p>
+    <p>
+      La licenza è stata cancellata da: <a href="mailto:<%= @license.user %>"><%= @license.user %></a></strong>
+    </p>
+  </body>
+</html>

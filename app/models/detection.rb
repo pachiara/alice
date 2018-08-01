@@ -134,4 +134,29 @@ class Detection < ApplicationRecord
     acquired = true
   end
 
+  before_destroy do
+    # User non impostato => si sta cancellando tutta la release (niente log)
+    if !self.user.nil? then
+      if ALICE['txt_logging']
+        alice_logger.info("
+          Product: #{release.product.name}
+          Release: #{release.version_name}
+          Detection: #{name}
+          Destroyed_by: #{user} ")
+      end
+      if ALICE['db_logging']
+        le = LogEntry.new
+        le.date = Time.now
+        le.user = user
+        le.object = "detection"
+        le.operation ="D"
+        le.product = release.product.name
+        le.product_release = release.version_name
+        le.detection = name
+        le.save
+      end
+      SpyMailer.detection_destroyed_email(self).deliver_now unless ALICE['spy_mail_list'].blank?
+    end
+  end
+  
 end

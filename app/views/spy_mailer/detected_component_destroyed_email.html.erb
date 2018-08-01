@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Cancellazione Componente Rilevato</h1>
+    <p>
+      Prodotto: <strong><%= @detected_component.detection.release.product.name %></strong><br/>
+      Release: <strong><%= @detected_component.detection.release.version_name %></strong><br/>
+      Rilevamento: <strong><%= @detected_component.detection.name %></strong><br/>
+      Componente:  <strong><%= @detected_component.name %></strong>
+    </p>
+    <p>
+      <a href="mailto:<%= @detected_component.user %>"><%= @detected_component.user %></a> ha cancellato il componente rilevato, che aveva<br/>
+      licenza: <strong><%= @license_name %></strong><br/>
+      flag Proprio: <strong><%= @detected_component.own %></strong><br/>
+      flag Acquistato: <strong><%= @detected_component.purchased %></strong>
+    </p>
+  </body>
+</html>

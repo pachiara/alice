@@ -23,28 +23,65 @@ class Component < ApplicationRecord
 
   before_update do
     previous = Component.find(id)
+    license = License.find(license_id).description
+    license_previous = License.find(previous.license_id).description
     if (license_id != previous.license_id or purchased != previous.purchased or own != previous.own or leave_out != previous.leave_out) then
-      alice_logger.info("
-        Component: #{name}
-        Version: #{version}
-        License: #{License.find(license_id).description}
-        License previous: #{License.find(previous.license_id).description}
-        Own: #{own}
-        Own previous: #{previous.own}
-        Purchased: #{purchased}
-        Purchased previous: #{previous.purchased}
-        Leave_out: #{leave_out}
-        Leave_out previous: #{previous.leave_out}
-        Updated_by: #{user} ")
+      if ALICE['txt_logging']
+        alice_logger.info("
+          Component: #{name}
+          Version: #{version}
+          License: #{license}
+          License previous: #{license_previous}
+          Own: #{own}
+          Own previous: #{previous.own}
+          Purchased: #{purchased}
+          Purchased previous: #{previous.purchased}
+          Leave_out: #{leave_out}
+          Leave_out previous: #{previous.leave_out}
+          Updated_by: #{user} ")
+      end
+      if ALICE['db_logging']
+        le = LogEntry.new
+        le.date = Time.now
+        le.user = user
+        le.object = "component"
+        le.operation ="U"
+        le.component = name
+        le.version = version
+        le.license = license
+        le.license_previous = license_previous
+        le.own = own
+        le.own_previous = previous.own
+        le.purchased =purchased
+        le.purchased_previous = previous.purchased
+        le.leave_out = leave_out
+        le.leave_out_previous = previous.leave_out
+        le.save      
+      end
+      SpyMailer.component_email(self, license).deliver_now unless ALICE['spy_mail_list'].blank?
     end
   end
 
   before_destroy do
-    alice_logger.info("
-      Component: #{name}
-      Version: #{version}
-      License: #{License.find(license_id).description}
-      Destroyed_by: #{user} ")
+    license = License.find(license_id).description
+    if ALICE['txt_logging']
+      alice_logger.info("
+        Component: #{name}
+        Version: #{version}
+        License: #{license}
+        Destroyed_by: #{user} ")
+    end
+    if ALICE['db_logging']
+      le = LogEntry.new
+      le.date = Time.now
+      le.user = user
+      le.object = "component"
+      le.operation ="D"
+      le.component = name
+      le.version = version
+      le.license = license
+    end
+    SpyMailer.component_destroyed_email(self, license).deliver_now unless ALICE['spy_mail_list'].blank?
   end
 
 

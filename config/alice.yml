@@ -4,15 +4,21 @@ default: &default
   own_component_tag_value: "Lispa License"
   # espressione regolare x validazione email utenti
   users_email_domain_validation_regex: lispa.it$
-
+  alice_logger_path: "../data/"
+  txt_logging: false
+  db_logging: true
+  
 development:
   <<: *default
-  alice_logger_path: log/alice_devel.log
+  alice_logger_name: alice_devel.log
+  spy_mail_list: ""
 
 test:
   <<: *default
-  alice_logger_path: log/alice_test.log
+  alice_logger_name: alice_test.log
 
 production:
   <<: *default
-  alice_logger_path: log/alice_prod.log
+  alice_logger_name: alice_prod.log
+  # mail list per controllo modifiche utenti
+  spy_mail_list: ""

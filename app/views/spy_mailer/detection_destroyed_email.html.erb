@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Cancellazione Rilevamento</h1>
+    <p>
+      Prodotto: <strong><%= @detection.release.product.name %></strong><br/>
+      Release: <strong><%= @detection.release.version_name %></strong><br/>
+      Rilevamento: <strong><%= @detection.name %></strong><br/>
+    </p>
+    <p>
+      <a href="mailto:<%= @detection.user %>"><%= @detection.user %></a> ha cancellato tutto il rilevamento.
+    </p>
+  </body>
+</html>

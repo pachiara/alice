@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     get 'ties/select'
     get 'ties/edit'
     post 'ties/edit'
-    delete 'ties/destroy'
     get 'ties/show'
     get 'check'
     post 'update_check'

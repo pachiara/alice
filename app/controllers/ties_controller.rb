@@ -62,19 +62,6 @@ class TiesController < ApplicationController
     end
   end
 
-  # DELETE /product/1/ties/destroy
-  # DELETE /product/1/ties/destroy.json
-  def destroy
-    @release = Release.find(params[:release_id])
-    @release.user = current_user.email
-    @release.delete_components
-
-    respond_to do |format|
-      format.html { redirect_to release_ties_edit_url }
-      format.json { head :no_content }
-    end
-  end
-
   # GET /product/1/ties/show
   # GET /product/1/ties/show.json
   def show
