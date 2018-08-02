@@ -5,13 +5,13 @@ default: &default
   # espressione regolare x validazione email utenti
   users_email_domain_validation_regex: lispa.it$
   alice_logger_path: "../data/"
-  txt_logging: false
+  txt_logging: true
   db_logging: true
   
 development:
   <<: *default
   alice_logger_name: alice_devel.log
-  spy_mail_list: ""
+  spy_mail_list: "enzo.ferri@lispa.it"
 
 test:
   <<: *default
@@ -21,4 +21,4 @@ production:
   <<: *default
   alice_logger_name: alice_prod.log
   # mail list per controllo modifiche utenti
-  spy_mail_list: ""
+  spy_mail_list: "release.management@lispa.it"

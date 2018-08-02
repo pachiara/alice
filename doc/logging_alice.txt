@@ -26,8 +26,10 @@ libera via email, ma dominio dell'indirizzo di posta deve finire per lispa.it
 config/alice.yml
   users_email_domain_validation_regex: lispa.it$
 
+============================================================== 
 Quali operazioni vengono tracciate:
-Viene scritto un record di log
+==============================================================
+Viene scritto un record di log, ed inviata una mail 
 Per Modifica di:
   Componenti rilevati
     quando viene modificato almeno 1 di questi dati
@@ -51,20 +53,59 @@ Per Modifica di:
   Legami
     quando viene cancellato eliminato un componente
 
-Sempre in caso di:
-  Cancellazione di:
+Per singola* Cancellazione di:
     Rilevamenti
     Componenti rilevati
     Componenti
     Legami
     Licenze
-
-  Creazione di:
+[* se viene, per esempio, cancellato un rilevamento, vengono automaticamente cancellati tutti i componenti rilevati ad esso legati.
+In tal caso non viene inviata una mail per ogni componente rilevato cancellato, ma solo la mail relativa alla cancellazione del rilevamento]
+    
+ Per la Creazione di:
     Licenze
 
+--------------------------------------------------------------------------
+    
 Il file di log è impostato in models/concerns/loggable.rb
   def alice_logger
     @@alice_logger ||= Logger.new(ALICE['alice_logger_path']}")
   end
 
 La variabile "alice_logger_path" è impostata in config/alice.yml
+
+
+==========================================
+Implementazione Logging Alice del 03/08/18 
+==========================================
+In config/alice.yml sono ora previsti due parametri:
+  alice_logger_path: "../data/"
+  alice_logger_name: alice_prod.log
+In questo modo è possibile impostare una directory interna o esterna per i file di log
+(per evitare la cancellazione del file quando viene aggiornato il progetto sul server di produzione)
+
+E' stata aggiunta la possibilità di memorizzare i dati di log su database, nella tabella: log_entries
+L'impostazione della modalità di logging avviene tramite due parametri sempre in config/alice.yml
+  txt_logging: false
+  db_logging: true
+I due parametri possono assumere il valore true o false indipendentemente l'uno dall'altro.
+  
+Il modello LogEntry contiene il metodo di classe: "create_entries_from_log" che popola la tabella leggendo il file di log.
+(il metodo prima dell'esecuzione testa che il file di log esista e che la tabella log_entries sia vuota)
+
+Il modello LogEntry contiene un secondo metodo di classe: "create_csv(kind)" che genera dei file .csv importabili automaticamente in un foglio di calcolo.
+Nel parametro "kind" possono essere passati 4 valori:
+  :licenze, :legami, :componenti, :rilevati
+A seconda del parametro passato il metodo genera un file csv con nome analogo
+(esempio: LogEntry.create_csv(:componenti)  genera il file componenti.csv)
+contenente le righe della tabella log_entries relative alle operazioni monitorare sugli oggetti del tipo suggerito dal nome del file stesso.
+Il file .csv verrà creato nella stessa directory specificata nelò parametro:
+  alice_logger_path:
+visto in precedenza.
+
+E' possibile poi, indipendentemente dai valori impostati per i due parametri "txt_logging" e "db_logging" 
+far spedire avvisi via mail delle attività monitorate ad una mail list di indirizzi.
+Esempio:
+  spy_mail_list: "enzo.ferri@lispa.it, chiara.palmieri@lispa.it"
+(lasciando la mail list vuota si disabilita la spedizione delle email)
+  spy_mail_list: ""
