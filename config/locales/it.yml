@@ -119,6 +119,7 @@ it:
         no_components: "il prodotto non ha componenti."
         no_license: "specificare una licenza per il prodotto."
         no_license_type: "specificare tipo licenza per licenza %{license_name} versione %{license_version}."
+        no_use: "specificare un tipo d'uso per il prodotto."
         no_detected_components: "%{detection_name}: Nessun componente rilevato."
         components_without_license: "I seguenti componenti non hanno una licenza assegnata:"
         not_purchased_component: "%{component_name}: con licenza proprietaria %{license_name} non acquistato."

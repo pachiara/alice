@@ -7,7 +7,6 @@ Obbligo di autenticazione per accedere alle seguenti funzionalità
 Modifica di:
   Componenti rilevati
   Componenti
-  Legami
   Licenze
 
 Cancellazione di:
@@ -49,9 +48,6 @@ Per Modifica di:
       nome licenza
       tipo licenza
       licenza equivalente
-
-  Legami
-    quando viene cancellato eliminato un componente
 
 Per singola* Cancellazione di:
     Rilevamenti

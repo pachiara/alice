@@ -91,6 +91,11 @@ class Release < ApplicationRecord
 
   def precheck
     check_result = true
+    if !self.product.use.name
+      self.errors.add(I18n.t("errors.messages.check.not_executable"),
+         I18n.t("errors.messages.check.no_use"))
+      check_result = false
+    end
     if self.license.nil?
       self.errors.add(I18n.t("errors.messages.check.not_executable"),
          I18n.t("errors.messages.check.no_license"))

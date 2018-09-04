@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
 
-  validates_presence_of :name, :title, :use_id
+  validates_presence_of :name, :title
   validates_uniqueness_of :name
 
   before_validation :strip_whitespace, :only => [:name]
