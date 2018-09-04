@@ -85,7 +85,8 @@ class Detection < ApplicationRecord
     end
     new_name = new_name.split(/\d+\.\d*\.*\d+/)[0].rstrip
     new_name = new_name.split('- v')[0].rstrip
-    return new_name
+    new_name = new_name.gsub(/['"]/,'')
+    return new_name[0...255]
   end
 
   def parse_version(name, url)
