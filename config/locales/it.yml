@@ -112,6 +112,10 @@ it:
         attributes:
           email:
             invalid_domain: dominio non valido
+      product:
+        attributes:
+          use:
+            required: specificare valore valido
     messages:
       check:
         not_executable: "Impossibile eseguire il controllo:"

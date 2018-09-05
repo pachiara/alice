@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :uses
   resources :products
+  post 'products/remote_create'
 
   resources :releases do
     get 'ties/select'

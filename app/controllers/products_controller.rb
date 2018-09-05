@@ -122,6 +122,43 @@ class ProductsController < ApplicationController
     end
   end
 
+
+  # POST /products/remote_create
+  # API
+  def remote_create
+    # parametri
+    # input:
+    # 1 - nome/sigla prodotto (obbligatorio)
+    # 2 - titolo (obbligatorio)
+    # 3 - tipo uso (facoltativo, default 8="non definito")
+    # 4 - descrizione lunga prodotto (facoltativo)
+    # 5 - gruppo (facoltativo)
+    # 6 - note (facoltativo)
+    # output:
+    # 0 prodotto creato
+    # 1 impossibile creare il prodotto
+    @product=Product.new
+    @product.name = params[:name]
+    @product.title = params[:title]
+    @product.use_id = !params[:use_id].blank? ? params[:use_id] : 8
+    @product.description = params[:description] || ""
+    @product.groupage = params[:groupage] || ""
+    @product.notes = params[:notes] || ""
+    @product.save
+    if @product.errors.full_messages.length > 0
+      @result = {"result" => 1, "product" => "#{@product.name}", "msg" => @product.errors.full_messages.join(", ")}
+    else
+      @result = {"result" => 0, "product" => "#{@product.name}", "msg" => "Prodotto: #{@product.name} creato"}
+    end
+    respond_to do |format|
+      format.html { render json: @result }
+      format.json { render json: @result }
+      format.xml { render xml: @result }
+    end
+  end
+  
+  
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
