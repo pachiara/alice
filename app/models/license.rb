@@ -62,7 +62,7 @@ class License < ApplicationRecord
         le.version = version
         le.license_previous = previous.name
         le.similar_license = similar_license
-        le.similar_License_previous = similar_license_previous
+        le.similar_license_previous = similar_license_previous
         le.license_type =license_type
         le.license_type_previous = license_type_previous
         le.save
