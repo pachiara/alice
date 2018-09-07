@@ -23,7 +23,7 @@ class DetectedComponent < ApplicationRecord
 
     queryString = "("
     words.each do |word|
-      queryString << "description LIKE '%#{word}%' or "
+      queryString << "description LIKE '%#{word} %' or "
     end
     queryString = queryString[0..-5] + ')'
     if version != nil
