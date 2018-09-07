@@ -2,7 +2,7 @@
   <div class="input-group-sm">
     <%= text_field_tag :license_name, params[:license_name], :class => "pull-left form-control", :placeholder => t('activerecord.models.license'), :type => "search" %>
     <span class="pull-left input-group-btn">
-      <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span> </button>
+      <button type="submit" class="btn btn-sm btn-primary" name="restart_page" value="true"><span class="glyphicon glyphicon-search"></span> </button>
     </span>
   </div>
 <% end %>

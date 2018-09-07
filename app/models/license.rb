@@ -10,14 +10,19 @@ class License < ApplicationRecord
   has_many   :releases
   has_many   :components
 
-  def self.search(name, page, per_page = 10)
-    order('name, version').where('name LIKE ?', "%#{name}%").paginate(page: page, per_page: per_page)
-  end
+  def self.search_order(name, sort_column, sort_order, page, per_page = 10)
+    if sort_column.nil? then sort_column = 'name' end
+    if sort_order.nil? then sort_order = ' ASC' end
 
-  def self.search_order(order, page, per_page = 10)
-    order(order).paginate(page: page, per_page: per_page)
+    sort = case sort_column
+      when 'description', 'license_type_id', 'category_id' then
+        sort_column + sort_order
+      else #name
+        sort_column + sort_order + ', version' + sort_order
+    end
+    order(sort).where('name LIKE ? or description LIKE ? ', "%#{name}%", "%#{name}%").paginate(page: page, per_page: per_page)
   end
-
+  
   before_update do
     previous = License.find(id)
     if similar_license_id.nil? then
