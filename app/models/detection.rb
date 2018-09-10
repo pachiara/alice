@@ -10,7 +10,8 @@ class Detection < ApplicationRecord
   validates_uniqueness_of :name, scope: :release_id
   validates_attachment_content_type :xml, :content_type => ["text/xml", "application/xml"]
   before_create :parse_file
-
+  after_create  :destroy_xml
+  
   def parse_file
     tempfile = xml.queued_for_write[:original]
     doc = Nokogiri::XML(tempfile)
@@ -158,6 +159,11 @@ class Detection < ApplicationRecord
       end
       SpyMailer.detection_destroyed_email(self).deliver_now unless ALICE['spy_mail_list'].blank?
     end
+  end
+
+private
+  def destroy_xml
+    self.xml.clear
   end
   
 end
