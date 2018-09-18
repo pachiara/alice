@@ -218,7 +218,8 @@ class DetectionsController < ApplicationController
           end
         else
           @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+             "msg" => "Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
+                   " #{@detection.errors.full_messages[0]}"}
         end
       end
       format.html { render json: @result }
