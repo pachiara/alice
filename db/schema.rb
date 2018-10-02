@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_131932) do
+ActiveRecord::Schema.define(version: 2018_09_24_144054) do
 
   create_table "admins", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -80,12 +80,10 @@ ActiveRecord::Schema.define(version: 2018_07_11_131932) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "xml_file_name"
-    t.string "xml_content_type"
-    t.integer "xml_file_size"
-    t.datetime "xml_updated_at"
     t.boolean "acquired", default: false
     t.integer "release_id"
+    t.string "parsed_file_name"
+    t.datetime "parsed_file_at"
   end
 
   create_table "license_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -115,7 +113,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_131932) do
     t.index ["name", "version"], name: "index_licenses_on_name_and_version", unique: true
   end
 
-  create_table "log_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "log_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "user"
     t.string "object"
     t.string "operation"

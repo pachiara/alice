@@ -23,8 +23,8 @@
   <tr>
     <td><%= detection.name %></td>
     <td><%= detection.created_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
-    <td><%= detection.xml_file_name %></td>
-    <td><%= detection.xml_updated_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
+    <td><%= detection.parsed_file_name %></td>
+    <td><%= detection.parsed_file_at.localtime.strftime('%d/%m/%Y - %H:%M:%S') %></td>
     <td>
       <% if detection.acquired %>  
         <span class="label label-success"><span class="glyphicon glyphicon-thumbs-up glyphicon-inverse"></span></span>

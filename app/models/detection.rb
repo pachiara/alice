@@ -1,62 +1,63 @@
 class Detection < ApplicationRecord
   include Loggable
 
-  has_attached_file :xml
   belongs_to :release
   has_many :detected_components, :dependent => :destroy
 
   validates_presence_of :name
-  validates_presence_of :xml, :message => ''
+  validates_presence_of :xml, on: :create
   validates_uniqueness_of :name, scope: :release_id
-  validates_attachment_content_type :xml, :content_type => ["text/xml", "application/xml"]
-  validate :components_names
+  validate :xml_components_names, on: :create
   before_create :parse_file
-  after_create  :destroy_xml
+  
+  attr_accessor :xml
   
   def parse_file
-    tempfile = xml.queued_for_write[:original]
-    doc = Nokogiri::XML(tempfile)
-    parse_xml(doc)
+    parse_xml(@doc)
+    self.parsed_file_name = @xml.original_filename
+    self.parsed_file_at   = DateTime.now
   end
 
   def parse_xml(doc)
-    doc.xpath('//licenses').each do |node|
-      if node.xpath('license').length > 0
-        # un componente può avere più tag <license>
-        node.xpath('license').each do |node|
+    doc.xpath('//dependency').each do |node|
+      node.xpath('licenses').each do |node|
+        if node.xpath('license').length > 0
+          # un componente può avere più tag <license>
+          node.xpath('license').each do |node|
+            dc = DetectedComponent.new
+            dc.name = node.xpath('../../artifactId').text
+            dc.version = node.xpath('../../version').text
+            if node.xpath('name').length > 0
+              dc.license_name = parse_name(node.xpath('name').text)
+              dc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
+            end
+            identify_component(dc)
+            if dc.component_id.nil?
+              # cerca licenza corrispondente
+              versions = dc.search_licenses(dc.license_name, dc.license_version)
+              dc.license_id = versions[0].id if versions.length == 1
+              # cerca tag che segnala componente proprio (own)
+              own_tag = node.xpath('../' + ALICE["own_component_tag_xpath"])
+              if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
+                dc.own = true
+              end
+            end
+            self.detected_components << dc
+          end
+        # componente rilevato senza tag <license>
+        else
           dc = DetectedComponent.new
-          dc.name = node.xpath('../../artifactId').text
-          dc.version = node.xpath('../../version').text
-          if node.xpath('name').length > 0
-            dc.license_name = parse_name(node.xpath('name').text)
-            dc.license_version = parse_version(node.xpath('name').text, node.xpath('url').text)
+          dc.name = node.xpath('../artifactId').text
+          dc.version = node.xpath('../version').text
+          dc.license_name = node.xpath('comment()').text[0...255]
+          # cerca tag che segnala componente proprio (own)
+          own_tag = node.xpath(ALICE["own_component_tag_xpath"])
+          if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
+            dc.own = true
           end
           identify_component(dc)
-          if dc.component_id.nil?
-            # cerca licenza corrispondente
-            versions = dc.search_licenses(dc.license_name, dc.license_version)
-            dc.license_id = versions[0].id if versions.length == 1
-            # cerca tag che segnala componente proprio (own)
-            own_tag = node.xpath('../' + ALICE["own_component_tag_xpath"])
-            if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
-              dc.own = true
-            end
-          end
           self.detected_components << dc
         end
-      # componente rilevato senza tag <license>
-      else
-        dc = DetectedComponent.new
-        dc.name = node.xpath('../artifactId').text
-        dc.version = node.xpath('../version').text
-        dc.license_name = node.xpath('comment()').text[0...255]
-        # cerca tag che segnala componente proprio (own)
-        own_tag = node.xpath(ALICE["own_component_tag_xpath"])
-        if !own_tag.nil? and own_tag.text.include? ALICE["own_component_tag_value"]
-          dc.own = true
-        end
-        identify_component(dc)
-        self.detected_components << dc
       end
     end
   end
@@ -161,26 +162,23 @@ class Detection < ApplicationRecord
       SpyMailer.detection_destroyed_email(self).deliver_now unless ALICE['spy_mail_list'].blank?
     end
   end
-
-  def components_names
+  
+  def xml_components_names
     too_long = Array.new
     name_max_length = Component.columns_hash['name'].sql_type[/\(.*?\)/].gsub(/[()]/, "").to_i
     version_max_length = Component.columns_hash['version'].sql_type[/\(.*?\)/].gsub(/[()]/, "").to_i
-    tempfile = xml.queued_for_write[:original]
-    doc = Nokogiri::XML(tempfile)
-    doc.xpath('//dependency').each do |node|
-      if node.xpath('artifactId').text.length > name_max_length or node.xpath('version').text.length > version_max_length
-        too_long.push("Componente: #{node.xpath('artifactId').text} versione: #{node.xpath('version').text}")
+    @doc = Nokogiri::XML.parse(@xml)
+    dependencies = @doc.xpath('//dependency') 
+    dependencies.each do |dependency|
+      name = dependency.xpath('artifactId').text
+      version = dependency.xpath('version').text
+      if name.length > name_max_length or version.length > version_max_length
+        too_long.push("Componente: #{name} Versione: #{version}")
       end
     end
     if too_long.length > 0
       errors.add(:xml, "Nome o numero versione troppo lungo: #{too_long.to_s.gsub(/['"]/,'')}")
     end
   end
-  
-private
-  def destroy_xml
-    self.xml.clear
-  end
-  
+ 
 end

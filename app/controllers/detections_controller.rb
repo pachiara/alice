@@ -199,7 +199,7 @@ class DetectionsController < ApplicationController
             @link = detected_components_path(detection_id: @detection.id)
             if @detection.errors.full_messages[0].include? "Nessun componente"
               @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "File licenses.xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
+                 "msg" => "File xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
                   " - RILEVAMENTO ELIMINATO!"}
               @detection.destroy
             else
@@ -297,7 +297,7 @@ class DetectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def detection_params
-      params.require(:detection).permit(:name, :release_id, :xml, :created_at, :xml_file_name, :xml_updated_at, :acquired)
+      params.require(:detection).permit(:name, :release_id, :xml, :created_at, :acquired)
     end
 
 end
