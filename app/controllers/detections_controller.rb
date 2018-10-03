@@ -297,7 +297,7 @@ class DetectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def detection_params
-      params.require(:detection).permit(:name, :release_id, :xml, :created_at, :acquired)
+      ActionController::Parameters.new(params).require(:detection).permit(:name, :release_id, :xml, :created_at, :acquired)
     end
 
 end
