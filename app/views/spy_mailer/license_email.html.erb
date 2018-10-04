@@ -14,5 +14,8 @@
       Licenza equivalente: <strong><%= @similar_license_description %></strong><br/>
       Tipo licenza: <strong><%= @license_type_description %></strong>
     </p>
+    <p>
+      Link diretto alla licenza: <%= link_to @license.name, edit_license_url(@license) %>
+    </p>    
   </body>
 </html>

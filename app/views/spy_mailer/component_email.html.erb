@@ -15,5 +15,8 @@
       flag Acquistato: <strong><%= @component.purchased %></strong><br/>
       flag Escluso: <strong><%= @component.leave_out %></strong><br/>
     </p>
+    <p>
+      Link diretto al componente: <%= link_to @component.name, edit_component_url(@component) %>
+    </p>
   </body>
 </html>

@@ -96,7 +96,7 @@ class License < ApplicationRecord
     SpyMailer.license_destroyed_email(self).deliver_now unless ALICE['spy_mail_list'].blank?
   end
 
-  before_create do
+  after_create do
     if similar_license_id.nil? then
       similar_license = " "
     else

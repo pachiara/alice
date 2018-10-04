@@ -17,5 +17,8 @@
       flag Proprio: <strong><%= @detected_component.own %></strong><br/>
       flag Acquistato: <strong><%= @detected_component.purchased %></strong>
     </p>
+    <p>
+      Link diretto al componente rilevato: <%= link_to @detected_component.name, edit_detected_component_url(@detected_component) %>
+    </p>
   </body>
 </html>
