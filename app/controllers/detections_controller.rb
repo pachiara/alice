@@ -146,7 +146,7 @@ class DetectionsController < ApplicationController
     @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}", "version" => "#{@version}",
-         "msg" => "Prodotto non trovato - prodotto: #{@name}"}
+         "msg" => I18n.t("errors.messages.check.product_not_found", product_name: "#{@name}")}
     else
       # Controllo parametro product_version
       @release = Release.where('product_id = ? and version_name = ?', "#{@product.id}", "#{@version}").take
@@ -169,17 +169,17 @@ class DetectionsController < ApplicationController
         end
         if !@release.id.nil? and !(Detection.where('release_id = ? and name = ?', "#{@release.id}", "#{@detection_name}").take).nil?
           @result = {"result" => 4, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "Nome rilevamento duplicato - rilevamento: #{@detection_name}  prodotto: #{@name}  versione: #{@version}"}
+             "msg" => I18n.t("errors.messages.r_detect.detection_name_taken") + detection_data}
         end
       end
-      # Controllo parametro detection
+    # Controllo parametro detection
       if @result.nil?
         if params[:detection].nil? ||
            !params[:detection].is_a?(ActiveSupport::HashWithIndifferentAccess) ||
            params[:detection][:xml].nil? ||
            !params[:detection][:xml].is_a?(ActionDispatch::Http::UploadedFile)
           @result = {"result" => 7, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "File licenses.xml non ricevuto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+             "msg" => I18n.t("errors.messages.r_detect.licenses_file_missing") + detection_data}
         else
           @detection = Detection.new(params[:detection])
           @detection.name = @detection_name
@@ -197,16 +197,14 @@ class DetectionsController < ApplicationController
           if @detection.errors.full_messages.length > 0
             @ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.ip_address
             @link = detected_components_path(detection_id: @detection.id)
-            if @detection.errors.full_messages[0].include? "Nessun componente"
+            if @detection.detected_components.length == 0 
               @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "File xml vuoto - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
-                  " - RILEVAMENTO ELIMINATO!"}
+                 "msg" => I18n.t("errors.messages.r_detect.licenses_file_empty") + detection_data + " - RILEVAMENTO ELIMINATO!"}
               @detection.destroy
             else
               require 'socket'
               @result = {"result" => 3, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-                 "msg" => "Licenza non trovata per uno o piu' componenti del rilevamento: #{@detection_name} prodotto: #{@name} versione: #{@version}",
-                 "link" => "http://#{@ip}:#{request.port}#{@link}"}
+                 "msg" => I18n.t("errors.messages.r_detect.license_not_found") + detection_data + " link: http://#{@ip}:#{request.port}#{@link}"}
             end
           else
             # Acquisisco il rilevamento
@@ -214,12 +212,11 @@ class DetectionsController < ApplicationController
             # Modifico lo stato del rilevamento
             @detection.update_attributes(acquired: true)
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-               "msg" => "Rilevamento acquisito correttamente - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}"}
+               "msg" => I18n.t("errors.messages.r_detect.detection_acquired") + detection_data}
           end
         else
           @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}", "detection" => "#{@detection_name}",
-             "msg" => "Importazione non riuscita - rilevamento: #{@detection_name}  prodotto: #{@name} versione: #{@version}" +
-                   " #{@detection.errors.full_messages[0]}"}
+             "msg" => I18n.t("errors.messages.r_detect.detection_not_saved") + detection_data + " #{@detection.errors.full_messages[0]}"}
         end
       end
       format.html { render json: @result }
@@ -246,7 +243,7 @@ class DetectionsController < ApplicationController
     @product = Product.where('name = ?', "#{@name}").take
     if @product.nil?
       @result = {"result" => 1, "product" => "#{@name}",
-         "msg" => "Prodotto non trovato - prodotto: #{@name}"}
+         "msg" => I18n.t("errors.messages.check.product_not_found", product_name: "#{@name}")}
     else
       if @version.nil?
         @version = @product.last_release.version_name
@@ -257,25 +254,25 @@ class DetectionsController < ApplicationController
       @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "#{@version}%").order('sequential_number desc').take
       if @release.nil?
         @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}",
-           "msg" => "Versione del prodotto inesistente - prodotto: #{@name} versione: #{@version}",
-           "link" => "http://#{@ip}:#{request.port}#{@link}"}
+          "msg" => I18n.t("errors.messages.check.product_version_not_found", product_name: "#{@name}", version: "#{@version}") +
+                   " link: http://#{@ip}:#{request.port}#{@link}"}
       else
         if @release.precheck
           @release.analyze_rules
           if @release.errors.full_messages.length > 0
             @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "Difformita' di licenze sul prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
-               "link" => "http://#{@ip}:#{request.port}#{@link}"}
+               "msg" => I18n.t("errors.messages.check.licenses_incompatibility", product_name: "#{@name}", version: "#{@release.version_name}") +
+                      " - #{@release.errors.full_messages.last}" + "link: http://#{@ip}:#{request.port}#{@link}"}
           else
             @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
-               "msg" => "Controllo ok prodotto: #{@name} versione: #{@release.version_name}"}
+               "msg" => I18n.t("infos.check.ok", product_name: "#{@name}", version: "#{@release.version_name}")}
           end
           # Aggiorno stato del prodotto
           @release.update_attributes(checked_at: Time.now)
         else
           @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
-             "msg" => "Prodotto: #{@name} versione: #{@release.version_name} - #{@release.errors.full_messages.last}",
-             "link" => "http://#{@ip}:#{request.port}#{@link}"}
+             "msg" => I18n.t("infos.check.product_data", product_name: "#{@name}", version: "#{@release.version_name}") + 
+                    "- #{@release.errors.full_messages.last}" + " link: http://#{@ip}:#{request.port}#{@link}"}
 
           # Aggiorno stato del prodotto
           @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
@@ -295,6 +292,10 @@ class DetectionsController < ApplicationController
       @detection = Detection.find(params[:id])
     end
 
+    def detection_data
+      I18n.t("errors.messages.detection.detection_data", detection_name: "#{@detection_name}", product_name: "#{@name}", version: "#{@version}")
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def detection_params
       ActionController::Parameters.new(params).require(:detection).permit(:name, :release_id, :xml, :created_at, :acquired)

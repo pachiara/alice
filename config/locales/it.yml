@@ -130,6 +130,20 @@ it:
         no_rules: "%{component_name}: impossibile verificare compatibilità. Mancano regole per la licenza %{license_name}."
         product_use_and_license: " e uso del prodotto contrastano con la licenza compatibilità componenti."
         incompatible_component: "%{component_name}: licenza %{license_name} incompatibile con licenza: %{compatible_license_name}"
+        product_not_found: "Prodotto non trovato - prodotto: %{product_name}"
+        product_version_not_found: "Versione del prodotto inesistente - prodotto: %{product_name} versione: %{version}"
+        licenses_incompatibility: "Difformita' di licenze sul prodotto: %{product_name} versione: %{version}"
+      r_detect:
+        detection_name_taken: "Nome rilevamento duplicato"
+        licenses_file_missing: "File licenses.xml non ricevuto"
+        licenses_file_empty: "File xml vuoto"
+        license_not_found: "Licenza non trovata per uno o piu' componenti"
+        detection_acquired: "Rilevamento acquisito correttamente"
+        detection_not_saved: "Importazione dati non riuscita"
+      detection:
+        detection_data: " - rilevamento: %{detection_name}  prodotto: %{product_name} versione: %{version}" 
+        too_long_components: "Nome o numero versione troppo lungo: %{components_list}"
+        components_list_item: "Componente: %{component_name} Versione: %{version}"
       accepted: deve essere accettata
       blank: non può essere lasciato in bianco
       confirmation: non coincide con la conferma
@@ -574,3 +588,5 @@ it:
   infos:
     check:
       start_license: "compatibilità componenti iniziale: %{license_name} %{license_version}"
+      ok: "Controllo ok prodotto: %{product_name} versione: %{version}"
+      product_data: "Prodotto: %{product_name} versione: %{version}"

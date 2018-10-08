@@ -164,7 +164,7 @@ class Detection < ApplicationRecord
   end
   
   def xml_components_names
-    too_long = Array.new
+    too_longs = Array.new
     name_max_length = Component.columns_hash['name'].sql_type[/\(.*?\)/].gsub(/[()]/, "").to_i
     version_max_length = Component.columns_hash['version'].sql_type[/\(.*?\)/].gsub(/[()]/, "").to_i
     @doc = Nokogiri::XML.parse(@xml)
@@ -173,11 +173,11 @@ class Detection < ApplicationRecord
       name = dependency.xpath('artifactId').text
       version = dependency.xpath('version').text
       if name.length > name_max_length or version.length > version_max_length
-        too_long.push("Componente: #{name} Versione: #{version}")
+        too_longs.push(I18n.t("errors.messages.detection.components_list_item", component_name: "#{name}", version: "#{version}"))
       end
     end
-    if too_long.length > 0
-      errors.add(:xml, "Nome o numero versione troppo lungo: #{too_long.to_s.gsub(/['"]/,'')}")
+    if too_longs.length > 0
+      errors.add(:xml, I18n.t("errors.messages.detection.too_long_components", components_list: " #{too_longs.to_s.gsub(/['"]/,'')}"))
     end
   end
  
