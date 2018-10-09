@@ -11,7 +11,7 @@ default: &default
 development:
   <<: *default
   alice_logger_name: alice_devel.log
-  spy_mail_list: "enzo.ferri@lispa.it"
+  spy_mail_list: ""
 
 test:
   <<: *default
