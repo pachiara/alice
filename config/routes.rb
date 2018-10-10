@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get 'detections/validate_components'
   post 'detections/acquire'
   post 'detections/remote_detect'
-  post 'detections/remote_check'
 
   resources :components do
     get 'ties/select'
@@ -24,6 +23,8 @@ Rails.application.routes.draw do
   resources :uses
   resources :products
   post 'products/remote_create'
+  post 'products/remote_check'
+
 
   resources :releases do
     get 'ties/select'

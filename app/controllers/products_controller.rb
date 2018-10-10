@@ -157,6 +157,67 @@ class ProductsController < ApplicationController
     end
   end
   
+
+  # POST /detections/remote_check
+  # API
+  def remote_check
+    # parametri
+    # input:
+    # 1 - nome/sigla prodotto
+    # 2 - versione
+    # output:
+    # 0 controllo ok
+    # 1 prodotto non trovato
+    # 2 versione non trovata
+    # 5 impossibile eseguire il controllo
+    # 6 KO sul controllo
+    @name    = params[:product_name]
+    @version = params[:product_version]
+    @product = Product.where('name = ?', "#{@name}").take
+    if @product.nil?
+      @result = {"result" => 1, "product" => "#{@name}",
+         "msg" => I18n.t("errors.messages.check.product_not_found", product_name: "#{@name}")}
+    else
+      if @version.nil?
+        @version = @product.last_release.version_name
+      end
+      # Controllo parametro product_version
+      @ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}.ip_address
+      @link = releases_path(product_id: @product.id)
+      @release = Release.where('product_id = ? and version_name LIKE ?', "#{@product.id}", "#{@version}%").order('sequential_number desc').take
+      if @release.nil?
+        @result = {"result" => 2, "product" => "#{@name}", "version" => "#{@version}",
+          "msg" => I18n.t("errors.messages.check.product_version_not_found", product_name: "#{@name}", version: "#{@version}") +
+                   " link: http://#{@ip}:#{request.port}#{@link}"}
+      else
+        if @release.precheck
+          @release.analyze_rules
+          if @release.errors.full_messages.length > 0
+            @result = {"result" => 6, "product" => "#{@name}", "version" => "#{@version}",
+               "msg" => I18n.t("errors.messages.check.licenses_incompatibility", product_name: "#{@name}", version: "#{@release.version_name}") +
+                      " - #{@release.errors.full_messages.last}" + "link: http://#{@ip}:#{request.port}#{@link}"}
+          else
+            @result = {"result" => 0, "product" => "#{@name}", "version" => "#{@version}",
+               "msg" => I18n.t("infos.check.ok", product_name: "#{@name}", version: "#{@release.version_name}")}
+          end
+          # Aggiorno stato del prodotto
+          @release.update_attributes(checked_at: Time.now)
+        else
+          @result = {"result" => 5, "product" => "#{@name}", "version" => "#{@version}",
+             "msg" => I18n.t("infos.check.product_data", product_name: "#{@name}", version: "#{@release.version_name}") + 
+                    "- #{@release.errors.full_messages.last}" + " link: http://#{@ip}:#{request.port}#{@link}"}
+
+          # Aggiorno stato del prodotto
+          @release.update_attributes(check_result: nil, checked_at: nil, compatible_license_id: nil)
+        end
+      end
+    end
+    respond_to do |format|
+      format.html { render json: @result }
+      format.json { render json: @result }
+      format.xml { render xml: @result }
+    end
+  end
   
   
   private
