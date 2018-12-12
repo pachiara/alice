@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2018_09_24_144054) do
     t.index ["name", "version"], name: "index_licenses_on_name_and_version", unique: true
   end
 
-  create_table "log_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "log_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "user"
     t.string "object"
     t.string "operation"
