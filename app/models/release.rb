@@ -15,6 +15,36 @@ class Release < ApplicationRecord
 
   has_many :detections, :dependent => :destroy
 
+  before_update do
+    previous = Release.find(id)
+    license = License.find(license_id).description
+    license_previous = License.find(previous.license_id).description
+    if license_id != previous.license_id then
+      if ALICE['txt_logging']
+        alice_logger.info("
+          Product: #{product.name}
+          Release: #{version_name}
+          License: #{license}
+          License previous: #{license_previous}
+          Updated_by: #{user} ")
+      end
+      if ALICE['db_logging']
+        le = LogEntry.new
+        le.date = Time.now
+        le.user = user
+        le.object = "release"
+        le.operation ="U"
+        le.product = product.name
+        le.product_release = version_name
+        le.license = license
+        le.license_previous = license_previous
+        le.save
+      end
+      SpyMailer.release_email(self, license).deliver_now unless ALICE['spy_mail_list'].blank?
+    end
+  end
+  
+  
   after_save do
     product.update_last_release
     product.save

@@ -1,4 +1,5 @@
 class ReleasesController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :set_release, only: [:show, :edit, :update, :destroy]
 
   def restore_search
@@ -121,6 +122,8 @@ class ReleasesController < ApplicationController
   # PATCH/PUT /releases/1.json
   def update
     @title = t('actions.edit') + " " + t('activerecord.models.release')
+    @release.user = current_user.email
+
     respond_to do |format|
       if @release.update(release_params)
         format.html { redirect_to(releases_path + "?product_id=#{@release.product.id}", notice: t('flash.release.update.notice')) }

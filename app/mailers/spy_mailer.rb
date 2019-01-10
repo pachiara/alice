@@ -47,4 +47,9 @@ class SpyMailer < ApplicationMailer
     @user = user
     mail(to: ALICE['spy_mail_list'], subject: "Cancellazione componente di una release")
   end  
+  def release_email(release, license_name)
+    @release = release
+    @license_name = license_name
+    mail(to: ALICE['spy_mail_list'], subject: "Modifica di una release")
+  end  
 end
