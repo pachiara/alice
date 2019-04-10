@@ -11,7 +11,7 @@ class RuleEntriesController < ApplicationController
     @rule = Rule.find(params[:rule_id])
     @rule_entries = @rule.rule_entries.order('order_id')
     @search_form_path = rule_rule_entries_path(@rule)
-    @licenses = License.search(params[:license_name], params[:page], 6)
+    @licenses = License.search_order(params[:license_name], nil, nil, params[:page], 6)
 
     respond_to do |format|
       format.html # index.html.erb
