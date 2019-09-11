@@ -216,6 +216,7 @@ class ReleasesController < ApplicationController
     respond_to do |format|
       format.pdf do
         render :pdf => @release.product.name.gsub(' ', '_'),
+               :lowquality =>  true,
                :header => { :left => 'Alice',
                             :center => @title,
                             :right => t('actions.messages.classification'),
