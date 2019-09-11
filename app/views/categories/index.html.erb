@@ -4,12 +4,12 @@
 
 <div class="table-responsive">
 <table class="table table-striped table-condensed table-bordered">
-  <thead>	
+  <thead>
   <tr>
     <th class="col-sm-2 col-xs-2"><%= t('activerecord.attributes.category.name') %></th>
     <th class="col-sm-6 col-xs-6"><%= t('activerecord.attributes.category.description') %></th>
     <th class="col-sm-4 col-xs-4"><%= t('actions.actions') %></th>
-  </tr>  
+  </tr>
   </thead>
   <tbody>
   <% @categories.each do |category| %>
@@ -33,7 +33,7 @@
 <%= link_to new_category_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
   <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
 <% end %>
- 
+
 <%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
-  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
-<% end %> 
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+<% end %>
