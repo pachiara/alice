@@ -8,6 +8,6 @@ class AboutController < ApplicationController
   end
 
   def lispa
-       @title = "Lombardia Informatica S.p.A."
+       @title = "Azienda Regionale Innovazione Acquisti S.p.A."
   end
 end

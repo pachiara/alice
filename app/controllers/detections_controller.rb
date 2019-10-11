@@ -154,7 +154,7 @@ class DetectionsController < ApplicationController
         @release = Release.new()
         @release.product_id = @product.id
         @release.version_name = @version
-        @release.license_id = License.where('name = "lispa"').take.id
+        @release.license_id = License.where('name = "ariaspa"').take.id
         @release.sequential_number = @release.next_sequential_number
         @release.save
       else

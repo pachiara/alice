@@ -92,7 +92,7 @@ class ReleasesController < ApplicationController
     @release = Release.new
     @release.product = Product.find(params[:product_id])
     @release.sequential_number = @release.next_sequential_number
-    @release.license_id = License.where('name = "lispa"').take.id
+    @release.license_id = License.where('name = "ariaspa"').take.id
   end
 
   # GET /releases/1/edit

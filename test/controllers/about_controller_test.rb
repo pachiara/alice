@@ -11,9 +11,9 @@ class AboutControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get lispa" do
-    get :lispa
-    assert_response :success
-  end
+#  test "should get lispa" do
+#    get :lispa
+#    assert_response :success
+#  end
 
 end
