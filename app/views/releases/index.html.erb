@@ -68,8 +68,10 @@
 </div>
 <br>
 
-<%= link_to (new_release_path + "?product_id=#{@product.id}"), :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
-  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
+<% if current_user.try(:admin?) %>
+  <%= link_to (new_release_path + "?product_id=#{@product.id}"), :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
+    <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
+  <% end %>
 <% end %>
 <%= link_to products_path, :class => "btn btn-default", :role => "button" do %>
   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
