@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('activerecord.models.rule') %>: <b><%= @rule.name %></b> - <%= t('activerecord.models.license') %>: <b><%= @rule.license.name %></b><% if @rule.plus %> + <% end %></h3>
+  </div>
+  <div class="panel-body">
+  	<%= form_tag @rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do %> 	
+  	  <div class="row">
+  	    <% num = 0 %>
+  	    <% @rule_entries.each do |rule_entry| %>
+  	      <div class="alert alert-info col-xs-12 col-sm-6 col-md-4 col-lg-2" style="padding-left: 0; padding-right: 0;">	
+            <div class="col-md-12">
+      	      <div class="input-group input-group-sm">
+                <span class="input-group-addon"><%= rule_entry.order_id %></span>
+                <input type="text" class="form-control" value="<%= rule_entry.license.name %>" disabled style="background-color: #FFFFFF;">
+                <span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "del", value: rule_entry.id, disabled: current_user.try(:admin?) ? false : true) do %>
+                  <span class="glyphicon glyphicon-minus glyphicon-inverse"></span>  
+                  <% end %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('actions.search') %> <%= t('activerecord.models.license') %></h3>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive"> 
+      <%= render :partial => "licenses/search_license" %>
+      <%= will_paginate @licenses, :renderer => BootstrapPagination::Rails %>	
+      <%= form_tag rule_rule_entries_path, :method => 'post', :class => "form-group", :role => "form" do |f| %>
+        <table class="table table-striped table-condensed table-bordered">
+          <tr>
+            <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><%= t('actions.add') %></th>
+            <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><%= t('activerecord.attributes.rule_entry.license') %></th>
+            <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><%= t('activerecord.attributes.license.version') %></th>
+            <th class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><%= t('activerecord.attributes.license.description') %></th>
+          </tr>
+          <% @licenses.each do |license| %>
+            <tr>
+              <td>
+              	<span class="input-group-btn"><%= button_tag(type: 'submit', class: "btn btn-sm btn-primary", name: "add", value: license.id, disabled: current_user.try(:admin?) ? false : true) do %>
+                  <span class="glyphicon glyphicon-plus glyphicon-inverse"></span>  
+                  <% end %>
+                </span>
+              </td>
+              <td><%= license.name %></td>
+              <td><%= license.version %></td>
+              <td><%= license.description %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= link_to rules_path, :class => "btn btn-default", :title => t('actions.back'), :alt => t('actions.back') do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 

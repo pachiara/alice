@@ -1,0 +1,24 @@
+<br />
+<br />
+
+<%= simple_form_for(@rule, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-group">
+  	<div class="col-sm-6 col-md-6 col-lg-6">
+      <%= f.input :name %>
+      <%= f.input :license_id, collection: License.all.order('name'), value_method: :id, label_method: :name %>
+    </div>
+  </div>
+
+  <div class="form-group">
+  	<div class="col-sm-6 col-md-6 col-lg-6">
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
+    <% end %>
+    <%= link_to rules_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %> 
+    </div>
+  </div>
+<% end %>

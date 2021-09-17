@@ -1,0 +1,24 @@
+default: &default
+  # xpath relativo dall'interno dei tag //licences 
+  own_component_tag_xpath: license/name
+  own_component_tag_value: "Ariaspa License"
+  # espressione regolare x validazione email utenti
+  users_email_domain_validation_regex: ariaspa.it$
+  alice_logger_path: "../data/"
+  txt_logging: true
+  db_logging: true
+  
+development:
+  <<: *default
+  alice_logger_name: alice_devel.log
+  spy_mail_list: ""
+
+test:
+  <<: *default
+  alice_logger_name: alice_test.log
+
+production:
+  <<: *default
+  alice_logger_name: alice_prod.log
+  # mail list per controllo modifiche utenti
+  spy_mail_list: "release.management@ariaspa.it"

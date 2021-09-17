@@ -1,0 +1,38 @@
+<%= simple_form_for(@detection, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+  <%= f.error_notification %>
+
+  <%= hidden_field_tag 'release_id', @detection.release.id %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @detection.release.product.name %></b> - Vers. <b><%= @detection.release.version_name %></b></h3>
+  </div>
+  <div class="panel-body">
+
+  <br />
+  <br />
+ 
+  <div class="form-group">
+  	<div class="col-sm-12 col-md-10 col-lg-8"> 
+      <%= f.input :name %>
+      <%= f.input :xml, as: :file, :input_html => { :class => "btn btn-default" } %>
+    </div>
+  </div>
+  <br />
+  <br />
+  
+  <div class="form-group">
+  	<div class="col-sm-6"> 
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
+    <% end %>
+    <%= link_to (detections_path + "?release_id=#{params[:release_id]}"), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+    <% end %>
+    </div>
+  </div>
+
+<% end %>
+
+</div>
+</div>

@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Detection:</b>
+  <%= @detected_component.detection %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @detected_component.name %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @detected_component.version %>
+</p>
+
+<p>
+  <b>License name:</b>
+  <%= @detected_component.license_name %>
+</p>
+
+<p>
+  <b>License version:</b>
+  <%= @detected_component.license_version %>
+</p>
+
+<p>
+  <b>Component:</b>
+  <%= @detected_component.component_id %>
+</p>
+
+<p>
+  <b>License:</b>
+  <%= @detected_component.license_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_detected_component_path(@detected_component) %> |
+<%= link_to 'Back', detected_components_path %>

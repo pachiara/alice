@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Cancellazione componente di una Release</h1>
+    <p>
+      Prodotto: <strong><%= @product_name %></strong><br/>
+      release: <strong><%= @version_name %></strong>
+    </p>
+    <p>
+      <a href="mailto:<%= @user %>"><%= @user %></a></strong> ha cancellato il<br/>
+      Componente: <strong><%= @component.name %></strong><br/>
+      versione: <strong><%= @component.version %></strong><br/>
+      Licenza componente: <strong><%= @component_license.description %></strong>
+    </p>
+  </body>
+</html>

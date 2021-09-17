@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('activerecord.attributes.use.name') %>:</b>
+  <%= @use.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.use.description') %>:</b>
+  <%= @use.description %>
+</p>
+
+<br />
+<div class="form-group">
+    <%= link_to edit_use_path(@use), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
+    <% end %>    
+    <%= link_to uses_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %>    
+</div>

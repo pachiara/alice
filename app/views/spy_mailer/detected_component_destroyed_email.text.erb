@@ -1,0 +1,12 @@
+===================================================
+Alice SpyMailer - Cancellazione Componente Rilevato
+===================================================
+Prodotto: <%= @detected_component.detection.release.product.name %>
+Release: <%= @detected_component.detection.release.version_name %>
+Rilevamento: <%= @detected_component.detection.name %>
+Componente:  <%= @detected_component.name %>.
+
+<%= @detected_component.user %> ha cancellato il componente rilevato, che aveva
+licenza: <%= @license_name %>
+flag Proprio: <%= @detected_component.own %>
+flag Acquistato: <%= @detected_component.purchased %>

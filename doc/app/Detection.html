@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class Detection - Rails Application Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">ActiveRecord::Base
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-acquire">#acquire</a>
+    
+    <li ><a href="#method-i-identify_component">#identify_component</a>
+    
+    <li ><a href="#method-i-parse_file">#parse_file</a>
+    
+    <li ><a href="#method-i-parse_name">#parse_name</a>
+    
+    <li ><a href="#method-i-parse_version">#parse_version</a>
+    
+    <li ><a href="#method-i-parse_xml">#parse_xml</a>
+    
+    <li ><a href="#method-i-validate_acquire">#validate_acquire</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Detection">
+  <h1 id="class-Detection" class="class">
+    class Detection
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-acquire" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">acquire</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="acquire-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">acquire</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-constant">Release</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">release_id</span>)
+  <span class="ruby-identifier">detected_components</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">component</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">component</span>.<span class="ruby-identifier">component_id</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">c</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">component</span>.<span class="ruby-identifier">component_id</span>)
+    <span class="ruby-comment"># detected_component.component_id è impostato durante il parsing del file .xml</span>
+    <span class="ruby-comment"># Il metodo acquire è eseguito a distanza di tempo, durante il quale un componente con stesso nome e versione</span>
+    <span class="ruby-comment"># potrebbe essere stato creato manualmente o da un&#39;altra acquisizione. </span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">c</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name = ? AND version = ?&quot;</span>, <span class="ruby-identifier">component</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">component</span>.<span class="ruby-identifier">version</span>).<span class="ruby-identifier">first</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">c</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">version</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">title</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">license_id</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">license_id</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">own</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">own</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">checked_at</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">use_id</span> = <span class="ruby-value">1</span>
+        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">c</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">components</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">acquired</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-identify_component" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">identify_component</span><span
+            class="method-args">(detected_component)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Se il componente è registrato assegna id e licenza corrispondente</p>
+          
+          
+
+          
+          <div class="method-source-code" id="identify_component-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">identify_component</span>(<span class="ruby-identifier">detected_component</span>)
+  <span class="ruby-identifier">component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name = ? and version = ?&quot;</span>, <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">version</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">major_release</span> = <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">component</span> = <span class="ruby-constant">Component</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;name = ? and version like ?&quot;</span>, <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">name</span>, <span class="ruby-node">&quot;#{major_release}.%&quot;</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">component_id</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">license_id</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">license_id</span>
+    <span class="ruby-identifier">detected_component</span>.<span class="ruby-identifier">own</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">own</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-parse_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_file</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_file-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_file</span>
+  <span class="ruby-identifier">tempfile</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">queued_for_write</span>[<span class="ruby-value">:original</span>]
+  <span class="ruby-identifier">doc</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span>(<span class="ruby-identifier">tempfile</span>)
+  <span class="ruby-identifier">parse_xml</span>(<span class="ruby-identifier">doc</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-parse_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_name</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_name-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_name</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">new_name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;,&#39;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;ersion&quot;</span>)
+    <span class="ruby-identifier">new_name</span> = <span class="ruby-identifier">new_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;ersion&#39;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">chop</span>.<span class="ruby-identifier">rstrip</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">new_name</span> = <span class="ruby-identifier">new_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/\d+\.\d*\.*\d+/</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">rstrip</span>
+  <span class="ruby-identifier">new_name</span> = <span class="ruby-identifier">new_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;- v&#39;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">rstrip</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">new_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-parse_version" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_version</span><span
+            class="method-args">(name, url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_version-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_version</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">url</span>)
+  <span class="ruby-identifier">version</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-regexp">/\d+\.\d*\.*\d+/</span>)
+  <span class="ruby-identifier">version</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-regexp">/\d+\.\d*\.*\d+/</span>) <span class="ruby-keyword">if</span> (<span class="ruby-identifier">version</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">url</span>.<span class="ruby-identifier">nil?</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">version</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-parse_xml" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_xml</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_xml-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_xml</span>(<span class="ruby-identifier">doc</span>)
+  <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;//licenses&#39;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;license&#39;</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-comment"># un componente può avere più tag &lt;license&gt; </span>
+      <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;license&#39;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">dc</span> = <span class="ruby-constant">DetectedComponent</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;../../artifactId&#39;</span>).<span class="ruby-identifier">text</span>
+        <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;../../version&#39;</span>).<span class="ruby-identifier">text</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;name&#39;</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+          <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_name</span> = <span class="ruby-identifier">parse_name</span>(<span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;name&#39;</span>).<span class="ruby-identifier">text</span>)
+          <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_version</span> = <span class="ruby-identifier">parse_version</span>(<span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;name&#39;</span>).<span class="ruby-identifier">text</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;url&#39;</span>).<span class="ruby-identifier">text</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">identify_component</span>(<span class="ruby-identifier">dc</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">component_id</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-comment"># cerca licenza corrispondente </span>
+          <span class="ruby-identifier">versions</span> = <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">search_licenses</span>(<span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_name</span>, <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_version</span>)
+          <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_id</span> = <span class="ruby-identifier">versions</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">id</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">detected_components</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dc</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># componente rilevato senza tag &lt;license&gt;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">dc</span> = <span class="ruby-constant">DetectedComponent</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;../artifactId&#39;</span>).<span class="ruby-identifier">text</span>
+      <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;../version&#39;</span>).<span class="ruby-identifier">text</span>
+      <span class="ruby-identifier">dc</span>.<span class="ruby-identifier">license_name</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">xpath</span>(<span class="ruby-string">&#39;comment()&#39;</span>).<span class="ruby-identifier">text</span>
+      <span class="ruby-identifier">identify_component</span>(<span class="ruby-identifier">dc</span>)
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">detected_components</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dc</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-validate_acquire" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validate_acquire</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="validate_acquire-source">
+            <pre><span class="ruby-comment"># File app/models/detection.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validate_acquire</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">detected_components</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;Rilevamento: #{name}&quot;</span>, <span class="ruby-string">&quot;Nessun componente rilevato&quot;</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">detected_components</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">component</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span>.<span class="ruby-identifier">license_id</span>.<span class="ruby-identifier">nil?</span>
+         <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;#{component.name}&quot;</span>, <span class="ruby-node">&quot;#{component.version}&quot;</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

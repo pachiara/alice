@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  license_id: 1
+  license_with_id: 1
+  plus: false
+  order: 1
+
+two:
+  license_id: 1
+  license_with_id: 1
+  plus: false
+  order: 1

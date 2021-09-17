@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Modifica Componente Rilevato</h1>
+    <p>
+      Prodotto: <strong><%= @detected_component.detection.release.product.name %></strong><br/>
+      Release: <strong><%= @detected_component.detection.release.version_name %></strong><br/>
+      Rilevamento: <strong><%= @detected_component.detection.name %></strong><br/>
+      Componente:  <strong><%= @detected_component.name %></strong>
+    </p>
+    <p>
+      <a href="mailto:<%= @detected_component.user %>"><%= @detected_component.user %></a> ha impostato<br/>
+      licenza: <strong><%= @license_name %></strong><br/>
+      flag Proprio: <strong><%= @detected_component.own %></strong><br/>
+      flag Acquistato: <strong><%= @detected_component.purchased %></strong>
+    </p>
+    <p>
+      Link diretto al componente rilevato: <%= link_to @detected_component.name, edit_detected_component_url(@detected_component) %>
+    </p>
+  </body>
+</html>

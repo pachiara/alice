@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Modifica Licenza</h1>
+    <p>
+      Licenza: <strong><%= @license.name %></strong><br/>
+      versione: <strong><%= @license.version %></strong>
+    </p>
+    <p>
+      <a href="mailto:<%= @license.user %>"><%= @license.user %></a></strong> ha impostato<br/>
+      Licenza equivalente: <strong><%= @similar_license_description %></strong><br/>
+      Tipo licenza: <strong><%= @license_type_description %></strong>
+    </p>
+    <p>
+      Link diretto alla licenza: <%= link_to @license.name, edit_license_url(@license) %>
+    </p>    
+  </body>
+</html>

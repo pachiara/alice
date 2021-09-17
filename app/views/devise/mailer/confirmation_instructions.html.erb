@@ -1,0 +1,5 @@
+<p>Benvenuto <%= @email %>!</p>
+
+<p>Puoi confermare il tuo account attraverso il link seguente:</p>
+
+<p><%= link_to 'Conferma il mio account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>

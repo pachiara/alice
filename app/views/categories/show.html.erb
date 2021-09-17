@@ -1,0 +1,21 @@
+<br />
+<br />
+<p>
+  <b><%= t('activerecord.attributes.category.name') %>:</b>
+  <%= @category.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.category.description') %>:</b>
+  <%= @category.description %>
+</p>
+
+<br /><br />
+<div class="form-group">
+    <%= link_to edit_category_path(@category), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
+    <% end %>    
+    <%= link_to categories_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %>    
+</div>

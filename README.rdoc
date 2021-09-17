@@ -1,0 +1,43 @@
+== Alice
+
+{<img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/pachiara/alice">}[https://gitter.im/pachiara/alice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge]
+
+Sistema open source per la gestione delle licenze d'uso nei prodotti software.
+
+== Premessa
+
+Lo sviluppo moderno ad oggetti, basato su componenti riutilizzabili e la sempre più diffusa cultura open source, 
+hanno determinato la consuetudine nei gruppi di sviluppo di selezionare componenti open source adeguati al problema da soddisfare.
+Oggi si può ipotizzare che nessun sviluppo parta riscrivendo tutto da zero, 
+senza riutilizzare nulla dell'enorme patrimonio di librerie di componenti messo a disposizione attraverso la rete internet. 
+La diffusione di internet, la scrittura con linguaggi ad oggetti, la cultura open source, sono quindi gli ingredienti che hanno determinato questo fenomeno, 
+generando una caratteristica non prevedibile: 
+
+nel tempo sono nate diverse tipologie di licenze open source con le quali vengono rilasciate le librerie di componenti, 
+spesso non compatibili fra di loro e con il tipo di licenza del prodotto finito che si intende realizzare.
+
+== Il Progetto
+
+Una volta consapevoli dell'esistenza del problema ci siamo posti l'obiettivo di controllare in maniera sistematica la correttezza dei componenti utilizzati.
+
+Alice aiuta a fare questo.
+
+== Il Nome
+
+Il nome “Alice” è nato da un gioco di parole fatto alla lavagna del nostro ufficio:
+
+      A license = Alice
+
+== Autori
+
+Lombardia Informatica S.p.A.
+
+== Licenza
+
+Alice e' rilasciata con licenza europea EUPL mantenuta a tradotta nelle 22 lingue della comunità, direttamente dalla Commissione Europea.
+
+## Help e Documentazione
+
+* [Gitter chat](https://gitter.im/pachiara/alice)
+* [Wiki](https://github.com/pachiara/alice/wiki)
+* [EUPL](https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12)

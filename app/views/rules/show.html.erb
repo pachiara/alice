@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.name') %>:</b>
+  <%= @rule.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.license') %>:</b>
+  <%= @rule.license.name %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.rule.plus') %>:</b>
+  <%= @rule.plus %>
+</p>
+
+<br />
+<div class="form-group">
+    <%= link_to edit_rule_path(@rule), :class => "btn btn-default", :disabled => current_user.admin? ? false : true do %>
+      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
+    <% end %>    
+    <%= link_to rules_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %>    
+</div>

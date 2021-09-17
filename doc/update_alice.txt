@@ -1,0 +1,20 @@
+Aggiornamento
+
+1) Alice
+    login con user = alice
+    salvataggio attuale:
+    tar czvf alice.`date +%Y%m%d`.tgz alice/
+    rm -rf alice
+    git clone https://github.com/pachiara/alice.git
+    cd alice
+    bundle install
+    bundle exec rake db:migrate RAILS_ENV=production
+    bundle exec rake tmp:clear
+    bundle exec rake assets:clean
+    RAILS_ENV=production bundle exec rake assets:precompile RAILS_RELATIVE_URL_ROOT=/alice
+
+2) Apache + Passenger
+
+   login con user = root
+   riavviare apache2:
+   apache2ctl restart

@@ -1,0 +1,23 @@
+<%= simple_form_for(@detection, html: {class: 'form-horizontal'}, wrapper: :horizontal_form) do |f| %>
+  <%= f.error_notification %>
+
+  <h4><%= t('activerecord.attributes.product.name') %>: <%= @detection.release.product.name %></h4>
+
+  <div class="form-group">
+  	<div class="col-sm-12 col-md-10 col-lg-8">
+      <%= f.input :name %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+  	<div class="col-sm-6 col-md-6 col-lg-6">
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
+    <% end %>
+    <%= link_to (detections_path + "?release_id=#{@detection.release.id}"), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+    <% end %>
+    </div>
+  </div>
+  
+<% end %>

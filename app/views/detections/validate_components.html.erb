@@ -1,0 +1,37 @@
+<%= form_for @detection, url: {action: 'acquire'}, html: {method: "post"} do |f| %>
+
+  <%= hidden_field_tag 'product_id', @detection.release.id %>
+  <%= hidden_field_tag 'detection_id', @detection.id %>
+
+  <button class="btn btn-lg btn-block btn-primary disabled" type="button">
+  	<%= t('activerecord.attributes.product.name_long') %>: <%= @detection.release.product.name %>
+    - Vers. <%= @detection.release.version_name %>
+  </button>
+  
+  <h4><%= t('activerecord.attributes.detection.name') %>: <%= @detection.name %></h4>
+
+  <% if @detection.errors.full_messages.length > 0 %>
+    <div class="alert alert-danger">
+      <span class="lead text-error"><%= t('errors.messages.check.components_without_license') %></span>
+      <ol>
+        <% @detection.errors.full_messages.each do |msg| %>
+           <li><label class="text-error"><%= msg %></label></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+
+    <div class="form-group">
+      <%= button_tag(type: 'submit', disabled: (@detection.errors.full_messages.length > 0), class: "btn btn-primary") do %>
+        <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.save') %>
+      <% end %>
+      <%= link_to (detections_path + "?release_id=#{@detection.release_id}"), :class => "btn btn-default" do %>
+          <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+      <% end %>
+    </div>
+
+  </div>
+
+<% end %>

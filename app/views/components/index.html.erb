@@ -1,0 +1,48 @@
+<div class="table-responsive">
+<%= render :partial => "search_component" %>
+<%= will_paginate @components, :renderer => BootstrapPagination::Rails %>
+
+<table class="table table-striped table-condensed table-bordered">
+<thead>
+  <tr>
+  	<th><%= t('activerecord.attributes.component.name') %></th>
+    <th><%= t('activerecord.attributes.component.version') %></th>
+    <th><%= t('activerecord.attributes.component.title') %></th>
+    <th><%= t('activerecord.attributes.component.description') %></th>
+    <th><%= t('activerecord.attributes.component.license') %></th>
+    <th><%= t('actions.actions') %></th>
+  </tr>
+</thead>
+<tbody>
+<% @components.each do |component| %>
+  <tr>
+    <td><%= component.name %></td>
+    <td><%= component.version %></td>
+    <td><%= component.title %></td>
+    <td><% if component.description.size > 0 %><span class="glyphicon glyphicon-ok"></span><% end %></td>
+    <td><%= unless component.license.nil?; component.license.name; end %></td>
+    <td>
+      <div class="btn-group">
+    	<%= link_to raw('<span class="glyphicon glyphicon-eye-open"></span>'), component, :class => "btn btn-default", :title => t('actions.show'), :alt => t('actions.show') %>
+    	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_component_path(component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+      <% if (component.releases.length > 0) %>
+        <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+      <% else %>
+        <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+      <% end %>
+      </div>
+    </td>	
+  </tr>
+<% end %>
+</tbody>
+</table>
+</div>
+
+<br />
+<%= link_to new_component_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
+<% end %>
+ 
+<%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 

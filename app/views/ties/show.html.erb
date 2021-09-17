@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('activerecord.models.product') %>: <b><%= @release.product.name %> - v. <%= @release.version_name %></b></h3>
+  </div>
+  <div class="panel-body">
+  	<div class="tree col-md-6">
+	  <ul>
+	  	<li>
+          <%= link_to @release.product.name+" - v. "+@release.version_name, release_ties_select_path(@release) %>
+        </li>
+        <ul>
+        <% @components.each do |component| %> 
+          <li>
+            <%= link_to component.name+" - v. "+component.version+" - lic. "+component.license.name, component_ties_select_path(component) %>
+          </li>
+        <% end %>
+        </ul>        	
+      </ul>
+	</div>
+  	<div class="col-md-6">
+  	<%= will_paginate @components, :param_name => 'page', :renderer => BootstrapPagination::Rails, :previous_label => '<', :next_label => '>', :inner_window => 2  %>
+  	</div>
+  </div>  
+</div>  
+<%= link_to (releases_path + "?product_id=#{Release.find(params[:release_id]).product_id}"), :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+<% end %>

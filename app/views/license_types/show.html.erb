@@ -1,0 +1,19 @@
+<p>
+  <b><%= t('activerecord.attributes.license_type.code') %>:</b>
+  <%= @license_type.code %>
+</p>
+
+<p>
+  <b><%= t('activerecord.attributes.license_type.description') %>:</b>
+  <%= @license_type.description %>
+</p>
+
+<br />
+<div class="form-group">
+    <%= link_to edit_license_type_path(@license_type), :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-pencil"></span> <%= t('actions.edit') %>      
+    <% end %>   
+    <%= link_to license_types_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %>    
+</div>

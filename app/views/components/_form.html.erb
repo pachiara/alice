@@ -1,0 +1,35 @@
+<%= simple_form_for(@component) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-group">
+    <div class="row">
+      <%= f.input :name, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :title, :wrapper_html => { :class => "col-md-5" } %>
+    </div>
+    <div class="row">
+      <%= f.input :version, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.association :license, collection: License.all.order('name'), :wrapper_html => { :class => "col-md-3" } %>
+    </div>
+
+    <div class="row">
+      <%= f.input :purchased, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :own, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
+      <%= f.input :leave_out, :as => :boolean, :wrapper_html => { :class => "col-md-3" } %>
+    </div>
+    <div class="row">  
+      <%= f.input :description, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+    </div>
+    <div class="row">
+      <%= f.input :notes, :wrapper_html => { :class => "col-md-11" }, :input_html => { :rows => 5 } %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+      <span class="glyphicon glyphicon-ok glyphicon-inverse"></span> <%= t('actions.update') %>  
+    <% end %>
+    <%= link_to components_path, :class => "btn btn-default" do %>
+      <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+    <% end %> 
+  </div>
+<% end %>

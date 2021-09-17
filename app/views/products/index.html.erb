@@ -1,0 +1,150 @@
+<div class="table-responsive"> 
+  <%= render :partial => "search_product_groupage" %>
+  <%= render :partial => "search_product" %>
+  <%= will_paginate @products, :renderer => BootstrapPagination::Rails %>
+  <% if params[:sort_column] == 'name'     then class_name     = 'btn btn-primary btn-block btn-sm'
+     else class_name     = 'btn btn-default btn-block btn-sm' end %>
+  <% if params[:sort_column] == 'groupage' then class_groupage = 'btn btn-primary btn-block btn-sm'
+     else class_groupage = 'btn btn-default btn-block btn-sm' end %>
+  <% if params[:sort_column] == 'check_result' then class_check_result = 'btn btn-primary btn-block btn-sm'
+     else class_check_result = 'btn btn-default btn-block btn-sm' end %>
+  <% if params[:sort_column] == 'checked_at' then class_checked_at = 'btn btn-primary btn-block btn-sm'
+     else class_checked_at = 'btn btn-default btn-block btn-sm' end %>
+  <% if params[:sort_column] == 'updated_at' then class_updated_at = 'btn btn-primary btn-block btn-sm'
+     else class_updated_at = 'btn btn-default btn-block btn-sm' end %>
+     
+  <%= form_tag products_path, :method => 'get', :class => 'form-group', :role => 'form' do %>
+    <table class="table table-striped table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>
+            <%= button_tag(:class => class_name, :type => 'submit', :name => 'sort_column', :value => 'name') do  %>
+              <b><%= t('activerecord.attributes.product.name')%></b>
+              <% if params[:sort_column] == 'name' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th><%= t('activerecord.attributes.product.title') %></th>
+          <th>
+            <%= button_tag(:class => class_groupage, :type => 'submit', :name => 'sort_column', :value => 'groupage') do  %>
+            	<b><%= t('activerecord.attributes.product.groupage')%></b>
+              <% if params[:sort_column] == 'groupage' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th><%= t('activerecord.attributes.product.use') %></th>
+          <th><%= t('activerecord.attributes.product.version') %></th>
+          <th>
+            <%= button_tag(:class => class_check_result, :type => 'submit', :name => 'sort_column', :value => 'check_result') do  %>
+              <b><%= t('activerecord.attributes.release.check_result')%></b>
+              <% if params[:sort_column] == 'check_result' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th>
+            <%= button_tag(:class => class_checked_at, :type => 'submit', :name => 'sort_column', :value => 'checked_at') do  %>
+              <b><%= t('activerecord.attributes.release.checked_at')%></b>
+              <% if params[:sort_column] == 'checked_at' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th>
+            <%= button_tag(:class => class_updated_at, :type => 'submit', :name => 'sort_column', :value => 'updated_at') do  %>
+              <b><%= t('activerecord.attributes.product.updated_at')%></b>
+              <% if params[:sort_column] == 'updated_at' %>
+                <% if params[:sort_order] == ' DESC' %>
+                  <span class="caret"></span>
+                <% else %>
+                  <span class="caret-up"></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          </th>
+          <th><%= t('actions.actions') %></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.title %></td>
+          <td class="text-center"><%= unless product.groupage.nil?; product.groupage; end %></td>
+          <td><%= unless product.use.nil?; product.use.description; end %></td>
+          <% if product.last_release.nil? %>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% else %>
+            <td><%= product.last_release_version_name %></td>
+            <td class="text-center">
+              <% if product.last_release_check_result.nil? %>
+                <span class="label label-warning">NC</span>
+                <% else %>
+                  <% if product.last_release_check_result? %>
+                    <span class="label label-success">OK</span>
+                	<% else %>
+            	     <span class="label label-danger">KO</span>
+                  <% end %>
+            	<% end %>
+            </td>
+            <td class="text-center"><% if !product.last_release_checked_at.nil? %><%= l product.last_release_checked_at %><% end %></td>
+          <% end %>
+          <td class="text-center"><%= (product.updated_at).strftime("%d/%m/%Y %H:%M") %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to raw('<span class="glyphicon glyphicon-tags"></span>'),
+               releases_path(:product_id => product.id), :class => "btn btn-default",
+               :title => t('activerecord.models.releases'), :alt => t('activerecord.models.releases') %>
+            	<%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'),
+            	 edit_product_path(product), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+            	<% unless product.last_release_version_name.nil? %>
+                <%= link_to raw('<span class="glyphicon glyphicon-check"></span>'),
+                 release_check_path(product.last_release), :class => "btn btn-default", 
+                 :title => t('actions.check'), :alt => t('actions.check') %>
+              	<%= link_to raw('<span class="glyphicon glyphicon-list"></span>'),
+                 release_ties_show_path(product.last_release), :class => "btn btn-default",
+                 :title => t('activerecord.models.components'), :alt => t('activerecord.models.components') %>
+                <%= link_to raw('<span class="glyphicon glyphicon-picture"></span>'),
+                 product.last_release, :class => "btn btn-default", :title => t('actions.graphics'), :alt => t('actions.graphics') %>
+              <% end %>
+            	<%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'),
+            	 product, method: :delete, data: { confirm: t('actions.are_you_sure') }, 
+            	 :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+
+<br />
+
+<%= link_to new_product_path, :class => "btn btn-default", :title => t('actions.new'), :alt => t('actions.new') do %>
+  <span class="glyphicon glyphicon-plus"></span> <%= t('actions.new') %>
+<% end %>
+<%= link_to root_path, :class => "btn btn-default", :role => "button" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %> 

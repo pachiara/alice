@@ -1,0 +1,95 @@
+---------------------
+- devise-omniauth 
+integrazione con IDPC
+https://github.com/intridea/omniauth/wiki
+_____________________
+- Prevedere il multi lingua
+SimpleForm con l'uso della gemma 'country_select'
+_____________________
+OK - paginazione 
+rientro alla stessa pagina navigata dopo la modifica
+_____________________
+- assegnamento delle licenze alla rilevazione:
+
+1) scelta della licenza:
+lasciare (con una scelta) la possibilità di visualizzare tutte le licenze per sceglierne una non in elenco,
+eventualmente con la selezione per effettuare un nuovo inserimento.
+http://127.0.0.1:3000/detected_components/318/edit
+_____________________
+
+OK 2) modificare le intestazioni:
+ Modifica Componente rilevato
+ Nome: portale-assiste
+ Nome Rilevamento: primo rilevamento portale-assiste   
+ 
+ Modifica Componente rilevato
+ Prodotto: portale-assiste - Rilevamento: primo rilevamento portale-assiste   
+ (nel falso bottone disattivato blu)
+_____________________
+- elenco licenze
+  http://127.0.0.1:3000/licenses
+OK 1) filtrare ordinamento per nome, categoria e tipo
+  
+OK 2) al ritorno di un aggiornamento rimanere sulla stessa pagina della lista da cui si era partiti
+
+OK 3) inserire ricerca per licenza
+______________________
+- detected_component.rb
+
+OK 1) Il caso di "No license information available."
+purify_name ritorna "." 
+in search_licenses se words contiene un "." esegue la query selezionando solo le licenze che hanno un "." nel nome.
+
+ho inserito in fondo alle parole dirty qulasiasi carattere non alfabetico e non numerico
+elimina sia gli spazi che i caratteri speciali
+@@grubber = ["license", "public", "software" ,"and", "the", "no", "information", "available", '\W']
+
+
+OK 2) il caso del componente "concurrent 1.3.4" che ha come licenza:  none
+@@grubber = ["license","public","software","none","and","the","no","information","available",'\W']
+
+inserito "none" nelle parole dirty prima di "no"
+_______________________
+OK - license_rulebook.rb
+
+in search_compatible va in errore se la licenza del componente da controllare non è inclusa 
+nelle regole delle licenze conosciute 
+
+-    compatibles = Floss_slide[license1] & Floss_slide[license2]
+
+
+  def search_compatible(license1, license2)
+    if Floss_slide.include?(license1) and Floss_slide.include?(license2) then
+      compatibles = Floss_slide[license1] & Floss_slide[license2]
+    end
+    return compatibles ? compatibles[0] : nil 
+  end  
+ --------------------------- 
+Va in errore se non esiste la licenza sul prodotto
+
+OK - license_rulebook.rb
+
+OK - check.html.erb 
+
+license_rulebook.rb
+
+escluso il prodotto con licenza a nil dal controllo
+
+# Prodotto proprietario e licenza richiesta strong
+rule :Strong, {:priority => 2},
+  [Product, :prod] do |v|
+    next if v[:prod].license.nil? 
+    if v[:prod].compatible_license.license_type.protection_level > 1 and v[:prod].license.license_type.protection_level < 0 
+      v[:prod].result = false
+      v[:prod].errors.add(:license_id, "incompatibile con licenza compatibilità componenti.")
+    end
+end
+check.html.erb
+
+condizionato nella vista il nome della licenza per il prodotto che non ne ha.
+
+<%= t('activerecord.attributes.product.license_id') %>: <% if !@product.license.nil? %><%= @product.license.name %> <%= @product.license.version %><% end %>
+--------------------------- 
+- documentare progetto
+--------------------------- 
+OK - provare installazione in environment di produzione

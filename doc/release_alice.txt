@@ -1,0 +1,28 @@
+1) creazione dei dati di default per il caricamento iniziale 
+genera db/seeds.rb che verrà elaborato durante la prima installazione con rake db:setup
+
+rake alice:dump_default_data
+
+Vengono precaricate 
+le tabelle di base:
+- User
+- Admin
+- Category
+- LicenseType
+- Use
+le licenze:
+- License
+i componenti:
+- Component
+e le regole:
+- Rule
+- RuleEntry
+
+2) documentazione applicativa
+
+rake doc:app
+
+3) documentazione entità
+
+rake erd
+

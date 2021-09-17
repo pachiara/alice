@@ -1,0 +1,251 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap-datetimepicker';
+html, body {
+  height: 100%;
+}
+body {
+  padding-top: 60px; 
+  background-color: #fff; 
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+a {
+  color: #000;
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+div {
+  &.field, &.actions {
+    margin-bottom: 10px;
+  }
+}
+#notice {
+  color: green;
+}
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff;
+  }
+  ul li {
+    font-size: 12px;
+    list-style: square;
+  }
+}
+.page-header {
+  margin: 5px 0 5px;
+  padding-bottom: 0;
+}
+.content {
+  background-color: #FDFDFD;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  /*
+  -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  -o-box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 2px rgba(0,0,0,0.3),0 3px 5px rgba(0,0,0,0.2);
+  */
+  margin: 15px 15px 15px 15px; 
+}
+.content a:hover {
+  color: #000000;
+  background: transparent;
+}
+footer {
+  position: absolute;
+  width: 100%;
+  background-color: #003A60;
+  color: #ffffff;
+  padding: 30px;
+/*  
+  color: #fefefe;
+  background: #3e3e3e;
+  padding: 17px 0 18px 0;
+  border-top: 1px solid #000;
+*/  
+}
+footer a {
+  color: #fefefe;
+}
+footer a:hover {
+  color: #efefef;
+  background: #003A60;
+}
+footer a:visited {
+  color: #efefef;
+  background: #003A60;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -63px;
+}
+.push {
+  height: 63px;
+}
+.wrapper > .container {
+  padding-top: 60px;
+}
+.logo {
+  display: block;
+  margin-bottom: -75px;
+  padding-top: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.pagination {
+  margin: 0px 0;
+}
+.caret-up {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: none;
+  border-bottom: 4px solid #FFFFFF;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top-width: 0px;
+  border-top-style: dotted;
+  content: "";
+}
+.tree li {
+  margin: 0px 0;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0px 5px;
+}
+.tree li::before{
+  content: '';
+  position: absolute; 
+  top: 0;
+  width: 1px; 
+  height: 100%;
+  right: auto; 
+  left: -20px;
+  border-left: 1px solid #ccc;
+  bottom: 50px;
+}
+.tree li::after{
+  content: '';
+  position: absolute; 
+  top: 30px; 
+  width: 25px; 
+  height: 20px;
+  right: auto; 
+  left: -20px;
+  border-top: 1px solid #ccc;
+}
+.tree li a{
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #666;
+  font-family: arial, verdana, tahoma;
+  font-size: 1.1em;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+/*Remove connectors before root*/
+.tree > ul > li::before, .tree > ul > li::after{
+  border: 0;
+}
+/*Remove connectors after last child*/
+.tree li:last-child::before{ 
+  height: 30px;
+}
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover+ul li a {
+  background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+}
+/*Connector styles on hover*/
+.tree li a:hover+ul li::after, 
+.tree li a:hover+ul li::before, 
+.tree li a:hover+ul::before, 
+.tree li a:hover+ul ul::before {
+  border-color:  #94a0b4;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
+}
+.btn-primary.active {
+  background-color: #000000;
+}
+.center {
+  text-align: center; 
+}
+.panel-main {
+  border-color: #337AB7;
+  background-color: #f9f8f7;
+}
+.panel-main > .panel-heading {
+  color: white;
+  background-color: #337AB7;
+  border-color: #337AB7;
+}
+table {
+  color: gray;
+  background-color: #FFFFFF;
+}
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+.navbar-static-top,
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  border-radius: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+}
+input[type="checkbox"] {
+  width: initial;
+  height: initial;
+}

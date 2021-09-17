@@ -1,0 +1,592 @@
+it:
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mer
+    - gio
+    - ven
+    - sab
+    abbr_month_names:
+    -
+    - gen
+    - feb
+    - mar
+    - apr
+    - mag
+    - giu
+    - lug
+    - ago
+    - set
+    - ott
+    - nov
+    - dic
+    day_names:
+    - domenica
+    - lunedì
+    - martedì
+    - mercoledì
+    - giovedì
+    - venerdì
+    - sabato
+    formats:
+      default: ! '%d-%m-%Y'
+      long: ! '%d %B %Y'
+      short: ! '%d %b'
+    order:
+      - :day
+      - :month
+      - :year
+    month_names:
+    -
+    - gennaio
+    - febbraio
+    - marzo
+    - aprile
+    - maggio
+    - giugno
+    - luglio
+    - agosto
+    - settembre
+    - ottobre
+    - novembre
+    - dicembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: circa un'ora
+        other: circa %{count} ore
+      about_x_months:
+        one: circa un mese
+        other: circa %{count} mesi
+      about_x_years:
+        one: circa un anno
+        other: circa %{count} anni
+      almost_x_years:
+        one: circa 1 anno
+        other: circa %{count} anni
+      half_a_minute: mezzo minuto
+      less_than_x_minutes:
+        one: meno di un minuto
+        other: meno di %{count} minuti
+      less_than_x_seconds:
+        one: meno di un secondo
+        other: meno di %{count} secondi
+      over_x_years:
+        one: oltre un anno
+        other: oltre %{count} anni
+      x_days:
+        one: 1 giorno
+        other: ! '%{count} giorni'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minuti'
+      x_months:
+        one: 1 mese
+        other: ! '%{count} mesi'
+      x_seconds:
+        one: 1 secondo
+        other: ! '%{count} secondi'
+    prompts:
+      day: Giorno
+      hour: Ora
+      minute: Minuto
+      month: Mese
+      second: Secondi
+      year: Anno
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    models:
+      component:
+        attributes:
+          purchased:
+            incompatible: valore incompatibile
+          own:
+            incompatible: valore incompatibile
+      user:
+        attributes:
+          email:
+            invalid_domain: dominio non valido
+      product:
+        attributes:
+          use:
+            required: specificare valore valido
+    messages:
+      check:
+        not_executable: "Impossibile eseguire il controllo:"
+        detection_not_acquired: "non tutti i rilevamenti della release sono stati acquisiti."
+        no_components: "il prodotto non ha componenti."
+        no_license: "specificare una licenza per il prodotto."
+        no_license_type: "specificare tipo licenza per licenza %{license_name} versione %{license_version}."
+        no_use: "specificare un tipo d'uso per il prodotto."
+        no_detected_components: "%{detection_name}: Nessun componente rilevato."
+        components_without_license: "I seguenti componenti non hanno una licenza assegnata:"
+        not_purchased_component: "%{component_name}: con licenza proprietaria %{license_name} non acquistato."
+        no_rules: "%{component_name}: impossibile verificare compatibilità. Mancano regole per la licenza %{license_name}."
+        product_use_and_license: " e uso del prodotto contrastano con la licenza compatibilità componenti."
+        incompatible_component: "%{component_name}: licenza %{license_name} incompatibile con licenza: %{compatible_license_name}"
+        product_not_found: "Prodotto non trovato - prodotto: %{product_name}"
+        product_version_not_found: "Versione del prodotto inesistente - prodotto: %{product_name} versione: %{version}"
+        licenses_incompatibility: "Difformita' di licenze sul prodotto: %{product_name} versione: %{version}"
+      r_detect:
+        detection_name_taken: "Nome rilevamento duplicato"
+        licenses_file_missing: "File licenses.xml non ricevuto"
+        licenses_file_empty: "File xml vuoto"
+        license_not_found: "Licenza non trovata per uno o piu' componenti"
+        detection_acquired: "Rilevamento acquisito correttamente"
+        detection_not_saved: "Importazione dati non riuscita"
+      detection:
+        detection_data: " - rilevamento: %{detection_name}  prodotto: %{product_name} versione: %{version}" 
+        too_long_components: "Nome o numero versione troppo lungo: %{components_list}"
+        components_list_item: "Componente: %{component_name} Versione: %{version}"
+      accepted: deve essere accettata
+      blank: non può essere lasciato in bianco
+      confirmation: non coincide con la conferma
+      empty: non può essere vuoto
+      equal_to: deve essere uguale a %{count}
+      even: deve essere pari
+      exclusion: è riservato
+      greater_than: deve essere superiore a %{count}
+      greater_than_or_equal_to: deve essere superiore o uguale a %{count}
+      inclusion: non è incluso nella lista dei valori ammessi
+      invalid: non è valido
+      less_than: deve essere meno di %{count}
+      less_than_or_equal_to: deve essere meno o uguale a %{count}
+      not_a_number: non è un numero
+      not_an_integer: non è un intero
+      odd: deve essere dispari
+      record_invalid: ! 'Validazione fallita: %{errors}'
+      taken: è già in uso
+      too_long:
+        one: è troppo lungo (il massimo è 1 carattere)
+        other: è troppo lungo (il massimo è %{count} caratteri)
+      too_short:
+        one: è troppo corto (il minimo è 1 carattere)
+        other: è troppo corto (il minimo è %{count} caratteri)
+      wrong_length:
+        one: è della lunghezza sbagliata (deve essere di 1 carattere)
+        other: è della lunghezza sbagliata (deve essere di %{count} caratteri)
+      already_confirmed: "è stato già confermato"
+      not_locked: "non era bloccato"
+      not_saved:  "Non salvato"
+    template:
+      body: ! 'Per favore ricontrolla i seguenti campi:'
+      header:
+        one: ! 'Non posso salvare questo %{model}: 1 errore'
+        other: ! 'Non posso salvare questo %{model}: %{count} errori.'
+  helpers:
+    select:
+      prompt: Per favore, seleziona
+    submit:
+      create: Crea %{model}
+      submit: Invia %{model}
+      update: Aggiorna %{model}
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%n %u'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: €
+    format:
+      delimiter: .
+      precision: 2
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: Miliardi
+          million: Milioni
+          quadrillion: Biliardi
+          thousand: Mila
+          trillion: Bilioni
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Byte
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ' e '
+      two_words_connector: ! ' e '
+      words_connector: ! ', '
+  time:
+    am: am
+    formats:
+      default: ! '%a %d %b %Y, %H:%M:%S %z'
+      long: ! '%d %B %Y %H:%M'
+      short: ! '%d %b %H:%M'
+    pm: pm
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+
+# modifiche applicative
+# nodo activerecord:
+
+      messages:
+        error: "errore"
+        errors: "errori"
+        taken: "è già in uso"
+        record_invalid: "Validazione fallita: %{errors}"
+
+    models:
+      license: Licenza
+      licenses: Licenze
+      category: Categoria
+      categories: Categorie
+      license_type: "Tipo Licenza"
+      license_types: "Tipologia di Licenze"
+      product: Prodotto
+      products: Prodotti
+      use: Uso
+      uses: Utilizzi
+      component: Componente
+      components: Componenti
+      detection: Rilevamento
+      detections: Rilevamenti
+      detected_component: "Componente rilevato"
+      detected_components: "Componenti rilevati"
+      tie: Legame
+      ties: Legami
+      rule: Regola
+      rules: Regole
+      rule_entry: "Voce della regola"
+      rule_entries: "Voci delle regole"
+      user: "Utente"
+      release: "Versione"
+      releases: "Versioni"
+
+    attributes:
+      license:
+        description:  "Descrizione"
+        category_id:  "Id Categoria"
+        text_license: "Testo"
+        name:         "Nome"
+        version:      "Versione"
+        category:     "Categoria"
+        license_type: "Tipo Licenza"
+        flag_osi:     "OSI"
+        notes:        "Note"
+        similar_license_id: "Licenza equivalente"
+      category:
+        name:         "Nome Categoria"
+        description:  "Descrizione"
+      license_type:
+        code:         "Codice"
+        description:  "Descrizione"
+        protection_level: "Livello protezione"
+        protection_level_short: "Protezione"
+        unidentified: "Non identificata"
+      product:
+        name:         "Nome"
+        name_long:    "Nome prodotto"
+        version:      "Ultima versione"
+        title:        "Titolo"
+        description:  "Descrizione"
+        use:          "Uso"
+        notes:        "Note"
+        groupage:     "Gruppo"
+        updated_at:   "Ultimo agg."
+      release:
+        version_name: "Versione"
+        sequential_number: "Ordinamento"
+        sequential_number_short: "Ord."
+        license:      "Licenza"
+        checked_at:   "Data controllo"
+        check_result: "Esito"
+        notes:        "Note"
+        compatible_license_id: "Licenza compatibilità componenti"
+      component:
+        name:         "Nome"
+        version:      "Versione"
+        version_short: "Vers."
+        title:        "Titolo"
+        description:  "Descrizione"
+        license:      "Licenza"
+        notes:        "Note"
+        purchased:    "Acquistato"
+        own:          "Proprio"
+        ownership:    "Proprietà"
+        leave_out:    "Escluso"
+      detection:
+        name:         "Nome Rilevamento"
+        created_at:   "Data rilevamento"
+        xml_file_name: "Nome file xml"
+        xml_updated_at: "Data file xml"
+        acquired:     "Acquisito"
+      detected_component:
+        name:         "Nome"
+        name_long:    "Nome componente"
+        version:      "Versione"
+        license_name: "Licenza"
+        license_version: "Versione licenza"
+        version_long: "Versione componente"
+        license_name: "Licenza rilevata"
+        license_version: "Versione"
+        license_id:   "Licenza assegnata"
+        license_id_version: "Versione assegnata"
+        own:          "Proprio"
+        purchased:    "Acquistato"
+      rule:
+        name:         "Nome"
+        license:      "Licenza"
+        plus:         "in poi"
+      rule_entry:
+        license:      "Licenza"
+        plus:         "in poi"
+        order:        "Ordine"
+      user:
+        sign_in_count: "Accessi"
+        current_sign_in_at: "Ultimo accesso"
+        last_sign_in_at: "Precedente accesso"
+        current_sign_in_ip: "Accesso da"
+        last_sign_in_ip: "Precedente accesso da"
+        created_at: "Creato"
+        updated_at: "Aggiornato"
+        admin: "Amministratore"
+        password_confirmation: "Conferma password"
+        current_password: "Password attuale"
+
+  actions:
+    actions: "Azioni"
+    show:    "Mostra"
+    edit:    "Modifica"
+    destroy: "Elimina"
+    are_you_sure: "Sei sicuro?"
+    attention: "Attenzione!"
+    back: "Ritorna"
+    new: "Inserisci"
+    listing: "Elenco"
+    search: "Ricerca"
+    back_to: "Torna a"
+    users: "Utenti"
+    sign_in: "Accedi"
+    sign_up: "Iscriviti"
+    authentication: "Accesso"
+    registration: "Registrazione"
+    reports: "Stampe"
+    update: "Aggiorna"
+    calculate: "Calcola"
+    assign: "Assegna"
+    release: "Rilascia"
+    report: "Stampa"
+    email: "Email"
+    management: "Gestione"
+    view_details: "Vedere i dettagli »"
+    download: "Scarica"
+    save: "Salva"
+    details: "Dettagli"
+    select: "Seleziona"
+    selected: "Selezionati"
+    acquire: "Acquisisci"
+    disabled: "Disabilitato"
+    check: "Controllo"
+    add: "Add"
+    delete: "Del"
+    graphics: "Grafici"
+    print:  "Stampa"
+    remember_me: "Ricordami"
+    sign_out: "Esci"
+    forgot_password: "Password dimenticata"
+    cancel_my_account: "Cancellami"
+    send_reset_instructions: "Invia istruzioni reimpostazione password"
+    change_my_password: "Cambia la mia password"
+
+    messages:
+      graphics: "Report composizione prodotto"
+      need_password: "La password è necessaria per eseguire le modifiche"
+      leave_it_blank: "Lasciare in bianco se non si desidera cambiarla"
+      waiting_confirmation: "In attesa di conferma da: "
+      hello: "Salve"
+      requested_change_your_password: "Qualcuno ha richiesto di cambiare la tua password. Puoi farlo cliccando sul link seguente:"
+      not_request_this: "Se non sei stato tu, ignora questa email."
+      password_wont_change: "La password rimane invariata fino a quando non si accede al link qui sopra e se ne crea una nuova."
+      date: "Data"
+      hour: "Ora"
+      classification: "Classificazione: circolazione limitata"
+      components_for_ownership: "Componenti per proprietà"
+      licenses_for_protection_level: "Licenze per livello di protezione"
+      licenses_for_type: "Licenze per tipo"
+      print_check: "Report controllo licenze"
+      compatibility: "compatibilità licenze"
+      components_list_legend: "Legenda: Pr=Proprio, Ac=Acquistato, Es=Escluso, Nt=Note"
+      acquisition: "Acquisizione"
+
+  will_paginate:
+    next_label: "&rarr;"
+    previous_label: "&larr;"
+
+  devise:
+    sessions:
+      user:
+        signed_in: "Accesso effettuato con successo."
+        signed_out: "Sei uscito correttamente."
+    registrations:
+      user:
+        signed_up: "Iscrizione correttamente eseguita. Se abilitata, una conferma è stata inviata al tuo indirizzo email."
+        updated: "Il tuo account è stato aggiornato."
+        destroyed: "Arrivederci! L'account è stato cancellato. Speriamo di rivederci presto."
+    failure:
+      user:
+        unauthenticated: "Devi accedere o registrarti per continuare."
+        unconfirmed: "Devi confermare il tuo account per continuare."
+        locked: "Il tuo account è bloccato."
+        invalid: "Indirizzo email o password non validi."
+        invalid_token: "Codice di autenticazione non valido."
+        timeout: "Sessione scaduta, accedere nuovamente per continuare."
+        inactive: "Il tuo account non è stato ancora attivato."
+        not_found_in_database: "Utente non trovato nel database"
+
+
+  simple_form:
+    "yes": 'Si'
+    "no": 'No'
+    required:
+      text: 'richiesto'
+      mark: '*'
+    error_notification:
+      default_message: "Correggere i problemi segnalati prima di procedere."
+    labels:
+      user:
+        remember_me: "Ricordami"
+
+  flash:
+    license:
+      create:
+        notice: "Licenza: creazione avvenuta con successo!"
+        alert: "Licenza: errore durante la creazione!"
+      update:
+        notice: "Licenza: aggiornamento avvenuto con successo!"
+        alert: "Licenza: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Licenza: eliminazione avvenuta con successo!"
+        alert: "Licenza: errore durante l'eliminazione!"
+    category:
+      create:
+        notice: "Categoria : creazione avvenuta con successo!"
+        alert: "Categoria: errore durante la creazione!"
+      update:
+        notice: "Categoria: aggiornamento avvenuto con successo!"
+        alert: "Categoria: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Categoria: eliminazione avvenuta con successo!"
+        alert: "Categoria: errore durante l'eliminazione!"
+    license_type:
+      create:
+        notice: "Tipo di licenza: creazione avvenuta con successo!"
+        alert: "Tipo di licenza: errore durante la creazione!"
+      update:
+        notice: "Tipo di licenza: aggiornamento avvenuto con successo!"
+        alert: "Tipo di licenza: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Tipo di licenza: eliminazione avvenuta con successo!"
+        alert: "Tipo di licenza: errore durante l'eliminazione!"
+    product:
+      create:
+        notice: "Prodotto: creazione avvenuta con successo!"
+        alert: "Prodotto: errore durante la creazione!"
+      update:
+        notice: "Prodotto: aggiornamento avvenuto con successo!"
+        alert: "Prodotto: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Prodotto: eliminazione avvenuta con successo!"
+        alert: "Prodotto: errore durante l'eliminazione!"
+    release:
+      create:
+        notice: "Versione: creazione avvenuta con successo!"
+        alert: "Versione: errore durante la creazione!"
+      update:
+        notice: "Versione: aggiornamento avvenuto con successo!"
+        alert: "Versione: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Versione: eliminazione avvenuta con successo!"
+        alert: "Versione: errore durante l'eliminazione!"
+    use:
+      create:
+        notice: "Uso: creazione avvenuta con successo!"
+        alert: "Uso: errore durante la creazione!"
+      update:
+        notice: "Uso: aggiornamento avvenuto con successo!"
+        alert: "Uso: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Uso: eliminazione avvenuta con successo!"
+        alert: "Uso: errore durante l'eliminazione!"
+    component:
+      create:
+        notice: "Componente: creazione avvenuta con successo!"
+        alert: "Componente: errore durante la creazione!"
+      update:
+        notice: "Componente: aggiornamento avvenuto con successo!"
+        alert: "Componente: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Componente: eliminazione avvenuta con successo!"
+        alert: "Componente: errore durante l'eliminazione!"
+    detection:
+      create:
+        notice: "Rilevamento: creazione avvenuta con successo!"
+        alert: "Rilevamento: errore durante la creazione!"
+      update:
+        notice: "Rilevamento: aggiornamento avvenuto con successo!"
+        alert: "Rilevamento: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Rilevamento: eliminazione avvenuta con successo!"
+        alert: "Rilevamento: errore durante l'eliminazione!"
+    detected_component:
+      create:
+        notice: "Componente rilevato: creazione avvenuta con successo!"
+        alert: "Componente rilevato: errore durante la creazione!"
+      update:
+        notice: "Componente rilevato: aggiornamento avvenuto con successo!"
+        alert: "Componente rilevato: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Componente rilevato: eliminazione avvenuta con successo!"
+        alert: "Componente rilevato: errore durante l'eliminazione!"
+    rule:
+      create:
+        notice: "Regola: creazione avvenuta con successo!"
+        alert: "Regola: errore durante la creazione!"
+      update:
+        notice: "Regola: aggiornamento avvenuto con successo!"
+        alert: "Regola: errore durante l'aggiornamento!"
+      destroy:
+        notice: "Regola: eliminazione avvenuta con successo!"
+        alert: "Regola: errore durante l'eliminazione!"
+
+  infos:
+    check:
+      start_license: "compatibilità componenti iniziale: %{license_name} %{license_version}"
+      ok: "Controllo ok prodotto: %{product_name} versione: %{version}"
+      product_data: "Prodotto: %{product_name} versione: %{version}"

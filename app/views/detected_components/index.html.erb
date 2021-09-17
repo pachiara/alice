@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <%= t('activerecord.models.product') %>: <b><%= @release.product.name %></b> - Vers. <b><%= @release.version_name %></b> &nbsp; 
+      <%= t('activerecord.attributes.detection.name') %>: <b><%= Detection.find(params[:detection_id]).name %></b>
+    </h3>
+  </div>
+  <div class="panel-body">
+
+<%= will_paginate @detected_components, :renderer => BootstrapPagination::Rails %>
+<br />
+<div class="table-responsive"> 
+<table class="table table-condensed table-striped table-bordered">
+<thead>	
+  <tr>
+    <th><%= t('activerecord.attributes.detected_component.name_long') %></th>
+    <th><%= t('activerecord.attributes.detected_component.version_long') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_name') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_version') %></th>
+    <th><%= t('activerecord.attributes.detected_component.license_id') %></th>
+    <th><%= t('activerecord.attributes.detected_component.own') %></th>
+    <th><%= t('actions.actions') %></th>
+  </tr>
+</thead>
+<tbody>
+<% @detected_components.each do |detected_component| %>
+  <tr>
+    <td><%= detected_component.name %></td>
+    <td class="text-center"><%= detected_component.version %></td>
+    <td><%= detected_component.license_name %></td>
+    <td class="text-center"><%= detected_component.license_version %></td>
+    <td>
+      <% if !detected_component.license_id.nil? %>
+        <%= License.find(detected_component.license_id).description %>
+      <% else %>
+        <span class="label label-danger">KO</span>
+      <% end %>
+    </td>
+    <td>
+      <% if detected_component.own %>
+        <p class="text-center"><span class="glyphicon glyphicon-ok"></span></p>
+      <% end %>
+    </td>
+    <td>
+      <div class="btn-group">
+        <%= link_to raw('<span class="glyphicon glyphicon-pencil"></span>'), edit_detected_component_path(detected_component), :class => "btn btn-default", :title => t('actions.edit'), :alt => t('actions.edit') %>
+        <% if detected_component.detection.acquired %>
+          <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), "#", :class => "btn btn-default", disabled: true, :title => t('actions.disabled'), :alt => t('actions.disabled') %>
+        <% else %>
+          <%= link_to raw('<span class="glyphicon glyphicon-trash"></span>'), detected_component, method: :delete, data: { confirm: t('actions.are_you_sure') }, :class => "btn btn-default", :title => t('actions.destroy'), :alt => t('actions.destroy') %>
+        <% end %>
+      </div>
+    </td>    
+  </tr>
+<% end %>
+</tbody>
+</table>
+</div>
+<br />
+ <%= link_to (detections_path + "?release_id=#{Detection.find(params[:detection_id]).release_id}"), :class => "btn btn-default" do %>
+   <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>
+<% end %>
+
+</div>
+</div>

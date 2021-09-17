@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Alice SpyMailer - Modifica Componente</h1>
+    <p>
+      Componente:  <strong><%= @component.name %></strong>
+    </p>
+    <p>
+      <a href="mailto:<%= @component.user %>"><%= @component.user %></a> ha impostato<br/>
+      licenza: <strong><%= @license_name %></strong><br/>
+      flag Proprio: <strong><%= @component.own %></strong><br/>
+      flag Acquistato: <strong><%= @component.purchased %></strong><br/>
+      flag Escluso: <strong><%= @component.leave_out %></strong><br/>
+    </p>
+    <p>
+      Link diretto al componente: <%= link_to @component.name, edit_component_url(@component) %>
+    </p>
+  </body>
+</html>

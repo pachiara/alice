@@ -1,0 +1,8 @@
+<%= form_tag @search_form_path, :method => 'get', :class => "form-group pull-right form-inline", :role => "form" do %> 
+  <div class="input-group-sm">
+    <%= text_field_tag :component_name, params[:component_name], :class => "pull-left form-control", :placeholder => t('activerecord.models.component'), :type => "search" %>
+    <span class="pull-left input-group-btn">
+      <button type="submit" class="btn btn-sm btn-primary" name="commit" value="clear"><span class="glyphicon glyphicon-search"></span> </button>
+    </span>
+  </div>
+<% end %>

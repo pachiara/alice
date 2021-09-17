@@ -1,0 +1,38 @@
+<br />
+<br />
+
+<div class="container-fluid">
+
+<div class="col-md-6">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<h3 class="panel-title">Alice</h3>
+  </div>
+  <div class="panel-body center">
+    <%= image_tag("alice2.png", :alt => "Logo Alice", :class => "img-rounded img-thumbnail img-responsive") %>
+    <br /><br />
+   	<%= link_to "Chi è Alice ?", about_alice_path, :class => "btn btn-default" %>
+  </div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<h3 class="panel-title">Azienda Regionale Innovazione Acquisti</h3>
+  </div>
+  <div class="panel-body center">
+  	<br /><br /><br />
+    <%= image_tag("aria.png", :alt => "Azienda Regionale Innovazione Acquisti", :class => "img-rounded img-thumbnail img-responsive") %>
+    <br /><br /><br /><br /><br /><br />
+  	<%= link_to "Azienda Regionale Innovazione Acquisti", about_lispa_path, :class => "btn btn-default" %>    
+  </div>
+</div>
+</div>
+
+<div class="col-md-12">
+<%= link_to root_path, :class => "btn btn-default" do %>
+  <span class="glyphicon glyphicon-arrow-left"></span> <%= t('actions.back') %>      
+<% end %>  
+</div>
+</div>  

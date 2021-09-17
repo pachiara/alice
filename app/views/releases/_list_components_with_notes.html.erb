@@ -1,0 +1,49 @@
+<h3><%= t('actions.listing') + " " + t('activerecord.models.components') %></h3>
+<p class="text-right"><%= t('actions.messages.components_list_legend') %></p>
+<table class="table table-striped table-condensed table-bordered">
+  <thead>
+    <tr>
+      <th><%= t('activerecord.models.component') %></th>
+      <th><%= t('activerecord.attributes.component.version_short') %></th>
+      <th><%= t('activerecord.attributes.component.license') %></th>
+      <th>Pr</th>
+      <th>Ac</th>
+      <th>Es</th>
+      <th>Nt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @components.each do |component| %>
+      <tr>
+        <td><%= component.name %></td>
+        <td><%= component.version %></td>
+        <td><%= unless component.license.nil?; component.license.name; end %></td>
+        <td><% if component.own %>&#10004;<% end %></td>
+        <td><% if component.purchased %>&#10004;<% end %></td>
+        <td><% if component.leave_out %>&#10004;<% end %></td>
+        <td><% if !component.notes.blank? %>&#10004;<% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if !@release.notes.nil? && !@release.notes.empty? %>
+  <h3><%= t('activerecord.attributes.release.notes') + " " + t('activerecord.models.release') %></h3>
+    <div class="well"><%= simple_format(@release.notes) %></div>
+<% end %>
+
+<% if !@components_with_notes.empty? %>
+  <h3><%= t('activerecord.attributes.component.notes') + " " + t('activerecord.models.components') %></h3>
+  <% @components_with_notes.each do |name, notes| %>
+    <h4><%= name %></h4>
+    <div class="well"><%= simple_format(notes) %></div>
+  <% end %>
+<% end %>
+ 
+<% if !@licenses_with_notes.empty? %>
+  <h3><%= t('activerecord.attributes.component.notes') + " " + t('activerecord.models.licenses') %></h3>
+  <% @licenses_with_notes.each do |name, license| %>
+    <h4><%= name %> <%= license.version %></h4>
+    <div class="well"><%= simple_format(license.notes) %></div>
+  <% end %>
+<% end %>
